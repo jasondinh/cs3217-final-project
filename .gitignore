@@ -1,0 +1,56 @@
+#OSX Noise
+.DS_Store
+
+# TextMate
+*.tmproj
+tmtags
+
+# XCode (and ancestors) per-user config (very noisy, and not relevant)
+*.mode1
+*.mode1v3
+*.mode2v3
+*.perspective
+*.perspectivev3
+*.pbxuser
+
+# build products
+build/
+*.[oa]
+
+# Other source repository archive directories (protects when importing)
+.hg
+.svn
+
+# Vim
+*.swp
+
+# Thinking Sphinx
+config/*.sphinx.conf
+db/sphinx
+
+# Rails 3
+.bundle
+db/*.sqlite3
+log/*.log
+tmp/**/*
+public/system/*
+
+# RubyMine
+.idea/workspace.xml
+.idea/tasks.xml
+
+# Google Android
+.metadata
+tmp/**
+*.tmp
+*.bak
+tmp/**/*
+*.swp
+*~.nib
+*~
+*.apk
+bin
+gen
+local.properties
+*.jar
+
