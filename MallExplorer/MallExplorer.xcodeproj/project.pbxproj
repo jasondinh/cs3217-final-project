@@ -15,6 +15,8 @@
 		2899E5220DE3E06400AC0155 /* MallExplorerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* MallExplorerViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* MallExplorerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* MallExplorerViewController.m */; };
+		39358AB91340B1CA00A6B4F2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39358AB81340B1CA00A6B4F2 /* MapKit.framework */; };
+		39358AD61340B1E200A6B4F2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39358AD51340B1E200A6B4F2 /* CoreLocation.framework */; };
 		E1C435CF133CC1CF00646BF1 /* Mall.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C435CE133CC1CF00646BF1 /* Mall.m */; };
 		E1C435D2133CC1D200646BF1 /* Map.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C435D1133CC1D200646BF1 /* Map.m */; };
 		E1C435D5133CC1D500646BF1 /* Point.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C435D4133CC1D500646BF1 /* Point.m */; };
@@ -48,6 +50,8 @@
 		28D7ACF70DDB3853001CB0EB /* MallExplorerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallExplorerViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* MallExplorer_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MallExplorer_Prefix.pch; sourceTree = "<group>"; };
+		39358AB81340B1CA00A6B4F2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		39358AD51340B1E200A6B4F2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* MallExplorer-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MallExplorer-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		E1C435CD133CC1CF00646BF1 /* Mall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mall.h; sourceTree = "<group>"; };
 		E1C435CE133CC1CF00646BF1 /* Mall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mall.m; sourceTree = "<group>"; };
@@ -90,6 +94,8 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				39358AB91340B1CA00A6B4F2 /* MapKit.framework in Frameworks */,
+				39358AD61340B1E200A6B4F2 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +162,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				39358AD51340B1E200A6B4F2 /* CoreLocation.framework */,
+				39358AB81340B1CA00A6B4F2 /* MapKit.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,

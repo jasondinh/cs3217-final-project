@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface Point : NSObject {
+@interface MapPoint : NSObject {
 
 }
 

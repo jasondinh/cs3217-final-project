@@ -9,6 +9,6 @@
 #import "Point.h"
 
 
-@implementation Point
+@implementation MapPoint
 
 @end
