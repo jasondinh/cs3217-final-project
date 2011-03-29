@@ -6,11 +6,19 @@
   <script type="text/javascript" src="map.js"></script>
 </head>
 <body>
+  <div id="instruction"></div>
   <div id="map_container">
     <div id="map_img_box">
+		<form id="add_shop_form">
+			<input type="text" name="shop_name"/><br/>
+			<input type="text" name="shop_unit"/><br/>
+			<textarea rows = "3" cols="15"></textarea><br/>	
+			<button id="add_done">Done</button>
+		</form>
         <img id="map_img" src="amazing.jpg" />
     </div>
   </div>
+  <button id="switch_btn">Tag location!</button>	
 </body>
 </html>
 
