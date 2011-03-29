@@ -1,4 +1,7 @@
 
+// MODE: ADD_MODE or TAG_MODE
+var MODE = "ADD_MODE";
+
 var Line = function(x1, y1, x2, y2){
     console.log(x1,y1,x2,y2);
     var dx = x2-x1;
@@ -11,6 +14,7 @@ var Line = function(x1, y1, x2, y2){
     this.view = view;
 
     view.dblclick( function(){
+		if (MODE != 'ADD_MODE') return;
         console.log("remove line");
         view.remove();
         return false;
@@ -19,11 +23,22 @@ var Line = function(x1, y1, x2, y2){
 
 var Point = function(px, py, index){
 
-    var view = $('<div>').attr('class', 'point'). css({position:'absolute', top:py-15, left:px-15, background:'gray', width:30, height:30});
+    var view = $('<div>').attr('class', 'point'). css({position:'absolute', top:py-15, left:px-15, background:'green', width:30, height:30});
     view.data('p-index', index);
+
+	view.click( function(evt){
+		if (MODE!='TAG_MODE') return;	
+		console.log('single click at point');
+		var pos = view.position();
+		AddShopForm.showAt(pos.top+5, pos.left+5 );
+		return false;
+	});
     
     view.dblclick( function(evt) {
-        console.log("point click");
+		if (MODE!='ADD_MODE') return;
+        console.log("point click, remove point");
+		//@Hung: should remove all lines connected to this point as well
+		view.remove();
         return false;
     });
 
@@ -32,6 +47,7 @@ var Point = function(px, py, index){
     var isDragging = false;
 
     // handle drag & drop using mousedown, mousemove and mouseup
+	// TODO: disable draggable when MODE is TAG_MODE
     view.draggable({
         start: function(evt, ui){
             // create copy of point at its initial position
@@ -70,6 +86,55 @@ var Point = function(px, py, index){
 
 $(function(){
 
+	AddShopForm = function (){
+		// either create on the fly when click on point
+		// or create before hand and hide / show when a point is clicked (in TAG_MODE)
+		
+		// temporary do it the second way
+		var form = $('#add_shop_form');
+		var donebtn = $('#add_done');
+		donebtn.click( function(){
+			console.log('done clicked');	
+			// handle ajax submit form here
+			form.hide();
+			return false;
+		});
+		// @Hung: for form blur when click outside, check out benalman's lib
+		return {
+			hide:function(){ 
+				console.log(form);
+				form.hide(); 
+			},
+			showAt: function(topPos, leftPos){ 
+				form.css({top:topPos, left: leftPos}); 
+				form.show();
+			}		
+		};
+	}();
+
+
+	var add_msg = "Double click to add point. Drag point to point to connect them. Double click on edge or point to remove";
+
+	var tag_msg = "Click at point to add information to it";
+	// set up information
+	$('#instruction').html(add_msg);
+	AddShopForm.hide();
+
+	// set up tag point 
+	$('#switch_btn').click( function(){
+		if (MODE == 'ADD_MODE'){
+			MODE = 'TAG_MODE';
+			$('#instruction').html(tag_msg);
+			$('#switch_btn').html('Done tagging');
+		} else 
+		if (MODE == 'TAG_MODE'){
+			MODE = 'ADD_MODE';
+			$('#instruction').html(add_msg);
+			$('#switch_btn').html('Click here to tag points');
+			AddShopForm.hide();
+		}
+	});
+	
     var pindex=0;
 
 	$('#map_img').load(function(){
@@ -82,6 +147,7 @@ $(function(){
     });
 
 	$('#map_img_box').dblclick( function(evt){
+		if (MODE != 'ADD_MODE') return;
         console.log('double click on map');
         var top = evt.pageY;
         var left = evt.pageX;
