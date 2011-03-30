@@ -23,7 +23,7 @@ var Line = function(x1, y1, x2, y2){
 
 var Point = function(px, py, index){
 
-    var view = $('<div>').attr('class', 'point'). css({position:'absolute', top:py-15, left:px-15, background:'green', width:30, height:30});
+    var view = $('<div>').attr('class', 'point').addClass('point').css({position:'absolute', top:py-5, left:px-5});
     view.data('p-index', index);
 
 	view.click( function(evt){
@@ -51,7 +51,7 @@ var Point = function(px, py, index){
     view.draggable({
         start: function(evt, ui){
             // create copy of point at its initial position
-            copyView = $('<div>').css({position:'absolute', 'top':py-15, 'left':px-15, 'background':'red', 'width':30, 'height':30});
+            copyView = $('<div>').addClass('point').css({top:py-5, left:px-5});
             view.parent().append(copyView);
             view.data('pos', view.position());
         },
@@ -76,7 +76,7 @@ var Point = function(px, py, index){
             console.log(p1.left, p1.top);
             var p2 = ui.draggable.data('pos');
             console.log(p2.left, p2.top);
-            var newLine = new Line(p1.left+15, p1.top+15, p2.left+15, p2.top+15);
+            var newLine = new Line(p1.left+5, p1.top+5, p2.left+5, p2.top+5);
             $(this).parent().append(newLine.view);
         },
     });
@@ -130,12 +130,17 @@ $(function(){
 		if (MODE == 'TAG_MODE'){
 			MODE = 'ADD_MODE';
 			$('#instruction').html(add_msg);
-			$('#switch_btn').html('Click here to tag points');
+			$('#switch_btn').html('Tag shop');
 			AddShopForm.hide();
 		}
 	});
 	
     var pindex=0;
+
+	// setup radio button set for type of points
+	$('#point_type').buttonset();
+	console.log( $('#point_type') );
+	console.log( $('#point_type').buttonset );
 
 	$('#map_img').load(function(){
 		var top = $('#map_container').offset().top;
