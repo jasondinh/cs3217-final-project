@@ -10,6 +10,7 @@
 
 
 @implementation MallViewController
+@synthesize coordinate;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -28,6 +29,21 @@
     [super viewDidLoad];
 }
 */
+
+- (NSString *)subtitle{
+	return @"Put some text here";
+}
+- (NSString *)title{
+	return @"Parked Location";
+}
+
+-(id)initWithCoordinate:(CLLocationCoordinate2D) c{
+	if(self = [super init]){
+		coordinate=c;
+		NSLog(@"%f,%f",c.latitude,c.longitude);
+	}
+	return self;
+}
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

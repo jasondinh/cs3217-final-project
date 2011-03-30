@@ -7,10 +7,13 @@
 //
 //	Updated by Dam Tuan Long on 29 Mar 2011 : add city map
 #import "MallExplorerViewController.h"
+#import "MallViewController.h"
+
 #import <CoreLocation/CoreLocation.h>
 @implementation MallExplorerViewController
 @synthesize mapView;
 @synthesize mapType;
+
 /*
 // The designated initializer. Override to perform setup that is required before the view is loaded.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -63,13 +66,23 @@
 	[mapView setDelegate:self];
 	mapView.showsUserLocation = YES;
 	mapType.selectedSegmentIndex =0;
-
+	CLLocationCoordinate2D mallLocation;
+	mallLocation.latitude = 1.302851; // Singapore!
+	mallLocation.longitude = 103.85523;
+	MallViewController* test = [[[MallViewController alloc]initWithCoordinate:mallLocation] autorelease];
+	[mapView addAnnotation:test];
 	
 	
 }
 -(MKAnnotationView *)mapView:(MKMapView*)_mapView viewForAnnotion:(id)annotation{
 	if (annotation == _mapView.userLocation)
 		return nil;	
+	else {
+		MKPinAnnotationView* annView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"s"];
+		annView.animatesDrop =YES;
+		return annView;
+	}
+
 }
 
 - (IBAction)changeType:(id)sender{
