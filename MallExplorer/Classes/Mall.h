@@ -10,7 +10,6 @@
 
 
 @interface Mall : NSObject {
-
 }
 
 @end

@@ -10,7 +10,11 @@
 
 
 @interface Annotation : NSObject {
-
+	CGPoint position;
+	NSString* title;
+	NSString* content;
 }
-
+@property CGPoint position;
+@property (nonatomic, retain) NSString* title;
+@property (nonatomic, retain) NSString* content;
 @end
