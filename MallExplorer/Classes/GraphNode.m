@@ -1,14 +1,14 @@
 //
-//  Node.m
+//  GraphNode.m
 //  ApplicationLibrary
 //
 //  Created by Tran Cong Hoang on 3/31/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "Node.h"
+#import "GraphNode.h"
 
 
-@implementation Node
+@implementation GraphNode
 @synthesize index;
 @end
