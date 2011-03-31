@@ -13,6 +13,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="2"/>
+			<integer value="70"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -40,7 +41,7 @@
 			<object class="IBUIView" id="766721923">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
-				<string key="NSFrameSize">{768, 1004}</string>
+				<string key="NSFrameSize">{1024, 748}</string>
 				<reference key="NSSuperview"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -48,6 +49,9 @@
 				</object>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics">
 					<int key="IBUIStatusBarStyle">2</int>
+				</object>
+				<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
+					<int key="interfaceOrientation">3</int>
 				</object>
 				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 			</object>
@@ -83,6 +87,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="IBUITableViewController" id="452891107">
 							<object class="IBUINavigationItem" key="IBUINavigationItem" id="688448184">
+								<reference key="IBUINavigationBar"/>
 								<string key="IBUITitle">Root View Controller</string>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 							</object>
@@ -115,30 +120,6 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">spiltViewController</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="515535608"/>
-					</object>
-					<int key="connectionID">88</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">cityMapViewController</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="363229236"/>
-					</object>
-					<int key="connectionID">89</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">mallListViewController</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="452891107"/>
-					</object>
-					<int key="connectionID">90</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">view</string>
 						<reference key="source" ref="841351856"/>
 						<reference key="destination" ref="766721923"/>
@@ -147,19 +128,27 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="515535608"/>
-						<reference key="destination" ref="363229236"/>
+						<string key="label">spiltViewController</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="515535608"/>
 					</object>
-					<int key="connectionID">94</int>
+					<int key="connectionID">96</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">mallListViewController</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="452891107"/>
+					</object>
+					<int key="connectionID">97</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">cityMapViewController</string>
-						<reference key="source" ref="452891107"/>
+						<reference key="source" ref="841351856"/>
 						<reference key="destination" ref="363229236"/>
 					</object>
-					<int key="connectionID">95</int>
+					<int key="connectionID">98</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -258,9 +247,9 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>MallExplorerViewController</string>
 					<string>UIResponder</string>
-					<string>{{1352, 91}, {768, 1024}}</string>
+					<string>{{1224, 219}, {1024, 768}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{901, 149}, {1024, 768}}</string>
+					<string>{{1284, 199}, {1024, 768}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>CityMapViewController</string>
@@ -287,7 +276,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">95</int>
+			<int key="maxID">98</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -455,6 +444,41 @@
 						<string key="minorKey">MallListViewController.h</string>
 					</object>
 				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SBJsonStreamWriter.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">UINavigationBar</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">UINavigationBar+TKCategory.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">UINavigationController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">UINavigationController+TKCategory.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">UIToolbar</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">UIToolbar+TKCategory.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">UIView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">UIView+TKCategory.h</string>
+					</object>
+				</object>
 			</object>
 			<object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.2+">
 				<bool key="EncodedWithXMLCoder">YES</bool>
@@ -534,6 +558,20 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">Foundation.framework/Headers/NSURLConnection.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">QuartzCore.framework/Headers/CAAnimation.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">QuartzCore.framework/Headers/CALayer.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
