@@ -1,5 +1,5 @@
 //
-//  Node.h
+//  GraphNode.h
 //  ApplicationLibrary
 //
 //  Created by Tran Cong Hoang on 3/31/11.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Node : NSObject {
+@interface GraphNode : NSObject {
 	int index;
 }
 @property int index;

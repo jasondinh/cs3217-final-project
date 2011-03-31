@@ -1,5 +1,5 @@
 //
-//  Edge.h
+//  GraphEdge.h
 //  ApplicationLibrary
 //
 //  Created by Tran Cong Hoang on 3/31/11.
@@ -7,18 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Node.h"
+#import "GraphNode.h"
 
-@interface Edge : NSObject {
-	Node* node1;
-	Node* node2;
+@interface GraphEdge : NSObject {
+	GraphNode* node1;
+	GraphNode* node2;
 	double weight;
 }
-@property (nonatomic, retain) Node* node1;
-@property (nonatomic, retain) Node* node2;
+@property (nonatomic, retain) GraphNode* node1;
+@property (nonatomic, retain) GraphNode* node2;
 @property double weight;
--(Edge*) initEdgeWithNode:(Node*) n1 andNode:(Node*) n2 withWeight:(double) w;
-+(Edge*) EdgeWithNode:(Node*) n1 andNode:(Node*) n2 withWeight:(double) w;
--(Node*) getSourceNode;
--(Node*) getDestinationNode;
+-(GraphEdge*) initEdgeWithNode:(GraphNode*) n1 andNode:(GraphNode*) n2 withWeight:(double) w;
++(GraphEdge*) EdgeWithNode:(GraphNode*) n1 andNode:(GraphNode*) n2 withWeight:(double) w;
+-(GraphNode*) getSourceNode;
+-(GraphNode*) getDestinationNode;
 @end

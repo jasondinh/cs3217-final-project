@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Node.h"
-#import "Edge.h"
+#import "GraphNode.h"
+#import "GraphEdge.h"
 
 @interface Graph : NSObject {
 	NSMutableArray* listNode;
@@ -21,9 +21,9 @@
 @property (nonatomic, retain) NSMutableArray* listEdge;
 @property BOOL isBiDiGraph;
 @property BOOL isMultiGraph;
--(int) addNode:(Node*) node;
--(BOOL) addEdge:(Edge*) edge;
--(NSArray*) getAdjacentNodes:(Node*) node;
--(double) getWeightOfEdgeBetweenNode:(Node*) n1 andNode:(Node*) n2;
-
+-(int) addNode:(GraphNode*) node;
+-(BOOL) addEdge:(GraphEdge*) edge;
+-(NSArray*) getAdjacentNodes:(GraphNode*) node;
+-(double) getWeightOfEdgeBetweenNode:(GraphNode*) n1 andNode:(GraphNode*) n2;
+-(NSArray*) getShortestPathFrom: (GraphNode*) start to:(GraphNode*) goal;
 @end
