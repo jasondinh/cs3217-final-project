@@ -11,6 +11,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 @implementation MallExplorerViewController
+@synthesize cityMapViewController,mallListViewController,spiltViewController;
 @synthesize mapView;
 @synthesize mapType;
 
@@ -71,6 +72,7 @@
 	mallLocation.longitude = 103.85523;
 	MallViewController* test = [[[MallViewController alloc]initWithCoordinate:mallLocation] autorelease];
 	[mapView addAnnotation:test];
+	[self.view addSubview:spiltViewController.view];
 	
 	
 }

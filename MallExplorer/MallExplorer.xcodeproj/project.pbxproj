@@ -15,6 +15,10 @@
 		2899E5220DE3E06400AC0155 /* MallExplorerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* MallExplorerViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* MallExplorerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* MallExplorerViewController.m */; };
+		3924E1261344B8430009F9FC /* CityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3924E1241344B8430009F9FC /* CityMapViewController.m */; };
+		3924E1271344B8430009F9FC /* CityMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3924E1251344B8430009F9FC /* CityMapViewController.xib */; };
+		3924E12C1344C1B80009F9FC /* MallListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3924E12A1344C1B80009F9FC /* MallListViewController.m */; };
+		3924E12D1344C1B80009F9FC /* MallListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3924E12B1344C1B80009F9FC /* MallListViewController.xib */; };
 		39358AB91340B1CA00A6B4F2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39358AB81340B1CA00A6B4F2 /* MapKit.framework */; };
 		39358AD61340B1E200A6B4F2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39358AD51340B1E200A6B4F2 /* CoreLocation.framework */; };
 		E1C435CF133CC1CF00646BF1 /* Mall.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C435CE133CC1CF00646BF1 /* Mall.m */; };
@@ -50,6 +54,12 @@
 		28D7ACF70DDB3853001CB0EB /* MallExplorerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallExplorerViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* MallExplorer_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MallExplorer_Prefix.pch; sourceTree = "<group>"; };
+		3924E1231344B8430009F9FC /* CityMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityMapViewController.h; sourceTree = "<group>"; };
+		3924E1241344B8430009F9FC /* CityMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityMapViewController.m; sourceTree = "<group>"; };
+		3924E1251344B8430009F9FC /* CityMapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityMapViewController.xib; sourceTree = "<group>"; };
+		3924E1291344C1B80009F9FC /* MallListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MallListViewController.h; sourceTree = "<group>"; };
+		3924E12A1344C1B80009F9FC /* MallListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallListViewController.m; sourceTree = "<group>"; };
+		3924E12B1344C1B80009F9FC /* MallListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MallListViewController.xib; sourceTree = "<group>"; };
 		39358AB81340B1CA00A6B4F2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		39358AD51340B1E200A6B4F2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* MallExplorer-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MallExplorer-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -131,6 +141,12 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				3924E1231344B8430009F9FC /* CityMapViewController.h */,
+				3924E1241344B8430009F9FC /* CityMapViewController.m */,
+				3924E1251344B8430009F9FC /* CityMapViewController.xib */,
+				3924E1291344C1B80009F9FC /* MallListViewController.h */,
+				3924E12A1344C1B80009F9FC /* MallListViewController.m */,
+				3924E12B1344C1B80009F9FC /* MallListViewController.xib */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -283,6 +299,8 @@
 				E1C43605133CC24300646BF1 /* ShopViewController.xib in Resources */,
 				E1C4360A133CC24800646BF1 /* AnnoViewController.xib in Resources */,
 				E1C4360F133CC24D00646BF1 /* CommentViewController.xib in Resources */,
+				3924E1271344B8430009F9FC /* CityMapViewController.xib in Resources */,
+				3924E12D1344C1B80009F9FC /* MallListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +327,8 @@
 				E1C43604133CC24300646BF1 /* ShopViewController.m in Sources */,
 				E1C43609133CC24800646BF1 /* AnnoViewController.m in Sources */,
 				E1C4360E133CC24D00646BF1 /* CommentViewController.m in Sources */,
+				3924E1261344B8430009F9FC /* CityMapViewController.m in Sources */,
+				3924E12C1344C1B80009F9FC /* MallListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
