@@ -23,7 +23,7 @@
 		39A4DA4D1344D9F000DFD802 /* CityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A4DA481344D9F000DFD802 /* CityMapViewController.m */; };
 		39A4DA4E1344D9F000DFD802 /* CityMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39A4DA491344D9F000DFD802 /* CityMapViewController.xib */; };
 		39A4DA4F1344D9F000DFD802 /* MallListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A4DA4B1344D9F000DFD802 /* MallListViewController.m */; };
-		39A4DA501344D9F000DFD802 /* MallListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39A4DA4C1344D9F000DFD802 /* MallListViewController.xib */; };
+		39B0401D1345184A002C69F0 /* MallListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39B0401C1345184A002C69F0 /* MallListViewController.xib */; };
 		E18A8EEB1344D0E200AB72AB /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = E18A8ED81344D0E200AB72AB /* ASIAuthenticationDialog.m */; };
 		E18A8EEC1344D0E200AB72AB /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = E18A8EDB1344D0E200AB72AB /* ASIDataCompressor.m */; };
 		E18A8EED1344D0E200AB72AB /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = E18A8EDD1344D0E200AB72AB /* ASIDataDecompressor.m */; };
@@ -139,7 +139,7 @@
 		39A4DA491344D9F000DFD802 /* CityMapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CityMapViewController.xib; path = ../CityMapViewController.xib; sourceTree = "<group>"; };
 		39A4DA4A1344D9F000DFD802 /* MallListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MallListViewController.h; path = ../MallListViewController.h; sourceTree = "<group>"; };
 		39A4DA4B1344D9F000DFD802 /* MallListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MallListViewController.m; path = ../MallListViewController.m; sourceTree = "<group>"; };
-		39A4DA4C1344D9F000DFD802 /* MallListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MallListViewController.xib; path = ../MallListViewController.xib; sourceTree = "<group>"; };
+		39B0401C1345184A002C69F0 /* MallListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MallListViewController.xib; path = ../MallListViewController.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MallExplorer-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MallExplorer-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		E18A8ED71344D0E200AB72AB /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		E18A8ED81344D0E200AB72AB /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
@@ -348,7 +348,7 @@
 				39A4DA491344D9F000DFD802 /* CityMapViewController.xib */,
 				39A4DA4A1344D9F000DFD802 /* MallListViewController.h */,
 				39A4DA4B1344D9F000DFD802 /* MallListViewController.m */,
-				39A4DA4C1344D9F000DFD802 /* MallListViewController.xib */,
+				39B0401C1345184A002C69F0 /* MallListViewController.xib */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -715,7 +715,7 @@
 				E1C4360A133CC24800646BF1 /* AnnoViewController.xib in Resources */,
 				E1C4360F133CC24D00646BF1 /* CommentViewController.xib in Resources */,
 				39A4DA4E1344D9F000DFD802 /* CityMapViewController.xib in Resources */,
-				39A4DA501344D9F000DFD802 /* MallListViewController.xib in Resources */,
+				39B0401D1345184A002C69F0 /* MallListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

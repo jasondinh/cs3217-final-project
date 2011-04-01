@@ -12,8 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="2"/>
-			<integer value="70"/>
+			<integer value="72"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -39,10 +38,9 @@
 				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 			</object>
 			<object class="IBUIView" id="766721923">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<string key="NSFrameSize">{1024, 748}</string>
-				<reference key="NSSuperview"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
@@ -92,6 +90,7 @@
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 							</object>
 							<reference key="IBUIParentViewController" ref="411224722"/>
+							<string key="IBUINibName">MallListViewController</string>
 							<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics">
 								<int key="IBUIStatusBarStyle">2</int>
 							</object>
@@ -100,13 +99,13 @@
 							</object>
 							<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 							<bool key="IBUIHorizontal">NO</bool>
-							<bool key="IBUIClearsSelectionOnViewWillAppear">NO</bool>
 						</object>
 					</object>
 				</object>
 				<object class="IBUIViewController" key="IBUIDetailViewController" id="363229236">
 					<reference key="IBUIToolbarItems" ref="0"/>
 					<reference key="IBUIParentViewController" ref="515535608"/>
+					<string key="IBUINibName">CityMapViewController</string>
 					<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
 						<int key="interfaceOrientation">1</int>
 					</object>
@@ -149,6 +148,22 @@
 						<reference key="destination" ref="363229236"/>
 					</object>
 					<int key="connectionID">98</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">cityMapViewController</string>
+						<reference key="source" ref="452891107"/>
+						<reference key="destination" ref="363229236"/>
+					</object>
+					<int key="connectionID">99</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="515535608"/>
+						<reference key="destination" ref="363229236"/>
+					</object>
+					<int key="connectionID">101</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -249,7 +264,7 @@
 					<string>UIResponder</string>
 					<string>{{1224, 219}, {1024, 768}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{1284, 199}, {1024, 768}}</string>
+					<string>{{1189, 303}, {1024, 768}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>CityMapViewController</string>
@@ -276,7 +291,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">98</int>
+			<int key="maxID">101</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -299,18 +314,18 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>detailDescriptionLabel</string>
 							<string>detailItem</string>
 							<string>mapType</string>
 							<string>mapView</string>
-							<string>title</string>
 							<string>toolbar</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>UILabel</string>
 							<string>id</string>
 							<string>UISegmentedControl</string>
 							<string>MKMapView</string>
-							<string>UILabel</string>
 							<string>UIToolbar</string>
 						</object>
 					</object>
@@ -318,14 +333,18 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>detailDescriptionLabel</string>
 							<string>detailItem</string>
 							<string>mapType</string>
 							<string>mapView</string>
-							<string>title</string>
 							<string>toolbar</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">detailDescriptionLabel</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">detailItem</string>
 								<string key="candidateClassName">id</string>
@@ -337,10 +356,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">mapView</string>
 								<string key="candidateClassName">MKMapView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">title</string>
-								<string key="candidateClassName">UILabel</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">toolbar</string>
@@ -356,33 +371,18 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">MallExplorerViewController</string>
 					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">changeType:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">changeType:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">changeType:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>cityMapViewController</string>
 							<string>mallListViewController</string>
-							<string>mapType</string>
-							<string>mapView</string>
 							<string>spiltViewController</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>CityMapViewController</string>
 							<string>MallListViewController</string>
-							<string>UISegmentedControl</string>
-							<string>MKMapView</string>
 							<string>UISplitViewController</string>
 						</object>
 					</object>
@@ -392,8 +392,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>cityMapViewController</string>
 							<string>mallListViewController</string>
-							<string>mapType</string>
-							<string>mapView</string>
 							<string>spiltViewController</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -405,14 +403,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">mallListViewController</string>
 								<string key="candidateClassName">MallListViewController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mapType</string>
-								<string key="candidateClassName">UISegmentedControl</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mapView</string>
-								<string key="candidateClassName">MKMapView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">spiltViewController</string>

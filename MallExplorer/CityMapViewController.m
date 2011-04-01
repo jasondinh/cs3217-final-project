@@ -17,7 +17,7 @@
 
 
 @implementation CityMapViewController
-@synthesize toolbar, popoverController, detailItem, title;
+@synthesize toolbar, popoverController, detailItem, detailDescriptionLabel;
 @synthesize mapView;
 @synthesize mapType;
 
@@ -34,7 +34,6 @@
         detailItem = [newDetailItem retain];
 		
         // Update the view.
-
 		
         [self configureView];
     }
@@ -125,14 +124,15 @@
 
 - (void)configureView {
     // Update the user interface for the detail item.
-    title.text = [detailItem description];   
+    detailDescriptionLabel.text = [detailItem description];   
 }
-
+#pragma mark -
+#pragma mark Split view support
 - (void)splitViewController: (UISplitViewController*)svc 
      willHideViewController:(UIViewController *)aViewController 
 		  withBarButtonItem:(UIBarButtonItem*)barButtonItem 
 	   forPopoverController: (UIPopoverController*)pc {
-	
+
     barButtonItem.title = @"Root List";
     NSMutableArray *items = [[toolbar items] mutableCopy];
     [items insertObject:barButtonItem atIndex:0];
@@ -150,8 +150,10 @@
     [toolbar setItems:items animated:YES];
     [items release];
     self.popoverController = nil;
+	
 }
-
+#pragma mark -
+#pragma mark Rotation support
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.
     return YES;
@@ -170,15 +172,15 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-	
+	self.popoverController = nil;
 }
 
 
 - (void)dealloc {
-
+	[popoverController release];
 	[toolbar release];
 	[detailItem release];
-	[title release];
+	[detailDescriptionLabel release];
 	[super dealloc];
 }
 

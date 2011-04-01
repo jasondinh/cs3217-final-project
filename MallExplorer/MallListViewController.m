@@ -82,13 +82,13 @@ self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-       return [listOfMovies count];
+	return 1;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 1;
+    return [listOfMovies count];
 }
 
 
@@ -195,6 +195,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 
 - (void)dealloc {
+	 [listOfMovies release];
     [super dealloc];
 }
 
