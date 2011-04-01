@@ -12,14 +12,24 @@
 
 @implementation MallListViewController
 @synthesize cityMapViewController;
-
 #pragma mark -
 #pragma mark View lifecycle
 
 NSMutableArray *listOfMovies;
 - (void)viewDidLoad {
-
-
+	UITableViewController* temp = [[UITableViewController alloc] init];
+	temp.title =@"a";
+	self.title =@"a";
+	UITableViewController* temp2 = [[UITableViewController alloc] init];
+	UIView* temp3 = [[UIView alloc] init]; 
+	[self pushViewController:temp animated:YES];
+	[self pushViewController:temp2 animated:YES];
+	self.navigationController.toolbarHidden =NO;
+	UIBarButtonItem *item = [[UIBarButtonItem alloc]   
+                             initWithBarButtonSystemItem:UIBarButtonSystemItemAdd   
+                             target:self   
+                             action:@selector(doSomething)];  
+    self.navigationItem.rightBarButtonItem = item;  
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -42,7 +52,7 @@ listOfMovies = [[NSMutableArray alloc] init];
 
 //---set the title---
 self.navigationItem.title = @"Movies";    
-
+	
 [super viewDidLoad];
 //self.clearsSelectionOnViewWillAppear = NO;
 //self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);

@@ -12,8 +12,9 @@
 @interface MallListViewController : UINavigationController {
 	
 	CityMapViewController* cityMapViewController;
-
 }
 
 @property (nonatomic,retain) IBOutlet CityMapViewController* cityMapViewController;
+
 @end
+
