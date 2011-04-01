@@ -24,7 +24,6 @@
 		39A4DA4D1344D9F000DFD802 /* CityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A4DA481344D9F000DFD802 /* CityMapViewController.m */; };
 		39A4DA4E1344D9F000DFD802 /* CityMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39A4DA491344D9F000DFD802 /* CityMapViewController.xib */; };
 		39A4DA4F1344D9F000DFD802 /* MallListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A4DA4B1344D9F000DFD802 /* MallListViewController.m */; };
-		39B0401D1345184A002C69F0 /* MallListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39B0401C1345184A002C69F0 /* MallListViewController.xib */; };
 		E18A8EEB1344D0E200AB72AB /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = E18A8ED81344D0E200AB72AB /* ASIAuthenticationDialog.m */; };
 		E18A8EEC1344D0E200AB72AB /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = E18A8EDB1344D0E200AB72AB /* ASIDataCompressor.m */; };
 		E18A8EED1344D0E200AB72AB /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = E18A8EDD1344D0E200AB72AB /* ASIDataDecompressor.m */; };
@@ -103,15 +102,11 @@
 		E1C435E1133CC1E500646BF1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C435E0133CC1E500646BF1 /* User.m */; };
 		E1C435E4133CC1E900646BF1 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C435E3133CC1E900646BF1 /* Comment.m */; };
 		E1C435FA133CC23500646BF1 /* MallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C435F8133CC23500646BF1 /* MallViewController.m */; };
-		E1C435FB133CC23500646BF1 /* MallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C435F9133CC23500646BF1 /* MallViewController.xib */; };
 		E1C435FF133CC23E00646BF1 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C435FD133CC23E00646BF1 /* MapViewController.m */; };
 		E1C43600133CC23E00646BF1 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C435FE133CC23E00646BF1 /* MapViewController.xib */; };
 		E1C43604133CC24300646BF1 /* ShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C43602133CC24300646BF1 /* ShopViewController.m */; };
-		E1C43605133CC24300646BF1 /* ShopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C43603133CC24300646BF1 /* ShopViewController.xib */; };
 		E1C43609133CC24800646BF1 /* AnnoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C43607133CC24800646BF1 /* AnnoViewController.m */; };
-		E1C4360A133CC24800646BF1 /* AnnoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C43608133CC24800646BF1 /* AnnoViewController.xib */; };
 		E1C4360E133CC24D00646BF1 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C4360C133CC24D00646BF1 /* CommentViewController.m */; };
-		E1C4360F133CC24D00646BF1 /* CommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C4360D133CC24D00646BF1 /* CommentViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,10 +133,10 @@
 		39358AD51340B1E200A6B4F2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		39A4DA471344D9F000DFD802 /* CityMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CityMapViewController.h; path = ../CityMapViewController.h; sourceTree = "<group>"; };
 		39A4DA481344D9F000DFD802 /* CityMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CityMapViewController.m; path = ../CityMapViewController.m; sourceTree = "<group>"; };
-		39A4DA491344D9F000DFD802 /* CityMapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CityMapViewController.xib; path = ../CityMapViewController.xib; sourceTree = "<group>"; };
+		39A4DA491344D9F000DFD802 /* CityMapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityMapViewController.xib; sourceTree = "<group>"; };
 		39A4DA4A1344D9F000DFD802 /* MallListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MallListViewController.h; path = ../MallListViewController.h; sourceTree = "<group>"; };
 		39A4DA4B1344D9F000DFD802 /* MallListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MallListViewController.m; path = ../MallListViewController.m; sourceTree = "<group>"; };
-		39B0401C1345184A002C69F0 /* MallListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MallListViewController.xib; path = ../MallListViewController.xib; sourceTree = "<group>"; };
+		39B0401C1345184A002C69F0 /* MallListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MallListViewController.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MallExplorer-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MallExplorer-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		E18A8ED71344D0E200AB72AB /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		E18A8ED81344D0E200AB72AB /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
@@ -300,19 +295,15 @@
 		E1C435E3133CC1E900646BF1 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		E1C435F7133CC23500646BF1 /* MallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MallViewController.h; sourceTree = "<group>"; };
 		E1C435F8133CC23500646BF1 /* MallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallViewController.m; sourceTree = "<group>"; };
-		E1C435F9133CC23500646BF1 /* MallViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MallViewController.xib; path = Classes/MallViewController.xib; sourceTree = "<group>"; };
 		E1C435FC133CC23E00646BF1 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		E1C435FD133CC23E00646BF1 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		E1C435FE133CC23E00646BF1 /* MapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MapViewController.xib; path = Classes/MapViewController.xib; sourceTree = "<group>"; };
 		E1C43601133CC24300646BF1 /* ShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopViewController.h; sourceTree = "<group>"; };
 		E1C43602133CC24300646BF1 /* ShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopViewController.m; sourceTree = "<group>"; };
-		E1C43603133CC24300646BF1 /* ShopViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ShopViewController.xib; path = Classes/ShopViewController.xib; sourceTree = "<group>"; };
 		E1C43606133CC24800646BF1 /* AnnoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnoViewController.h; sourceTree = "<group>"; };
 		E1C43607133CC24800646BF1 /* AnnoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnoViewController.m; sourceTree = "<group>"; };
-		E1C43608133CC24800646BF1 /* AnnoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AnnoViewController.xib; path = Classes/AnnoViewController.xib; sourceTree = "<group>"; };
 		E1C4360B133CC24D00646BF1 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
 		E1C4360C133CC24D00646BF1 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
-		E1C4360D133CC24D00646BF1 /* CommentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CommentViewController.xib; path = Classes/CommentViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -345,12 +336,6 @@
 				E1C435C5133CC10800646BF1 /* Controllers */,
 				1D3623240D0F684500981E51 /* MallExplorerAppDelegate.h */,
 				1D3623250D0F684500981E51 /* MallExplorerAppDelegate.m */,
-				39A4DA471344D9F000DFD802 /* CityMapViewController.h */,
-				39A4DA481344D9F000DFD802 /* CityMapViewController.m */,
-				39A4DA491344D9F000DFD802 /* CityMapViewController.xib */,
-				39A4DA4A1344D9F000DFD802 /* MallListViewController.h */,
-				39A4DA4B1344D9F000DFD802 /* MallListViewController.m */,
-				39B0401C1345184A002C69F0 /* MallListViewController.xib */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -361,6 +346,36 @@
 				1D6058910D05DD3D006BFB54 /* MallExplorer.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		272A0DF51346411200A0AC2E /* Outside */ = {
+			isa = PBXGroup;
+			children = (
+				39A4DA471344D9F000DFD802 /* CityMapViewController.h */,
+				39A4DA481344D9F000DFD802 /* CityMapViewController.m */,
+				39A4DA4A1344D9F000DFD802 /* MallListViewController.h */,
+				39A4DA4B1344D9F000DFD802 /* MallListViewController.m */,
+				28D7ACF60DDB3853001CB0EB /* MallExplorerViewController.h */,
+				28D7ACF70DDB3853001CB0EB /* MallExplorerViewController.m */,
+			);
+			name = Outside;
+			sourceTree = "<group>";
+		};
+		272A0DF61346412500A0AC2E /* Inside */ = {
+			isa = PBXGroup;
+			children = (
+				E1C435FC133CC23E00646BF1 /* MapViewController.h */,
+				E1C435FD133CC23E00646BF1 /* MapViewController.m */,
+				E1C43601133CC24300646BF1 /* ShopViewController.h */,
+				E1C43602133CC24300646BF1 /* ShopViewController.m */,
+				E1C43606133CC24800646BF1 /* AnnoViewController.h */,
+				E1C43607133CC24800646BF1 /* AnnoViewController.m */,
+				E1C4360B133CC24D00646BF1 /* CommentViewController.h */,
+				E1C4360C133CC24D00646BF1 /* CommentViewController.m */,
+				E1C435F7133CC23500646BF1 /* MallViewController.h */,
+				E1C435F8133CC23500646BF1 /* MallViewController.m */,
+			);
+			name = Inside;
 			sourceTree = "<group>";
 		};
 		2742DC171344C7CF00E4A4A0 /* ApplicationLibrary */ = {
@@ -402,11 +417,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				39A4DA491344D9F000DFD802 /* CityMapViewController.xib */,
+				39B0401C1345184A002C69F0 /* MallListViewController.xib */,
 				E1C435FE133CC23E00646BF1 /* MapViewController.xib */,
-				E1C43603133CC24300646BF1 /* ShopViewController.xib */,
-				E1C43608133CC24800646BF1 /* AnnoViewController.xib */,
-				E1C4360D133CC24D00646BF1 /* CommentViewController.xib */,
-				E1C435F9133CC23500646BF1 /* MallViewController.xib */,
 				2899E5210DE3E06400AC0155 /* MallExplorerViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* MallExplorer-Info.plist */,
@@ -607,18 +620,8 @@
 		E1C435C5133CC10800646BF1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E1C435FC133CC23E00646BF1 /* MapViewController.h */,
-				E1C435FD133CC23E00646BF1 /* MapViewController.m */,
-				E1C43601133CC24300646BF1 /* ShopViewController.h */,
-				E1C43602133CC24300646BF1 /* ShopViewController.m */,
-				E1C43606133CC24800646BF1 /* AnnoViewController.h */,
-				E1C43607133CC24800646BF1 /* AnnoViewController.m */,
-				E1C4360B133CC24D00646BF1 /* CommentViewController.h */,
-				E1C4360C133CC24D00646BF1 /* CommentViewController.m */,
-				28D7ACF60DDB3853001CB0EB /* MallExplorerViewController.h */,
-				28D7ACF70DDB3853001CB0EB /* MallExplorerViewController.m */,
-				E1C435F7133CC23500646BF1 /* MallViewController.h */,
-				E1C435F8133CC23500646BF1 /* MallViewController.m */,
+				272A0DF61346412500A0AC2E /* Inside */,
+				272A0DF51346411200A0AC2E /* Outside */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -712,13 +715,8 @@
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				2899E5220DE3E06400AC0155 /* MallExplorerViewController.xib in Resources */,
-				E1C435FB133CC23500646BF1 /* MallViewController.xib in Resources */,
 				E1C43600133CC23E00646BF1 /* MapViewController.xib in Resources */,
-				E1C43605133CC24300646BF1 /* ShopViewController.xib in Resources */,
-				E1C4360A133CC24800646BF1 /* AnnoViewController.xib in Resources */,
-				E1C4360F133CC24D00646BF1 /* CommentViewController.xib in Resources */,
 				39A4DA4E1344D9F000DFD802 /* CityMapViewController.xib in Resources */,
-				39A4DA501344D9F000DFD802 /* MallListViewController.xib in Resources */,
 				2742DE11134510F200E4A4A0 /* vivioMap.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

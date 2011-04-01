@@ -21,9 +21,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
     // Override point for customization after app launch. 
-    [self.window addSubview:viewController.view];
+	mallExplorer = [[MallExplorerViewController alloc] initWithNibName:@"MallExplorerViewController" bundle:nil];
+    [self.window addSubview:mallExplorer.view];
     [self.window makeKeyAndVisible];
-
+	
 	return YES;
 }
 
@@ -62,7 +63,8 @@
 
 
 - (void)dealloc {
-    [viewController release];
+	[viewController release];
+    [mallExplorer release];
     [window release];
     [super dealloc];
 }

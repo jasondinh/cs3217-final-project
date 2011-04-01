@@ -12,17 +12,11 @@
 #import "CityMapViewController.h"
 
 
-@interface MallExplorerViewController : UIViewController<MKMapViewDelegate,CLLocationManagerDelegate> {
+@interface MallExplorerViewController : UISplitViewController<MKMapViewDelegate,CLLocationManagerDelegate> {
 	CityMapViewController* cityMapViewController;
 	MallListViewController* mallListViewController;
-	UISplitViewController * splitViewController;
 
 }
-
-
-@property (nonatomic,retain) IBOutlet CityMapViewController* cityMapViewController;
-@property (nonatomic,retain) IBOutlet MallListViewController* mallListViewController;
-@property (nonatomic,retain) IBOutlet UISplitViewController* spiltViewController;
 
 @end
 

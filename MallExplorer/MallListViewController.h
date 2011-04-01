@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class CityMapViewController;
-@interface MallListViewController : UITableViewController {
+@interface MallListViewController : UINavigationController {
 	
 	CityMapViewController* cityMapViewController;
 

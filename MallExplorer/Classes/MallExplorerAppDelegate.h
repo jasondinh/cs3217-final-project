@@ -12,7 +12,7 @@
 
 @interface MallExplorerAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
-    MallExplorerViewController *viewController;
+    MallExplorerViewController* mallExplorer;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

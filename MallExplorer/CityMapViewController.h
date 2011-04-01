@@ -11,7 +11,7 @@
 #import "MallViewController.h"
 
 
-@interface CityMapViewController : UIViewController <UIPopoverControllerDelegate ,UISplitViewControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate>{
+@interface CityMapViewController : UIViewController <UIPopoverControllerDelegate ,MKMapViewDelegate,CLLocationManagerDelegate,UISplitViewControllerDelegate>{
 	UIPopoverController *popoverController;
 	UIToolbar *toolbar;
 	id detailItem;

@@ -11,18 +11,23 @@
 
 #import <CoreLocation/CoreLocation.h>
 @implementation MallExplorerViewController
-@synthesize cityMapViewController,mallListViewController,spiltViewController;
 
-/*
+
 // The designated initializer. Override to perform setup that is required before the view is loaded.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+		// Custom initialization
+		mallListViewController= [[MallListViewController alloc] init];
+		cityMapViewController = [[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil];
+		
+		self.viewControllers = [NSArray arrayWithObjects: mallListViewController, cityMapViewController, nil];
+		[self setDelegate:cityMapViewController];
+		//	
     }
     return self;
 }
-*/
+
 
 /*
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
@@ -37,10 +42,7 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	[self.view addSubview:spiltViewController.view];
 }
-
-
 
 
 

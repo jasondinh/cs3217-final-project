@@ -44,8 +44,8 @@ listOfMovies = [[NSMutableArray alloc] init];
 self.navigationItem.title = @"Movies";    
 
 [super viewDidLoad];
-self.clearsSelectionOnViewWillAppear = NO;
-self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+//self.clearsSelectionOnViewWillAppear = NO;
+//self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
 }
 
 
