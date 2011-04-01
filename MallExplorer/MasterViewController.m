@@ -18,12 +18,12 @@
 NSMutableArray *listOfMovies;
 - (void)viewDidLoad {
 	UITableViewController* temp = [[UITableViewController alloc] init];
+	[temp.tableView setDelegate:self];
+	[temp.tableView setDataSource:self];
 	temp.title =@"a";
 	self.title =@"a";
-	UITableViewController* temp2 = [[UITableViewController alloc] init];
 	
 	[self pushViewController:temp animated:YES];
-	[self pushViewController:temp2 animated:YES];
 	self.navigationController.toolbarHidden =NO;
 	UIBarButtonItem *item = [[UIBarButtonItem alloc]   
                              initWithBarButtonSystemItem:UIBarButtonSystemItemAdd   
@@ -35,25 +35,25 @@ NSMutableArray *listOfMovies;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-listOfMovies = [[NSMutableArray alloc] init];
-[listOfMovies addObject:@"Training Day"];
-[listOfMovies addObject:@"Remember the Titans"];
-[listOfMovies addObject:@"John Q."];
-[listOfMovies addObject:@"The Bone Collector"];
-[listOfMovies addObject:@"Ricochet"];
-[listOfMovies addObject:@"The Siege"];
-[listOfMovies addObject:@"Malcolm X"];
-[listOfMovies addObject:@"Antwone Fisher"];
-[listOfMovies addObject:@"Courage Under Fire"];
-[listOfMovies addObject:@"He Got Game"];
-[listOfMovies addObject:@"The Pelican Brief"];
-[listOfMovies addObject:@"Glory"];
-[listOfMovies addObject:@"The Preacher's Wife"];
-
-//---set the title---
-self.navigationItem.title = @"Movies";    
+	listOfMovies = [[NSMutableArray alloc] init];
+	[listOfMovies addObject:@"Training Day"];
+	[listOfMovies addObject:@"Remember the Titans"];
+	[listOfMovies addObject:@"John Q."];
+	[listOfMovies addObject:@"The Bone Collector"];
+	[listOfMovies addObject:@"Ricochet"];
+	[listOfMovies addObject:@"The Siege"];
+	[listOfMovies addObject:@"Malcolm X"];
+	[listOfMovies addObject:@"Antwone Fisher"];
+	[listOfMovies addObject:@"Courage Under Fire"];
+	[listOfMovies addObject:@"He Got Game"];
+	[listOfMovies addObject:@"The Pelican Brief"];
+	[listOfMovies addObject:@"Glory"];
+	[listOfMovies addObject:@"The Preacher's Wife"];
 	
-[super viewDidLoad];
+	//---set the title---
+	self.navigationItem.title = @"Movies";    
+	
+	[super viewDidLoad];
 //self.clearsSelectionOnViewWillAppear = NO;
 //self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
 }
@@ -104,7 +104,7 @@ self.navigationItem.title = @"Movies";
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+//    NSLog(@"em da dc goi");
     static NSString *CellIdentifier = @"CellIdentifier";
 	
     // Dequeue or create a cell of the appropriate type.
@@ -182,9 +182,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //detailViewController.detailItem = 
     //    [NSString stringWithFormat:@"Row %d", indexPath.row];
 	
-    cityMapViewController.detailItem = 
-	[NSString stringWithFormat:@"%@", 
-	 [listOfMovies objectAtIndex:indexPath.row]];    
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:nil];
+	//cityMapViewController.detailItem = 
+	//[NSString stringWithFormat:@"%@", 
+	 //[listOfMovies objectAtIndex:indexPath.row]];    
 }
 
 

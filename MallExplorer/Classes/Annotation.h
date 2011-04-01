@@ -17,4 +17,5 @@
 @property CGPoint position;
 @property (nonatomic, retain) NSString* title;
 @property (nonatomic, retain) NSString* content;
+-(Annotation*) initWithPosition: (CGPoint) position title:(NSString*) title content: (NSString*) content;
 @end

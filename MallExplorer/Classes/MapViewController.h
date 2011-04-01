@@ -22,5 +22,5 @@
 
 -(void) addAnnotation: (Annotation*) annotation;
 -(MapViewController*) initWithMapImage:(UIImage*) img annotationList:(NSArray*) annList;
-
+-(MapViewController*) initMall;
 @end

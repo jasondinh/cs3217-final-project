@@ -8,6 +8,7 @@
 //	Updated by Dam Tuan Long on 29 Mar 2011 : add city map
 #import "MallExplorerViewController.h"
 #import "MallViewController.h"
+#import "MapViewController.h"
 
 #import <CoreLocation/CoreLocation.h>
 @implementation MallExplorerViewController
@@ -20,12 +21,18 @@
 		// Custom initialization
 		masterViewController= [[MasterViewController alloc] init];
 		cityMapViewController = [[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil];
-		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
 		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
 		[self setDelegate:cityMapViewController];
 		//	
     }
     return self;
+}
+
+-(void) mallChosen:(id) object{
+	MapViewController* aMVC = [[MapViewController alloc] initMall];
+	self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
+	
 }
 
 

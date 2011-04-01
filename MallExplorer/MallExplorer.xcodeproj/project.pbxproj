@@ -15,6 +15,8 @@
 		2742DD0F1344DE7600E4A4A0 /* GraphEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2742DD0B1344DE7600E4A4A0 /* GraphEdge.m */; };
 		2742DD101344DE7600E4A4A0 /* GraphNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2742DD0D1344DE7600E4A4A0 /* GraphNode.m */; };
 		2742DE11134510F200E4A4A0 /* vivioMap.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2742DE10134510F200E4A4A0 /* vivioMap.gif */; };
+		275B5F3813467BE00063BF3D /* map.gif in Resources */ = {isa = PBXBuildFile; fileRef = 275B5F3713467BE00063BF3D /* map.gif */; };
+		275B5F401346806E0063BF3D /* icon_shop.png in Resources */ = {isa = PBXBuildFile; fileRef = 275B5F3F1346806E0063BF3D /* icon_shop.png */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		2899E5220DE3E06400AC0155 /* MallExplorerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* MallExplorerViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
@@ -122,6 +124,8 @@
 		2742DD0C1344DE7600E4A4A0 /* GraphNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphNode.h; sourceTree = "<group>"; };
 		2742DD0D1344DE7600E4A4A0 /* GraphNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphNode.m; sourceTree = "<group>"; };
 		2742DE10134510F200E4A4A0 /* vivioMap.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = vivioMap.gif; sourceTree = "<group>"; };
+		275B5F3713467BE00063BF3D /* map.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = map.gif; sourceTree = "<group>"; };
+		275B5F3F1346806E0063BF3D /* icon_shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_shop.png; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2899E5210DE3E06400AC0155 /* MallExplorerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MallExplorerViewController.xib; sourceTree = "<group>"; };
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
@@ -657,6 +661,8 @@
 		E1C435C8133CC12600646BF1 /* Arts */ = {
 			isa = PBXGroup;
 			children = (
+				275B5F3F1346806E0063BF3D /* icon_shop.png */,
+				275B5F3713467BE00063BF3D /* map.gif */,
 				2742DE10134510F200E4A4A0 /* vivioMap.gif */,
 			);
 			name = Arts;
@@ -716,6 +722,8 @@
 				E1C43600133CC23E00646BF1 /* MapViewController.xib in Resources */,
 				39A4DA4E1344D9F000DFD802 /* CityMapViewController.xib in Resources */,
 				2742DE11134510F200E4A4A0 /* vivioMap.gif in Resources */,
+				275B5F3813467BE00063BF3D /* map.gif in Resources */,
+				275B5F401346806E0063BF3D /* icon_shop.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

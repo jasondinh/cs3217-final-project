@@ -13,4 +13,12 @@
 @synthesize position;
 @synthesize title;
 @synthesize content;
+-(Annotation*) initWithPosition: (CGPoint) pos title:(NSString*) tit content: (NSString*) cont{
+	self = [super init];
+	if (!self) return nil;
+	self.position = pos;
+	self.title = tit;
+	self.content = cont;
+	return self;
+}
 @end

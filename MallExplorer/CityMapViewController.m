@@ -7,7 +7,7 @@
 //
 
 #import "CityMapViewController.h"
-#import "MallListViewController.h"
+#import "MasterViewController.h"
 
 @interface CityMapViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;

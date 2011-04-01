@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class CityMapViewController;
-@interface MasterViewController : UINavigationController {
+@interface MasterViewController : UINavigationController<UITableViewDelegate, UITableViewDataSource> {
 	
 	CityMapViewController* cityMapViewController;
 }
