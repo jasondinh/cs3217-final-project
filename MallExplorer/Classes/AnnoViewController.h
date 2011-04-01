@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Annotation.h"
 
 @interface AnnoViewController : UIViewController {
-
+	Annotation* annotation;
 }
-
+@property (nonatomic, retain) Annotation* annotation;
+-(AnnoViewController*) initWithAnnotation: (Annotation*) anno;
 @end

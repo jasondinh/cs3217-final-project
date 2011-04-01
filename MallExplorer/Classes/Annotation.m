@@ -10,5 +10,7 @@
 
 
 @implementation Annotation
-
+@synthesize position;
+@synthesize title;
+@synthesize content;
 @end

@@ -10,8 +10,7 @@
 #import <MapKit/MapKit.h>
 @interface MallViewController : UIViewController <MKAnnotation>{
 	CLLocationCoordinate2D coordinate;
-
-
+	NSArray* mapList;
 }
 @property  (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 -(id)initWithCoordinate:(CLLocationCoordinate2D) coordinate;

@@ -11,6 +11,8 @@
 
 @implementation AnnoViewController
 
+@synthesize annotation;
+
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -29,6 +31,12 @@
 }
 */
 
+-(AnnoViewController*) initWithAnnotation:(Annotation *)anno{
+	self = [super init];
+	if (!self) return nil;
+	self.annotation = anno;
+	return self;
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.
