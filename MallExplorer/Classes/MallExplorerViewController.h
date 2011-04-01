@@ -8,13 +8,13 @@
 //	Updated by Dam Tuan Long on 29 Mar 2011 :add city map
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "MallListViewController.h"
+#import "MasterViewController.h"
 #import "CityMapViewController.h"
 
 
 @interface MallExplorerViewController : UISplitViewController<MKMapViewDelegate,CLLocationManagerDelegate> {
 	CityMapViewController* cityMapViewController;
-	MallListViewController* mallListViewController;
+	MasterViewController* masterViewController;
 
 }
 

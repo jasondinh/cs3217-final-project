@@ -18,10 +18,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
 		// Custom initialization
-		mallListViewController= [[MallListViewController alloc] init];
+		masterViewController= [[MasterViewController alloc] init];
 		cityMapViewController = [[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil];
 		
-		self.viewControllers = [NSArray arrayWithObjects: mallListViewController, cityMapViewController, nil];
+		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
 		[self setDelegate:cityMapViewController];
 		//	
     }
