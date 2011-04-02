@@ -2,7 +2,7 @@
 //  AnnoViewController.m
 //  MallExplorer
 //
-//  Created by bathanh-m on 3/25/11.
+//  Created by Tran Cong Hoang on 3/31/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -12,7 +12,8 @@
 @implementation AnnoViewController
 
 @synthesize annotation;
-
+@synthesize titleIsShown;
+@synthesize titleButton;
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -49,13 +50,10 @@
 }
 
 -(void) togglePopUp: (UIGestureRecognizer*) recognizer{
-	NSLog(@"adding tooltip");
-	
-	 UIButton* buttonLabel = [[UIButton alloc] initWithFrame:CGRectMake(0,35,100,20)];
-	 [buttonLabel setTitle:annotation.title forState:UIControlStateNormal];
-	//buttonLabel.backgroundColor = [UIColor greenColor];
-	 [self.view addSubview:buttonLabel];
-	
+		if (!titleIsShown) {
+			titleIsShown = YES;
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"title is shown" object:self];
+		}
 }
 
 -(AnnoViewController*) initWithAnnotation:(Annotation *)anno{
@@ -65,7 +63,7 @@
 	UIImage* image = [UIImage imageNamed:@"icon_shop.png"];
 	UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
 	imageView.frame = CGRectMake(0, 0, 30, 30);	
-	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+	self.view = [[UIView alloc] initWithFrame:imageView.frame];
 	//self.view.backgroundColor = [UIColor redColor];
 	[self.view addSubview: imageView];
 	[image release];

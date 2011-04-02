@@ -2,9 +2,9 @@
 //  MapViewController.h
 //  MallExplorer
 //
-//  Created by bathanh-m on 3/25/11.
+//  Created by Tran Cong Hoang on 3/31/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
+
 
 #import <UIKit/UIKit.h>
 #import "AnnoViewController.h"
@@ -14,10 +14,13 @@
 	NSMutableArray* annotationList;
 	Map* map;
 	UIScrollView* displayArea;
+	BOOL displayAllTitleMode;
+	AnnoViewController* annoBeingSelected;
 }
 
 @property (nonatomic, retain) NSArray* annotationList;
 @property (nonatomic, retain) Map* map;
+@property BOOL displayAllTitleMode;
 //@property (nonatomic, retain) UIImage* imageMap;
 
 -(void) addAnnotation: (Annotation*) annotation;

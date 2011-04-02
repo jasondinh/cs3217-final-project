@@ -2,7 +2,7 @@
 //  AnnoViewController.h
 //  MallExplorer
 //
-//  Created by bathanh-m on 3/25/11.
+//  Created by Tran Cong Hoang on 3/31/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,7 +11,11 @@
 
 @interface AnnoViewController : UIViewController {
 	Annotation* annotation;
+	BOOL titleIsShown;
+	UIButton* titleButton;
 }
 @property (nonatomic, retain) Annotation* annotation;
+@property (nonatomic, retain) UIButton* titleButton;
+@property BOOL titleIsShown;
 -(AnnoViewController*) initWithAnnotation: (Annotation*) anno;
 @end

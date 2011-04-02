@@ -1,8 +1,8 @@
-    //
+//
 //  MapViewController.m
 //  MallExplorer
 //
-//  Created by bathanh-m on 3/25/11.
+//  Created by Tran Cong Hoang on 3/31/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -15,21 +15,33 @@
 @implementation MapViewController
 @synthesize annotationList;
 @synthesize map;
+@synthesize displayAllTitleMode;
 
-
+#pragma mark -
+#pragma mark add annotation methods
 
 -(void) addAnnotationToMap: (AnnoViewController*) annoView{
 	[displayArea addSubview:annoView.view];
 	[annoView.view setCenter:annoView.annotation.position];
+	UIButton* titleButton = [[UIButton alloc] initWithFrame:CGRectMake(annoView.view.frame.origin.x, annoView.view.frame.origin.y+annoView.view.frame.size.height+5, annoView.view.frame.size.width*3, 20)];
+	NSLog(@"%lf %lf %lf %lf", titleButton.frame.origin.x, titleButton.frame.origin.y, titleButton.frame.size.width, titleButton.frame.size.height);
+	[titleButton setTitle:annoView.annotation.title forState:UIControlStateNormal];
+	titleButton.hidden = YES;
+	[displayArea addSubview:titleButton];
+	annoView.titleButton = titleButton;
 }
 
 -(void) addAnnotation: (Annotation*) annotation{
 	[self.map addAnnotation:annotation];
 	AnnoViewController* annoView = [[AnnoViewController alloc] initWithAnnotation: annotation];
 	[annotationList addObject:annoView];
-	[self addAnnotationToMap:annoView];
 	[annoView release];
 }
+
+
+#pragma mark -
+#pragma mark initializers
+
 
 -(MapViewController*) initMall{
 	NSLog(@"initMall");
@@ -43,28 +55,32 @@
 -(MapViewController*) initWithMapImage:(UIImage*) img annotationList:(NSArray*) annList{
 	self = [super init];
 	if (!self) return nil;
+	annotationList = [[NSMutableArray alloc] init];
 	self.map = [[Map alloc] initWithMapImage:img annotationList:annList];
 	for (int i= 0; i<[annList count]; i++) {
 		AnnoViewController* annoView = [[AnnoViewController alloc] initWithAnnotation: [annList objectAtIndex:i]];
 		[annotationList addObject:annoView];
-		[self.view addSubview: annoView.view];
-		annoView.view.center = annoView.annotation.position;
-		NSLog(@"%d", [annoView retainCount]);
-		//[annoView release];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(annotationChangeToggle:) name:@"title is shown" object:nil];
+		NSLog(@"retain count %d", [annoView retainCount]);
+		[annoView release];
 	}
+	displayAllTitleMode = NO;
+	annoBeingSelected = nil;
 	return self;
 }
 
- // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
+
+
+// The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization.
-    }
-    return self;
-}
-*/
+ - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+ self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+ if (self) {
+ // Custom initialization.
+ }
+ return self;
+ }
+ */
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -75,12 +91,16 @@
 	UIImageView* imageView = [[UIImageView alloc] initWithImage:self.map.imageMap];
 	[displayArea addSubview:imageView];
 	[displayArea setContentSize:imageView.bounds.size];
+	NSLog(@"annotationList count %d", [annotationList count]);
 	for (int i = 0; i < [annotationList count]; i++) {
 		[self addAnnotationToMap:[annotationList objectAtIndex:i]];
 	}
 	// set inset 
 	
+		
 	// set off set
+	
+	NSLog(@"finish adding annotation to map");
 	[displayArea setContentOffset:CGPointMake(0, 0)];
 	self.view = displayArea;
 	[imageView release];
@@ -91,45 +111,70 @@
 
 -(void) addGestureRegconizer{
 	UIPinchGestureRecognizer* pinchGesture	 = [[UIPinchGestureRecognizer alloc]
-											initWithTarget:self action:@selector(zoomMap:)];
+												initWithTarget:self action:@selector(zoomMap:)];
 	[self.view addGestureRecognizer:pinchGesture];
 	[pinchGesture release];
 	
 	
 	//panGesture	 = [[UIPanGestureRecognizer alloc]
-//					initWithTarget:self action:@selector(movePigButton:)];
-//	[pigButton addGestureRecognizer:panGesture];
-//	[panGesture release];
-//	
-//	
-//	panGesture	 = [[UIPanGestureRecognizer alloc]
-//					initWithTarget:self action:@selector(moveBlockButton:)];
-//	[blockButton addGestureRecognizer:panGesture];
-//	[panGesture release];
-//	
-//	panGesture	 = [[UIPanGestureRecognizer alloc]
-//					initWithTarget:self action:@selector(moveSquareBlockButton:)];
-//	[squareBlockButton addGestureRecognizer:panGesture];
-//	[panGesture release];
-//	
-//	UITapGestureRecognizer* tapGesture	 = [[UITapGestureRecognizer alloc]
-//											initWithTarget:self action:@selector(blueWindButton:)];
-//	[tapGesture setNumberOfTapsRequired:1];
-//	[blueWindButton addGestureRecognizer:tapGesture];
-//	[tapGesture release];
-//	
-//	tapGesture	 = [[UITapGestureRecognizer alloc]
-//					initWithTarget:self action:@selector(redWindButton:)];
-//	[tapGesture setNumberOfTapsRequired:1];
-//	[redWindButton addGestureRecognizer:tapGesture];
-//	[tapGesture release];
-//	
-//	tapGesture	 = [[UITapGestureRecognizer alloc]
-//					initWithTarget:self action:@selector(greenWindButton:)];
-//	[tapGesture setNumberOfTapsRequired:1];
-//	[greenWindButton addGestureRecognizer:tapGesture];
-//	[tapGesture release];
+	//					initWithTarget:self action:@selector(movePigButton:)];
+	//	[pigButton addGestureRecognizer:panGesture];
+	//	[panGesture release];
+	//	
+	//	
+	//	panGesture	 = [[UIPanGestureRecognizer alloc]
+	//					initWithTarget:self action:@selector(moveBlockButton:)];
+	//	[blockButton addGestureRecognizer:panGesture];
+	//	[panGesture release];
+	//	
+	//	panGesture	 = [[UIPanGestureRecognizer alloc]
+	//					initWithTarget:self action:@selector(moveSquareBlockButton:)];
+	//	[squareBlockButton addGestureRecognizer:panGesture];
+	//	[panGesture release];
+	//	
+	//	UITapGestureRecognizer* tapGesture	 = [[UITapGestureRecognizer alloc]
+	//											initWithTarget:self action:@selector(blueWindButton:)];
+	//	[tapGesture setNumberOfTapsRequired:1];
+	//	[blueWindButton addGestureRecognizer:tapGesture];
+	//	[tapGesture release];
+	//	
+	//	tapGesture	 = [[UITapGestureRecognizer alloc]
+	//					initWithTarget:self action:@selector(redWindButton:)];
+	//	[tapGesture setNumberOfTapsRequired:1];
+	//	[redWindButton addGestureRecognizer:tapGesture];
+	//	[tapGesture release];
+	//	
+	//	tapGesture	 = [[UITapGestureRecognizer alloc]
+	//					initWithTarget:self action:@selector(greenWindButton:)];
+	//	[tapGesture setNumberOfTapsRequired:1];
+	//	[greenWindButton addGestureRecognizer:tapGesture];
+	//	[tapGesture release];
 }
+
+
+
+#pragma mark -
+#pragma mark Handling annotation title toggling
+
+-(void) annotationChangeToggle:(NSNotification*) notification{
+	if (!displayAllTitleMode) {
+	NSLog(@"anno change toggled");
+		if (annoBeingSelected) {
+			NSLog(@"turned off something");
+			annoBeingSelected.titleIsShown = NO;
+			annoBeingSelected.titleButton.hidden = YES;
+			NSLog(@"anno is being display %d", annoBeingSelected.titleButton.hidden);
+		}
+		annoBeingSelected = notification.object;
+		annoBeingSelected.titleButton.hidden = NO;
+		NSLog(@"%d",  annoBeingSelected.titleButton.hidden);
+		for (int i = 0; i<[annotationList count]; i++) {
+			NSLog(@"anno %d is being display: %d", i, [[annotationList objectAtIndex:i] titleButton].hidden);
+		}
+	}
+}
+
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.
