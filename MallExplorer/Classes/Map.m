@@ -20,7 +20,7 @@
 	self = [super init];
 	if (!self) return nil;
 	self.imageMap = img;
-	self.annotationList = annList;
+	self.annotationList = [[NSMutableArray arrayWithArray:annList] retain];
 	return self;
 }
 -(void) dealloc{

@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "MapViewController.h"
+#import "AnnoViewController.h"
+
 @interface MallViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate>{
 	CLLocationCoordinate2D coordinate;
 	NSArray* mapList;
@@ -16,10 +19,18 @@
 	id detailItem;
 //	IBOutlet MKMapView *mapView;
 //	IBOutlet UISegmentedControl *mapType;
-	
+	UIImageView* toggleTextButton;
+	UIImageView* startFlagButton;
+	UIImageView* goalFlagButton;
+	UIImageView* pathFindingButton;
+	MapViewController* mapViewController;
 }
 
 @property (nonatomic, retain) IBOutlet UIToolbar* toolbar;
+@property (nonatomic, retain) IBOutlet UIImageView* toogleTextButton;
+@property (nonatomic, retain) IBOutlet UIImageView* startFlagButton;
+@property (nonatomic, retain) IBOutlet UIImageView* goalFlagButton;
+@property (nonatomic, retain) IBOutlet UIImageView*	pathFindingButton;
 @property (nonatomic, retain) id detailItem;
 @property (nonatomic, retain) UIPopoverController* popoverController;
 //@property (nonatomic,retain)IBOutlet MKMapView *mapView;

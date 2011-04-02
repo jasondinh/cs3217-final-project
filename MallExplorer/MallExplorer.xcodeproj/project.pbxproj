@@ -18,6 +18,10 @@
 		275B5F3813467BE00063BF3D /* map.gif in Resources */ = {isa = PBXBuildFile; fileRef = 275B5F3713467BE00063BF3D /* map.gif */; };
 		275B5F401346806E0063BF3D /* icon_shop.png in Resources */ = {isa = PBXBuildFile; fileRef = 275B5F3F1346806E0063BF3D /* icon_shop.png */; };
 		275B62A31346CFC70063BF3D /* MallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 275B62A21346CFC70063BF3D /* MallViewController.xib */; };
+		275B63011346E5080063BF3D /* toogle-text-tooltips.png in Resources */ = {isa = PBXBuildFile; fileRef = 275B63001346E5080063BF3D /* toogle-text-tooltips.png */; };
+		275B63121346E92B0063BF3D /* green_flag_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 275B63111346E92B0063BF3D /* green_flag_icon.png */; };
+		275B63161346E9CE0063BF3D /* red_flag_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 275B63151346E9CE0063BF3D /* red_flag_icon.png */; };
+		275B63931346F0E80063BF3D /* PathFinding.png in Resources */ = {isa = PBXBuildFile; fileRef = 275B63921346F0E80063BF3D /* PathFinding.png */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		2899E5220DE3E06400AC0155 /* MallExplorerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* MallExplorerViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
@@ -128,6 +132,10 @@
 		275B5F3713467BE00063BF3D /* map.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = map.gif; sourceTree = "<group>"; };
 		275B5F3F1346806E0063BF3D /* icon_shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_shop.png; sourceTree = "<group>"; };
 		275B62A21346CFC70063BF3D /* MallViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MallViewController.xib; sourceTree = "<group>"; };
+		275B63001346E5080063BF3D /* toogle-text-tooltips.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toogle-text-tooltips.png"; sourceTree = "<group>"; };
+		275B63111346E92B0063BF3D /* green_flag_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_flag_icon.png; sourceTree = "<group>"; };
+		275B63151346E9CE0063BF3D /* red_flag_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_flag_icon.png; sourceTree = "<group>"; };
+		275B63921346F0E80063BF3D /* PathFinding.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PathFinding.png; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2899E5210DE3E06400AC0155 /* MallExplorerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MallExplorerViewController.xib; sourceTree = "<group>"; };
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
@@ -664,6 +672,10 @@
 		E1C435C8133CC12600646BF1 /* Arts */ = {
 			isa = PBXGroup;
 			children = (
+				275B63921346F0E80063BF3D /* PathFinding.png */,
+				275B63151346E9CE0063BF3D /* red_flag_icon.png */,
+				275B63111346E92B0063BF3D /* green_flag_icon.png */,
+				275B63001346E5080063BF3D /* toogle-text-tooltips.png */,
 				275B5F3F1346806E0063BF3D /* icon_shop.png */,
 				275B5F3713467BE00063BF3D /* map.gif */,
 				2742DE10134510F200E4A4A0 /* vivioMap.gif */,
@@ -728,6 +740,10 @@
 				275B5F3813467BE00063BF3D /* map.gif in Resources */,
 				275B5F401346806E0063BF3D /* icon_shop.png in Resources */,
 				275B62A31346CFC70063BF3D /* MallViewController.xib in Resources */,
+				275B63011346E5080063BF3D /* toogle-text-tooltips.png in Resources */,
+				275B63121346E92B0063BF3D /* green_flag_icon.png in Resources */,
+				275B63161346E9CE0063BF3D /* red_flag_icon.png in Resources */,
+				275B63931346F0E80063BF3D /* PathFinding.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

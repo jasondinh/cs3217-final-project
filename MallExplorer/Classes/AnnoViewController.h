@@ -18,4 +18,5 @@
 @property (nonatomic, retain) UIButton* titleButton;
 @property BOOL titleIsShown;
 -(AnnoViewController*) initWithAnnotation: (Annotation*) anno;
+-(CGRect) getAnnoTitleRect;
 @end

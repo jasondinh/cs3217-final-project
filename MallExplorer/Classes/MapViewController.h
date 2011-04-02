@@ -10,12 +10,15 @@
 #import "AnnoViewController.h"
 #import "Annotation.h"
 #import "Map.h"
-@interface MapViewController : UIViewController {
+@interface MapViewController : UIViewController<UIScrollViewDelegate> {
 	NSMutableArray* annotationList;
 	Map* map;
+	CGSize mapSize;
+	CGPoint mapCenterPoint;
 	UIScrollView* displayArea;
 	BOOL displayAllTitleMode;
 	AnnoViewController* annoBeingSelected;
+	double zoomScale, maxScale, minScale;
 }
 
 @property (nonatomic, retain) NSArray* annotationList;
@@ -25,5 +28,6 @@
 
 -(void) addAnnotation: (Annotation*) annotation;
 -(MapViewController*) initWithMapImage:(UIImage*) img annotationList:(NSArray*) annList;
--(MapViewController*) initMall;
+-(MapViewController*) initMallWithFrame: (CGRect) aFrame;
+-(void) toggleDisplayText;
 @end

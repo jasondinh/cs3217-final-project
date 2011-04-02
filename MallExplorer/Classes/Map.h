@@ -11,7 +11,7 @@
 
 @interface Map : NSObject {
 	NSMutableArray* annotationList;
-	UIImage* imageMap;
+	UIImage* imageMap;	
 }
 
 @property (nonatomic, retain) NSArray* annotationList;
