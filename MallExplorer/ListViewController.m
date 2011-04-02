@@ -1,49 +1,55 @@
 //
-//  MallListViewController.m
+//  ListViewController.m
 //  MallExplorer
 //
-//  Created by Dam Tuan Long on 3/31/11.
+//  Created by Dam Tuan Long on 4/2/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "MasterViewController.h"
-#import "CityMapViewController.h"
 #import "ListViewController.h"
 
 
-@implementation MasterViewController
-@synthesize cityMapViewController;
+@implementation ListViewController
+
+@synthesize list;
+#pragma mark -
+#pragma mark Initialization
+
+/*
+- (id)initWithStyle:(UITableViewStyle)style {
+    // Override initWithStyle: if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
+    self = [super initWithStyle:style];
+    if (self) {
+        // Custom initialization.
+    }
+    return self;
+}
+*/
+
+
 #pragma mark -
 #pragma mark View lifecycle
 
-NSMutableArray *listOfMovies;
+
 - (void)viewDidLoad {
-		[super viewDidLoad];
-	UITableViewController* temp = [[ListViewController alloc] init];
-	[temp.tableView setDelegate:temp];
-	[temp.tableView setDataSource:temp];
-	temp.title =@"Malls list";
-	self.title =@"Malls list";
-	
-	[self pushViewController:temp animated:YES];
-	self.navigationController.toolbarHidden =NO;
-	UIBarButtonItem *item = [[UIBarButtonItem alloc]   
-                             initWithBarButtonSystemItem:UIBarButtonSystemItemAdd   
-                             target:self   
-                             action:@selector(doSomething)];  
-    self.navigationItem.rightBarButtonItem = item;  
-	self.navigationItem.title = @"Movies";   
+    [super viewDidLoad];
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	list = [[NSMutableArray alloc] init];
+	[list addObject:@"Vivocity"];
+	[list addObject:@"OG Orchard"];
+	[list addObject:@"Woodlands Point"];
+	[list addObject:@"Tanglin Shopping Centre"];
+	[list addObject:@"Orchard Plaza"];
+	[list addObject:@"Lucky Chinatown"];
+	[list addObject:@"Hougang Green Shopping Mall"];
 
- 
 	
-
-//self.clearsSelectionOnViewWillAppear = NO;
-//self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+	//---set the title---
 }
 
 
@@ -80,19 +86,19 @@ NSMutableArray *listOfMovies;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-	return 1;
+    return 1;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [listOfMovies count];
+    return [list count];
 }
 
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSLog(@"em da dc goi");
+	//    NSLog(@"em da dc goi");
     static NSString *CellIdentifier = @"CellIdentifier";
 	
     // Dequeue or create a cell of the appropriate type.
@@ -110,7 +116,7 @@ NSMutableArray *listOfMovies;
     // cell.textLabel.text = 
     //     [NSString stringWithFormat:@"Row %d", indexPath.row];
 	
-    cell.textLabel.text = [listOfMovies objectAtIndex:indexPath.row];
+    cell.textLabel.text = [list objectAtIndex:indexPath.row];
 	
     return cell;
 }
@@ -160,6 +166,9 @@ NSMutableArray *listOfMovies;
 #pragma mark -
 #pragma mark Table view delegate
 
+#pragma mark -
+#pragma mark Table view delegate
+
 - (void)tableView:(UITableView *)aTableView 
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
@@ -173,8 +182,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:nil];
 	//cityMapViewController.detailItem = 
 	//[NSString stringWithFormat:@"%@", 
-	 //[listOfMovies objectAtIndex:indexPath.row]];    
+	//[listOfMovies objectAtIndex:indexPath.row]];    
 }
+
+
 
 
 #pragma mark -
@@ -194,7 +205,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 
 - (void)dealloc {
-	 [listOfMovies release];
     [super dealloc];
 }
 
