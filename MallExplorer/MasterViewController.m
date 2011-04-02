@@ -8,6 +8,7 @@
 
 #import "MasterViewController.h"
 #import "CityMapViewController.h"
+#import "ListViewController.h"
 
 
 @implementation MasterViewController
@@ -17,9 +18,10 @@
 
 NSMutableArray *listOfMovies;
 - (void)viewDidLoad {
-	UITableViewController* temp = [[UITableViewController alloc] init];
-	[temp.tableView setDelegate:self];
-	[temp.tableView setDataSource:self];
+		[super viewDidLoad];
+	UITableViewController* temp = [[ListViewController alloc] init];
+	[temp.tableView setDelegate:temp];
+	[temp.tableView setDataSource:temp];
 	temp.title =@"a";
 	self.title =@"a";
 	
@@ -35,25 +37,10 @@ NSMutableArray *listOfMovies;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-	listOfMovies = [[NSMutableArray alloc] init];
-	[listOfMovies addObject:@"Training Day"];
-	[listOfMovies addObject:@"Remember the Titans"];
-	[listOfMovies addObject:@"John Q."];
-	[listOfMovies addObject:@"The Bone Collector"];
-	[listOfMovies addObject:@"Ricochet"];
-	[listOfMovies addObject:@"The Siege"];
-	[listOfMovies addObject:@"Malcolm X"];
-	[listOfMovies addObject:@"Antwone Fisher"];
-	[listOfMovies addObject:@"Courage Under Fire"];
-	[listOfMovies addObject:@"He Got Game"];
-	[listOfMovies addObject:@"The Pelican Brief"];
-	[listOfMovies addObject:@"Glory"];
-	[listOfMovies addObject:@"The Preacher's Wife"];
-	
-	//---set the title---
+
 	self.navigationItem.title = @"Movies";    
 	
-	[super viewDidLoad];
+
 //self.clearsSelectionOnViewWillAppear = NO;
 //self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
 }
