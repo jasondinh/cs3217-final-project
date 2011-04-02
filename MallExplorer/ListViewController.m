@@ -36,40 +36,10 @@
 	searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.frame.size.width, 0)];  
 	searchBar.barStyle = UIBarStyleDefault;
 	searchBar.delegate = self;
-	//searchBar.text = @"search";
 	[searchBar sizeToFit];
-	self.navigationItem.title = @"Malls list";
+
 	self.tableView.tableHeaderView = searchBar;
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-/*	listOfItems = [[NSMutableArray alloc] init];
-	[listOfItems addObject:@"Vivocity"];
-	[listOfItems addObject:@"OG Orchard"];
-	[listOfItems addObject:@"Woodlands Point"];
-	[listOfItems addObject:@"Tanglin Shopping Centre"];
-	[listOfItems addObject:@"Orchard Plaza"];
-	[listOfItems addObject:@"Lucky Chinatown"];
-	[listOfItems addObject:@"Hougang Green Shopping Mall"];
-	copyListOfItems = [[NSMutableArray alloc]init];
 
-	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-	
-	searching = NO;
-	letUserSelectRow = YES;
-	NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"Nearby",@"Favorite",nil];
-	typeOfList = [[UISegmentedControl alloc] initWithItems:segmentArray];
-
-	//typeOfList.frame = CGRectMake(35, 200, 250, 50);
-	typeOfList.segmentedControlStyle = UISegmentedControlStyleBar;
-	typeOfList.selectedSegmentIndex = 1;
-	UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:typeOfList];
-	self.toolbarItems = [NSMutableArray arrayWithObject:barButton];
-	/*self.toolbarItems =[NSMutableArray arrayWithObject: [[[UIBarButtonItem alloc]
-	 initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-	 target:self action:@selector(doneSearching_Clicked:)] autorelease] ];*/
 	
 	
 }

@@ -9,6 +9,8 @@
 #import "MallExplorerViewController.h"
 #import "MallViewController.h"
 #import "MapViewController.h"
+#import "ShopListViewController.h"
+#import "Mall.h"
 
 #import <CoreLocation/CoreLocation.h>
 @implementation MallExplorerViewController
@@ -39,6 +41,11 @@ BOOL chosen;
 		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
 		[self setDelegate: aMVC];
 		chosen = !chosen;
+		Mall* aMall = [[Mall alloc]init];
+
+		ShopListViewController* shopListViewController = [[ShopListViewController alloc] initWithMall:aMall] ;
+		[masterViewController pushViewController:shopListViewController animated:YES];
+
 	} else {
 		self.viewControllers = [NSArray arrayWithObjects:masterViewController, cityMapViewController, nil];
 		[self setDelegate: cityMapViewController];

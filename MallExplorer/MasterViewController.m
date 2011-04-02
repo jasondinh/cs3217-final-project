@@ -9,6 +9,7 @@
 #import "MasterViewController.h"
 #import "CityMapViewController.h"
 #import "ListViewController.h"
+#import "MallListViewController.h"
 
 
 @implementation MasterViewController
@@ -19,12 +20,12 @@
 NSMutableArray *listOfMovies;
 - (void)viewDidLoad {
 		[super viewDidLoad];
-	UITableViewController* temp = [[ListViewController alloc] init];
+	UITableViewController* temp = [[MallListViewController alloc] init];
 	[temp.tableView setDelegate:temp];
 	[temp.tableView setDataSource:temp];
-	temp.title =@"Malls list";
-	self.title =@"Malls list";
-	
+	//temp.title =@"Malls list";
+	//self.title =@"Malls list";
+
 	[self pushViewController:temp animated:YES];
 	self.navigationController.toolbarHidden =NO;
 	UIBarButtonItem *item = [[UIBarButtonItem alloc]   
@@ -39,15 +40,13 @@ NSMutableArray *listOfMovies;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-
- 
-	
-
 //self.clearsSelectionOnViewWillAppear = NO;
 //self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
 }
 
-
+//-(void)pushViewController:(UIViewController*) controller animated:(BOOL)animated{
+//	[self pushViewController:controller animated:animated];
+//}
 /*
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
