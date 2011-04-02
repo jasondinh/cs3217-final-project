@@ -59,7 +59,7 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	CLLocationManager *locationManager=[[CLLocationManager alloc] init];
+	/*CLLocationManager *locationManager=[[CLLocationManager alloc] init];
 	locationManager.delegate=self;
 	locationManager.desiredAccuracy=kCLLocationAccuracyNearestTenMeters;
 	
@@ -82,9 +82,9 @@
 	mapType.selectedSegmentIndex =0;
 	CLLocationCoordinate2D mallLocation;
 	mallLocation.latitude = 1.302851; // Singapore!
-	mallLocation.longitude = 103.85523;
-	MallViewController* test = [[[MallViewController alloc]initWithCoordinate:mallLocation] autorelease];
-	[mapView addAnnotation:test];
+	mallLocation.longitude = 103.85523;*/
+//	MallViewController* test = [[[MallViewController alloc]initWithCoordinate:mallLocation] autorelease];
+//	[mapView addAnnotation:test];
 	
 	
 }

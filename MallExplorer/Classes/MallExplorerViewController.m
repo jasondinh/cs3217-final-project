@@ -12,7 +12,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 @implementation MallExplorerViewController
-
+BOOL chosen;
 
 // The designated initializer. Override to perform setup that is required before the view is loaded.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -20,18 +20,30 @@
     if (self) {
 		// Custom initialization
 		masterViewController= [[MasterViewController alloc] init];
-		cityMapViewController = [[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
-		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
-		[self setDelegate:cityMapViewController];
+		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
+		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
+		[self setDelegate: aMVC];
+		//cityMapViewController = [[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil];
+//		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
+//		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
+//		[self setDelegate:cityMapViewController];
 		//	
     }
     return self;
 }
 
 -(void) mallChosen:(id) object{
-	MapViewController* aMVC = [[MapViewController alloc] initMall];
-	self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
+	if (!chosen) {
+		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
+		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
+		[self setDelegate: aMVC];
+		chosen = !chosen;
+	} else {
+		self.viewControllers = [NSArray arrayWithObjects:masterViewController, cityMapViewController, nil];
+		[self setDelegate: cityMapViewController];
+		chosen = !chosen;
+	}
+
 	
 }
 

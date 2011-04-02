@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "MallViewController.h"
 
 
 @interface CityMapViewController : UIViewController <UIPopoverControllerDelegate ,MKMapViewDelegate,CLLocationManagerDelegate,UISplitViewControllerDelegate>{

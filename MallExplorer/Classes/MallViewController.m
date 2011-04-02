@@ -10,18 +10,23 @@
 
 
 @implementation MallViewController
-@synthesize coordinate;
+//@synthesize coordinate;
 
+@synthesize toolbar;
+@synthesize detailItem;
+@synthesize popoverController;
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-/*
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization.
+		NSLog(@"I am called");
+		
     }
     return self;
 }
-*/
+
 
 /*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -45,6 +50,32 @@
 	return self;
 }
 
+#pragma mark -
+#pragma mark Split view support
+- (void)splitViewController: (UISplitViewController*)svc 
+     willHideViewController:(UIViewController *)aViewController 
+		  withBarButtonItem:(UIBarButtonItem*)barButtonItem 
+	   forPopoverController: (UIPopoverController*)pc {
+	
+    barButtonItem.title = @"Root List";
+    NSMutableArray *items = [[toolbar items] mutableCopy];
+    [items insertObject:barButtonItem atIndex:0];
+    [toolbar setItems:items animated:YES];
+    [items release];
+    self.popoverController = pc;
+}
+
+- (void)splitViewController: (UISplitViewController*)svc 
+     willShowViewController:(UIViewController *)aViewController 
+  invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
+	
+    NSMutableArray *items = [[toolbar items] mutableCopy];
+    [items removeObjectAtIndex:0];
+    [toolbar setItems:items animated:YES];
+    [items release];
+    self.popoverController = nil;
+	
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.
@@ -71,5 +102,9 @@
     [super dealloc];
 }
 
+
+-(void) buttonClicked:(UIButton *)sender{
+	
+}
 
 @end

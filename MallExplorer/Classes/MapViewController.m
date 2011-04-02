@@ -26,6 +26,7 @@
 	UIButton* titleButton = [[UIButton alloc] initWithFrame:CGRectMake(annoView.view.frame.origin.x, annoView.view.frame.origin.y+annoView.view.frame.size.height+5, annoView.view.frame.size.width*3, 20)];
 	NSLog(@"%lf %lf %lf %lf", titleButton.frame.origin.x, titleButton.frame.origin.y, titleButton.frame.size.width, titleButton.frame.size.height);
 	[titleButton setTitle:annoView.annotation.title forState:UIControlStateNormal];
+	titleButton.backgroundColor = [UIColor	colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.4];
 	titleButton.hidden = YES;
 	[displayArea addSubview:titleButton];
 	annoView.titleButton = titleButton;
