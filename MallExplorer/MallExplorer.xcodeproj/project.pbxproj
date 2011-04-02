@@ -117,6 +117,7 @@
 		E1C43604133CC24300646BF1 /* ShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C43602133CC24300646BF1 /* ShopViewController.m */; };
 		E1C43609133CC24800646BF1 /* AnnoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C43607133CC24800646BF1 /* AnnoViewController.m */; };
 		E1C4360E133CC24D00646BF1 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C4360C133CC24D00646BF1 /* CommentViewController.m */; };
+		FD9E4FF61347DB5B0027DD69 /* APIController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9E4FF51347DB5B0027DD69 /* APIController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -326,6 +327,9 @@
 		E1C43607133CC24800646BF1 /* AnnoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnoViewController.m; sourceTree = "<group>"; };
 		E1C4360B133CC24D00646BF1 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
 		E1C4360C133CC24D00646BF1 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
+		FD9E4FF31347DB300027DD69 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
+		FD9E4FF41347DB5B0027DD69 /* APIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIController.h; sourceTree = "<group>"; };
+		FD9E4FF51347DB5B0027DD69 /* APIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +356,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FD9E4EBF1347DAC20027DD69 /* Config */,
 				2742DC171344C7CF00E4A4A0 /* ApplicationLibrary */,
 				E1C435C7133CC11600646BF1 /* Views */,
 				E1C435C6133CC10F00646BF1 /* Models */,
@@ -396,6 +401,8 @@
 				E1C4360C133CC24D00646BF1 /* CommentViewController.m */,
 				E1C435F7133CC23500646BF1 /* MallViewController.h */,
 				E1C435F8133CC23500646BF1 /* MallViewController.m */,
+				FD9E4FF41347DB5B0027DD69 /* APIController.h */,
+				FD9E4FF51347DB5B0027DD69 /* APIController.m */,
 			);
 			name = Inside;
 			sourceTree = "<group>";
@@ -698,6 +705,14 @@
 			name = Arts;
 			sourceTree = "<group>";
 		};
+		FD9E4EBF1347DAC20027DD69 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				FD9E4FF31347DB300027DD69 /* Constant.h */,
+			);
+			name = Config;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -857,6 +872,7 @@
 				39E4DF0D134776DE007123EE /* ListViewController.m in Sources */,
 				39E4E1F31347BEF0007123EE /* MallListViewController.m in Sources */,
 				39E4E2191347C14F007123EE /* ShopListViewController.m in Sources */,
+				FD9E4FF61347DB5B0027DD69 /* APIController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,6 +14,10 @@
 #define MAP_WIDTH	= 500
 #define MAP_HEIGHT	= 500
 
+//API constant
+
+#define API_END_POINT @"http://cs3217.heroku.com"
+
 
 @protocol Constant
 
