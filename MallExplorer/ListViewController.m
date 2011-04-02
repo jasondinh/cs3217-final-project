@@ -11,7 +11,7 @@
 
 @implementation ListViewController
 
-@synthesize list;
+@synthesize listOfItems,copyListOfItems,searchBar,typeOfList;
 #pragma mark -
 #pragma mark Initialization
 
@@ -33,23 +33,58 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+	searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.frame.size.width, 0)];  
+	searchBar.barStyle = UIBarStyleDefault;
+	searchBar.delegate = self;
+	//searchBar.text = @"search";
+	[searchBar sizeToFit];
+	self.navigationItem.title = @"Malls list";
+	self.tableView.tableHeaderView = searchBar;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-	list = [[NSMutableArray alloc] init];
-	[list addObject:@"Vivocity"];
-	[list addObject:@"OG Orchard"];
-	[list addObject:@"Woodlands Point"];
-	[list addObject:@"Tanglin Shopping Centre"];
-	[list addObject:@"Orchard Plaza"];
-	[list addObject:@"Lucky Chinatown"];
-	[list addObject:@"Hougang Green Shopping Mall"];
+/*	listOfItems = [[NSMutableArray alloc] init];
+	[listOfItems addObject:@"Vivocity"];
+	[listOfItems addObject:@"OG Orchard"];
+	[listOfItems addObject:@"Woodlands Point"];
+	[listOfItems addObject:@"Tanglin Shopping Centre"];
+	[listOfItems addObject:@"Orchard Plaza"];
+	[listOfItems addObject:@"Lucky Chinatown"];
+	[listOfItems addObject:@"Hougang Green Shopping Mall"];
+	copyListOfItems = [[NSMutableArray alloc]init];
 
+	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
 	
-	//---set the title---
+	searching = NO;
+	letUserSelectRow = YES;
+	NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"Nearby",@"Favorite",nil];
+	typeOfList = [[UISegmentedControl alloc] initWithItems:segmentArray];
+
+	//typeOfList.frame = CGRectMake(35, 200, 250, 50);
+	typeOfList.segmentedControlStyle = UISegmentedControlStyleBar;
+	typeOfList.selectedSegmentIndex = 1;
+	UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:typeOfList];
+	self.toolbarItems = [NSMutableArray arrayWithObject:barButton];
+	/*self.toolbarItems =[NSMutableArray arrayWithObject: [[[UIBarButtonItem alloc]
+	 initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+	 target:self action:@selector(doneSearching_Clicked:)] autorelease] ];*/
+	
+	
+}
+
+- (void) doneSearching_Clicked:(id)sender {
+	
+	searchBar.text = @"";
+	[searchBar resignFirstResponder];
+	
+	letUserSelectRow = YES;
+	searching = NO;
+	self.navigationItem.rightBarButtonItem = nil;
+	self.tableView.scrollEnabled = YES;
+	
+	[self.tableView reloadData];
 }
 
 
@@ -86,42 +121,115 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 1;
+    if (searching)
+		return 1;
+	else
+		return 1
+		;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [list count];
+	if (searching)
+		return [copyListOfItems count];
+	else {
+		
+		//Number of rows it should expect should be based on the section
+
+		return [listOfItems count];
+	}
 }
 
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	//    NSLog(@"em da dc goi");
-    static NSString *CellIdentifier = @"CellIdentifier";
+	static NSString *CellIdentifier = @"Cell";
 	
-    // Dequeue or create a cell of the appropriate type.
-    UITableViewCell *cell = [tableView 
-							 dequeueReusableCellWithIdentifier:CellIdentifier];
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (cell == nil) {
+		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:CellIdentifier] autorelease];
+	}
 	
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] 
-				 initWithStyle:UITableViewCellStyleDefault 
-				 reuseIdentifier:CellIdentifier] autorelease];
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
+	// Set up the cell...
 	
-    // Configure the cell.    
-    // cell.textLabel.text = 
-    //     [NSString stringWithFormat:@"Row %d", indexPath.row];
+	if(searching)
+		cell.textLabel.text = [copyListOfItems objectAtIndex:indexPath.row];
+	else {
+		
+		//First get the dictionary object
+
+		cell.textLabel.text = [listOfItems objectAtIndex:indexPath.row];;
+	}
 	
-    cell.textLabel.text = [list objectAtIndex:indexPath.row];
-	
-    return cell;
+	return cell;
 }
 
+//RootViewController.m
+- (void) searchBarTextDidBeginEditing:(UISearchBar *)theSearchBar {
+	
+	searching = YES;
+	letUserSelectRow = YES;
+	self.tableView.scrollEnabled = NO;
+	
+	//Add the done button.
+	/*self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
+											   initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+											   target:self action:@selector(doneSearching_Clicked:)] autorelease];*/
+}
+//RootViewController.m
+- (NSIndexPath *)tableView :(UITableView *)theTableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	if(letUserSelectRow)
+		return indexPath;
+	else
+		return nil;
+}
+//RootViewController.m
+- (void)searchBar:(UISearchBar *)theSearchBar textDidChange:(NSString *)searchText {
+	
+	//Remove all objects first.
+	[copyListOfItems removeAllObjects];
+	
+	if([searchText length] > 0) {
+		
+		searching = YES;
+		letUserSelectRow = YES;
+		self.tableView.scrollEnabled = YES;
+		[self searchTableView];
+	}
+	else {
+		
+		searching = NO;
+		letUserSelectRow = NO;
+		self.tableView.scrollEnabled = NO;
+	}
+	
+	[self.tableView reloadData];
+}
 
+- (void) searchBarSearchButtonClicked:(UISearchBar *)theSearchBar {
+	
+	[self searchTableView];
+}
+
+- (void) searchTableView {
+	NSString *searchText = searchBar.text;
+	NSMutableArray *searchArray = [[NSMutableArray alloc] init];
+	
+
+	
+	for (NSString *sTemp in listOfItems)
+	{
+		NSRange titleResultsRange = [sTemp rangeOfString:searchText options:NSCaseInsensitiveSearch];
+		
+		if (titleResultsRange.length > 0)
+			[copyListOfItems addObject:sTemp];
+	}
+	[searchArray release];
+	searchArray = nil;
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -178,6 +286,17 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
      */
     //detailViewController.detailItem = 
     //    [NSString stringWithFormat:@"Row %d", indexPath.row];
+	NSString *selectedItem = nil;
+	NSString *searchingText = searchBar.text;
+	if(searching && [searchingText length]!=0)
+		selectedItem = [copyListOfItems objectAtIndex:indexPath.row];
+	else {
+		
+		selectedItem = [listOfItems objectAtIndex:indexPath.row];
+	}
+	
+	//Initialize the detail view controller and display it.
+ 
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:nil];
 	//cityMapViewController.detailItem = 

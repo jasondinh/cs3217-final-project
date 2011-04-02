@@ -17,7 +17,7 @@
 
 
 @implementation CityMapViewController
-@synthesize toolbar, popoverController, detailItem, detailDescriptionLabel;
+@synthesize toolbar, popoverController, detailItem;
 @synthesize mapView;
 @synthesize mapType;
 
@@ -125,7 +125,7 @@
 
 - (void)configureView {
     // Update the user interface for the detail item.
-    detailDescriptionLabel.text = [detailItem description];   
+  
 }
 #pragma mark -
 #pragma mark Split view support
@@ -181,7 +181,8 @@
 	[popoverController release];
 	[toolbar release];
 	[detailItem release];
-	[detailDescriptionLabel release];
+
+	
 	[super dealloc];
 }
 

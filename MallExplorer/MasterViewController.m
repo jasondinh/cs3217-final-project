@@ -33,6 +33,7 @@ NSMutableArray *listOfMovies;
                              action:@selector(doSomething)];  
     self.navigationItem.rightBarButtonItem = item;  
 	self.navigationItem.title = @"Movies";   
+	self.toolbarHidden =NO;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -75,45 +76,7 @@ NSMutableArray *listOfMovies;
 }
 
 
-#pragma mark -
-#pragma mark Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-	return 1;
-}
-
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    return [listOfMovies count];
-}
-
-
-// Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSLog(@"em da dc goi");
-    static NSString *CellIdentifier = @"CellIdentifier";
-	
-    // Dequeue or create a cell of the appropriate type.
-    UITableViewCell *cell = [tableView 
-							 dequeueReusableCellWithIdentifier:CellIdentifier];
-	
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] 
-				 initWithStyle:UITableViewCellStyleDefault 
-				 reuseIdentifier:CellIdentifier] autorelease];
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
-	
-    // Configure the cell.    
-    // cell.textLabel.text = 
-    //     [NSString stringWithFormat:@"Row %d", indexPath.row];
-	
-    cell.textLabel.text = [listOfMovies objectAtIndex:indexPath.row];
-	
-    return cell;
-}
 
 
 
@@ -158,23 +121,6 @@ NSMutableArray *listOfMovies;
 
 
 #pragma mark -
-#pragma mark Table view delegate
-
-- (void)tableView:(UITableView *)aTableView 
-didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-    /*
-     When a row is selected, set the detail view controller's detail item to 
-     the item associated with the selected row.
-     */
-    //detailViewController.detailItem = 
-    //    [NSString stringWithFormat:@"Row %d", indexPath.row];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:nil];
-	//cityMapViewController.detailItem = 
-	//[NSString stringWithFormat:@"%@", 
-	 //[listOfMovies objectAtIndex:indexPath.row]];    
-}
 
 
 #pragma mark -
