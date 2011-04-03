@@ -16,7 +16,7 @@
 
 //API constant
 
-#define API_END_POINT @"http://cs3217.heroku.com"
+#define API_END_POINT @"http://localhost:3000"
 
 
 @protocol Constant

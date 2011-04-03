@@ -7,7 +7,7 @@
 //
 
 #import "MallListViewController.h"
-
+#import "Mall.h"
 
 @implementation MallListViewController
 @synthesize favoriteList,mallList;
@@ -29,6 +29,69 @@
 }
 */
 
+- (id) initWithMalls: (NSArray *) malls {
+	self = [super init];
+	
+	if (self) {
+		self.listOfItems = malls;
+	}
+	
+	return self;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	if (searching)
+		return [copyListOfItems count];
+	else {		
+		return [listOfItems count];
+	}
+}
+
+- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+		
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:nil];
+	//cityMapViewController.detailItem = 
+	//[NSString stringWithFormat:@"%@", 
+	//[listOfMovies objectAtIndex:indexPath.row]];    
+}
+
+
+//override
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	//    NSLog(@"em da dc goi");
+	static NSString *CellIdentifier = @"Cell";
+	
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (cell == nil) {
+		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:CellIdentifier] autorelease];
+	}
+	
+	// Set up the cell..
+	
+	Mall *tmpMall = [listOfItems objectAtIndex: indexPath.row];
+	
+	
+	cell.textLabel.text = tmpMall.name;
+	
+	//
+//	if(searching)
+//		cell.textLabel.text = [copyListOfItems objectAtIndex:indexPath.row];
+//	else {
+//		
+//		//First get the dictionary object
+//		
+//		cell.textLabel.text = [listOfItems objectAtIndex:indexPath.row];;
+//	}
+	
+	return cell;
+}
+
+
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
@@ -38,14 +101,7 @@
 	
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-	listOfItems = [[NSMutableArray alloc] init];
-	 [listOfItems addObject:@"Vivocity"];
-	 [listOfItems addObject:@"OG Orchard"];
-	 [listOfItems addObject:@"Woodlands Point"];
-	 [listOfItems addObject:@"Tanglin Shopping Centre"];
-	 [listOfItems addObject:@"Orchard Plaza"];
-	 [listOfItems addObject:@"Lucky Chinatown"];
-	 [listOfItems addObject:@"Hougang Green Shopping Mall"];
+	
 	 copyListOfItems = [[NSMutableArray alloc]init];
 	self.navigationItem.title = @"Malls list";
 	 searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -89,6 +145,8 @@
 
 
 - (void)dealloc {
+	[mallList release];
+	[favoriteList release];
     [super dealloc];
 }
 

@@ -10,24 +10,42 @@
 #import "CityMapViewController.h"
 #import "ListViewController.h"
 #import "MallListViewController.h"
-
+#import "APIController.h"
+#import "MBProgressHUD.h"
+#import "Mall.h"
 
 @implementation MasterViewController
-@synthesize cityMapViewController;
+@synthesize cityMapViewController, progress;
 #pragma mark -
 #pragma mark View lifecycle
 
-//wth?
-NSMutableArray *listOfMovies;
-
-- (void)viewDidLoad {
-		[super viewDidLoad];
-	UITableViewController* temp = [[MallListViewController alloc] init];
+- (void) requestDidLoad: (id) object {
+	NSArray *malls = (NSArray *) object;
+	
+	NSEnumerator *e = [malls objectEnumerator];
+	
+	NSDictionary *tmpMall;
+	NSMutableArray *tmpMalls = [NSMutableArray array];
+	while (tmpMall = [e nextObject]) {
+		NSDictionary *tmp = [tmpMall valueForKey: @"mall"];
+		Mall *mall = [[Mall alloc] initWithId: [tmp valueForKey: @"id"] 
+									  andName:[tmp valueForKey: @"name"] 
+								 andLongitude:[tmp valueForKey: @"longitude"] 
+								  andLatitude:[tmp valueForKey: @"latitude"] 
+								   andAddress:[tmp valueForKey: @"address"] 
+									   andZip:[tmp valueForKey: @"zip"]];
+		
+		[tmpMalls addObject: mall];
+	}
+	
+	MallListViewController* temp = [[MallListViewController alloc] initWithMalls: tmpMalls];
+	
+	
+	
+	
 	[temp.tableView setDelegate:temp];
 	[temp.tableView setDataSource:temp];
-	//temp.title =@"Malls list";
-	//self.title =@"Malls list";
-
+	
 	[self pushViewController:temp animated:YES];
 	self.navigationController.toolbarHidden =NO;
 	UIBarButtonItem *item = [[UIBarButtonItem alloc]   
@@ -37,14 +55,40 @@ NSMutableArray *listOfMovies;
     self.navigationItem.rightBarButtonItem = item;  
 	self.navigationItem.title = @"Movies";   
 	self.toolbarHidden =NO;
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-//self.clearsSelectionOnViewWillAppear = NO;
-//self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+	[temp release];
+	
+	[progress hide:YES];
 }
+
+- (void) requestDidStart {
+	[progress show:YES];
+}
+
+- (void)viewDidLoad {
+	
+	progress = [[MBProgressHUD alloc] initWithView: self.view];
+	
+	[self.view addSubview: progress];
+	
+	[progress release];
+	
+	APIController *api = [[APIController alloc] init];
+	api.debugMode = YES;
+	api.delegate = self;
+	[api getAPI: @"/malls.json"];
+	
+	
+	
+	//test api post
+	
+	APIController *testApi = [[APIController alloc] init];
+	
+	testApi.debugMode = YES;
+	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys: @"1", @"user_id", @"5", @"comment_id", @"1", @"vote", nil];
+	[testApi postAPI: @"/ratings" withData:dict];
+	[super viewDidLoad];
+}
+
 
 //-(void)pushViewController:(UIViewController*) controller animated:(BOOL)animated{
 //	[self pushViewController:controller animated:animated];
@@ -141,7 +185,6 @@ NSMutableArray *listOfMovies;
 
 
 - (void)dealloc {
-	 [listOfMovies release];
     [super dealloc];
 }
 

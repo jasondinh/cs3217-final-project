@@ -542,8 +542,8 @@
 				E18A8F241344D19800AB72AB /* SBJsonStreamWriterState.m */,
 				E18A8F251344D19800AB72AB /* SBJsonTokeniser.h */,
 				E18A8F261344D19800AB72AB /* SBJsonTokeniser.m */,
-				E18A8F271344D19800AB72AB /* SBJsonWriter.h */,
 				E18A8F281344D19800AB72AB /* SBJsonWriter.m */,
+				E18A8F271344D19800AB72AB /* SBJsonWriter.h */,
 			);
 			name = JSON;
 			sourceTree = "<group>";

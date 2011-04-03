@@ -10,16 +10,16 @@
 
 
 @interface ListViewController : UITableViewController <UISearchBarDelegate>{
-	NSMutableArray* listOfItems;
-	NSMutableArray*copyListOfItems;
+	NSArray *listOfItems;
+	NSArray *copyListOfItems;
 	UISearchBar * searchBar;
 	UISegmentedControl* typeOfList;
 	BOOL searching;
 	BOOL letUserSelectRow;
 }
-@property (nonatomic,retain) NSMutableArray* listOfItems;
+@property (nonatomic,retain) NSArray* listOfItems;
 @property (nonatomic,retain) IBOutlet UISearchBar *searchBar;
-@property (nonatomic,retain) NSMutableArray* copyListOfItems;
+@property (nonatomic,retain) NSArray* copyListOfItems;
 @property (nonatomic,retain) IBOutlet UISegmentedControl* typeOfList;
 
 - (void) searchTableView;
