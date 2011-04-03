@@ -22,6 +22,7 @@
 		275B63121346E92B0063BF3D /* green_flag_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 275B63111346E92B0063BF3D /* green_flag_icon.png */; };
 		275B63161346E9CE0063BF3D /* red_flag_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 275B63151346E9CE0063BF3D /* red_flag_icon.png */; };
 		275B63931346F0E80063BF3D /* PathFinding.png in Resources */ = {isa = PBXBuildFile; fileRef = 275B63921346F0E80063BF3D /* PathFinding.png */; };
+		275B6ACC134840160063BF3D /* LineEdgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 275B6ACB134840160063BF3D /* LineEdgeView.m */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		2899E5220DE3E06400AC0155 /* MallExplorerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* MallExplorerViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
@@ -140,6 +141,8 @@
 		275B63111346E92B0063BF3D /* green_flag_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_flag_icon.png; sourceTree = "<group>"; };
 		275B63151346E9CE0063BF3D /* red_flag_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_flag_icon.png; sourceTree = "<group>"; };
 		275B63921346F0E80063BF3D /* PathFinding.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PathFinding.png; sourceTree = "<group>"; };
+		275B6ACA134840160063BF3D /* LineEdgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineEdgeView.h; sourceTree = "<group>"; };
+		275B6ACB134840160063BF3D /* LineEdgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineEdgeView.m; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2899E5210DE3E06400AC0155 /* MallExplorerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MallExplorerViewController.xib; sourceTree = "<group>"; };
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
@@ -391,6 +394,8 @@
 		272A0DF61346412500A0AC2E /* Inside */ = {
 			isa = PBXGroup;
 			children = (
+				E1C435F7133CC23500646BF1 /* MallViewController.h */,
+				E1C435F8133CC23500646BF1 /* MallViewController.m */,
 				E1C435FC133CC23E00646BF1 /* MapViewController.h */,
 				E1C435FD133CC23E00646BF1 /* MapViewController.m */,
 				E1C43601133CC24300646BF1 /* ShopViewController.h */,
@@ -399,8 +404,6 @@
 				E1C43607133CC24800646BF1 /* AnnoViewController.m */,
 				E1C4360B133CC24D00646BF1 /* CommentViewController.h */,
 				E1C4360C133CC24D00646BF1 /* CommentViewController.m */,
-				E1C435F7133CC23500646BF1 /* MallViewController.h */,
-				E1C435F8133CC23500646BF1 /* MallViewController.m */,
 				FD9E4FF41347DB5B0027DD69 /* APIController.h */,
 				FD9E4FF51347DB5B0027DD69 /* APIController.m */,
 			);
@@ -687,6 +690,8 @@
 		E1C435C7133CC11600646BF1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				275B6ACA134840160063BF3D /* LineEdgeView.h */,
+				275B6ACB134840160063BF3D /* LineEdgeView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -873,6 +878,7 @@
 				39E4E1F31347BEF0007123EE /* MallListViewController.m in Sources */,
 				39E4E2191347C14F007123EE /* ShopListViewController.m in Sources */,
 				FD9E4FF61347DB5B0027DD69 /* APIController.m in Sources */,
+				275B6ACC134840160063BF3D /* LineEdgeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

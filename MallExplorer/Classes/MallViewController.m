@@ -134,9 +134,12 @@ toMakeAnnotationType:(AnnotationType) annoType
 		UIAlertView * message = [[UIAlertView alloc] initWithTitle: @"Please specific destination!!" message: @"Please choose destination by dragging the red flag to the map" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
 		[message show];
 		[message release];
-		
 	}
+	[mapViewController findPathFromStartAnnotation:start.annotation ToGoalAnnotaion:goal.annotation];
 }
+
+
+
 
 #pragma mark -
 
@@ -155,6 +158,14 @@ toMakeAnnotationType:(AnnotationType) annoType
 	}
 	return self;
 }
+
+
+
+
+
+
+
+
 
 #pragma mark -
 #pragma mark Split view support

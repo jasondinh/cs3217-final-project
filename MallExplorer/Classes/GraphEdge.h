@@ -21,4 +21,5 @@
 +(GraphEdge*) EdgeWithNode:(GraphNode*) n1 andNode:(GraphNode*) n2 withWeight:(double) w;
 -(GraphNode*) getSourceNode;
 -(GraphNode*) getDestinationNode;
+-(BOOL) isEqual:(id)object;
 @end

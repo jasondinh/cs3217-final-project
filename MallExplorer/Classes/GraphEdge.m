@@ -31,6 +31,17 @@
 -(GraphNode*) getDestinationNode{
 	return node2;
 }
+-(BOOL) isEqual:(id)o{
+	if (![o isMemberOfClass:[GraphEdge class]]) {
+		return NO;
+	}
+	GraphEdge* obj = (GraphEdge*) o;
+	if ([node1 isEqual: obj.node1] && [node2 isEqual:obj.node2] )
+	{
+		return YES;
+	} 
+	else return NO;
+}
 -(void) dealloc{
 	[node1 release];
 	[node2 release];

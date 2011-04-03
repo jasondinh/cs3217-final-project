@@ -12,8 +12,7 @@
 
 typedef enum {
 	kAnnoShop,
-	kAnnoPoint,
-	kAnnoStart,
+ 	kAnnoStart,
 	kAnnoGoal
 } AnnotationType;
 
@@ -23,7 +22,7 @@ typedef enum {
 	NSString* content;
 	BOOL isDisplayed;
 	AnnotationType annoType;
-	
+	MapPoint* thePoint;
 }
 @property AnnotationType annoType;
 @property CGPoint position;
