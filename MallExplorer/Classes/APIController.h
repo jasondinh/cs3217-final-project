@@ -14,9 +14,11 @@
 
 @interface APIController : NSObject {
 	id<APIDelegate> delegate;	//delegate object does not get retained
+	BOOL debugMode; //set to YES to enable NSLog of output
 }
 
-@property(nonatomic,assign) id<APIDelegate> delegate;
+@property (nonatomic,assign) id<APIDelegate> delegate;
+@property BOOL debugMode;
 
 - (void) getAPI: (NSString *) path;
 - (void) postAPI: (NSString *) path withData: (NSDictionary *) data;

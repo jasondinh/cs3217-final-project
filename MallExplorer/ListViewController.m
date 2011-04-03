@@ -38,10 +38,7 @@
 	searchBar.delegate = self;
 	[searchBar sizeToFit];
 
-	self.tableView.tableHeaderView = searchBar;
-
-	
-	
+	self.tableView.tableHeaderView = searchBar;	
 }
 
 - (void) doneSearching_Clicked:(id)sender {
@@ -247,8 +244,7 @@
 #pragma mark -
 #pragma mark Table view delegate
 
-- (void)tableView:(UITableView *)aTableView 
-didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
     /*
      When a row is selected, set the detail view controller's detail item to 
@@ -294,6 +290,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 
 - (void)dealloc {
+	[listOfItems release];
+	[copyListOfItems release];
+	[searchBar release];
+	[typeOfList release];
     [super dealloc];
 }
 

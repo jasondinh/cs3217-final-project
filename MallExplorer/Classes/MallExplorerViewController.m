@@ -10,6 +10,7 @@
 #import "MallViewController.h"
 #import "MapViewController.h"
 #import "ShopListViewController.h"
+#import "ShopViewController.h"
 #import "Mall.h"
 
 #import <CoreLocation/CoreLocation.h>
