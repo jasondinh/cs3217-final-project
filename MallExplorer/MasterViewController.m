@@ -17,7 +17,9 @@
 #pragma mark -
 #pragma mark View lifecycle
 
+//wth?
 NSMutableArray *listOfMovies;
+
 - (void)viewDidLoad {
 		[super viewDidLoad];
 	UITableViewController* temp = [[MallListViewController alloc] init];

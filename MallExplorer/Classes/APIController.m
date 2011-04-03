@@ -9,6 +9,8 @@
 #import "APIController.h"
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
+#import "Constant.h"
+#import "JSON.h"
 @implementation APIController
 @synthesize delegate;
 
