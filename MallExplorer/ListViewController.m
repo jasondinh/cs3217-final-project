@@ -294,6 +294,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 
 - (void)dealloc {
+	[listOfItems release];
+	[copyListOfItems release];
+	[searchBar release];
+	[typeOfList release];
     [super dealloc];
 }
 
