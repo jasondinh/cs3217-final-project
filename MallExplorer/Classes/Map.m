@@ -35,11 +35,13 @@
 	for (int i = 0; i<[pointList count]; i++) {
 		MapPoint* aNode = [pointList objectAtIndex:i];
 		[graph addNode:aNode withIndex:aNode.index];
+		NSLog(@"%d", aNode.index);
 	}
 	for (int i = 0; i<[edgeList count]; i++) {
 		Edge* anEdge = [edgeList objectAtIndex: i];
 		MapPoint* node1 = anEdge.pointA;
 		MapPoint* node2 = anEdge.pointB;
+		NSLog(@"%d %d", node1.index, node2.index);
 		[graph addEdgeBetweenNodeWithIndex:node1.index andNodeWithIndex:node2.index withWeight:anEdge.weight];
 		if (anEdge.isBidirectional) {
 			[graph addEdgeBetweenNodeWithIndex:node2.index andNodeWithIndex:node1.index withWeight:anEdge.weight];

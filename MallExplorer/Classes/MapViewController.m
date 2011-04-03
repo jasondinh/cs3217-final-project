@@ -14,6 +14,8 @@
 @synthesize map;
 @synthesize displayAllTitleMode;
 
+int startPoint,endPoint;
+
 NSMutableArray* hiddenAttribute;
 
 CGRect aFrame;
@@ -73,16 +75,18 @@ NSMutableArray* edgeList;
 	}
 	
 	[hiddenAttribute release];
-	
 	for (int i = 0; i<[edgeDisplayedList count]; i++) {
 		LineEdgeView* aLine = [edgeDisplayedList objectAtIndex:i];
 		aLine.startPoint = [self translatePointToScrollViewCoordinationFromMapCoordination:aLine.startPoint];
 		aLine.goalPoint = [self translatePointToScrollViewCoordinationFromMapCoordination: aLine.goalPoint];
 		[aLine adjustFrameToPoint1: aLine.startPoint andPoint2:aLine.goalPoint];
 		NSLog(@"after zooming %lf %lf %lf %lf", aLine.startPoint.x, aLine.startPoint.y, aLine.goalPoint.x, aLine.goalPoint.y);
+	}
+	for (int i = 0; i<[edgeDisplayedList count]; i++)
+	{
+		LineEdgeView* aLine = [edgeDisplayedList objectAtIndex:i];
 		[displayArea addSubview:aLine];
 		[displayArea sendSubviewToBack:aLine];
-		
 	}
 	[displayArea sendSubviewToBack:imageView];
 }
@@ -92,14 +96,25 @@ NSMutableArray* edgeList;
 
 -(void) addAnnotationToMap: (AnnoViewController*) annoView{
 	[displayArea addSubview:annoView.view];
-	[annoView.view setCenter:annoView.annotation.position];
+	[annoView.view setCenter:[self translatePointToScrollViewCoordinationFromMapCoordination: annoView.annotation.position]];
 	UIButton* titleButton = [[UIButton alloc] initWithFrame:[annoView getAnnoTitleRect]];
 	NSLog(@"%lf %lf %lf %lf", titleButton.frame.origin.x, titleButton.frame.origin.y, titleButton.frame.size.width, titleButton.frame.size.height);
 	[titleButton setTitle:annoView.annotation.title forState:UIControlStateNormal];
 	titleButton.backgroundColor = [UIColor	colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.4];
-	titleButton.hidden = YES;
+	titleButton.hidden = !displayAllTitleMode;
 	[displayArea addSubview:titleButton];
 	annoView.titleButton = titleButton;
+}
+
+-(AnnoViewController*) addAnnotationType:(AnnotationType) annType ToScrollViewAtPosition:(CGPoint)pos withTitle:(NSString*) title withContent:(NSString*) content {
+	Annotation* anno = [[Annotation alloc] initAnnotationType:annType WithPosition:[self translatePointToMapCoordinationFromScrollViewCoordination:pos] title:title content:content];
+	NSLog(@"position of new annotation: %lf %lf", pos.x, pos.y);
+	NSLog(@"position of new annotation: %lf %lf", [self translatePointToMapCoordinationFromScrollViewCoordination: pos].x, [self translatePointToMapCoordinationFromScrollViewCoordination: pos].y);
+	AnnoViewController* annoView = [[AnnoViewController alloc] initWithAnnotation:anno];
+	[self addAnnotationToMap:annoView];
+	[annotationList addObject:annoView];
+	[anno release];
+	return [annoView autorelease];
 }
 
 -(void) addAnnotation: (Annotation*) annotation{
@@ -155,32 +170,168 @@ NSMutableArray* edgeList;
 	aFrame = aFr;
 	NSLog(@"initMall");
 	UIImage* image = [UIImage imageNamed:@"map.gif"];
-	Annotation* location1 = [[Annotation alloc] initAnnotationType:kAnnoShop WithPosition:CGPointMake(50, 50) title:@"abc" content:@"abcxyz"];
-	Annotation* location2 = [[Annotation alloc] initAnnotationType:kAnnoShop WithPosition:CGPointMake(160, 160) title:@"nmf" content:@"ghijkl"];
-	CGPoint defaultPoint = CGPointMake(100, 100);
-	MapPoint* p0 = [[MapPoint alloc] initWithPosition:CGPointMake(105, 10) andIndex:0];
-	MapPoint* p1 = [[MapPoint alloc] initWithPosition:CGPointMake(35, 40) andIndex:1];
-	MapPoint* p2 = [[MapPoint alloc] initWithPosition:CGPointMake(155, 50) andIndex:2];
-	MapPoint* p3 = [[MapPoint alloc] initWithPosition:CGPointMake(70, 260) andIndex:3];
-	MapPoint* p4 = [[MapPoint alloc] initWithPosition:CGPointMake(195, 80) andIndex:4];
-	MapPoint* p5 = [[MapPoint alloc] initWithPosition:CGPointMake(95, 75) andIndex:5];
-	MapPoint* p6 = [[MapPoint alloc] initWithPosition:CGPointMake(40, 125) andIndex:6];
-	MapPoint* p7 = [[MapPoint alloc] initWithPosition:CGPointMake(150, 95) andIndex:7];
-	MapPoint* p8 = [[MapPoint alloc] initWithPosition:CGPointMake(160, 175) andIndex:8];
-	MapPoint* p9 = [[MapPoint alloc] initWithPosition:CGPointMake(145, 155) andIndex:9];
-	NSArray* pointList = [NSArray arrayWithObjects:p0,p1,p2,p3,p4,p5,p6,p7,p8,p9,nil];
-	int edgeNode1[] = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9};
-	int edgeNode2[] = {1, 3, 4, 2, 3, 5, 0, 7, 6, 8, 2, 7, 9, 0, 3, 2, 7, 9, 3, 5};
+	NSMutableArray* pointList = [[NSMutableArray alloc] init];
 	edgeList = [[NSMutableArray alloc] init];
-	for (int i = 0; i<20; i++) {
-		MapPoint* point1 = [pointList objectAtIndex:edgeNode1[i]];
-		MapPoint* point2 = [pointList objectAtIndex:edgeNode2[i]];
-		Edge* anEdge = [[Edge alloc] initWithPoint1:point1 point2:point2 withLength:[MapPoint getDistantBetweenPoint:point1 andPoint:point2] isBidirectional:YES withTravelType:kWalk];
-		[edgeList addObject:anEdge];		
-	}
+	MapPoint* point = [[MapPoint alloc] initWithPosition:CGPointMake(31.000000, 30.000000) andIndex:0];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(126.000000, 33.000000) andIndex:1];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(297.000000, 69.000000) andIndex:2];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(249.000000, 16.000000) andIndex:3];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(101.000000, 197.000000) andIndex:4];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(22.000000, 185.000000) andIndex:5];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(90.000000, 282.000000) andIndex:6];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(71.000000, 331.000000) andIndex:7];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(32.000000, 373.000000) andIndex:8];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(176.000000, 462.000000) andIndex:9];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(335.000000, 469.000000) andIndex:10];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(407.000000, 277.000000) andIndex:11];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(556.000000, 279.000000) andIndex:12];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(688.000000, 278.000000) andIndex:13];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(403.000000, 115.000000) andIndex:14];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(535.000000, 59.000000) andIndex:15];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(537.000000, 184.000000) andIndex:16];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(534.000000, 121.000000) andIndex:17];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(685.000000, 139.000000) andIndex:18];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(442.000000, 319.000000) andIndex:19];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(455.000000, 424.000000) andIndex:20];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(530.000000, 448.000000) andIndex:21];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(529.000000, 387.000000) andIndex:22];
+	[pointList addObject:point];
+	[point release];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(545.000000, 516.000000) andIndex:23];
+	[pointList addObject:point];
+	[point release];
+	Edge* edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 0] point2:[pointList objectAtIndex: 1] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 0] andPoint:[pointList objectAtIndex: 1]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 1] point2:[pointList objectAtIndex: 3] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 1] andPoint:[pointList objectAtIndex: 3]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 3] point2:[pointList objectAtIndex: 2] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 3] andPoint:[pointList objectAtIndex: 2]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 2] point2:[pointList objectAtIndex: 1] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 2] andPoint:[pointList objectAtIndex: 1]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 1] point2:[pointList objectAtIndex: 4] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 1] andPoint:[pointList objectAtIndex: 4]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 4] point2:[pointList objectAtIndex: 5] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 4] andPoint:[pointList objectAtIndex: 5]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 4] point2:[pointList objectAtIndex: 6] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 4] andPoint:[pointList objectAtIndex: 6]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 6] point2:[pointList objectAtIndex: 7] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 6] andPoint:[pointList objectAtIndex: 7]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 7] point2:[pointList objectAtIndex: 8] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 7] andPoint:[pointList objectAtIndex: 8]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 8] point2:[pointList objectAtIndex: 9] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 8] andPoint:[pointList objectAtIndex: 9]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 9] point2:[pointList objectAtIndex: 10] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 9] andPoint:[pointList objectAtIndex: 10]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 4] point2:[pointList objectAtIndex: 11] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 4] andPoint:[pointList objectAtIndex: 11]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 11] point2:[pointList objectAtIndex: 14] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 11] andPoint:[pointList objectAtIndex: 14]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 14] point2:[pointList objectAtIndex: 17] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 14] andPoint:[pointList objectAtIndex: 17]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 17] point2:[pointList objectAtIndex: 15] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 17] andPoint:[pointList objectAtIndex: 15]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 17] point2:[pointList objectAtIndex: 16] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 17] andPoint:[pointList objectAtIndex: 16]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 17] point2:[pointList objectAtIndex: 18] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 17] andPoint:[pointList objectAtIndex: 18]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 14] point2:[pointList objectAtIndex: 15] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 14] andPoint:[pointList objectAtIndex: 15]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 14] point2:[pointList objectAtIndex: 16] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 14] andPoint:[pointList objectAtIndex: 16]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 16] point2:[pointList objectAtIndex: 18] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 16] andPoint:[pointList objectAtIndex: 18]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 11] point2:[pointList objectAtIndex: 19] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 11] andPoint:[pointList objectAtIndex: 19]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 19] point2:[pointList objectAtIndex: 20] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 19] andPoint:[pointList objectAtIndex: 20]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 20] point2:[pointList objectAtIndex: 21] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 20] andPoint:[pointList objectAtIndex: 21]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 21] point2:[pointList objectAtIndex: 22] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 21] andPoint:[pointList objectAtIndex: 22]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 21] point2:[pointList objectAtIndex: 23] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 21] andPoint:[pointList objectAtIndex: 23]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 11] point2:[pointList objectAtIndex: 12] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 11] andPoint:[pointList objectAtIndex: 12]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 12] point2:[pointList objectAtIndex: 13] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 12] andPoint:[pointList objectAtIndex: 13]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 12] point2:[pointList objectAtIndex: 19] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 12] andPoint:[pointList objectAtIndex: 19]] isBidirectional:YES withTravelType:kWalk];
+	[edgeList addObject:edge];
+	[edge release];
+	CGPoint defaultPoint = CGPointMake(100, 100);
 	return [self initWithMapImage:image 
 		   withDefaultCenterPoint:(CGPoint) defaultPoint 
-			   withAnnotationList:[NSArray arrayWithObjects:location1, location2, nil]
+			   withAnnotationList:[NSArray arrayWithObjects:/*location1, location2,*/ nil]
 						pointList:pointList 
 						 edgeList:edgeList
 			];
@@ -246,7 +397,15 @@ NSMutableArray* edgeList;
 		
 	}*/
 	//
-	
+	/*UITapGestureRecognizer* tapGesture	 = [[UITapGestureRecognizer alloc]
+											initWithTarget:self action:@selector(tapToScrollViewPoint:)];
+	[tapGesture setNumberOfTapsRequired:1];
+	[displayArea addGestureRecognizer:tapGesture];
+	UIPanGestureRecognizer* panGesture	 = [[UIPanGestureRecognizer alloc]
+											initWithTarget:self action:@selector(connectPoint:)];
+	[displayArea addGestureRecognizer:panGesture];
+	[panGesture release];
+	*/
 	
 	[displayArea sendSubviewToBack:imageView];	
 	[imageView release];
@@ -255,6 +414,47 @@ NSMutableArray* edgeList;
 	displayArea.minimumZoomScale = 0.5;
 	[displayArea setDelegate:self];
 	NSLog(@"%d", [displayArea.subviews count]);
+	
+}
+
+-(void) tapToScrollViewPoint:(UIGestureRecognizer*) gesture{
+	CGPoint aPoint = [gesture locationInView:displayArea];
+	NSLog(@"MapPoint* point = [[MapPoint alloc] initWithPosition:CGPointMake(%lf %lf) andIndex:%d]", aPoint.x, aPoint.y,[map.pointList count]);
+	MapPoint* point = [[MapPoint alloc] initWithPosition:aPoint andIndex: [map.pointList count]];
+	LineEdgeView* aLine = [[LineEdgeView alloc] initWithPoint1:aPoint andPoint2:CGPointMake(aPoint.x+2, aPoint.y+2)];
+	[displayArea addSubview:aLine];
+	[aLine release];
+	[map addPoint:point];
+}
+
+-(int) getTheClosestPointToCoordination:(CGPoint) pos{
+	double min = INFINITY;
+	int minpos;
+	for (int i = 0; i<[map.pointList count]; i++) {
+		MapPoint* aPoint = [map.pointList objectAtIndex:i];
+		double dis = sqrt((aPoint.position.x-pos.x)*(aPoint.position.x-pos.x) + (aPoint.position.y-pos.y)*(aPoint.position.y-pos.y));
+		if (dis<min) {
+			min = dis;
+			minpos = i;
+		}
+	}
+	return minpos;
+}
+
+-(void) connectPoint:(UIGestureRecognizer*) gesture{
+	if (gesture.state == UIGestureRecognizerStateBegan){
+		startPoint = [self getTheClosestPointToCoordination:[gesture locationInView:displayArea]];
+	}
+	if (gesture.state == UIGestureRecognizerStateEnded) {
+		endPoint = [self getTheClosestPointToCoordination:[gesture locationInView:displayArea]];
+	NSLog(@"Edge* edge = [[Edge alloc] initWithPoint1:[map.pointList objectAtIndex: %d] point2:[map.pointList objectAtIndex: %d] withLength:[MapPoint getDistantBetweenPoint:[map.pointList objectAtIndex: %d] andPoint:[map.pointList objectAtIndex: %d]] isBidirectional:YES withTravelType:kWalk];",startPoint,endPoint,startPoint, endPoint);
+	}
+
+//	Edge* edge = [[Edge alloc] initWithPoint1:[map.pointList objectAtIndex: startPoint]
+//						  point2:[map.pointList objectAtIndex: endPoint]
+//					  withLength:[MapPoint getDistantBetweenPoint:[map.pointList objectAtIndex: startPoint]
+//														 andPoint:[map.pointList objectAtIndex: endPoint]] isBidirectional:YES withTravelType:kWalk];
+//	[self. addObject:edge];
 }
 
 #pragma mark -
@@ -278,7 +478,6 @@ NSMutableArray* edgeList;
 
 -(void) annotationChangeToggle:(NSNotification*) notification{
 	if (!displayAllTitleMode) {
-	NSLog(@"anno change toggled");
 		if (annoBeingSelected) {
 			NSLog(@"turned off something");
 			annoBeingSelected.titleIsShown = NO;
@@ -296,7 +495,11 @@ NSMutableArray* edgeList;
 
 #pragma mark -
 #pragma mark path finding
+
+// position is in scrollview coordination
 -(NSArray*) findPathFromStartPosition:(CGPoint)startPos ToGoalPosition:(CGPoint) goalPos{
+	startPos = [self translatePointToMapCoordinationFromScrollViewCoordination: startPos];
+	goalPos = [self translatePointToMapCoordinationFromScrollViewCoordination: goalPos];
 	MapPoint* startPoint = [[MapPoint alloc] initWithPosition:startPos andIndex:0];
 	MapPoint* goalPoint = [[MapPoint alloc] initWithPosition:goalPos andIndex:0];
 	MapPoint* point1 = [map getClosestMapPointToPosition:startPos];
@@ -305,23 +508,38 @@ NSMutableArray* edgeList;
 	NSMutableArray* result = [[NSMutableArray alloc] initWithObjects:startPoint, nil];
 	[result addObjectsFromArray:[map findPathFrom:point1 to:point2]];
 	[result addObject:goalPoint];
+	NSLog(@"path found with: %d node", [result count] );
+	for	(int i = 0; i<[result count]; i++){
+		MapPoint* aPoint = [result objectAtIndex:i];
+		NSLog(@"%lf %lf", aPoint.position.x, aPoint.position.y);
+	}
+	for (int i = 0; i<[edgeDisplayedList count]; i++) {
+		[[edgeDisplayedList objectAtIndex:i] removeFromSuperview];
+	}
+	[edgeDisplayedList removeAllObjects];
 	for	(int i = 0; i<[result count]-1; i++)
 	{
 		CGPoint pos1 = [self translatePointToScrollViewCoordinationFromMapCoordination:[[result objectAtIndex:i] position]];
 		CGPoint pos2 = [self translatePointToScrollViewCoordinationFromMapCoordination:[[result objectAtIndex:i+1] position]];
 		LineEdgeView* aLineView = [[LineEdgeView alloc] initWithPoint1:pos1 andPoint2:pos2];
-		[displayArea addSubview:aLineView];
-		[displayArea sendSubviewToBack:aLineView];
 		[edgeDisplayedList addObject:aLineView];
 		[aLineView release];
+	}
+	for (int i = 0; i<[edgeDisplayedList count]; i++) {
+		LineEdgeView* aLineView = [edgeDisplayedList objectAtIndex:i];
+		[displayArea addSubview:aLineView];
+		[displayArea sendSubviewToBack:aLineView];
+
 	}
 	[displayArea sendSubviewToBack:imageView];
 	return result;
 }
 
-
+// annotation's position is in map coordination
 -(NSArray*) findPathFromStartAnnotation:(Annotation*)start ToGoalAnnotaion:(Annotation*) goal{
-	return [self findPathFromStartPosition:start.position ToGoalPosition:goal.position];
+	CGPoint startPos = [self translatePointToScrollViewCoordinationFromMapCoordination: start.position];
+	CGPoint goalPos = [self translatePointToScrollViewCoordinationFromMapCoordination: goal.position];
+	return [self findPathFromStartPosition:startPos ToGoalPosition: goalPos];
 }
 
 

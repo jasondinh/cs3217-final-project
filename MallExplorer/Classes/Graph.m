@@ -191,8 +191,7 @@
 
 -(NSArray*) dijkstraFrom: (GraphNode*) start to: (GraphNode*) goal{
 	if ([start isEqual:goal]) {
-		GraphEdge* edge = [GraphEdge EdgeWithNode:start andNode:start withWeight:0];
-		NSArray* path = [NSArray arrayWithObject:edge];
+		NSArray* path = [NSArray arrayWithObject:start.object];
 		return path;
 	}
 	

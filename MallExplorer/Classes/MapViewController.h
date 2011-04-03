@@ -30,7 +30,9 @@
 @property BOOL displayAllTitleMode;
 //@property (nonatomic, retain) UIImage* imageMap;
 
+-(AnnoViewController*) addAnnotationType:(AnnotationType) annType ToScrollViewAtPosition:(CGPoint)pos withTitle:(NSString*) title withContent:(NSString*) content ;
 -(void) addAnnotation: (Annotation*) annotation;
+	
 -(MapViewController*) initWithMapImage:(UIImage*)img 
 				withDefaultCenterPoint:(CGPoint)defaultPoint
 					withAnnotationList:(NSArray*) annList
@@ -38,7 +40,10 @@
 							  edgeList:(NSArray*) edgeList;
 -(MapViewController*) initMallWithFrame: (CGRect) aFrame;
 -(void) toggleDisplayText;
+// startPos and goalPos is the position on scrollView coordination
 -(NSArray*) findPathFromStartPosition:(CGPoint)startPos ToGoalPosition:(CGPoint) goalPos;
+
+// annotation - model's position is the map coordination
 -(NSArray*) findPathFromStartAnnotation:(Annotation*)start ToGoalAnnotaion:(Annotation*) goal;
 // find path from point1 to an item in category type: 
 //-(NSArray*) findPathFrom:() point1 to: () type;

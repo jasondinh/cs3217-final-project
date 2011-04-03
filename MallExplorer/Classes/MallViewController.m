@@ -96,8 +96,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 			double x = newX + button.frame.size.width/2  + theScrollView.contentOffset.x;
 			double y = newY + button.frame.size.height/2 + theScrollView.contentOffset.y ;
 			NSLog(@"new x new y %lf %lf", x, y);
-			Annotation* aNewAnnotation = [[Annotation alloc] initAnnotationType:annoType WithPosition:CGPointMake(x, y) title:title content:content];
-			[mapViewController addAnnotation: aNewAnnotation];
+			[mapViewController addAnnotationType:annoType ToScrollViewAtPosition:CGPointMake(x, y) withTitle:title withContent:content];
 			if (annoType == kAnnoStart) {
 				start = [mapViewController.annotationList lastObject];
 			} else if (annoType == kAnnoGoal) {
@@ -128,12 +127,14 @@ toMakeAnnotationType:(AnnotationType) annoType
 		UIAlertView * message = [[UIAlertView alloc] initWithTitle: @"Please specific start position!!" message: @"Please choose starting position by dragging the green flag to the map" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
 		[message show];
 		[message release];
+		return;
 		
 	} else
 	if (!goal) {
 		UIAlertView * message = [[UIAlertView alloc] initWithTitle: @"Please specific destination!!" message: @"Please choose destination by dragging the red flag to the map" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
 		[message show];
 		[message release];
+		return;
 	}
 	[mapViewController findPathFromStartAnnotation:start.annotation ToGoalAnnotaion:goal.annotation];
 }
