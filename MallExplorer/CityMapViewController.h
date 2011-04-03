@@ -14,7 +14,6 @@
 	UIPopoverController *popoverController;
 	UIToolbar *toolbar;
 	id detailItem;
-	UILabel *detailDescriptionLabel;
 	IBOutlet MKMapView *mapView;
 	IBOutlet UISegmentedControl *mapType;
 	
@@ -23,7 +22,7 @@
 
 @property (nonatomic, retain) IBOutlet UIToolbar* toolbar;
 @property (nonatomic,retain) id detailItem;
-@property (nonatomic, retain) IBOutlet UILabel *detailDescriptionLabel;
+
 @property (nonatomic,retain)IBOutlet MKMapView *mapView;
 @property (nonatomic,retain)IBOutlet UISegmentedControl* mapType;
 - (IBAction)changeType:(id)sender;

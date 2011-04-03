@@ -8,6 +8,8 @@
 
 #import "MasterViewController.h"
 #import "CityMapViewController.h"
+#import "ListViewController.h"
+#import "MallListViewController.h"
 
 
 @implementation MasterViewController
@@ -15,14 +17,17 @@
 #pragma mark -
 #pragma mark View lifecycle
 
+//wth?
 NSMutableArray *listOfMovies;
+
 - (void)viewDidLoad {
-	UITableViewController* temp = [[UITableViewController alloc] init];
-	[temp.tableView setDelegate:self];
-	[temp.tableView setDataSource:self];
-	temp.title =@"a";
-	self.title =@"a";
-	
+		[super viewDidLoad];
+	UITableViewController* temp = [[MallListViewController alloc] init];
+	[temp.tableView setDelegate:temp];
+	[temp.tableView setDataSource:temp];
+	//temp.title =@"Malls list";
+	//self.title =@"Malls list";
+
 	[self pushViewController:temp animated:YES];
 	self.navigationController.toolbarHidden =NO;
 	UIBarButtonItem *item = [[UIBarButtonItem alloc]   
@@ -30,35 +35,20 @@ NSMutableArray *listOfMovies;
                              target:self   
                              action:@selector(doSomething)];  
     self.navigationItem.rightBarButtonItem = item;  
+	self.navigationItem.title = @"Movies";   
+	self.toolbarHidden =NO;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-	listOfMovies = [[NSMutableArray alloc] init];
-	[listOfMovies addObject:@"Training Day"];
-	[listOfMovies addObject:@"Remember the Titans"];
-	[listOfMovies addObject:@"John Q."];
-	[listOfMovies addObject:@"The Bone Collector"];
-	[listOfMovies addObject:@"Ricochet"];
-	[listOfMovies addObject:@"The Siege"];
-	[listOfMovies addObject:@"Malcolm X"];
-	[listOfMovies addObject:@"Antwone Fisher"];
-	[listOfMovies addObject:@"Courage Under Fire"];
-	[listOfMovies addObject:@"He Got Game"];
-	[listOfMovies addObject:@"The Pelican Brief"];
-	[listOfMovies addObject:@"Glory"];
-	[listOfMovies addObject:@"The Preacher's Wife"];
-	
-	//---set the title---
-	self.navigationItem.title = @"Movies";    
-	
-	[super viewDidLoad];
 //self.clearsSelectionOnViewWillAppear = NO;
 //self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
 }
 
-
+//-(void)pushViewController:(UIViewController*) controller animated:(BOOL)animated{
+//	[self pushViewController:controller animated:animated];
+//}
 /*
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -87,45 +77,7 @@ NSMutableArray *listOfMovies;
 }
 
 
-#pragma mark -
-#pragma mark Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-	return 1;
-}
-
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    return [listOfMovies count];
-}
-
-
-// Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSLog(@"em da dc goi");
-    static NSString *CellIdentifier = @"CellIdentifier";
-	
-    // Dequeue or create a cell of the appropriate type.
-    UITableViewCell *cell = [tableView 
-							 dequeueReusableCellWithIdentifier:CellIdentifier];
-	
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] 
-				 initWithStyle:UITableViewCellStyleDefault 
-				 reuseIdentifier:CellIdentifier] autorelease];
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
-	
-    // Configure the cell.    
-    // cell.textLabel.text = 
-    //     [NSString stringWithFormat:@"Row %d", indexPath.row];
-	
-    cell.textLabel.text = [listOfMovies objectAtIndex:indexPath.row];
-	
-    return cell;
-}
 
 
 
@@ -170,23 +122,6 @@ NSMutableArray *listOfMovies;
 
 
 #pragma mark -
-#pragma mark Table view delegate
-
-- (void)tableView:(UITableView *)aTableView 
-didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-    /*
-     When a row is selected, set the detail view controller's detail item to 
-     the item associated with the selected row.
-     */
-    //detailViewController.detailItem = 
-    //    [NSString stringWithFormat:@"Row %d", indexPath.row];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:nil];
-	//cityMapViewController.detailItem = 
-	//[NSString stringWithFormat:@"%@", 
-	 //[listOfMovies objectAtIndex:indexPath.row]];    
-}
 
 
 #pragma mark -

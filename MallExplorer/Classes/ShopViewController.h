@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "AnnoViewController.h"
 
-@interface ShopViewController : AnnoViewController {
+
+@interface ShopViewController : UITabBarController {
 
 }
 

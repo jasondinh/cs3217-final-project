@@ -22,12 +22,19 @@
 }
 */
 
-/*
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+/*	UITableViewController *temp1 = [[UITableViewController alloc] init];
+	UITableViewController *temp2 = [[UITableViewController alloc] init];
+	UITableViewController *temp3 = [[UITableViewController alloc] init];
+	[self setViewControllers:
+     [NSArray arrayWithObjects:temp1, temp2, temp3, nil]];*/
+	
 }
-*/
+
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
