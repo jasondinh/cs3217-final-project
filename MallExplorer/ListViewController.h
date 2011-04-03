@@ -19,7 +19,7 @@
 }
 @property (retain) NSArray* listOfItems;
 @property (retain) IBOutlet UISearchBar *searchBar;
-@property (retain) NSMutableArray* copyListOfItems;
+@property (retain) NSArray* copyListOfItems;
 @property (retain) IBOutlet UISegmentedControl* typeOfList;
 
 

@@ -81,11 +81,11 @@
 	
 	//test api post
 	
-	APIController *testApi = [[APIController alloc] init];
-	
-	testApi.debugMode = YES;
-	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys: @"1", @"user_id", @"5", @"comment_id", @"1", @"vote", nil];
-	[testApi postAPI: @"/ratings" withData:dict];
+	//APIController *testApi = [[APIController alloc] init];
+//	
+//	testApi.debugMode = YES;
+//	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys: @"1", @"user_id", @"5", @"comment_id", @"1", @"vote", nil];
+//	[testApi postAPI: @"/ratings" withData:dict];
 	[super viewDidLoad];
 }
 
