@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Annotation.h"
 
+
 @interface AnnoViewController : UIViewController {
 	Annotation* annotation;
 	BOOL titleIsShown;

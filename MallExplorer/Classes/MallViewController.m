@@ -7,6 +7,8 @@
 //
 
 #import "MallViewController.h"
+#import "Graph.h"
+
 #define MAP_ORIGIN_X 0
 #define MAP_ORIGIN_Y 46
 #define MAP_WIDTH	 703
@@ -32,6 +34,7 @@
     }
     return self;
 }*/
+
 
 
 #pragma mark viewDidLoad
@@ -73,7 +76,8 @@
 
 -(void) moveButton:(UIImageView*) button 
 	   withGesture: (UIGestureRecognizer*) gesture 
-	toMakeAnnotationWithTitle:(NSString*) title
+toMakeAnnotationType:(AnnotationType) annoType
+		 WithTitle:(NSString*) title
 		andContent:(NSString*) content
 {
 	CGPoint	translation = [(UIPanGestureRecognizer*) gesture translationInView:self.view];
@@ -92,9 +96,14 @@
 			double x = newX + button.frame.size.width/2  + theScrollView.contentOffset.x;
 			double y = newY + button.frame.size.height/2 + theScrollView.contentOffset.y ;
 			NSLog(@"new x new y %lf %lf", x, y);
-			Annotation* aNewAnnotation = [[Annotation alloc] initWithPosition:CGPointMake(x, y) title:title content:content];
+			Annotation* aNewAnnotation = [[Annotation alloc] initAnnotationType:annoType WithPosition:CGPointMake(x, y) title:title content:content];
 			[mapViewController addAnnotation: aNewAnnotation];
-//			AnnoViewController* anAnnoViewController = [[AnnoViewController alloc] initWithAnnotation:aNewAnnotation];
+			if (annoType == kAnnoStart) {
+				start = [mapViewController.annotationList lastObject];
+			} else if (annoType == kAnnoGoal) {
+				goal = [mapViewController.annotationList lastObject];
+			} 
+			[button setUserInteractionEnabled:NO];
 		}
 		button.transform = CGAffineTransformIdentity;
 	}
@@ -102,16 +111,31 @@
 }
 
 - (void)startFlagMove:(UIGestureRecognizer *)gesture{
-	[self moveButton:startFlagButton withGesture:gesture toMakeAnnotationWithTitle:@"Start" andContent:@"Your starting position"];
+	[self moveButton:startFlagButton withGesture:gesture toMakeAnnotationType: kAnnoStart WithTitle:@"Start" andContent:@"Your starting position"];
 }
 
 - (void)goalFlagMove:(UIGestureRecognizer *)gesture{
-	[self moveButton:goalFlagButton withGesture:gesture toMakeAnnotationWithTitle:@"Goal" andContent:@"Your destination"];
+	[self moveButton:goalFlagButton withGesture:gesture toMakeAnnotationType: kAnnoGoal WithTitle:@"Goal" andContent:@"Your destination"];
 }
-
+ 
 -(void) toggleText:(UIGestureRecognizer*) gesture{
 	NSLog(@"toggle title");
 	[mapViewController toggleDisplayText];
+}
+
+-(void) pathFinding{
+	if (!start) {
+		UIAlertView * message = [[UIAlertView alloc] initWithTitle: @"Please specific start position!!" message: @"Please choose starting position by dragging the green flag to the map" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
+		[message show];
+		[message release];
+		
+	} else
+	if (!goal) {
+		UIAlertView * message = [[UIAlertView alloc] initWithTitle: @"Please specific destination!!" message: @"Please choose destination by dragging the red flag to the map" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
+		[message show];
+		[message release];
+		
+	}
 }
 
 #pragma mark -

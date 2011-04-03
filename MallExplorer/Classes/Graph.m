@@ -14,14 +14,14 @@
 @synthesize listEdge;
 @synthesize isBiDiGraph;
 @synthesize isMultiGraph;
--(int) addNode:(GraphNode*) node{
+-(int) addANode:(GraphNode*) node{
 	[listNode insertObject:node atIndex:nextNodeIndex];
 	NSMutableArray* adjacentList = [[NSMutableArray alloc] init];
 	[listEdge insertObject:adjacentList atIndex:nextNodeIndex];
 	nextNodeIndex++;
 	return nextNodeIndex-1;
 }
--(BOOL) addEdgeFromNode:(GraphNode*)n1 toNode:(GraphNode*) n2 withWeight:(double) w{
+-(BOOL) addAnEdgeFromNode:(GraphNode*)n1 toNode:(GraphNode*) n2 withWeight:(double) w{
 	NSMutableArray* adjacentList = [listEdge objectAtIndex:n1.index];
 	GraphEdge* edge = [GraphEdge EdgeWithNode:n1 andNode:n2 withWeight:w];
 	if (!isMultiGraph) {
@@ -32,10 +32,33 @@
 	[adjacentList addObject:edge];
 	return YES;
 }
+
+-(void) addNode:(id) object{
+	GraphNode* aNewNode = [[GraphNode alloc] initWithObject:object andId:0];
+	aNewNode.index = [self addANode:aNewNode];
+}
+-(void) addEdge:(id) obj1 andObject2:(id) obj2 withWeight:(double) w{
+	GraphNode* n1;
+	GraphNode* n2;
+	 for (int i = 0; i<nextNodeIndex; i++) {
+		 if ([obj1 isEqual: [[listNode objectAtIndex:i] object]]) {
+			 n1 = [listNode objectAtIndex:i];
+			 break;
+		 }
+	 }
+	for (int i = 0; i<nextNodeIndex; i++) {
+		if ([obj2 isEqual: [[listNode objectAtIndex:i] object]]) {
+			n2 = [listNode objectAtIndex:i];
+			break;
+		}
+	}
+	[self addAnEdgeFromNode:n1 toNode:n2 withWeight:w];
+}
+
 -(BOOL) addEdge:(GraphEdge*) edge{
-	if (![self addEdgeFromNode: [edge getSourceNode] toNode:[edge getDestinationNode] withWeight: edge.weight]) return NO;
+	if (![self addAnEdgeFromNode: [edge getSourceNode] toNode:[edge getDestinationNode] withWeight: edge.weight]) return NO;
 	if (isBiDiGraph) 
-		if (![self addEdgeFromNode: [edge getDestinationNode] toNode: [edge getSourceNode] withWeight: edge.weight]) return NO;
+		if (![self addAnEdgeFromNode: [edge getDestinationNode] toNode: [edge getSourceNode] withWeight: edge.weight]) return NO;
 	return YES;
 }
 -(NSArray*) getAdjacentNodes:(GraphNode*) node{

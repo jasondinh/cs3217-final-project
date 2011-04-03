@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AnnoViewController.h"
 
-
-@interface ShopViewController : UIViewController {
+@interface ShopViewController : AnnoViewController {
 
 }
 

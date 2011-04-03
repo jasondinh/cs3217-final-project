@@ -21,8 +21,8 @@
 @property (nonatomic, retain) NSMutableArray* listEdge;
 @property BOOL isBiDiGraph;
 @property BOOL isMultiGraph;
--(int) addNode:(GraphNode*) node;
--(BOOL) addEdge:(GraphEdge*) edge;
+-(void) addNode:(id) object;
+-(void) addEdge:(id) obj1 andObject2:(id) obj2 withWeight:(double) w;
 -(NSArray*) getAdjacentNodes:(GraphNode*) node;
 -(double) getWeightOfEdgeBetweenNode:(GraphNode*) n1 andNode:(GraphNode*) n2;
 -(NSArray*) getShortestPathFrom: (GraphNode*) start to:(GraphNode*) goal;

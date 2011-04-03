@@ -102,7 +102,7 @@
 		E18A8FD31344D24200AB72AB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E18A8FD21344D24200AB72AB /* QuartzCore.framework */; };
 		E1C435CF133CC1CF00646BF1 /* Mall.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C435CE133CC1CF00646BF1 /* Mall.m */; };
 		E1C435D2133CC1D200646BF1 /* Map.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C435D1133CC1D200646BF1 /* Map.m */; };
-		E1C435D5133CC1D500646BF1 /* Point.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C435D4133CC1D500646BF1 /* Point.m */; };
+		E1C435D5133CC1D500646BF1 /* MapPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C435D4133CC1D500646BF1 /* MapPoint.m */; };
 		E1C435D8133CC1D700646BF1 /* Edge.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C435D7133CC1D700646BF1 /* Edge.m */; };
 		E1C435DB133CC1DB00646BF1 /* Shop.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C435DA133CC1DB00646BF1 /* Shop.m */; };
 		E1C435DE133CC1DE00646BF1 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C435DD133CC1DE00646BF1 /* Annotation.m */; };
@@ -294,8 +294,8 @@
 		E1C435CE133CC1CF00646BF1 /* Mall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mall.m; sourceTree = "<group>"; };
 		E1C435D0133CC1D200646BF1 /* Map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
 		E1C435D1133CC1D200646BF1 /* Map.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Map.m; sourceTree = "<group>"; };
-		E1C435D3133CC1D500646BF1 /* Point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Point.h; sourceTree = "<group>"; };
-		E1C435D4133CC1D500646BF1 /* Point.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Point.m; sourceTree = "<group>"; };
+		E1C435D3133CC1D500646BF1 /* MapPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapPoint.h; sourceTree = "<group>"; };
+		E1C435D4133CC1D500646BF1 /* MapPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapPoint.m; sourceTree = "<group>"; };
 		E1C435D6133CC1D700646BF1 /* Edge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Edge.h; sourceTree = "<group>"; };
 		E1C435D7133CC1D700646BF1 /* Edge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Edge.m; sourceTree = "<group>"; };
 		E1C435D9133CC1DB00646BF1 /* Shop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shop.h; sourceTree = "<group>"; };
@@ -648,8 +648,8 @@
 				E1C435E3133CC1E900646BF1 /* Comment.m */,
 				E1C435D0133CC1D200646BF1 /* Map.h */,
 				E1C435D1133CC1D200646BF1 /* Map.m */,
-				E1C435D3133CC1D500646BF1 /* Point.h */,
-				E1C435D4133CC1D500646BF1 /* Point.m */,
+				E1C435D3133CC1D500646BF1 /* MapPoint.h */,
+				E1C435D4133CC1D500646BF1 /* MapPoint.m */,
 				E1C435D6133CC1D700646BF1 /* Edge.h */,
 				E1C435D7133CC1D700646BF1 /* Edge.m */,
 				E1C435D9133CC1DB00646BF1 /* Shop.h */,
@@ -759,7 +759,7 @@
 				28D7ACF80DDB3853001CB0EB /* MallExplorerViewController.m in Sources */,
 				E1C435CF133CC1CF00646BF1 /* Mall.m in Sources */,
 				E1C435D2133CC1D200646BF1 /* Map.m in Sources */,
-				E1C435D5133CC1D500646BF1 /* Point.m in Sources */,
+				E1C435D5133CC1D500646BF1 /* MapPoint.m in Sources */,
 				E1C435D8133CC1D700646BF1 /* Edge.m in Sources */,
 				E1C435DB133CC1DB00646BF1 /* Shop.m in Sources */,
 				E1C435DE133CC1DE00646BF1 /* Annotation.m in Sources */,

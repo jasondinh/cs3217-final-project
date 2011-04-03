@@ -110,8 +110,8 @@ CGRect aFrame;
 	aFrame = aFr;
 	NSLog(@"initMall");
 	UIImage* image = [UIImage imageNamed:@"map.gif"];
-	Annotation* location1 = [[Annotation alloc] initWithPosition:CGPointMake(50, 50) title:@"xxx shop" content:@"xxx toy shop, for 21+ only =)"];
-	Annotation* location2 = [[Annotation alloc] initWithPosition:CGPointMake(160, 160) title:@"gd service" content:@"gender education service =)"];
+	Annotation* location1 = [[Annotation alloc] initAnnotationType:kAnnoShop WithPosition:CGPointMake(50, 50) title:@"xxx shop" content:@"xxx toy shop, for 21+ only =)"];
+	Annotation* location2 = [[Annotation alloc] initAnnotationType:kAnnoShop WithPosition:CGPointMake(160, 160) title:@"gd service" content:@"gender education service =)"];
 	CGPoint defaultPoint = CGPointMake(100, 100);
 	return [self initWithMapImage:image 
 		   withDefaultCenterPoint:(CGPoint) defaultPoint 

@@ -1,5 +1,5 @@
 //
-//  Point.h
+//  MapPoint.h
 //  MallExplorer
 //
 //  Created by bathanh-m on 3/25/11.

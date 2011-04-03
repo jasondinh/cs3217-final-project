@@ -10,12 +10,28 @@
 
 
 @implementation Annotation
+@synthesize annoType;
 @synthesize position;
 @synthesize title;
 @synthesize content;
--(Annotation*) initWithPosition: (CGPoint) pos title:(NSString*) tit content: (NSString*) cont{
+@synthesize isDisplayed;
+-(Annotation*) initAnnotationType: (AnnotationType) annType WithPosition: (CGPoint) pos title:(NSString*) tit content: (NSString*) cont{
 	self = [super init];
+	self.annoType = annType;
+	/*switch (annoType) {
+		case kAnnoShop:
+			self = nil;
+			self = [[Shop alloc] init];
+			break;
+		case kAnnoPoint:			
+			self = nil;
+			self = [[MapPoint alloc] init];
+			break;
+		default:
+			break;
+	}*/
 	if (!self) return nil;
+	self.isDisplayed = YES;
 	self.position = pos;
 	self.title = tit;
 	self.content = cont;

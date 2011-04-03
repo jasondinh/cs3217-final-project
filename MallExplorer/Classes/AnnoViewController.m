@@ -63,7 +63,22 @@
 	self = [super init];
 	if (!self) return nil;
 	self.annotation = anno;
-	UIImage* image = [UIImage imageNamed:@"icon_shop.png"];
+	NSString* imageName = [[NSString alloc] init];
+	switch (anno.annoType) {
+		case kAnnoShop:
+			imageName = @"icon_shop.png";
+			break;
+		case kAnnoStart:
+			imageName = @"green_flag_icon.png";
+			break;
+		case kAnnoGoal:
+			imageName = @"red_flag_icon.png";
+			break;
+
+		default:
+			break;
+	}
+	UIImage* image = [UIImage imageNamed:imageName];
 	UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
 	imageView.frame = CGRectMake(0, 0, 30, 30);	
 	self.view = [[UIView alloc] initWithFrame:imageView.frame];

@@ -7,15 +7,28 @@
 //
 
 #import <Foundation/Foundation.h>
+#import	"Shop.h"
+#import "MapPoint.h"
 
+typedef enum {
+	kAnnoShop,
+	kAnnoPoint,
+	kAnnoStart,
+	kAnnoGoal
+} AnnotationType;
 
 @interface Annotation : NSObject {
 	CGPoint position;
 	NSString* title;
 	NSString* content;
+	BOOL isDisplayed;
+	AnnotationType annoType;
+	
 }
+@property AnnotationType annoType;
 @property CGPoint position;
 @property (nonatomic, retain) NSString* title;
 @property (nonatomic, retain) NSString* content;
--(Annotation*) initWithPosition: (CGPoint) position title:(NSString*) title content: (NSString*) content;
+@property BOOL isDisplayed;
+-(Annotation*) initAnnotationType: (AnnotationType) annType WithPosition: (CGPoint) position title:(NSString*) title content: (NSString*) content;
 @end

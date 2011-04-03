@@ -24,6 +24,8 @@
 	UIImageView* goalFlagButton;
 	UIImageView* pathFindingButton;
 	MapViewController* mapViewController;
+	AnnoViewController* start;
+	AnnoViewController* goal;
 }
 
 @property (nonatomic, retain) IBOutlet UIToolbar* toolbar;
