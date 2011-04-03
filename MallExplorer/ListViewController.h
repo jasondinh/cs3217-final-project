@@ -17,10 +17,11 @@
 	BOOL searching;
 	BOOL letUserSelectRow;
 }
-@property (nonatomic,retain) NSArray* listOfItems;
-@property (nonatomic,retain) IBOutlet UISearchBar *searchBar;
-@property (nonatomic,retain) NSArray* copyListOfItems;
-@property (nonatomic,retain) IBOutlet UISegmentedControl* typeOfList;
+@property (retain) NSArray* listOfItems;
+@property (retain) IBOutlet UISearchBar *searchBar;
+@property (retain) NSMutableArray* copyListOfItems;
+@property (retain) IBOutlet UISegmentedControl* typeOfList;
+
 
 - (void) searchTableView;
 - (void) doneSearching_Clicked:(id) sender;
