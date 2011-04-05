@@ -11,7 +11,7 @@
 @implementation Mall
 @synthesize name, longitude, latitude, address, mId, zip;
 
-- (id) initWithId: (NSInteger) mId  
+- (id) initWithId: (NSInteger) _mId  
 		  andName: (NSString *) n 
 	 andLongitude: (NSString *) lon 
 	  andLatitude: (NSString *) lat
@@ -22,7 +22,7 @@
 	
 	if (self) {
 		self.name = n;
-		self.mId = mId;
+		self.mId = _mId;
 		self.longitude = lon;
 		self.latitude = lat;
 		self.address = a;

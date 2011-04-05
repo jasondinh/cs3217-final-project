@@ -57,7 +57,8 @@
 	UIBarButtonItem* category = [[UIBarButtonItem alloc]initWithTitle:@"category" style:UIBarButtonItemStyleBordered target:self action:@selector(category:) ];
 	self.toolbarItems = [NSMutableArray arrayWithObjects:barButton,category,nil];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
-
+self.contentSizeForViewInPopover = CGSizeMake(100, 350);
+	
 	
 }
 -(void)category:(id)sender{

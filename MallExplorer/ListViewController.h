@@ -9,17 +9,17 @@
 #import <UIKit/UIKit.h>
 
 
-@interface ListViewController : UITableViewController <UISearchBarDelegate>{
-	NSArray *listOfItems;
-	NSArray *copyListOfItems;
+@interface ListViewController : UITableViewController <UISearchBarDelegate,UITableViewDelegate, UITableViewDataSource>{
+	NSMutableArray *listOfItems;
+	NSMutableArray *copyListOfItems;
 	UISearchBar * searchBar;
 	UISegmentedControl* typeOfList;
 	BOOL searching;
 	BOOL letUserSelectRow;
 }
-@property (retain) NSArray* listOfItems;
+@property (retain) NSMutableArray* listOfItems;
 @property (retain) IBOutlet UISearchBar *searchBar;
-@property (retain) NSArray* copyListOfItems;
+@property (retain) NSMutableArray* copyListOfItems;
 @property (retain) IBOutlet UISegmentedControl* typeOfList;
 
 

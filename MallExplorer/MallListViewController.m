@@ -7,7 +7,7 @@
 //
 
 #import "MallListViewController.h"
-#import "MallInCity.h"
+#import "Mall.h"
 
 @implementation MallListViewController
 @synthesize favoriteList,mallList;
@@ -73,7 +73,7 @@
 	
 	// Set up the cell..
 	
-	MallInCity *tmpMall = [listOfItems objectAtIndex: indexPath.row];
+	Mall *tmpMall = [listOfItems objectAtIndex: indexPath.row];
 	
 	
 	cell.textLabel.text = tmpMall.name;
@@ -119,6 +119,7 @@
 	 /*self.toolbarItems =[NSMutableArray arrayWithObject: [[[UIBarButtonItem alloc]
 	 initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 	 target:self action:@selector(doneSearching_Clicked:)] autorelease] ];*/
+	self.contentSizeForViewInPopover = CGSizeMake(100, 350);
 }
 
 
