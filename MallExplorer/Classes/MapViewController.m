@@ -94,7 +94,11 @@ NSMutableArray* edgeList;
 #pragma mark -
 #pragma mark add annotation methods
 
--(void) addAnnotationToMap: (AnnoViewController*) annoView{
+-(BOOL) addAnnotationToMap: (AnnoViewController*) annoView{
+	if (![map checkPositionInsideMap:annoView.annotation.position] || ![map checkFreeAtPoint:annoView.annotation.position]) {
+		return NO; // cannot add
+	} 
+	
 	[displayArea addSubview:annoView.view];
 	[annoView.view setCenter:[self translatePointToScrollViewCoordinationFromMapCoordination: annoView.annotation.position]];
 	UIButton* titleButton = [[UIButton alloc] initWithFrame:[annoView getAnnoTitleRect]];
@@ -103,7 +107,9 @@ NSMutableArray* edgeList;
 	titleButton.backgroundColor = [UIColor	colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.4];
 	titleButton.hidden = !displayAllTitleMode;
 	[displayArea addSubview:titleButton];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(annotationMoved:) name:@"annotation moved" object:nil];
 	annoView.titleButton = titleButton;
+	return YES;
 }
 
 -(AnnoViewController*) addAnnotationType:(AnnotationType) annType ToScrollViewAtPosition:(CGPoint)pos withTitle:(NSString*) title withContent:(NSString*) content {
@@ -111,7 +117,7 @@ NSMutableArray* edgeList;
 	NSLog(@"position of new annotation: %lf %lf", pos.x, pos.y);
 	NSLog(@"position of new annotation: %lf %lf", [self translatePointToMapCoordinationFromScrollViewCoordination: pos].x, [self translatePointToMapCoordinationFromScrollViewCoordination: pos].y);
 	AnnoViewController* annoView = [[AnnoViewController alloc] initWithAnnotation:anno];
-	[self addAnnotationToMap:annoView];
+	if (![self addAnnotationToMap:annoView]) return nil;
 	[annotationList addObject:annoView];
 	[anno release];
 	return [annoView autorelease];
@@ -458,7 +464,22 @@ NSMutableArray* edgeList;
 }
 
 #pragma mark -
-#pragma mark Handling annotation title toggling
+#pragma mark Handling annotation notification
+
+-(void) annotationMoved:(NSNotification*) notification{
+	AnnoViewController* anAnnoVC = notification.object;
+	CGPoint newAnnoMapPosition = [self translatePointToMapCoordinationFromScrollViewCoordination:CGPointMake(anAnnoVC.view.frame.origin.x+anAnnoVC.view.frame.size.width/2, anAnnoVC.view.frame.origin.y+anAnnoVC.view.frame.size.height/2)];
+	if (![map checkPositionInsideMap:newAnnoMapPosition] || ![map checkFreeAtPoint:newAnnoMapPosition]) {
+		[anAnnoVC invalidatePosition];
+		return;
+	} 
+	anAnnoVC.annotation.position = newAnnoMapPosition;
+	if (anAnnoVC.annotation.annoType == kAnnoStart|| anAnnoVC.annotation.annoType == kAnnoGoal) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"start or goal moved" object:nil];	
+	}
+	
+	NSLog(@"new position in map: %lf %lf", anAnnoVC.annotation.position.x, anAnnoVC.annotation.position.y);
+}
 
 -(void) toggleDisplayText{
 	if (!displayAllTitleMode) {
@@ -508,6 +529,7 @@ NSMutableArray* edgeList;
 	NSMutableArray* result = [[NSMutableArray alloc] initWithObjects:startPoint, nil];
 	[result addObjectsFromArray:[map findPathFrom:point1 to:point2]];
 	[result addObject:goalPoint];
+	result = [map refineAPath:result];
 	NSLog(@"path found with: %d node", [result count] );
 	for	(int i = 0; i<[result count]; i++){
 		MapPoint* aPoint = [result objectAtIndex:i];

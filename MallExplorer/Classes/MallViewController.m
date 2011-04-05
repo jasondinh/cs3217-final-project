@@ -65,6 +65,7 @@
 	panGesture	 = [[UIPanGestureRecognizer alloc]
 											initWithTarget:self action:@selector(goalFlagMove:)];
 	[goalFlagButton addGestureRecognizer:panGesture];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startOrGoalMoved:) name:@"start or goal moved" object:nil];
 
 	[panGesture release];
 	[tapGesture release];
@@ -89,6 +90,10 @@ toMakeAnnotationType:(AnnotationType) annoType
 		double newX = button.frame.origin.x - mapViewController.view.frame.origin.x;
 		double newY = button.frame.origin.y - mapViewController.view.frame.origin.y;
 		NSLog(@"new x new y %lf %lf", newX, newY);
+		// bring the button to the original position
+		button.transform = CGAffineTransformIdentity;
+
+		
 		if (newX>= 0 && newY>=0)
 		{
 			//GameObject* aController = [[GameObject alloc] initWithType:objectType withShape:shapeType atX:newX+gamearea.contentOffset.x atY:newY+ gamearea.contentOffset.y  withWidth:size.width withHeight:size.height];
@@ -96,15 +101,19 @@ toMakeAnnotationType:(AnnotationType) annoType
 			double x = newX + button.frame.size.width/2  + theScrollView.contentOffset.x;
 			double y = newY + button.frame.size.height/2 + theScrollView.contentOffset.y ;
 			NSLog(@"new x new y %lf %lf", x, y);
-			[mapViewController addAnnotationType:annoType ToScrollViewAtPosition:CGPointMake(x, y) withTitle:title withContent:content];
+			if (![mapViewController addAnnotationType:annoType ToScrollViewAtPosition:CGPointMake(x, y) withTitle:title withContent:content]) {
+				button.transform = CGAffineTransformIdentity;
+				return; // add to blocked position
+			}
 			if (annoType == kAnnoStart) {
 				start = [mapViewController.annotationList lastObject];
 			} else if (annoType == kAnnoGoal) {
 				goal = [mapViewController.annotationList lastObject];
 			} 
+			[self startOrGoalMoved:nil];
 			[button setUserInteractionEnabled:NO];
-		}
-		button.transform = CGAffineTransformIdentity;
+			button.alpha = 0.5;
+		} 
 	}
 	
 }
@@ -115,6 +124,13 @@ toMakeAnnotationType:(AnnotationType) annoType
 
 - (void)goalFlagMove:(UIGestureRecognizer *)gesture{
 	[self moveButton:goalFlagButton withGesture:gesture toMakeAnnotationType: kAnnoGoal WithTitle:@"Goal" andContent:@"Your destination"];
+}
+
+-(void) startOrGoalMoved:(NSNotification*) notification{
+	NSLog(@"start or goal moved");
+	if (start && goal) {
+		[mapViewController findPathFromStartAnnotation:start.annotation ToGoalAnnotaion:goal.annotation];
+	}
 }
  
 -(void) toggleText:(UIGestureRecognizer*) gesture{

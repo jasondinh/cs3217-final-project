@@ -7,7 +7,7 @@
 //
 
 #import "MallListViewController.h"
-#import "Mall.h"
+#import "MallInCity.h"
 
 @implementation MallListViewController
 @synthesize favoriteList,mallList;
@@ -73,7 +73,7 @@
 	
 	// Set up the cell..
 	
-	Mall *tmpMall = [listOfItems objectAtIndex: indexPath.row];
+	MallInCity *tmpMall = [listOfItems objectAtIndex: indexPath.row];
 	
 	
 	cell.textLabel.text = tmpMall.name;

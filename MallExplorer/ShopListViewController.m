@@ -64,7 +64,7 @@
 }
 -(void)addToFavorite:(id)sender{
 }
--(id)initWithMall:(Mall *)mall{
+-(id)initWithMall:(Mall*)mall{
 	return self;
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

@@ -14,7 +14,8 @@
 @interface MallViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate>{
 	CLLocationCoordinate2D coordinate;
 	NSArray* mapList;
-	UIPopoverController *popoverController;
+	UIPopoverController* popoverController;
+	UIPopoverController* levelListController;
 	UIToolbar *toolbar;
 	id detailItem;
 //	IBOutlet MKMapView *mapView;
@@ -26,6 +27,8 @@
 	MapViewController* mapViewController;
 	AnnoViewController* start;
 	AnnoViewController* goal;
+	UILabel* titleLabel;
+	UIBarItem* selectLevel;
 }
 
 @property (nonatomic, retain) IBOutlet UIToolbar* toolbar;
@@ -33,6 +36,8 @@
 @property (nonatomic, retain) IBOutlet UIImageView* startFlagButton;
 @property (nonatomic, retain) IBOutlet UIImageView* goalFlagButton;
 @property (nonatomic, retain) IBOutlet UIImageView*	pathFindingButton;
+@property (nonatomic, retain) IBOutlet UIBarItem*	selectLevel;
+@property (nonatomic, retain) IBOutlet UILabel* titleLabel;
 @property (nonatomic, retain) id detailItem;
 @property (nonatomic, retain) UIPopoverController* popoverController;
 //@property (nonatomic,retain)IBOutlet MKMapView *mapView;
@@ -42,5 +47,5 @@
 - (NSString *)subtitle;
 - (NSString *)title;
 - (IBAction) buttonClicked:(UIButton*) sender;
-
+- (IBAction) selectLevelClicked:(UIBarItem*) sender;
 @end

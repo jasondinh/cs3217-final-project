@@ -42,14 +42,31 @@
 	[tapGesture release];
 	
 	UIPanGestureRecognizer* panGesture	 = [[UIPanGestureRecognizer alloc]
-											initWithTarget:self action:@selector(testAction:)];
+											initWithTarget:self action:@selector(annoMoved:)];
 	[self.view addGestureRecognizer:panGesture];
 	[panGesture release];
 	
 }
 
--(void) testAction: (UIGestureRecognizer*) recognizer{
-	
+-(void) annoMoved: (UIGestureRecognizer*) gesture{
+	if (self.annotation.annoType == kAnnoStart || self.annotation.annoType == kAnnoGoal) {
+		CGPoint	translation = [(UIPanGestureRecognizer*) gesture translationInView:self.view];
+		[(UIPanGestureRecognizer*)gesture setTranslation:CGPointZero inView:self.view];
+
+		if (gesture.state == UIGestureRecognizerStateBegan){
+			previousFrame = self.view.frame;
+		} 
+		if (gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateChanged) {
+			self.view.transform = CGAffineTransformTranslate(self.view.transform, translation.x, translation.y);
+		}
+		if (gesture.state == UIGestureRecognizerStateEnded) {
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"annotation moved" object:self];     // notify to update the annotation position
+		}
+	}
+}
+
+-(void) invalidatePosition{
+	self.view.frame = previousFrame;
 }
 
 -(void) togglePopUp: (UIGestureRecognizer*) recognizer{

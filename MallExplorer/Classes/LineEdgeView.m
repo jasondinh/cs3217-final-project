@@ -53,9 +53,11 @@
     CGContextBeginPath(contextRef);
 	double x = self.frame.origin.x;
 	double y = self.frame.origin.y;
+	const CGPoint points[] = {CGPointMake(startPoint.x-x, startPoint.y-y),CGPointMake(goalPoint.x-x, goalPoint.y-y)};
     CGContextMoveToPoint(contextRef, startPoint.x-x, startPoint.y-y);
-    CGContextAddLineToPoint(contextRef, goalPoint.x-x, goalPoint.y-y);
-    CGContextStrokePath(contextRef);
+//    CGContextAddLineToPoint(contextRef, goalPoint.x-x, goalPoint.y-y);
+//    CGContextStrokePath(contextRef);
+	CGContextStrokeLineSegments(contextRef, points, 2);
 }
 
 - (void)dealloc {

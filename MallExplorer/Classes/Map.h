@@ -17,6 +17,8 @@
 //	NSMutableArray* sortedPointList;
 	UIImage* imageMap;	
 	Graph* graph;
+	unsigned char* imageData ; // data of the image in bitmap format
+	UIColor* passAbleColor;
 }
 
 @property (nonatomic, retain) NSArray* annotationList;
@@ -32,5 +34,10 @@
 -(NSArray*) findPathFrom:(MapPoint*) point1 to: (MapPoint*) point2;
 // find path from point1 to an item in category type: 
 //-(NSArray*) findPathFrom:() point1 to: () type;
+
+-(NSArray*) refineAPath:(NSArray*) aPath;
+
+-(BOOL) checkFreeAtPoint:(CGPoint) point;
+-(BOOL) checkPositionInsideMap:(CGPoint) aPosition;
 
 @end
