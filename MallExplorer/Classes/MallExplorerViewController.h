@@ -15,7 +15,6 @@
 @interface MallExplorerViewController : UISplitViewController<MKMapViewDelegate,CLLocationManagerDelegate> {
 	UIViewController* cityMapViewController;
 	MasterViewController* masterViewController;
-
 }
 
 

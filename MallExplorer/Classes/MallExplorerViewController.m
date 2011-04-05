@@ -24,13 +24,13 @@ BOOL chosen;
 		// Custom initialization
 		masterViewController= [[MasterViewController alloc] init];
 		
-		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
-		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
-		[self setDelegate: aMVC];
-//		cityMapViewController = [[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil];
-//		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
-//		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
-//		[self setDelegate:cityMapViewController];
+//		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
+//		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
+//		[self setDelegate: aMVC];
+		cityMapViewController = [[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
+		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
+		[self setDelegate:cityMapViewController];
 		//	
     }
     return self;
