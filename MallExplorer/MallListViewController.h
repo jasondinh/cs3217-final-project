@@ -17,4 +17,5 @@
 
 @property (nonatomic,retain) NSMutableArray* favoriteList;
 @property (nonatomic,retain) NSMutableArray* mallList;
+- (id) initWithMalls: (NSArray *) malls ;
 @end

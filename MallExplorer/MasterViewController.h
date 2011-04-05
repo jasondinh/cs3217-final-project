@@ -10,7 +10,7 @@
 
 @class CityMapViewController;
 @class MBProgressHUD;
-@interface MasterViewController : UINavigationController<UITableViewDelegate, UITableViewDataSource> {
+@interface MasterViewController : UINavigationController {
 	MBProgressHUD *progress;
 	CityMapViewController* cityMapViewController;
 }

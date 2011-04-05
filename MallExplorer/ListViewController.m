@@ -245,7 +245,7 @@
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
+
     /*
      When a row is selected, set the detail view controller's detail item to 
      the item associated with the selected row.
@@ -265,6 +265,7 @@
  
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:nil];
+
 	//cityMapViewController.detailItem = 
 	//[NSString stringWithFormat:@"%@", 
 	//[listOfMovies objectAtIndex:indexPath.row]];    
