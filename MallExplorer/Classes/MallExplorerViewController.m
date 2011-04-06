@@ -8,6 +8,7 @@
 //	Updated by Dam Tuan Long on 29 Mar 2011 : add city map
 #import "MallExplorerViewController.h"
 #import "MallViewController.h"
+#import "MallListViewController.h"
 #import "MapViewController.h"
 #import "ShopListViewController.h"
 #import "ShopViewController.h"
@@ -29,11 +30,20 @@ BOOL chosen;
 //		[self setDelegate: aMVC];
 		cityMapViewController = [[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ListViewWillAppear:) name:@"Listview will appear" object:nil];
+
 		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
 		[self setDelegate:cityMapViewController];
 		//	
     }
     return self;
+}
+-(void) ListViewWillAppear:(id)sender{
+	if ([[sender object] isKindOfClass:[MallListViewController class]]) {
+		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
+		[self setDelegate:cityMapViewController];
+	}
+	
 }
 
 -(void) mallChosen:(id) object{
