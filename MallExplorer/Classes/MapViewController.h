@@ -12,6 +12,7 @@
 #import "Map.h"
 #import "LineEdgeView.h"
 #import "Constant.h"
+//#import "AnnotationFactory.h"
 @interface MapViewController : UIViewController<UIScrollViewDelegate> {
 	NSMutableArray* annotationList;
 	NSMutableArray* edgeDisplayedList;
@@ -31,7 +32,10 @@
 @property BOOL displayAllTitleMode;
 //@property (nonatomic, retain) UIImage* imageMap;
 
+// add an annotation to the map, at the position based on scrollview coordination
 -(AnnoViewController*) addAnnotationType:(AnnotationType) annType ToScrollViewAtPosition:(CGPoint)pos withTitle:(NSString*) title withContent:(NSString*) content ;
+
+// add an annotation to the map, since this is the model, the annotation's position is in map's coordination
 -(void) addAnnotation: (Annotation*) annotation;
 	
 -(MapViewController*) initWithMapImage:(UIImage*)img 

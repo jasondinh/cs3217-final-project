@@ -100,9 +100,9 @@ NSMutableArray* edgeList;
 }
 
 -(AnnoViewController*) addAnnotationType:(AnnotationType) annType ToScrollViewAtPosition:(CGPoint)pos withTitle:(NSString*) title withContent:(NSString*) content {
-	Annotation* anno = [[Annotation alloc] initAnnotationType:annType inlevel:self.map WithPosition:pos title:title content:content];
-	NSLog(@"position of new annotation: %lf %lf", pos.x, pos.y);
-	NSLog(@"position of new annotation: %lf %lf", [self translatePointToMapCoordinationFromScrollViewCoordination: pos].x, [self translatePointToMapCoordinationFromScrollViewCoordination: pos].y);
+	Annotation* anno = [[Annotation alloc] initAnnotationType:annType inlevel:self.map WithPosition:[self translatePointToMapCoordinationFromScrollViewCoordination:pos] title:title content:content];
+	//NSLog(@"position of new annotation: %lf %lf", pos.x, pos.y);
+	//NSLog(@"position of new annotation: %lf %lf", [self translatePointToMapCoordinationFromScrollViewCoordination: pos].x, [self translatePointToMapCoordinationFromScrollViewCoordination: pos].y);
 	AnnoViewController* annoView = [[AnnoViewController alloc] initWithAnnotation:anno];
 	if (![self addAnnotationToMap:annoView]) return nil;
 	[annotationList addObject:annoView];
@@ -113,16 +113,6 @@ NSMutableArray* edgeList;
 -(void) addAnnotation: (Annotation*) annotation{
 	[self.map addAnnotation:annotation];
 	AnnoViewController* annoView = [[AnnoViewController alloc] initWithAnnotation: annotation];
-	
-	if ([annotationList isMemberOfClass:[NSMutableArray class]]) {
-		NSLog(@"can add object");
-	} else if ([annotationList isMemberOfClass:[NSArray class]]) {
-		NSLog(@"cannot add object");
-	}
-	else {
-		NSLog(@"not member of any array clas");
-	}
-
 	[annotationList addObject:annoView];
 	[self addAnnotationToMap:annoView];
 	NSLog(@"%d", [annotationList count]);

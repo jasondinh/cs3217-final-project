@@ -11,7 +11,7 @@
 #import "MapViewController.h"
 #import "AnnoViewController.h"
 #import "Mall.h"
-
+//#import "AnnotationFactory.h"
 //#define MAP_ORIGIN_X 0
 //#define MAP_ORIGIN_Y 46
 //#define MAP_WIDTH	 703
@@ -19,7 +19,6 @@
 
 @interface MallViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>{
 	CLLocationCoordinate2D coordinate;
-	NSArray* mapList;
 	UIPopoverController* popoverController;
 	UIPopoverController* levelListController;
 	UIToolbar *toolbar;
@@ -62,5 +61,6 @@
 - (IBAction) selectLevelClicked:(UIBarButtonItem*) sender;
 -(id)initWithCoordinate:(CLLocationCoordinate2D) coordinate;
 
+// since the data for the mall object will be populated after the mall is chosen, this method is called after init, when the app needs to load maps to mall
 -(void) loadMaps:(NSArray*) listMap andStairs:(NSArray*) stairs withDefaultMap:(Map*) defaultMap;
 @end
