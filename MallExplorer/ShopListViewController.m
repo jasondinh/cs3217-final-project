@@ -66,6 +66,32 @@
 -(id)initWithMall:(Mall*)mall{
 	return self;
 }
+- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+    /*
+     When a row is selected, set the detail view controller's detail item to 
+     the item associated with the selected row.
+     */
+    //detailViewController.detailItem = 
+    //    [NSString stringWithFormat:@"Row %d", indexPath.row];
+	NSString *selectedItem = nil;
+	NSString *searchingText = searchBar.text;
+	if(searching && [searchingText length]!=0)
+		selectedItem = [copyListOfItems objectAtIndex:indexPath.row];
+	else {
+		
+		selectedItem = [listOfItems objectAtIndex:indexPath.row];
+	}
+	
+	//Initialize the detail view controller and display it.
+	
+	Mall * chosenMall = [[[Mall alloc] init] autorelease];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen" object:chosenMall];
+	
+	//cityMapViewController.detailItem = 
+	//[NSString stringWithFormat:@"%@", 
+	//[listOfMovies objectAtIndex:indexPath.row]];    
+}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.
     return YES;

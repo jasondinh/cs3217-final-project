@@ -56,7 +56,7 @@
 	self.navigationItem.title = @"Movies";   
 	self.toolbarHidden =NO;
 	[temp release];
-	self.delegate = self;
+
 	[progress hide:YES];
 
 }

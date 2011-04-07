@@ -112,8 +112,7 @@
 	 searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
 	searching = NO;
 	 letUserSelectRow = YES;
-	((UINavigationController*)self.parentViewController).toolbarHidden = YES;
-
+	
 	 NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"Nearby",@"Favorite",nil];
 	 typeOfList = [[UISegmentedControl alloc] initWithItems:segmentArray];
 	 [typeOfList sizeToFit];
