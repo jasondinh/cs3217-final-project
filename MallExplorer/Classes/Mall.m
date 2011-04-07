@@ -102,22 +102,17 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 	NSLog(@"now finding path ------------------------------");
 	for ( int i = 0; i<[mapList count]; i++) {
 		[[mapList objectAtIndex:i] resetPathOnMap];
-		//self.levelPath = nil;
 	}
 	MapPoint* startPoint = [[MapPoint alloc] initWithPosition:startPos inLevel:level1  andIndex:0];
 	MapPoint* goalPoint = [[MapPoint alloc] initWithPosition:goalPos inLevel:level2 andIndex:0];
 	MapPoint* point1 = [level1 getClosestMapPointToPosition:startPos];
 	MapPoint* point2 = [level2 getClosestMapPointToPosition:goalPos];
+	NSMutableArray* result = [[NSMutableArray alloc] init];
 	if ([level1 isEqual:level2]) {
-		NSMutableArray* result = [[NSMutableArray alloc] initWithObjects:startPoint, nil];
+		[result  addObject:startPoint];
 		[result addObjectsFromArray:[level1 findPathFrom:point1 to:point2]];
 		[result addObject:goalPoint];
 		result = [level1 refineAPath:result];
-		//NSLog(@"path found with: %d node", [result count] );
-//		for	(int i = 0; i<[result count]; i++){
-//			MapPoint* aPoint = [result objectAtIndex:i];
-//			NSLog(@"%lf %lf", aPoint.position.x, aPoint.position.y);
-//		}
 		[level1 addPathOnMap: result];
 		return result;
 	}
@@ -126,6 +121,8 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 		[pathBetweenLevel insertObject:point1 atIndex:0];
 		[pathBetweenLevel addObject:point2];
 		for (int i = [pathBetweenLevel count]-1; i>=0; i--) {
+			// the path between level is a mixed of map point and points that represent level.
+			// so we need to clear all the points that represent levels before continuing
 			if ([[pathBetweenLevel objectAtIndex:i] isMemberOfClass:[Map class]]) [pathBetweenLevel removeObjectAtIndex:i];
 		}
 		
@@ -134,9 +131,7 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 			id p2 = [pathBetweenLevel objectAtIndex:i+1];
 			Map* lev1;
 			Map* lev2;
-//			if ([p1 isMemberOfClass:[Map class]]) lev1 = p1;
 			lev1 = [p1 level];
-			//if ([p2 isMemberOfClass:[Map class]]) lev2 = p2;
 			lev2 = [p2 level];
 			if ([lev1 isEqual:lev2]) {
 				NSArray* aPath = [lev1 findPathFrom:p1 to:p2];
@@ -146,15 +141,15 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 		
 		[level1 addPathOnMap:[NSArray arrayWithObjects:startPoint, point1, nil]];
 		[level2 addPathOnMap:[NSArray arrayWithObjects:point2, goalPoint, nil]];
+		result = pathBetweenLevel;
 		
 	}
 	NSLog(@"map name is: %@", point1.level.mapName);
-	return nil;
+	return result;
 }
 
 -(NSArray*) findPathFromStartAnnotation:(Annotation*) anno1 ToGoalAnnotaion:(Annotation*) anno2{
-	// closet position
-	[self findPathFrom:anno1.position inLevel:anno1.level to:anno2.position inLevel:anno2.level];
+	return [self findPathFrom:anno1.position inLevel:anno1.level to:anno2.position inLevel:anno2.level];
 }
 
 - (void) dealloc  {

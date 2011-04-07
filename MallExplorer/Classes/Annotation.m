@@ -8,6 +8,7 @@
 
 #import "Annotation.h"
 #import "Map.h"
+#import "AnnotationFactory.h"
 
 @implementation Annotation
 @synthesize annoType;
@@ -17,20 +18,9 @@
 @synthesize isDisplayed;
 @synthesize level;
 -(Annotation*) initAnnotationType: (AnnotationType) annType inlevel:(Map*)lev WithPosition: (CGPoint) pos title:(NSString*) tit content: (NSString*) cont{
-	self = [super init];
+	[self release];
+	self = [[AnnotationFactory createAnnotationType:annType] retain];
 	self.annoType = annType;
-	/*switch (annoType) {
-		case kAnnoShop:
-			self = nil;
-			self = [[Shop alloc] init];
-			break;
-		case kAnnoPoint:			
-			self = nil;
-			self = [[MapPoint alloc] init];
-			break;
-		default:
-			break;
-	}*/
 	if (!self) return nil;
 	self.level = lev;
 	self.isDisplayed = YES;

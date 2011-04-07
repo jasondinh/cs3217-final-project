@@ -1,18 +1,16 @@
     //
-//  AnnoViewController.m
+//  AnnoStairViewController.m
 //  MallExplorer
 //
-//  Created by Tran Cong Hoang on 3/31/11.
+//  Created by Tran Cong Hoang on 4/8/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "AnnoViewController.h"
+#import "AnnoStairViewController.h"
 
-@implementation AnnoViewController
 
-@synthesize annotation;
-@synthesize titleIsShown;
-@synthesize titleButton;
+@implementation AnnoStairViewController
+
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -24,35 +22,31 @@
 }
 */
 
--(CGRect) getAnnoTitleRect{
-	return CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y+self.view.frame.size.height+5, self.view.frame.size.width*3, 20);
+/*
+// Implement loadView to create a view hierarchy programmatically, without using a nib.
+- (void)loadView {
 }
+*/
 
+/*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
 }
+*/
 
--(void) addGestureRecognizer{
-	UITapGestureRecognizer* tapGesture	 = [[UITapGestureRecognizer alloc]
-											initWithTarget:self action:@selector(togglePopUp:)];
-	[tapGesture setNumberOfTapsRequired:1];
-	[self.view addGestureRecognizer:tapGesture];
-	[tapGesture release];
-	
-}
-
--(void) togglePopUp: (UIGestureRecognizer*) recognizer{
-		if (!titleIsShown) {
-			titleIsShown = YES;
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"title is shown" object:self];
-		}
-}
-
--(AnnoViewController*) initWithAnnotation:(Annotation *)anno{
-	[self release];
-	self = [[AnnotationFactory createAnnotationViewWithAnnotation:anno] retain];
-	[self addGestureRecognizer];
+-(AnnoStairViewController*) initWithAnnotation:(Annotation *)anno{
+	self = [super init];
+	if (!self) return nil;
+	self.annotation = anno;
+	NSString* imageName = [NSString stringWithString:@"icon_shop.png"];
+	UIImage* image = [UIImage imageNamed:imageName];
+	UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
+	imageView.frame = CGRectMake(0, 0, 30, 30);	
+	self.view = [[UIView alloc] initWithFrame:imageView.frame];
+	//self.view.backgroundColor = [UIColor redColor];
+	[self.view addSubview: imageView];
+	[image release];
 	return self;
 }
 

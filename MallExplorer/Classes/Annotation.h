@@ -14,7 +14,10 @@
 typedef enum {
 	kAnnoShop,
  	kAnnoStart,
-	kAnnoGoal
+	kAnnoGoal,
+	kAnnoStair,
+	kAnnoLift,
+	kAnnoConnector
 } AnnotationType;
 
 @interface Annotation : NSObject {

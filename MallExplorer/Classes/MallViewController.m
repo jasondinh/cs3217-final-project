@@ -378,9 +378,7 @@
 	defaultMap = map1;
 	listMap = [NSArray arrayWithObjects:map1, map2, nil];
 	NSArray* stair = [self createTestStair:listMap];
-	stairs = stair;
-	
-	
+	stairs = stair;	
 	
 	[mall buildGraphWithMaps:listMap andStairs:stairs];
 	listMapViewController = [[NSMutableArray alloc] initWithCapacity:[listMap count]];
@@ -412,7 +410,7 @@
 	[toogleTextButton addGestureRecognizer:tapGesture];
 	
 	tapGesture	 = [[UITapGestureRecognizer alloc]
-											initWithTarget:self action:@selector(pathFinding)];
+											initWithTarget:self action:@selector(pathFindingClicked)];
 	[tapGesture setNumberOfTapsRequired:1];
 	[pathFindingButton addGestureRecognizer:tapGesture];
 
@@ -487,8 +485,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 -(void) startOrGoalMoved:(NSNotification*) notification{
 	NSLog(@"start or goal moved");
 	if (start && goal) {
-		[mall findPathFromStartAnnotation:start.annotation ToGoalAnnotaion:goal.annotation];
-		[mapViewController redisplayPath];
+		[self pathFinding];
 	}
 }
  
@@ -498,6 +495,31 @@ toMakeAnnotationType:(AnnotationType) annoType
 }
 
 -(void) pathFinding{
+	NSArray* levelConnectingPoint = [mall findPathFromStartAnnotation:start.annotation ToGoalAnnotaion:goal.annotation];
+	// level connecting point is a series of map points that travel through several maps, to show a path between maps, from the start point to the goal point.
+	for (int i = 0; i<[levelConnectingPoint count]-1; i++) {
+		id p1 = [levelConnectingPoint objectAtIndex:i];
+		id p2 = [levelConnectingPoint objectAtIndex:i+1];
+		Map* lev1;
+		Map* lev2;
+		lev1 = [p1 level];
+		lev2 = [p2 level];
+		if (![lev1 isEqual:lev2]) {
+			Annotation* departing = [[Annotation alloc] initAnnotationType:kAnnoConnector inlevel:lev1 WithPosition:[p1 position] title:[NSString stringWithFormat:@"to @", lev2.mapName] content:[NSString stringWithFormat:@"continue path to @", lev2.mapName]];
+			[departing setIsDepartingConnector:YES];
+			[departing setIsUp:[self checkLevel:lev1 isHigherThan:lev2]];
+			[lev1 addAnnotation: departing];
+			Annotation* arriving = [[Annotation alloc] initAnnotationType:kAnnoConnector inlevel:lev2 WithPosition:[p2 position] title:[NSString stringWithFormat:@"from @", lev1.mapName] content:[NSString stringWithFormat:@"continue path from @", lev1.mapName]];
+			[departing setIsDepartingConnector:NO];
+			[departing setIsUp:[self checkLevel:lev1 isHigherThan:lev2]];
+			[lev2 addAnnotation: arriving];
+		}
+	}
+	
+	[mapViewController redisplayPath];
+}
+
+-(void) pathFindingClicked{
 	if (!start) {
 		UIAlertView * message = [[UIAlertView alloc] initWithTitle: @"Please specific start position!!" message: @"Please choose starting position by dragging the green flag to the map" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
 		[message show];
@@ -511,8 +533,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 		[message release];
 		return;
 	}
-	[mall findPathFromStartAnnotation:start.annotation ToGoalAnnotaion:goal.annotation];
-	[mapViewController redisplayPath];
+	[self pathFinding];
 }
 
 - (IBAction) selectLevelClicked:(UIBarButtonItem*) sender{
@@ -543,12 +564,17 @@ toMakeAnnotationType:(AnnotationType) annoType
 	}
 }
 
+-(BOOL) checkLevel:(Map*) lev1 isHigherThan:(Map*) lev2{
+	int index1 = [mall.mapList indexOfObject:lev1];
+	int index2 = [mall.mapList indexOfObject:lev2];
+	return index1>index2;
+}
 
 #pragma mark -
 #pragma mark level list popover support methods
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController{
-	[popoverController release];
+	[popoverController release];	
 }
 
 #pragma mark -
@@ -579,6 +605,7 @@ toMakeAnnotationType:(AnnotationType) annoType
     // open a alert with an OK and cancel button
     NSString* chosenLevel = [NSString stringWithString:[[mall.mapList objectAtIndex:[indexPath row]] mapName]];
 	[self choseLevel: chosenLevel];
+	[levelListController dismissPopoverAnimated:YES];
 }
 
 
