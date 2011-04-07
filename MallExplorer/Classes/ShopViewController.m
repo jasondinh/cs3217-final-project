@@ -27,15 +27,39 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-/*	UITableViewController *temp1 = [[UITableViewController alloc] init];
-	UITableViewController *temp2 = [[UITableViewController alloc] init];
-	UITableViewController *temp3 = [[UITableViewController alloc] init];
+	UIViewController *temp1 = [[UIViewController alloc] init];
+	UIViewController *temp2 = [[UIViewController alloc] init];
+	UIViewController *temp3 = [[UIViewController alloc] init];
 	[self setViewControllers:
-     [NSArray arrayWithObjects:temp1, temp2, temp3, nil]];*/
+     [NSArray arrayWithObjects:temp1, temp2, temp3, nil]];
+	/*self.navigationController.delegate =self;
+	self.title =@"a shop";
+	self.contentSizeForViewInPopover = CGSizeMake(320, 850);
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
+	//[self.tabBar setBackgroundColor:[UIColor whiteColor]] ;*/
 	
 }
-
-
+- (void)navigationController:(UINavigationController *)navigationController 
+	  willShowViewController:(UIViewController *)viewController animated:(BOOL)animated 
+{
+	NSLog(@"show");
+	if (viewController != self) {
+        self.navigationController.delegate = nil;
+        if ([[navigationController viewControllers] containsObject:self]) {
+            NSLog(@"FORWARD");
+        } else {
+            NSLog(@"BACKWARD");
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"Shopview will appear" object:self];
+			viewController.navigationController.delegate =viewController;
+			
+        }
+    }
+	
+    [viewController viewWillAppear:animated];
+}
+-(id)initWithShop:(Shop*)aShop{
+	return self;
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.

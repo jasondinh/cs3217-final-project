@@ -108,12 +108,11 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	
 	 copyListOfItems = [[NSMutableArray alloc]init];
-	self.navigationItem.title = @"Malls list";
+	self.navigationItem.title = @"Mall list";
 	 searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
 	searching = NO;
 	 letUserSelectRow = YES;
-	((UINavigationController*)self.parentViewController).toolbarHidden = YES;
-
+	
 	 NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"Nearby",@"Favorite",nil];
 	 typeOfList = [[UISegmentedControl alloc] initWithItems:segmentArray];
 	 [typeOfList sizeToFit];
@@ -124,8 +123,8 @@
 	 /*self.toolbarItems =[NSMutableArray arrayWithObject: [[[UIBarButtonItem alloc]
 	 initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 	 target:self action:@selector(doneSearching_Clicked:)] autorelease] ];*/
-	self.contentSizeForViewInPopover = CGSizeMake(100, 350);
-}
+	self.contentSizeForViewInPopover = CGSizeMake(320, 850);
+	}
 
 
 

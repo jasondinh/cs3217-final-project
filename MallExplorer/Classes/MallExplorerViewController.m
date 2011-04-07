@@ -12,11 +12,12 @@
 #import "MapViewController.h"
 #import "ShopListViewController.h"
 #import "ShopViewController.h"
+#import "Shop.h"
 #import "Mall.h"
 
 #import <CoreLocation/CoreLocation.h>
 @implementation MallExplorerViewController
-BOOL chosen;
+BOOL chosen,shopchosen;
 
 // The designated initializer. Override to perform setup that is required before the view is loaded.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -28,27 +29,50 @@ BOOL chosen;
 //		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
 //		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
 //		[self setDelegate: aMVC];
-		cityMapViewController = [[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil];
+		cityMapViewController = [[[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil] retain];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ListViewWillAppear:) name:@"Listview will appear" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"shop chosen" object:nil];
 
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShopViewWillAppear:) name:@"Shopview will appear"  object:nil];
 		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
 		[self setDelegate:cityMapViewController];
-		//	
     }
     return self;
 }
+-(void) ShopViewWillAppear:(id)sender{
+}
+-(void) shopChosen:(id)sender{
+	
+	//if (!shopchosen) {
+	//	shopchosen = !shopchosen;
+		Shop* aShop = [[Shop alloc]init];
+		
+		ShopViewController* shopViewController = [[ShopViewController alloc] initWithShop:aShop] ;
+		[masterViewController pushViewController:shopViewController animated:YES];
+		//MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
+		//self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
+		//[self setDelegate: aMVC];
+		//[aMVC loadMaps:nil andStairs:nil withDefaultMap:nil];
+		
+	//} 
+	
+}
 -(void) ListViewWillAppear:(id)sender{
-	if ([[sender object] isKindOfClass:[MallListViewController class]]) {
+
+	if ([[sender object] isKindOfClass:[ShopListViewController class]]) {
+		//cityMapViewController = [[[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil] retain];
+
 		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
 		[self setDelegate:cityMapViewController];
 	}
 	
 }
 
+
 -(void) mallChosen:(id) object{
-	if (!chosen) {
-		chosen = !chosen;
+	//if (!chosen) {
+	//	chosen = !chosen;
 		Mall* aMall = [[Mall alloc]init];
 
 		ShopListViewController* shopListViewController = [[ShopListViewController alloc] initWithMall:aMall] ;
@@ -58,11 +82,7 @@ BOOL chosen;
 		[self setDelegate: aMVC];
 		[aMVC loadMaps:nil andStairs:nil withDefaultMap:nil];
 
-	} else {
-		self.viewControllers = [NSArray arrayWithObjects:masterViewController, cityMapViewController, nil];
-		[self setDelegate: cityMapViewController];
-		chosen = !chosen;
-	}
+	//} 
 
 	
 }

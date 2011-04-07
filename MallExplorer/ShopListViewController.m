@@ -33,7 +33,6 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
 	listOfItems = [[NSMutableArray alloc] init];
 	[listOfItems addObject:@"KFC"];
 	[listOfItems addObject:@"Mac Donald"];
@@ -43,9 +42,8 @@
 	[listOfItems addObject:@"Lucky Chinatown"];
 	[listOfItems addObject:@"Hougang Green Shopping Mall"];
 	copyListOfItems = [[NSMutableArray alloc]init];
-	self.navigationItem.title = @"Shops list";
+	self.navigationItem.title = @"Shop list";
 	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-	
 	searching = NO;
 	letUserSelectRow = YES;
 	NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"This level",@"Favorite",nil];
@@ -57,7 +55,7 @@
 	UIBarButtonItem* category = [[UIBarButtonItem alloc]initWithTitle:@"category" style:UIBarButtonItemStyleBordered target:self action:@selector(category:) ];
 	self.toolbarItems = [NSMutableArray arrayWithObjects:barButton,category,nil];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
-self.contentSizeForViewInPopover = CGSizeMake(100, 350);
+	self.contentSizeForViewInPopover = CGSizeMake(320, 850);
 	
 	
 }
@@ -67,6 +65,32 @@ self.contentSizeForViewInPopover = CGSizeMake(100, 350);
 }
 -(id)initWithMall:(Mall*)mall{
 	return self;
+}
+- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+    /*
+     When a row is selected, set the detail view controller's detail item to 
+     the item associated with the selected row.
+     */
+    //detailViewController.detailItem = 
+    //    [NSString stringWithFormat:@"Row %d", indexPath.row];
+	NSString *selectedItem = nil;
+	NSString *searchingText = searchBar.text;
+	if(searching && [searchingText length]!=0)
+		selectedItem = [copyListOfItems objectAtIndex:indexPath.row];
+	else {
+		
+		selectedItem = [listOfItems objectAtIndex:indexPath.row];
+	}
+	
+	//Initialize the detail view controller and display it.
+	
+	Mall * chosenMall = [[[Mall alloc] init] autorelease];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen" object:chosenMall];
+	
+	//cityMapViewController.detailItem = 
+	//[NSString stringWithFormat:@"%@", 
+	//[listOfMovies objectAtIndex:indexPath.row]];    
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.

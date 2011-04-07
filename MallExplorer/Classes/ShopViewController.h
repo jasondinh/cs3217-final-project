@@ -10,7 +10,7 @@
 #import "AnnoViewController.h"
 
 
-@interface ShopViewController : UITabBarController {
+@interface ShopViewController : UITabBarController<UINavigationControllerDelegate> {
 
 }
 
