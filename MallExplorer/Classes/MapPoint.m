@@ -13,12 +13,14 @@
 @synthesize position;
 @synthesize annotation;
 @synthesize index;
+@synthesize level;
 
--(MapPoint*) initWithPosition:(CGPoint) pos andIndex:(int) ind{
+-(MapPoint*) initWithPosition:(CGPoint) pos inLevel:(Map*)map andIndex:(int) ind{
 	self = [super init];
 	if (self) {
 		self.position = pos;
 		self.index = ind;
+		self.level = map;
 	}
 	return self;
 }
@@ -32,6 +34,18 @@
 +(double) getDistantBetweenCoordination:(CGPoint) p1 andCoordination: (CGPoint) p2{
 	return sqrt((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y));
 }
+-(BOOL) isEqual:(id)o{
+	if (![o isMemberOfClass:[MapPoint class]]) {
+		return NO;
+	}
+	MapPoint* obj = (MapPoint*) o;
+	if (position.x == obj.position.x && position.y == obj.position.y && level == obj.level) {
+		return YES;
+	} else return NO;
+}
 
-
+-(void) dealloc{
+	[annotation release];
+	[super dealloc];
+}
 @end

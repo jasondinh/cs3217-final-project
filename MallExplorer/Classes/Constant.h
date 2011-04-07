@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 
 // Map constant
-#define MAP_ORGIN_X = 100
-#define MAP_ORGIN_Y = 50
-#define MAP_WIDTH	= 500
-#define MAP_HEIGHT	= 500
+#define MAP_ORIGIN_X 100
+#define MAP_ORIGIN_Y 50
+#define MAP_WIDTH	500
+#define MAP_HEIGHT	500
 
 //API constant
 

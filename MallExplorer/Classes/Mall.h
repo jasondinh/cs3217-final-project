@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "Map.h"
+#import "MapPoint.h"
+#import "Graph.h"
 
 @interface Mall : NSObject {
 	NSInteger mId;
@@ -16,12 +18,22 @@
 	NSString *latitude;
 	NSString *address;
 	NSInteger zip;
+	NSInteger numberOfMaps;
+	
+	// this list holds a set of maps
+	NSMutableArray* mapList;
+	// this list holds the "connecting points" that connect map to map
+	// this list form a graph that is used for searching path between different levels
+	NSMutableArray* mapPointList;
+	Graph* mallGraph;
 }
 
 @property (retain) NSString *name;
 @property (retain) NSString *longitude;
 @property (retain) NSString *latitude;
 @property (retain) NSString *address;
+@property (retain) NSArray* mapList;
+@property (retain) NSArray* mapPointList;
 
 @property NSInteger mId;
 @property NSInteger zip;
@@ -32,5 +44,14 @@
 	  andLatitude: (NSString *) lat
 	   andAddress: (NSString *)a
 		   andZip: (NSInteger) z;
+
+//-(void) loadConnectingPointList:(NSArray *)pLists withEdgeList:(NSArray*) edgeLists;
+
+//stair is an array of edge
+-(void) buildGraphWithMaps: (NSArray*) mList andStairs:(NSArray*) edgeList;
+
+// find path between any two points in any two levels
+-(NSArray*) findPathFrom:(CGPoint) point1 inLevel:(Map*)level1 to: (CGPoint) point2 inLevel:(Map*) level2;
+-(NSArray*) findPathFromStartAnnotation:(Annotation*) anno1 ToGoalAnnotaion:(Annotation*) anno2;
 
 @end

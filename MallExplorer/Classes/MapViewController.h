@@ -11,6 +11,7 @@
 #import "Annotation.h"
 #import "Map.h"
 #import "LineEdgeView.h"
+#import "Constant.h"
 @interface MapViewController : UIViewController<UIScrollViewDelegate> {
 	NSMutableArray* annotationList;
 	NSMutableArray* edgeDisplayedList;
@@ -39,6 +40,8 @@
 							 pointList:(NSArray*) pointList
 							  edgeList:(NSArray*) edgeList;
 -(MapViewController*) initMallWithFrame: (CGRect) aFrame;
+-(MapViewController*) initMallWithFrame: (CGRect) aFrame andMap:(Map*) aMap;
+
 -(void) toggleDisplayText;
 // startPos and goalPos is the position on scrollView coordination
 -(NSArray*) findPathFromStartPosition:(CGPoint)startPos ToGoalPosition:(CGPoint) goalPos;
@@ -47,4 +50,5 @@
 -(NSArray*) findPathFromStartAnnotation:(Annotation*)start ToGoalAnnotaion:(Annotation*) goal;
 // find path from point1 to an item in category type: 
 //-(NSArray*) findPathFrom:() point1 to: () type;
+-(void) redisplayPath;
 @end

@@ -10,6 +10,7 @@
 #import	"Shop.h"
 #import "MapPoint.h"
 
+@class Map;
 typedef enum {
 	kAnnoShop,
  	kAnnoStart,
@@ -23,11 +24,13 @@ typedef enum {
 	BOOL isDisplayed;
 	AnnotationType annoType;
 	MapPoint* thePoint;
+	Map* level;
 }
 @property AnnotationType annoType;
 @property CGPoint position;
 @property (nonatomic, retain) NSString* title;
 @property (nonatomic, retain) NSString* content;
+@property (nonatomic, retain) Map* level;
 @property BOOL isDisplayed;
--(Annotation*) initAnnotationType: (AnnotationType) annType WithPosition: (CGPoint) position title:(NSString*) title content: (NSString*) content;
+-(Annotation*) initAnnotationType: (AnnotationType) annType inlevel:(Map*)level WithPosition: (CGPoint) position title:(NSString*) title content: (NSString*) content;
 @end

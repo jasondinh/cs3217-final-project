@@ -8,15 +8,19 @@
 
 #import "Mall.h"
 
+const int MAX_LEVEL_POSSIBLE = 10000;
 @implementation Mall
 @synthesize name, longitude, latitude, address, mId, zip;
+@synthesize mapList;
+@synthesize mapPointList;
 
 - (id) initWithId: (NSInteger) _mId  
 		  andName: (NSString *) n 
 	 andLongitude: (NSString *) lon 
 	  andLatitude: (NSString *) lat
 	   andAddress: (NSString *)a
-		   andZip: (NSInteger) z {
+		   andZip: (NSInteger) z 
+{
 	
 	self = [super init];
 	
@@ -27,8 +31,130 @@
 		self.latitude = lat;
 		self.address = a;
 		self.zip = zip;
+		self.mapList = nil;
+		mapList = nil;
+		mapPointList = nil;
 	}
 	return self;
+}
+
+-(MapPoint*) addConnectingPoint:(MapPoint*) aPoint{
+	int index = [mapPointList indexOfObject:aPoint];
+	if (index == NSNotFound) {
+		[mapPointList addObject:aPoint];
+		[mallGraph addNode:aPoint];
+		Map* aLevel = [mapList objectAtIndex:[mapList indexOfObject:aPoint.level]];
+		[mallGraph addEdge:[mapPointList lastObject] andObject2: aLevel withWeight:MAX_LEVEL_POSSIBLE+100];
+		[mallGraph addEdge:aLevel andObject2:[mapPointList lastObject]  withWeight:MAX_LEVEL_POSSIBLE+100];
+		for ( int i = 0; i<[mapPointList count]; i++) {
+			MapPoint* aMapPoint = [mapPointList objectAtIndex:i];
+			if (![aMapPoint isEqual:aPoint] && [aMapPoint.level isEqual:aPoint.level]) {
+				// later this function can change to accommodate the path between two stairs on a same level.
+				// now that path is assumed to be of length 1
+				[mallGraph addEdge:aMapPoint andObject2:aPoint withWeight:1];
+			}
+		}
+		return [mapPointList lastObject];
+	} else {
+		return [mapPointList objectAtIndex:index];
+	}
+
+}
+
+-(void) buildGraphWithMaps: (NSArray*) mList andStairs:(NSArray*) stairList{
+	// building graph
+	mallGraph = [[Graph alloc] init];
+	mapList = [[NSMutableArray arrayWithArray:mList] retain];
+	mapPointList = [[NSMutableArray alloc] init];
+	NSLog(@"mall with: %d level", [mapList count]);
+	NSLog(@"stair list with: %d", [stairList count]);
+	for (int i = 0; i<[mapList count]; i++) {
+		Map* aNode = [mapList objectAtIndex:i];
+		[mallGraph addNode:aNode];
+	}
+	for (int i = 0; i<[stairList count]; i++) {
+		Edge* anEdge = [stairList objectAtIndex: i];
+		MapPoint* node1 = anEdge.pointA;
+		node1 = [self addConnectingPoint:node1];
+		MapPoint* node2 = anEdge.pointB;
+		node2 = [self addConnectingPoint:node2];
+		NSLog(@"%@ %@", node1.level.mapName, node2.level.mapName);
+		[mallGraph addEdge:node1 andObject2:node2 withWeight:1];
+		if (anEdge.isBidirectional) {
+			[mallGraph addEdge:node2 andObject2:node1 withWeight:1];
+		}
+	}
+}
+
+-(void)addMap:(Map*) aMap{
+	
+}
+
+-(void) loadMaps:(NSArray*) mList{
+	
+}
+
+-(NSArray*) pathFindingBetween:(Map*) map1 and: (Map*) map2{
+	return [mallGraph getShortestPathFromObject:map1 toObject:map2];
+}
+-(NSArray*) findPathFrom:(CGPoint) startPos inLevel:(Map*)level1 to: (CGPoint)goalPos inLevel:(Map*) level2{
+	// reset all the path now;
+	NSLog(@"now finding path ------------------------------");
+	for ( int i = 0; i<[mapList count]; i++) {
+		[[mapList objectAtIndex:i] resetPathOnMap];
+		//self.levelPath = nil;
+	}
+	MapPoint* startPoint = [[MapPoint alloc] initWithPosition:startPos inLevel:level1  andIndex:0];
+	MapPoint* goalPoint = [[MapPoint alloc] initWithPosition:goalPos inLevel:level2 andIndex:0];
+	MapPoint* point1 = [level1 getClosestMapPointToPosition:startPos];
+	MapPoint* point2 = [level2 getClosestMapPointToPosition:goalPos];
+	if ([level1 isEqual:level2]) {
+		NSMutableArray* result = [[NSMutableArray alloc] initWithObjects:startPoint, nil];
+		[result addObjectsFromArray:[level1 findPathFrom:point1 to:point2]];
+		[result addObject:goalPoint];
+		result = [level1 refineAPath:result];
+		//NSLog(@"path found with: %d node", [result count] );
+//		for	(int i = 0; i<[result count]; i++){
+//			MapPoint* aPoint = [result objectAtIndex:i];
+//			NSLog(@"%lf %lf", aPoint.position.x, aPoint.position.y);
+//		}
+		[level1 addPathOnMap: result];
+		return result;
+	}
+	else {
+		NSMutableArray* pathBetweenLevel = [NSMutableArray arrayWithArray:[mallGraph getShortestPathFromObject:level1 toObject: level2]];
+		[pathBetweenLevel insertObject:point1 atIndex:0];
+		[pathBetweenLevel addObject:point2];
+		for (int i = [pathBetweenLevel count]-1; i>=0; i--) {
+			if ([[pathBetweenLevel objectAtIndex:i] isMemberOfClass:[Map class]]) [pathBetweenLevel removeObjectAtIndex:i];
+		}
+		
+		for (int i = 0; i<[pathBetweenLevel count]-1; i++) {
+			id p1 = [pathBetweenLevel objectAtIndex:i];
+			id p2 = [pathBetweenLevel objectAtIndex:i+1];
+			Map* lev1;
+			Map* lev2;
+//			if ([p1 isMemberOfClass:[Map class]]) lev1 = p1;
+			lev1 = [p1 level];
+			//if ([p2 isMemberOfClass:[Map class]]) lev2 = p2;
+			lev2 = [p2 level];
+			if ([lev1 isEqual:lev2]) {
+				NSArray* aPath = [lev1 findPathFrom:p1 to:p2];
+				[lev1 addPathOnMap:aPath];
+			}
+		}
+		
+		[level1 addPathOnMap:[NSArray arrayWithObjects:startPoint, point1, nil]];
+		[level2 addPathOnMap:[NSArray arrayWithObjects:point2, goalPoint, nil]];
+		
+	}
+	NSLog(@"map name is: %@", point1.level.mapName);
+	return nil;
+}
+
+-(NSArray*) findPathFromStartAnnotation:(Annotation*) anno1 ToGoalAnnotaion:(Annotation*) anno2{
+	// closet position
+	[self findPathFrom:anno1.position inLevel:anno1.level to:anno2.position inLevel:anno2.level];
 }
 
 - (void) dealloc  {

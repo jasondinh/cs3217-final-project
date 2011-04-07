@@ -178,7 +178,7 @@
 
 -(int) getNodeWithSmallestDistanceWithDistanceArray: (double*) dist andCheckArray:(BOOL*) check{
 	double minDist = INFINITY;
-	int minPos;
+	int minPos = -1;
 	for (int i = 0; i<nextNodeIndex; i++) if (!check[i])
 	{
 		if (dist[i] < minDist) {
@@ -187,6 +187,16 @@
 		}
 	}
 	return minPos;
+}
+
+-(GraphNode*) getGraphNodeFromObject:(id) object{
+	for (int i = 0; i<[listNode count]; i++) {
+		GraphNode* aNode = [listNode objectAtIndex:i];
+		if (aNode.object == object) {
+			return aNode;
+		}
+	}
+	return nil;
 }
 
 -(NSArray*) dijkstraFrom: (GraphNode*) start to: (GraphNode*) goal{
@@ -207,6 +217,9 @@
 	dist[start.index] = 0;
 	while (YES) {
 		int minPosNode = [self getNodeWithSmallestDistanceWithDistanceArray: dist andCheckArray:check];
+		if (minPosNode == -1) {
+			return nil;
+		}
 		check[minPosNode] = YES;
 		GraphNode* node = [listNode objectAtIndex:minPosNode];
 		if ([node isEqual:goal]) {
@@ -241,23 +254,36 @@
 }
 
 -(NSArray*) getShortestPathFromNodeWithIndex:(int) n1 toNodeWithIndex:(int) n2{
-	NSLog(@"get Shortest path from %d to %d", n1, n2);
-	for (int i = 0; i<[listNode count]; i++) {
-//		NSLog(@" object %d, with index: %d, coordination %lf %lf", i, [[listNode objectAtIndex:i] index], [[[[listNode objectAtIndex:i] object ] position ]x],[[[[listNode objectAtIndex:i] object ] position ]y]);
-		NSArray* adjacentList = [listEdge objectAtIndex:i];
-		NSLog(@" adjacent to %d is: %d", i, [adjacentList count]);
-		for (int i = 0; i<[adjacentList count]; i++) {
-			GraphEdge* anEdge = [adjacentList objectAtIndex:i];
-			NSLog(@"connect to %d with weight %lf", [anEdge getDestinationNode].index, [anEdge weight]);
-		}
-		
-	}
+//	NSLog(@"get Shortest path from %d to %d", n1, n2);
+//	for (int i = 0; i<[listNode count]; i++) {
+////		NSLog(@" object %d, with index: %d, coordination %lf %lf", i, [[listNode objectAtIndex:i] index], [[[[listNode objectAtIndex:i] object ] position ]x],[[[[listNode objectAtIndex:i] object ] position ]y]);
+//		NSArray* adjacentList = [listEdge objectAtIndex:i];
+//		NSLog(@" adjacent to %d is: %d", i, [adjacentList count]);
+//		for (int i = 0; i<[adjacentList count]; i++) {
+//			GraphEdge* anEdge = [adjacentList objectAtIndex:i];
+//			NSLog(@"connect to %d with weight %lf", [anEdge getDestinationNode].index, [anEdge weight]);
+//		}
+//		
+//	}
 	NSArray* result = [self dijkstraFrom:[listNode objectAtIndex:n1] to:[listNode objectAtIndex:n2]];
-	NSLog(@"the found path: ");
-	for (int i = 0; i<[result count]; i++) {
-		NSLog(@"%d", [[result objectAtIndex:i] index]);
-	}
+//	NSLog(@"the found path: ");
+//	for (int i = 0; i<[result count]; i++) {
+//		NSLog(@"%d", [[result objectAtIndex:i] index]);
+//	}
 	return result;
+}
+
+-(NSArray*) getShortestPathFromObject: (id) obj1 toObject:(id) obj2{
+	GraphNode* node1 = [self getGraphNodeFromObject:obj1];
+	GraphNode* node2 = [self getGraphNodeFromObject:obj2];	
+	return [self getShortestPathFrom:node1 to:node2];
+	
+}
+
+-(void) dealloc{
+	[listNode release];
+	[listEdge release];
+	[super dealloc];
 }
 
 @end

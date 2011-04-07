@@ -4,7 +4,7 @@
 //
 //  Created by bathanh-m on 3/25/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
+//  Author: Tran Cong Hoang
 
 #import "Map.h"
 
@@ -13,13 +13,25 @@
 
 @synthesize annotationList;
 @synthesize pointList;
-
+@synthesize mapName;
 @synthesize imageMap;
-
+@synthesize pathOnMap;
+@synthesize edgeList;
+@synthesize defaultCenterPoint;
 const double toleranceRange = 10;
 // number of maximum steps in binery search in B->C to refine a path A->B->C by a point in between B,C
 BOOL canRefinePath;
 const int maxNumstep = 10;
+
+-(BOOL) isEqual:(id)o{
+	if (![o isMemberOfClass:[Map class]]) {
+		return NO;
+	}
+	Map* obj = (Map*) o;
+	if ((mapName==nil && obj.mapName==nil) ||[mapName isEqualToString:obj.mapName]){
+		return YES;
+	} else return NO;
+}
 
 -(void) addAnnotation: (Annotation*) annotation{
 	[annotationList addObject:annotation];
@@ -27,14 +39,10 @@ const int maxNumstep = 10;
 -(void) addPoint: (MapPoint*) aPoint{
 	[pointList addObject:aPoint];
 }
--(Map*) initWithMapImage:(UIImage*) img annotationList:(NSArray*) annList pointList:(NSArray*) pList edgeList:(NSArray*) edgeList{
-	self = [super init];
-	if (!self) return nil;
-	self.imageMap = img;
-	self.annotationList = [[NSMutableArray arrayWithArray:annList] retain];
-	self.pointList = [[NSMutableArray arrayWithArray:pList] retain];
 
-	// building graph
+#pragma mark initializers
+
+-(void) buildGraph{
 	graph = [[Graph alloc] init];
 	NSLog(@"point list with: %d", [pointList count]);
 	NSLog(@"edge list with: %d", [edgeList count]);
@@ -55,8 +63,39 @@ const int maxNumstep = 10;
 	}
 	canRefinePath = [self createBitmapFromImage];
 	passAbleColor = [[self getPixelColorAtLocation:[[pointList objectAtIndex:0] position]] retain];
+}
+
+-(Map*) initWithAnObject:(id) object{
+	[self release];
+	self = [object retain];
+	[self buildGraph];
 	return self;
 }
+
+-(Map*) init{
+	self = [super init];
+	if (self) {
+		self.pathOnMap = [[NSMutableArray alloc] init];
+	}
+	return self;
+}
+
+-(void) loadDataWithMapName:(NSString*) mName withMapImage:(UIImage*) img annotationList:(NSArray*) annList pointList:(NSArray*) pList edgeList:(NSArray*) edgeList defaultCenterPoint:(CGPoint) dfCenterPoint{
+//	self = [super init];
+//	if (!self) return nil;
+	imageMap = img;
+	mapName = mName;
+	self.annotationList = [NSMutableArray arrayWithArray:annList];
+	self.pointList = [NSMutableArray arrayWithArray:pList] ;
+	self.edgeList = [NSArray arrayWithArray:edgeList];
+	self.defaultCenterPoint = dfCenterPoint;
+	// building graph of this map
+	[self buildGraph];
+	//return self;
+}
+
+#pragma mark -
+#pragma mark path finding
 
 -(NSArray*) findPathFrom:(MapPoint*) point1 to: (MapPoint*) point2{
 	return [graph getShortestPathFromNodeWithIndex:point1.index toNodeWithIndex:point2.index];
@@ -221,12 +260,12 @@ const int maxNumstep = 10;
 			if ([MapPoint getDistantBetweenCoordination:leftPoint andCoordination:rightPoint]<5)
 			{
 				if ([self canTravelFrom:[[path objectAtIndex:i] position] to:rightPoint]) {
-					MapPoint* aPoint = [[MapPoint alloc] initWithPosition:rightPoint andIndex:0];
+					MapPoint* aPoint = [[MapPoint alloc] initWithPosition:rightPoint inLevel:self andIndex:0];
 					[path replaceObjectAtIndex:j withObject:aPoint];
 					[aPoint release];
 					break;
 				} else if (leftPoint.x!=left.position.x || leftPoint.y!=left.position.y){
-					MapPoint* aPoint = [[MapPoint alloc] initWithPosition:rightPoint andIndex:0];
+					MapPoint* aPoint = [[MapPoint alloc] initWithPosition:rightPoint inLevel:self andIndex:0];
 					[path replaceObjectAtIndex:j withObject:aPoint];
 					[aPoint release];
 					break;
@@ -244,7 +283,7 @@ const int maxNumstep = 10;
 		}
 		if (numStep == maxNumstep) {
 			if (hasChosen) {
-				MapPoint* aPoint = [[MapPoint alloc] initWithPosition:holdTemp andIndex:0];
+				MapPoint* aPoint = [[MapPoint alloc] initWithPosition:holdTemp inLevel:self andIndex:0];
 				[path replaceObjectAtIndex:j withObject:aPoint];
 				[aPoint release];
 			}
@@ -280,12 +319,28 @@ const int maxNumstep = 10;
 	}
 	return path;
 }
+
+-(void) addPathOnMap:(NSArray*)aPath{
+	for (int i = 0; i<[aPath count]-1; i++) {
+		MapPoint* point1 = [aPath objectAtIndex:i];
+		MapPoint* point2 = [aPath objectAtIndex:i+1];
+		Edge* anEdge = [[Edge alloc] initWithPoint1:point1  point2:point2 withLength:[MapPoint getDistantBetweenPoint:point1 andPoint:point2] isBidirectional:YES withTravelType:kWalk];
+		[pathOnMap addObject:anEdge];
+	}
+}
+-(void) resetPathOnMap{
+	[pathOnMap removeAllObjects];
+}
 				
 -(void) dealloc{
+	[edgeList release];
 	[imageMap release];
 	[pointList release];
 	[annotationList release];
 	[graph release];
+	if (pathOnMap) {
+		[pathOnMap release];	
+	}
 	[super dealloc];
 }
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "Annotation.h"
-
+#import "Map.h"
 
 @implementation Annotation
 @synthesize annoType;
@@ -15,7 +15,8 @@
 @synthesize title;
 @synthesize content;
 @synthesize isDisplayed;
--(Annotation*) initAnnotationType: (AnnotationType) annType WithPosition: (CGPoint) pos title:(NSString*) tit content: (NSString*) cont{
+@synthesize level;
+-(Annotation*) initAnnotationType: (AnnotationType) annType inlevel:(Map*)lev WithPosition: (CGPoint) pos title:(NSString*) tit content: (NSString*) cont{
 	self = [super init];
 	self.annoType = annType;
 	/*switch (annoType) {
@@ -31,6 +32,7 @@
 			break;
 	}*/
 	if (!self) return nil;
+	self.level = lev;
 	self.isDisplayed = YES;
 	self.position = pos;
 	self.title = tit;

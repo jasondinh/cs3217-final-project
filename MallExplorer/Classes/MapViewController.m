@@ -75,20 +75,7 @@ NSMutableArray* edgeList;
 	}
 	
 	[hiddenAttribute release];
-	for (int i = 0; i<[edgeDisplayedList count]; i++) {
-		LineEdgeView* aLine = [edgeDisplayedList objectAtIndex:i];
-		aLine.startPoint = [self translatePointToScrollViewCoordinationFromMapCoordination:aLine.startPoint];
-		aLine.goalPoint = [self translatePointToScrollViewCoordinationFromMapCoordination: aLine.goalPoint];
-		[aLine adjustFrameToPoint1: aLine.startPoint andPoint2:aLine.goalPoint];
-		NSLog(@"after zooming %lf %lf %lf %lf", aLine.startPoint.x, aLine.startPoint.y, aLine.goalPoint.x, aLine.goalPoint.y);
-	}
-	for (int i = 0; i<[edgeDisplayedList count]; i++)
-	{
-		LineEdgeView* aLine = [edgeDisplayedList objectAtIndex:i];
-		[displayArea addSubview:aLine];
-		[displayArea sendSubviewToBack:aLine];
-	}
-	[displayArea sendSubviewToBack:imageView];
+	[self redisplayPath];
 }
 
 #pragma mark -
@@ -113,7 +100,7 @@ NSMutableArray* edgeList;
 }
 
 -(AnnoViewController*) addAnnotationType:(AnnotationType) annType ToScrollViewAtPosition:(CGPoint)pos withTitle:(NSString*) title withContent:(NSString*) content {
-	Annotation* anno = [[Annotation alloc] initAnnotationType:annType WithPosition:[self translatePointToMapCoordinationFromScrollViewCoordination:pos] title:title content:content];
+	Annotation* anno = [[Annotation alloc] initAnnotationType:annType inlevel:self.map WithPosition:pos title:title content:content];
 	NSLog(@"position of new annotation: %lf %lf", pos.x, pos.y);
 	NSLog(@"position of new annotation: %lf %lf", [self translatePointToMapCoordinationFromScrollViewCoordination: pos].x, [self translatePointToMapCoordinationFromScrollViewCoordination: pos].y);
 	AnnoViewController* annoView = [[AnnoViewController alloc] initWithAnnotation:anno];
@@ -152,16 +139,21 @@ NSMutableArray* edgeList;
 							 pointList:(NSArray*) pointList
 							  edgeList:(NSArray*) edgeList
 {
+	Map* aMap = [[Map alloc] initWithMapImage:img annotationList:annList pointList:pointList edgeList:edgeList defaultCenterPoint:defaultPoint];
+	return [self initMallWithFrame:CGRectMake(MAP_ORIGIN_X, MAP_ORIGIN_Y, MAP_WIDTH, MAP_HEIGHT) andMap:aMap];
+}
+
+-(MapViewController*) initMallWithFrame: (CGRect) aFrame andMap:(Map*) aMap{
 	self = [super init];
 	if (!self) return nil;
+	self.map = aMap;
 	zoomScale = 1.0;
-	mapCenterPoint = defaultPoint;
+	mapCenterPoint = aMap.defaultCenterPoint;
 	annotationList = [[NSMutableArray alloc] init];
 	edgeDisplayedList = [[NSMutableArray alloc] init];
-	self.map = [[Map alloc] initWithMapImage:img annotationList:annList pointList:pointList edgeList:edgeList];
-	mapSize = img.size;
-	for (int i= 0; i<[annList count]; i++) {
-		AnnoViewController* annoView = [[AnnoViewController alloc] initWithAnnotation: [annList objectAtIndex:i]];
+	mapSize = aMap.imageMap.size;
+	for (int i= 0; i<[aMap.annotationList count]; i++) {
+		AnnoViewController* annoView = [[AnnoViewController alloc] initWithAnnotation: [annotationList objectAtIndex:i]];
 		[annotationList addObject:annoView];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(annotationChangeToggle:) name:@"title is shown" object:nil];
 		[annoView release];
@@ -175,79 +167,79 @@ NSMutableArray* edgeList;
 -(MapViewController*) initMallWithFrame:(CGRect) aFr{
 	aFrame = aFr;
 	NSLog(@"initMall");
-	UIImage* image = [UIImage imageNamed:@"map.gif"];
+	UIImage* image = [UIImage imageNamed:@"map.jpg"];
 	NSMutableArray* pointList = [[NSMutableArray alloc] init];
 	edgeList = [[NSMutableArray alloc] init];
-	MapPoint* point = [[MapPoint alloc] initWithPosition:CGPointMake(31.000000, 30.000000) andIndex:0];
+	MapPoint* point = [[MapPoint alloc] initWithPosition:CGPointMake(31.000000, 30.000000) inLevel:self.map andIndex:0];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(126.000000, 33.000000) andIndex:1];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(126.000000, 33.000000) inLevel:self.map andIndex:1];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(297.000000, 69.000000) andIndex:2];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(297.000000, 69.000000) inLevel:self.map andIndex:2];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(249.000000, 16.000000) andIndex:3];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(249.000000, 16.000000) inLevel:self.map andIndex:3];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(101.000000, 197.000000) andIndex:4];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(101.000000, 197.000000) inLevel:self.map andIndex:4];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(22.000000, 185.000000) andIndex:5];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(22.000000, 185.000000) inLevel:self.map andIndex:5];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(90.000000, 282.000000) andIndex:6];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(90.000000, 282.000000) inLevel:self.map andIndex:6];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(71.000000, 331.000000) andIndex:7];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(71.000000, 331.000000) inLevel:self.map andIndex:7];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(32.000000, 373.000000) andIndex:8];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(32.000000, 373.000000) inLevel:self.map andIndex:8];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(176.000000, 462.000000) andIndex:9];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(176.000000, 462.000000) inLevel:self.map andIndex:9];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(335.000000, 469.000000) andIndex:10];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(335.000000, 469.000000) inLevel:self.map andIndex:10];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(407.000000, 277.000000) andIndex:11];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(407.000000, 277.000000) inLevel:self.map andIndex:11];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(556.000000, 279.000000) andIndex:12];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(556.000000, 279.000000) inLevel:self.map andIndex:12];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(688.000000, 278.000000) andIndex:13];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(688.000000, 278.000000) inLevel:self.map andIndex:13];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(403.000000, 115.000000) andIndex:14];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(403.000000, 115.000000) inLevel:self.map andIndex:14];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(535.000000, 59.000000) andIndex:15];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(535.000000, 59.000000) inLevel:self.map andIndex:15];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(537.000000, 184.000000) andIndex:16];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(537.000000, 184.000000) inLevel:self.map andIndex:16];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(534.000000, 121.000000) andIndex:17];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(534.000000, 121.000000) inLevel:self.map andIndex:17];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(685.000000, 139.000000) andIndex:18];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(685.000000, 139.000000) inLevel:self.map andIndex:18];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(442.000000, 319.000000) andIndex:19];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(442.000000, 319.000000) inLevel:self.map andIndex:19];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(455.000000, 424.000000) andIndex:20];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(455.000000, 424.000000) inLevel:self.map andIndex:20];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(530.000000, 448.000000) andIndex:21];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(530.000000, 448.000000) inLevel:self.map andIndex:21];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(529.000000, 387.000000) andIndex:22];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(529.000000, 387.000000) inLevel:self.map andIndex:22];
 	[pointList addObject:point];
 	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(545.000000, 516.000000) andIndex:23];
+	point = [[MapPoint alloc] initWithPosition:CGPointMake(545.000000, 516.000000) inLevel:self.map andIndex:23];
 	[pointList addObject:point];
 	[point release];
 	Edge* edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 0] point2:[pointList objectAtIndex: 1] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 0] andPoint:[pointList objectAtIndex: 1]] isBidirectional:YES withTravelType:kWalk];
@@ -426,7 +418,7 @@ NSMutableArray* edgeList;
 -(void) tapToScrollViewPoint:(UIGestureRecognizer*) gesture{
 	CGPoint aPoint = [gesture locationInView:displayArea];
 	NSLog(@"MapPoint* point = [[MapPoint alloc] initWithPosition:CGPointMake(%lf %lf) andIndex:%d]", aPoint.x, aPoint.y,[map.pointList count]);
-	MapPoint* point = [[MapPoint alloc] initWithPosition:aPoint andIndex: [map.pointList count]];
+	MapPoint* point = [[MapPoint alloc] initWithPosition:aPoint inLevel:self.map andIndex: [map.pointList count]];
 	LineEdgeView* aLine = [[LineEdgeView alloc] initWithPoint1:aPoint andPoint2:CGPointMake(aPoint.x+2, aPoint.y+2)];
 	[displayArea addSubview:aLine];
 	[aLine release];
@@ -521,8 +513,8 @@ NSMutableArray* edgeList;
 -(NSArray*) findPathFromStartPosition:(CGPoint)startPos ToGoalPosition:(CGPoint) goalPos{
 	startPos = [self translatePointToMapCoordinationFromScrollViewCoordination: startPos];
 	goalPos = [self translatePointToMapCoordinationFromScrollViewCoordination: goalPos];
-	MapPoint* startPoint = [[MapPoint alloc] initWithPosition:startPos andIndex:0];
-	MapPoint* goalPoint = [[MapPoint alloc] initWithPosition:goalPos andIndex:0];
+	MapPoint* startPoint = [[MapPoint alloc] initWithPosition:startPos inLevel:self.map  andIndex:0];
+	MapPoint* goalPoint = [[MapPoint alloc] initWithPosition:goalPos inLevel:self.map andIndex:0];
 	MapPoint* point1 = [map getClosestMapPointToPosition:startPos];
 	MapPoint* point2 = [map getClosestMapPointToPosition:goalPos];
 	
@@ -535,25 +527,6 @@ NSMutableArray* edgeList;
 		MapPoint* aPoint = [result objectAtIndex:i];
 		NSLog(@"%lf %lf", aPoint.position.x, aPoint.position.y);
 	}
-	for (int i = 0; i<[edgeDisplayedList count]; i++) {
-		[[edgeDisplayedList objectAtIndex:i] removeFromSuperview];
-	}
-	[edgeDisplayedList removeAllObjects];
-	for	(int i = 0; i<[result count]-1; i++)
-	{
-		CGPoint pos1 = [self translatePointToScrollViewCoordinationFromMapCoordination:[[result objectAtIndex:i] position]];
-		CGPoint pos2 = [self translatePointToScrollViewCoordinationFromMapCoordination:[[result objectAtIndex:i+1] position]];
-		LineEdgeView* aLineView = [[LineEdgeView alloc] initWithPoint1:pos1 andPoint2:pos2];
-		[edgeDisplayedList addObject:aLineView];
-		[aLineView release];
-	}
-	for (int i = 0; i<[edgeDisplayedList count]; i++) {
-		LineEdgeView* aLineView = [edgeDisplayedList objectAtIndex:i];
-		[displayArea addSubview:aLineView];
-		[displayArea sendSubviewToBack:aLineView];
-
-	}
-	[displayArea sendSubviewToBack:imageView];
 	return result;
 }
 
@@ -562,6 +535,29 @@ NSMutableArray* edgeList;
 	CGPoint startPos = [self translatePointToScrollViewCoordinationFromMapCoordination: start.position];
 	CGPoint goalPos = [self translatePointToScrollViewCoordinationFromMapCoordination: goal.position];
 	return [self findPathFromStartPosition:startPos ToGoalPosition: goalPos];
+}
+
+-(void) redisplayPath{
+	NSLog(@"display path: %d", [map.pathOnMap count]);
+	for (int i = 0; i<[edgeDisplayedList count]; i++) {
+		[[edgeDisplayedList objectAtIndex:i] removeFromSuperview];
+	}
+	[edgeDisplayedList removeAllObjects];
+	for	(int i = 0; i<[map.pathOnMap count]; i++)
+	{
+		CGPoint pos1 = [self translatePointToScrollViewCoordinationFromMapCoordination:[[[map.pathOnMap objectAtIndex:i] pointA] position]];
+		CGPoint pos2 = [self translatePointToScrollViewCoordinationFromMapCoordination:[[[map.pathOnMap objectAtIndex:i] pointB] position]];
+		LineEdgeView* aLineView = [[LineEdgeView alloc] initWithPoint1:pos1 andPoint2:pos2];
+		[edgeDisplayedList addObject:aLineView];
+		[aLineView release];
+	}
+	for (int i = 0; i<[edgeDisplayedList count]; i++) {
+		LineEdgeView* aLineView = [edgeDisplayedList objectAtIndex:i];
+		[displayArea addSubview:aLineView];
+		[displayArea sendSubviewToBack:aLineView];
+		
+	}
+	[displayArea sendSubviewToBack:imageView];
 }
 
 

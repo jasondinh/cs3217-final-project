@@ -34,8 +34,10 @@
 -(NSArray*) getAdjacentNodesToNodeWithIndex:(int) index;
 -(double) getWeightOfEdgeBetweenNode:(GraphNode*) n1 andNode:(GraphNode*) n2;
 -(double) getWeightOfEdgeBetweenNodeWithIndex:(int) n1 andNodeWithIndex:(int) n2;
+-(id) getGraphNodeFromObject:(id) object;
 
 // path finding 
 -(NSArray*) getShortestPathFrom: (GraphNode*) start to:(GraphNode*) goal;
 -(NSArray*) getShortestPathFromNodeWithIndex:(int) n1 toNodeWithIndex:(int) n2;
+-(NSArray*) getShortestPathFromObject: (id) obj1 toObject:(id) obj2;
 @end

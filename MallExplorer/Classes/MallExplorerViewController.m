@@ -38,14 +38,15 @@ BOOL chosen;
 
 -(void) mallChosen:(id) object{
 	if (!chosen) {
-		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
-		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
-		[self setDelegate: aMVC];
 		chosen = !chosen;
 		Mall* aMall = [[Mall alloc]init];
 
 		ShopListViewController* shopListViewController = [[ShopListViewController alloc] initWithMall:aMall] ;
 		[masterViewController pushViewController:shopListViewController animated:YES];
+		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
+		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
+		[self setDelegate: aMVC];
+		[aMVC loadMaps:nil andStairs:nil withDefaultMap:nil];
 
 	} else {
 		self.viewControllers = [NSArray arrayWithObjects:masterViewController, cityMapViewController, nil];

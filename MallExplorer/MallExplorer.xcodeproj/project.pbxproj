@@ -11,11 +11,12 @@
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		27029CE7134C68FD000956C8 /* map.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 27029CE5134C68FD000956C8 /* map.jpg */; };
+		27029CE8134C68FD000956C8 /* map1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 27029CE6134C68FD000956C8 /* map1.jpg */; };
 		2742DD0E1344DE7600E4A4A0 /* Graph.m in Sources */ = {isa = PBXBuildFile; fileRef = 2742DD091344DE7600E4A4A0 /* Graph.m */; };
 		2742DD0F1344DE7600E4A4A0 /* GraphEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2742DD0B1344DE7600E4A4A0 /* GraphEdge.m */; };
 		2742DD101344DE7600E4A4A0 /* GraphNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2742DD0D1344DE7600E4A4A0 /* GraphNode.m */; };
 		2742DE11134510F200E4A4A0 /* vivioMap.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2742DE10134510F200E4A4A0 /* vivioMap.gif */; };
-		275B5F3813467BE00063BF3D /* map.gif in Resources */ = {isa = PBXBuildFile; fileRef = 275B5F3713467BE00063BF3D /* map.gif */; };
 		275B5F401346806E0063BF3D /* icon_shop.png in Resources */ = {isa = PBXBuildFile; fileRef = 275B5F3F1346806E0063BF3D /* icon_shop.png */; };
 		275B62A31346CFC70063BF3D /* MallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 275B62A21346CFC70063BF3D /* MallViewController.xib */; };
 		275B63011346E5080063BF3D /* toogle-text-tooltips.png in Resources */ = {isa = PBXBuildFile; fileRef = 275B63001346E5080063BF3D /* toogle-text-tooltips.png */; };
@@ -127,6 +128,8 @@
 		1D3623250D0F684500981E51 /* MallExplorerAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallExplorerAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* MallExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MallExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		27029CE5134C68FD000956C8 /* map.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = map.jpg; sourceTree = "<group>"; };
+		27029CE6134C68FD000956C8 /* map1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = map1.jpg; sourceTree = "<group>"; };
 		2742DD081344DE7600E4A4A0 /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
 		2742DD091344DE7600E4A4A0 /* Graph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graph.m; sourceTree = "<group>"; };
 		2742DD0A1344DE7600E4A4A0 /* GraphEdge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphEdge.h; sourceTree = "<group>"; };
@@ -134,7 +137,6 @@
 		2742DD0C1344DE7600E4A4A0 /* GraphNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphNode.h; sourceTree = "<group>"; };
 		2742DD0D1344DE7600E4A4A0 /* GraphNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphNode.m; sourceTree = "<group>"; };
 		2742DE10134510F200E4A4A0 /* vivioMap.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = vivioMap.gif; sourceTree = "<group>"; };
-		275B5F3713467BE00063BF3D /* map.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = map.gif; sourceTree = "<group>"; };
 		275B5F3F1346806E0063BF3D /* icon_shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_shop.png; sourceTree = "<group>"; };
 		275B62A21346CFC70063BF3D /* MallViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MallViewController.xib; sourceTree = "<group>"; };
 		275B63001346E5080063BF3D /* toogle-text-tooltips.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toogle-text-tooltips.png"; sourceTree = "<group>"; };
@@ -671,8 +673,6 @@
 				E1C435E0133CC1E500646BF1 /* User.m */,
 				E1C435E2133CC1E900646BF1 /* Comment.h */,
 				E1C435E3133CC1E900646BF1 /* Comment.m */,
-				E1C435D0133CC1D200646BF1 /* Map.h */,
-				E1C435D1133CC1D200646BF1 /* Map.m */,
 				E1C435D3133CC1D500646BF1 /* MapPoint.h */,
 				E1C435D4133CC1D500646BF1 /* MapPoint.m */,
 				E1C435D6133CC1D700646BF1 /* Edge.h */,
@@ -681,6 +681,8 @@
 				E1C435DA133CC1DB00646BF1 /* Shop.m */,
 				E1C435DC133CC1DE00646BF1 /* Annotation.h */,
 				E1C435DD133CC1DE00646BF1 /* Annotation.m */,
+				E1C435D0133CC1D200646BF1 /* Map.h */,
+				E1C435D1133CC1D200646BF1 /* Map.m */,
 				E1C435CD133CC1CF00646BF1 /* Mall.h */,
 				E1C435CE133CC1CF00646BF1 /* Mall.m */,
 			);
@@ -699,12 +701,13 @@
 		E1C435C8133CC12600646BF1 /* Arts */ = {
 			isa = PBXGroup;
 			children = (
+				27029CE5134C68FD000956C8 /* map.jpg */,
+				27029CE6134C68FD000956C8 /* map1.jpg */,
 				275B63921346F0E80063BF3D /* PathFinding.png */,
 				275B63151346E9CE0063BF3D /* red_flag_icon.png */,
 				275B63111346E92B0063BF3D /* green_flag_icon.png */,
 				275B63001346E5080063BF3D /* toogle-text-tooltips.png */,
 				275B5F3F1346806E0063BF3D /* icon_shop.png */,
-				275B5F3713467BE00063BF3D /* map.gif */,
 				2742DE10134510F200E4A4A0 /* vivioMap.gif */,
 			);
 			name = Arts;
@@ -772,13 +775,14 @@
 				E1C43600133CC23E00646BF1 /* MapViewController.xib in Resources */,
 				39A4DA4E1344D9F000DFD802 /* CityMapViewController.xib in Resources */,
 				2742DE11134510F200E4A4A0 /* vivioMap.gif in Resources */,
-				275B5F3813467BE00063BF3D /* map.gif in Resources */,
 				275B5F401346806E0063BF3D /* icon_shop.png in Resources */,
 				275B62A31346CFC70063BF3D /* MallViewController.xib in Resources */,
 				275B63011346E5080063BF3D /* toogle-text-tooltips.png in Resources */,
 				275B63121346E92B0063BF3D /* green_flag_icon.png in Resources */,
 				275B63161346E9CE0063BF3D /* red_flag_icon.png in Resources */,
 				275B63931346F0E80063BF3D /* PathFinding.png in Resources */,
+				27029CE7134C68FD000956C8 /* map.jpg in Resources */,
+				27029CE8134C68FD000956C8 /* map1.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
