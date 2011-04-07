@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 
-@interface ListViewController : UITableViewController <UISearchBarDelegate,UITableViewDelegate, UITableViewDataSource>{
+@interface ListViewController : UITableViewController <UISearchBarDelegate,UITableViewDelegate, UITableViewDataSource,UINavigationControllerDelegate
+>{
 	NSMutableArray *listOfItems;
 	NSMutableArray *copyListOfItems;
 	UISearchBar * searchBar;

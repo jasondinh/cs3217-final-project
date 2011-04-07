@@ -37,6 +37,7 @@
 	searchBar.barStyle = UIBarStyleDefault;
 	searchBar.delegate = self;
 	[searchBar sizeToFit];
+	self.navigationController.delegate =self;
 
 	self.tableView.tableHeaderView = searchBar;	
 }
@@ -54,11 +55,33 @@
 	[self.tableView reloadData];
 }
 
+- (void)navigationController:(UINavigationController *)navigationController 
+	  willShowViewController:(UIViewController *)viewController animated:(BOOL)animated 
+{
 
+	if (viewController != self) {
+        self.navigationController.delegate = nil;
+        if ([[navigationController viewControllers] containsObject:self]) {
+            NSLog(@"FORWARD");
+        } else {
+            NSLog(@"BACKWARD");
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"Listview will appear" object:self];
+        }
+    }
+	
+    [viewController viewWillAppear:animated];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController 
+	   didShowViewController:(UIViewController *)viewController animated:(BOOL)animated 
+{
+	
+	
+    [viewController viewDidAppear:animated];
+}
 
 - (void)viewWillAppear:(BOOL)animated {
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"Listview will appear" object:self];
-    [super viewWillAppear:animated];
+	    [super viewWillAppear:animated];
 }
 
 /*

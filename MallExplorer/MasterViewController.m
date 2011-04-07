@@ -51,13 +51,14 @@
 	UIBarButtonItem *item = [[UIBarButtonItem alloc]   
                              initWithBarButtonSystemItem:UIBarButtonSystemItemAdd   
                              target:self   
-                             action:@selector(doSomething)];  
+                             action:@selector(doSomething:)];  
     self.navigationItem.rightBarButtonItem = item;  
 	self.navigationItem.title = @"Movies";   
 	self.toolbarHidden =NO;
 	[temp release];
-	
+	self.delegate = self;
 	[progress hide:YES];
+
 }
 
 - (void) requestDidStart {

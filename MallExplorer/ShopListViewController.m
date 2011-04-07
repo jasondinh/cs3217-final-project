@@ -33,7 +33,6 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
 	listOfItems = [[NSMutableArray alloc] init];
 	[listOfItems addObject:@"KFC"];
 	[listOfItems addObject:@"Mac Donald"];
@@ -43,9 +42,8 @@
 	[listOfItems addObject:@"Lucky Chinatown"];
 	[listOfItems addObject:@"Hougang Green Shopping Mall"];
 	copyListOfItems = [[NSMutableArray alloc]init];
-	self.navigationItem.title = @"Shops list";
+	self.navigationItem.title = @"Shop list";
 	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-	
 	searching = NO;
 	letUserSelectRow = YES;
 	NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"This level",@"Favorite",nil];
@@ -57,7 +55,7 @@
 	UIBarButtonItem* category = [[UIBarButtonItem alloc]initWithTitle:@"category" style:UIBarButtonItemStyleBordered target:self action:@selector(category:) ];
 	self.toolbarItems = [NSMutableArray arrayWithObjects:barButton,category,nil];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
-self.contentSizeForViewInPopover = CGSizeMake(100, 350);
+	self.contentSizeForViewInPopover = CGSizeMake(320, 850);
 	
 	
 }

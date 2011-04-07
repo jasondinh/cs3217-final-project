@@ -608,7 +608,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 		  withBarButtonItem:(UIBarButtonItem*)barButtonItem 
 	   forPopoverController: (UIPopoverController*)pc {
 	
-    barButtonItem.title = @"Root List";
+    NSLog(barButtonItem.title) ;//= @"Root List";
     NSMutableArray *items = [[toolbar items] mutableCopy];
     [items insertObject:barButtonItem atIndex:0];
     [toolbar setItems:items animated:YES];
@@ -619,7 +619,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 - (void)splitViewController: (UISplitViewController*)svc 
      willShowViewController:(UIViewController *)aViewController 
   invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
-	
+	  NSLog(barButtonItem.title) ;//= @"Root List";
     NSMutableArray *items = [[toolbar items] mutableCopy];
     [items removeObjectAtIndex:0];
     [toolbar setItems:items animated:YES];

@@ -28,7 +28,7 @@ BOOL chosen;
 //		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
 //		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
 //		[self setDelegate: aMVC];
-		cityMapViewController = [[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil];
+		cityMapViewController = [[[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil] retain];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ListViewWillAppear:) name:@"Listview will appear" object:nil];
 
@@ -39,12 +39,18 @@ BOOL chosen;
     return self;
 }
 -(void) ListViewWillAppear:(id)sender{
-	if ([[sender object] isKindOfClass:[MallListViewController class]]) {
+	NSLog(@"view will appear");
+
+	if ([[sender object] isKindOfClass:[ShopListViewController class]]) {
+		//cityMapViewController = [[[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil] retain];
+
 		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
 		[self setDelegate:cityMapViewController];
 	}
 	
+	
 }
+
 
 -(void) mallChosen:(id) object{
 	if (!chosen) {

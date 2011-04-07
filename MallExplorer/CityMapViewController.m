@@ -146,7 +146,9 @@
      willShowViewController:(UIViewController *)aViewController 
   invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
 	
+
     NSMutableArray *items = [[toolbar items] mutableCopy];
+	//if (((UIBarButtonItem*)[items objectAtIndex:0]).title ==@"Root List" )
     [items removeObjectAtIndex:0];
     [toolbar setItems:items animated:YES];
     [items release];

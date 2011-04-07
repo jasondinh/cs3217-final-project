@@ -18,4 +18,6 @@
 @property (nonatomic,retain) NSMutableArray* favoriteList;
 @property (nonatomic,retain) NSMutableArray* mallList;
 - (id) initWithMalls: (NSArray *) malls ;
+-(void)backButtonClick:(id)sender;
+-(void) doSomething:(id)sender;
 @end
