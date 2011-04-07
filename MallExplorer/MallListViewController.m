@@ -33,7 +33,12 @@
 	self = [super init];
 	
 	if (self) {
-		self.listOfItems = malls;
+		self.mallList = [malls mutableCopy];
+		listOfItems = [[NSMutableArray alloc]init];
+		for (Mall* aMall in malls){
+			
+			[listOfItems addObject:aMall.name];
+					}
 	}
 	
 	return self;
@@ -73,10 +78,10 @@
 	
 	// Set up the cell..
 	
-	Mall *tmpMall = [listOfItems objectAtIndex: indexPath.row];
+	NSString *tmpMall = [listOfItems objectAtIndex: indexPath.row];
 	
 	
-	cell.textLabel.text = tmpMall.name;
+	cell.textLabel.text = tmpMall;
 	
 	//
 //	if(searching)

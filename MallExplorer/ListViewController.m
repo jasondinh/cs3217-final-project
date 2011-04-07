@@ -55,11 +55,12 @@
 }
 
 
-/*
+
 - (void)viewWillAppear:(BOOL)animated {
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"Listview will appear" object:self];
     [super viewWillAppear:animated];
 }
-*/
+
 /*
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -138,7 +139,7 @@
 	
 	searching = YES;
 	letUserSelectRow = YES;
-	self.tableView.scrollEnabled = NO;
+	self.tableView.scrollEnabled = YES;
 	
 	//Add the done button.
 	/*self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
@@ -169,8 +170,8 @@
 	else {
 		
 		searching = NO;
-		letUserSelectRow = NO;
-		self.tableView.scrollEnabled = NO;
+		letUserSelectRow = YES;
+		self.tableView.scrollEnabled = YES;
 	}
 	
 	[self.tableView reloadData];
