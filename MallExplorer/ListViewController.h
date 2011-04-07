@@ -9,22 +9,28 @@
 #import <UIKit/UIKit.h>
 
 
-@interface ListViewController : UITableViewController <UISearchBarDelegate,UITableViewDelegate, UITableViewDataSource,UINavigationControllerDelegate
+@interface ListViewController : UITableViewController <UISearchDisplayDelegate, UISearchBarDelegate,UINavigationControllerDelegate
 >{
+	UISearchDisplayController *displayController;
 	NSMutableArray *listOfItems;
 	NSMutableArray *copyListOfItems;
+	
 	UISearchBar * searchBar;
 	UISegmentedControl* typeOfList;
-	BOOL searching;
-	BOOL letUserSelectRow;
+    NSString		*savedSearchTerm;
+    NSInteger		savedScopeButtonIndex;
+    BOOL			searchWasActive;
+
 }
-@property (retain) NSMutableArray* listOfItems;
+@property (retain) NSArray* listOfItems;
 @property (retain) IBOutlet UISearchBar *searchBar;
-@property (retain) NSMutableArray* copyListOfItems;
 @property (retain) IBOutlet UISegmentedControl* typeOfList;
+@property (retain) IBOutlet UISearchDisplayController *displayController;
 
+@property (retain) NSMutableArray* copyListOfItems;
+@property (nonatomic, copy) NSString *savedSearchTerm;
+@property (nonatomic) NSInteger savedScopeButtonIndex;
+@property BOOL searchWasActive;
 
-- (void) searchTableView;
-- (void) doneSearching_Clicked:(id) sender;
 
 @end

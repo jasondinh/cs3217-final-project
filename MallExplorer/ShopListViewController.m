@@ -44,8 +44,7 @@
 	copyListOfItems = [[NSMutableArray alloc]init];
 	self.navigationItem.title = @"Shop list";
 	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-	searching = NO;
-	letUserSelectRow = YES;
+
 	NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"This level",@"Favorite",nil];
 	typeOfList = [[UISegmentedControl alloc] initWithItems:segmentArray];
 	[typeOfList sizeToFit];
@@ -76,7 +75,8 @@
     //    [NSString stringWithFormat:@"Row %d", indexPath.row];
 	NSString *selectedItem = nil;
 	NSString *searchingText = searchBar.text;
-	if(searching && [searchingText length]!=0)
+	if(searchWasActive &&
+	   [searchingText length]!=0)
 		selectedItem = [copyListOfItems objectAtIndex:indexPath.row];
 	else {
 		
