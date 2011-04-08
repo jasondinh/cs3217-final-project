@@ -48,6 +48,9 @@
 	temp1.title = @"OVERVIEW";
 	temp2.title = @"COMMENTS";
 	temp3.title = @"FACEBOOK";
+	temp1.view.backgroundColor = [UIColor whiteColor];	
+		temp2.view.backgroundColor = [UIColor whiteColor];	
+		temp3.view.backgroundColor = [UIColor whiteColor];	
 	temp1.tabBarItem.image = [self scale:[UIImage imageNamed:@"overview_tab_icon.png" ] ToSize:CGSizeMake(26, 26) ];
 	temp2.tabBarItem.image = [self scale:[UIImage imageNamed:@"comments_tab_icon.png" ] ToSize:CGSizeMake(26, 26) ];
 	temp3.tabBarItem.image = [self scale:[UIImage imageNamed:@"facebook_tab_icon.png" ] ToSize:CGSizeMake(30, 26) ];
@@ -58,7 +61,10 @@
 	
 	//UITextField *comment = [[UITextField alloc]init];
 	
-	UITextField * textFieldRounded = [[UITextField alloc] initWithFrame:CGRectMake(0, 750, 320, 50)];
+	UITextField * textFieldRounded = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+	UITableViewController * tableview = [[UITableViewController alloc]init];
+	[temp2.view addSubview:tableview.view];
+	tableview.view.autoresizingMask = 	UIViewAutoresizingFlexibleBottomMargin;
 	textFieldRounded.borderStyle = UITextBorderStyleRoundedRect;
 	textFieldRounded.textColor = [UIColor blackColor]; //text color
 	textFieldRounded.font = [UIFont systemFontOfSize:17.0];  //font size
@@ -71,6 +77,10 @@
 	
 	textFieldRounded.clearButtonMode = UITextFieldViewModeWhileEditing;	// has a clear 'x' button to the right
 	textFieldRounded.delegate = self;	// let us be the delegate so we know when the keyboard's "Done" button is pressed
+	
+	//textFieldRounded.inputView = 
+	
+	//self.view.contentMode = UIViewContentModeScaleToFill;
 	[temp2.view addSubview:textFieldRounded];
 	self.title =@"a shop";
 	self.contentSizeForViewInPopover = CGSizeMake(320, 850);
