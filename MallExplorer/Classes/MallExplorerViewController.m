@@ -47,7 +47,7 @@ BOOL chosen,shopchosen;
 	//	shopchosen = !shopchosen;
 		Shop* aShop = [[Shop alloc]init];
 		
-		ShopViewController* shopViewController = [[[ShopViewController alloc] initWithShop:aShop]autorelease] ;
+	ShopViewController* shopViewController = [[ShopViewController alloc] init ];//WithShop:aShop] ;
 		[masterViewController pushViewController:shopViewController animated:YES];
 		
 	
