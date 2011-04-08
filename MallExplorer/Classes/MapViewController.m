@@ -20,7 +20,7 @@ int startPoint,endPoint;
 NSMutableArray* hiddenAttribute;
 NSMutableArray* pointPathList;
 
-CGRect aFrame;
+CGRect frame;
 NSMutableArray* edgeList;
 
 #pragma mark map view update methods
@@ -38,6 +38,14 @@ NSMutableArray* edgeList;
 	return CGPointMake(point.x/newSizeWidth*mapSize.width, point.y/newSizeHeight*mapSize.height);
 }
 
+-(void) addATestPoint:(CGPoint) point withImage:(NSString*) imageName withDuration:(double) time{
+	UIImageView* imgView = [UIImageView  imageViewWithImageNamed:imageName];
+	imgView.frame = CGRectMake(0, 0, 20, 20);
+	imgView.center = point;
+	[self.view addSubview:imgView];
+	[[self.view.subviews lastObject] performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:time];
+}
+
 -(void) mapUpdate{
 /*	//NSLog(@"%d", [self.view.subviews count]);
 	for (int i = 0; i<[pointPathList count]; i++) {
@@ -46,12 +54,8 @@ NSMutableArray* edgeList;
 	[pointPathList removeAllObjects];*/
 	////NSLog(@"%d", [self.view.subviews count]);
 	for (int i = 0; i<[map.pointList count]; i++) {
-		UIImageView* point = [UIImageView imageViewWithImageNamed:@"point.png"];
 		MapPoint* aMapPoint = [map.pointList objectAtIndex:i];
-		point.center = [self translatePointToScrollViewCoordinationFromMapCoordination:aMapPoint.position];
-		[self.view addSubview:point];
-//		[pointPathList addObject:point];
-		[[self.view.subviews lastObject] performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:1.0];
+		[self addATestPoint:[self translatePointToScrollViewCoordinationFromMapCoordination: aMapPoint.position] withImage:@"point.png" withDuration:3.0];
 	}
 	//NSLog(@"%d", [self.view.subviews count]);
 }
@@ -116,28 +120,29 @@ NSMutableArray* edgeList;
 	[displayArea addSubview:titleButton];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(annotationOnMapMoved:) name:@"annotation on map moved" object:annoView];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(annotationOnMapRemoved:) name:@"annotation on map removed" object:annoView];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moveToDestinationOfAStair:) name:@"move to destination of a stair" object:annoView];
 	annoView.titleButton = titleButton;
 	return YES;
 }
 
 -(AnnoViewController*) addAnnotationType:(AnnotationType) annType ToScrollViewAtPosition:(CGPoint)pos withTitle:(NSString*) title withContent:(NSString*) content {
-	Annotation* anno = [[Annotation alloc] initAnnotationType:annType inlevel:self.map WithPosition:[self translatePointToMapCoordinationFromScrollViewCoordination:pos] title:title content:content];
+	Annotation* anno = [Annotation annotationWithAnnotationType:annType inlevel:self.map WithPosition:[self translatePointToMapCoordinationFromScrollViewCoordination:pos] title:title content:content];
 	////NSLog(@"position of new annotation: %lf %lf", pos.x, pos.y);
 	////NSLog(@"position of new annotation: %lf %lf", [self translatePointToMapCoordinationFromScrollViewCoordination: pos].x, [self translatePointToMapCoordinationFromScrollViewCoordination: pos].y);
-	AnnoViewController* annoView = [[AnnoViewController alloc] initWithAnnotation:anno];
+	AnnoViewController* annoView = [AnnoViewController annoViewControllerWithAnnotation:[[anno retain] autorelease]];
+	[[annoView retain] autorelease];
 	if (![self addAnnotationToMap:annoView]) return nil;
 	[annotationList addObject:annoView];
-	[anno release];
-	return [annoView autorelease];
+	return annoView;
 }
 
 -(void) addAnnotation: (Annotation*) annotation{
 	[self.map addAnnotation:annotation];
-	AnnoViewController* annoView = [[AnnoViewController alloc] initWithAnnotation: annotation];
+	AnnoViewController* annoView = [AnnoViewController annoViewControllerWithAnnotation: annotation];
+	[[annoView retain] autorelease];
 	[annotationList addObject:annoView];
 	[self addAnnotationToMap:annoView];
 	//NSLog(@"%d", [annotationList count]);
-	[annoView release];
 }
 
 
@@ -157,6 +162,7 @@ NSMutableArray* edgeList;
 -(MapViewController*) initMallWithFrame: (CGRect) aFrame andMap:(Map*) aMap{
 	self = [super init];
 	if (!self) return nil;
+	frame = aFrame;
 	self.map = aMap;
 	zoomScale = 1.0;
 	mapCenterPoint = aMap.defaultCenterPoint;
@@ -164,10 +170,9 @@ NSMutableArray* edgeList;
 	edgeDisplayedList = [[NSMutableArray alloc] init];
 	mapSize = aMap.imageMap.size;
 	for (int i= 0; i<[aMap.annotationList count]; i++) {
-		AnnoViewController* annoView = [[AnnoViewController alloc] initWithAnnotation: [annotationList objectAtIndex:i]];
+		AnnoViewController* annoView = [AnnoViewController annoViewControllerWithAnnotation: [map.annotationList objectAtIndex:i]];
 		[annotationList addObject:annoView];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(annotationChangeToggle:) name:@"title is shown" object:nil];
-		[annoView release];
 	}
 	displayAllTitleMode = NO;
 	annoBeingSelected = nil;
@@ -175,8 +180,8 @@ NSMutableArray* edgeList;
 }
 
 
--(MapViewController*) initMallWithFrame:(CGRect) aFr{
-	aFrame = aFr;
+-(MapViewController*) initMallWithFrame:(CGRect) aFrame{
+	frame = aFrame;
 	//NSLog(@"initMall");
 	UIImage* image = [UIImage imageNamed:@"map.jpg"];
 	NSMutableArray* pointList = [[NSMutableArray alloc] init];
@@ -363,7 +368,7 @@ NSMutableArray* edgeList;
 - (void)viewDidLoad {
     [super viewDidLoad];
 	//NSLog(@"mall view did load");
-	displayArea = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,aFrame.size.width,aFrame.size.height)];
+	displayArea = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,frame.size.width,frame.size.height)];
 	//NSLog(@"%lf %lf %lf %lf", displayArea.frame.origin.x, displayArea.frame.origin.y, displayArea.frame.size.width, displayArea.frame.size.height);
 	//displayArea = [[UIScrollView alloc] initWithFrame:CGRectMake(MAP_ORIGIN_X, MAP_ORIGIN_Y, MAP_WIDTH, MAP_HEIGHT)];
 	imageView = [[UIImageView alloc] initWithImage:self.map.imageMap];
@@ -418,10 +423,11 @@ NSMutableArray* edgeList;
 	
 	[displayArea sendSubviewToBack:imageView];	
 	[imageView release];
+	[displayArea setDelegate:self];
+	[self focusToAMapPosition:map.defaultCenterPoint];
 	[displayArea release];
 	displayArea.maximumZoomScale = 2.0;
 	displayArea.minimumZoomScale = 0.5;
-	[displayArea setDelegate:self];
 	
 	if (DEBUG){
 		pointPathList = [[NSMutableArray alloc] init];
@@ -473,6 +479,11 @@ NSMutableArray* edgeList;
 
 #pragma mark -
 #pragma mark Handling annotation notification
+
+-(void) moveToDestinationOfAStair:(NSNotification*) notification{
+	AnnoViewController* anAVC = notification.object;
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"change map" object: [anAVC.annotation destination]];
+}
 
 -(void) annotationOnMapRemoved:(NSNotification*) notification{
 	AnnoViewController* anAnnoVC = notification.object;
@@ -588,6 +599,26 @@ NSMutableArray* edgeList;
 	[displayArea sendSubviewToBack:imageView];
 }
 
+#pragma mark -
+#pragma mark focus supporting methods
+-(void) focusToAMapPosition:(CGPoint) point{
+	[self focusToAScrollViewPosition:[self translatePointToScrollViewCoordinationFromMapCoordination:point]];
+}
+
+-(void) focusToAScrollViewPosition:(CGPoint) point{
+	CGFloat maxX = displayArea.frame.origin.x+displayArea.contentSize.width-displayArea.frame.size.width;
+	CGFloat maxY = displayArea.frame.origin.y+displayArea.contentSize.height-displayArea.frame.size.height;
+	NSLog(@"%max X, max Y %lf %lf point %lf %lf", maxX, maxY, point.x, point.y);
+	CGFloat newOriginX = fmax(0, fmin(point.x-displayArea.frame.size.width/2, maxX));
+	CGFloat newOriginY = fmax(0, fmin(point.y-displayArea.frame.size.height/2, maxY));
+	CGPoint newOrigin = CGPointMake(newOriginX, newOriginY);
+	NSLog(@"new origin: %lf %lf", newOrigin.x, newOrigin.y);
+	displayArea.contentOffset = newOrigin;
+	// test
+	[self addATestPoint:point withImage:@"icon_shop.png" withDuration:5.0];
+}
+
+#pragma mark -
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.

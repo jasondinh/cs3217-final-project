@@ -10,7 +10,6 @@
 #import "AnnoViewController.h"
 
 @interface AnnoStairViewController : AnnoViewController {
-
 }
 
 @end

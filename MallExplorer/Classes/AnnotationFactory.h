@@ -20,6 +20,8 @@
 @interface AnnotationFactory : NSObject {
 }
 
+// method to create an annotation view controller
 +(AnnoViewController*) createAnnotationViewWithAnnotation:(Annotation*) annotation;
+// method to create an annotation
 +(Annotation*) createAnnotationType: (AnnotationType)annType;
 @end

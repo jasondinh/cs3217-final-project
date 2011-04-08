@@ -54,5 +54,10 @@
 -(NSArray*) findPathFromStartAnnotation:(Annotation*)start ToGoalAnnotaion:(Annotation*) goal;
 // find path from point1 to an item in category type: 
 //-(NSArray*) findPathFrom:() point1 to: () type;
+
+// focusing support methods
+-(void) focusToAMapPosition:(CGPoint) point;
+-(void) focusToAScrollViewPosition:(CGPoint) point;
+
 -(void) redisplayPath;
 @end

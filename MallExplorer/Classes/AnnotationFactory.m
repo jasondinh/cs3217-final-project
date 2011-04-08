@@ -40,20 +40,11 @@
 +(Annotation*) createAnnotationType: (AnnotationType)annoType{
 	switch (annoType) {
 		case kAnnoStart:
-			//			Annotation* anAnno = [[Annotation alloc] init]
 		case kAnnoGoal:
-			//return [[AnnoPathPointViewController alloc]  initWithAnnotation:annotation];
-			//break;
 		case kAnnoShop:
-			//return [[AnnoShopViewController alloc]  initWithAnnotation:annotation];
-			//break;
+			return [[[Annotation alloc]  init] autorelease];
 		case kAnnoLift:
-			//return [[AnnoLiftViewController alloc]  initWithAnnotation:annotation];
-			//break;
 		case kAnnoStair:
-			//return [[AnnoStairViewController alloc]  initWithAnnotation:annotation];
-			//break;
-			return [[[Annotation alloc] init] autorelease];
 		case kAnnoConnector:
 			return [[[AnnotationLevelConnector alloc] init] autorelease];
 		default:
