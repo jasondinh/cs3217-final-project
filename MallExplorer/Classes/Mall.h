@@ -35,6 +35,7 @@
 @property (retain) NSArray* mapList;
 @property (retain) NSArray* mapPointList;
 
+
 @property NSInteger mId;
 @property NSInteger zip;
 
@@ -56,5 +57,11 @@
 
 // remove the path on all the maps
 -(void) resetPath;
+
+// data for shop list view controller
+@property (retain) NSArray* mapNameList;
+
+
+-(NSArray*) getAllShopFromThisMall;
 
 @end

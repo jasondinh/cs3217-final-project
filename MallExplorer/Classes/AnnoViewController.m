@@ -51,9 +51,9 @@
 }
 
 +(AnnoViewController*) annoViewControllerWithAnnotation:(Annotation *)anno{
-	AnnoViewController* anAVC = [AnnotationFactory createAnnotationViewWithAnnotation:anno];
+	AnnoViewController* anAVC = [[AnnotationFactory createAnnotationViewWithAnnotation:anno] retain];
 	[anAVC addGestureRecognizer];
-	return anAVC;
+	return [anAVC autorelease];
 }
 
 

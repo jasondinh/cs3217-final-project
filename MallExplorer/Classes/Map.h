@@ -48,6 +48,7 @@
 
 // find path from a point to a point in the same level
 -(NSArray*) findPathFrom:(MapPoint*) point1 to: (MapPoint*) point2;
+-(NSArray*) findPathFromStartPosition:(CGPoint)startPos ToGoalPosition:(CGPoint) goalPos;
 // find path from point1 to an item in category type: 
 //-(NSArray*) findPathFrom:() point1 to: () type;
 -(void) addPathOnMap:aPath;

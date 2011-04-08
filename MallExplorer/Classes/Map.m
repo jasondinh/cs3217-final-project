@@ -106,6 +106,18 @@ const int maxNumstep = 10;
 	return [graph getShortestPathFromNodeWithIndex:point1.index toNodeWithIndex:point2.index];
 }
 
+-(NSArray*) findPathFromStartPosition:(CGPoint)startPos ToGoalPosition:(CGPoint) goalPos{
+	MapPoint* startPoint = [[MapPoint alloc] initWithPosition:startPos inLevel:self  andIndex:0];
+	MapPoint* goalPoint = [[MapPoint alloc] initWithPosition:goalPos inLevel:self andIndex:0];
+	MapPoint* point1 = [self getClosestMapPointToPosition:startPos];
+	MapPoint* point2 = [self getClosestMapPointToPosition:goalPos];
+	
+	NSMutableArray* aPath = [[NSMutableArray alloc] initWithObjects:startPoint, nil];
+	[aPath addObjectsFromArray:[self findPathFrom:point1 to:point2]];
+	[aPath addObject:goalPoint];
+	return [self refineAPath:[aPath autorelease]];
+}
+
 -(MapPoint*) getClosestMapPointToPosition:(CGPoint) pos{
 	double minDist = INFINITY;
 	int minPos = 0;
