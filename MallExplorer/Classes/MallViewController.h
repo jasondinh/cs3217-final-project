@@ -38,11 +38,12 @@
 	AnnoViewController* goal;
 	UILabel* titleLabel;
 	UIBarItem* selectLevel;
+	BOOL displayAllTitleMode;
 	Mall* mall;
 }
 
 @property (nonatomic, retain) IBOutlet UIToolbar* toolbar;
-@property (nonatomic, retain) IBOutlet UIImageView* toogleTextButton;
+@property (nonatomic, retain) IBOutlet UIImageView* toggleTextButton;
 @property (nonatomic, retain) IBOutlet UIImageView* startFlagButton;
 @property (nonatomic, retain) IBOutlet UIImageView* goalFlagButton;
 @property (nonatomic, retain) IBOutlet UIImageView*	pathFindingButton;

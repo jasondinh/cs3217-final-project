@@ -15,7 +15,7 @@
 @synthesize toolbar;
 @synthesize detailItem;
 @synthesize popoverController;
-@synthesize toogleTextButton;
+@synthesize toggleTextButton;
 @synthesize startFlagButton;
 @synthesize goalFlagButton;
 @synthesize pathFindingButton;
@@ -410,11 +410,12 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+	displayAllTitleMode = YES;
 	mall = [[Mall alloc] initWithId:nil andName:nil andLongitude:nil andLatitude:nil andAddress:nil andZip:nil];
 	UITapGestureRecognizer* tapGesture	 = [[UITapGestureRecognizer alloc]
-											initWithTarget:self action:@selector(toggleText:)];
+											initWithTarget:self action:@selector(toggleDisplayCaptionMode:)];
 	[tapGesture setNumberOfTapsRequired:1];
-	[toogleTextButton addGestureRecognizer:tapGesture];
+	[toggleTextButton addGestureRecognizer:tapGesture];
 	
 	tapGesture	 = [[UITapGestureRecognizer alloc]
 											initWithTarget:self action:@selector(pathFindingClicked)];
@@ -453,7 +454,6 @@
 -(void) changeMap:(NSNotification*) notification{
 	[self choseLevel: [notification.object mapName]];
 }
-
 
 #pragma mark -
 #pragma mark event handling for toolbar button
@@ -530,11 +530,23 @@ toMakeAnnotationType:(AnnotationType) annoType
 	}
 	[mall resetPath];
 	[mapViewController redisplayPath];
+	for (int i = 0; i<[listMapViewController count]; i++) {
+		[[listMapViewController objectAtIndex:i] removeAllAnnotationOfType:kAnnoConnector];
+	}
 }
  
--(void) toggleText:(UIGestureRecognizer*) gesture{
-	//NSLog(@"toggle title");
-	[mapViewController toggleDisplayText];
+-(void) toggleDisplayCaptionMode:(UIGestureRecognizer*) gesture{
+	if (!displayAllTitleMode) {
+		displayAllTitleMode = YES;
+		for (int i = 0; i<[mapViewController.annotationList count]; i++) {
+			[[mapViewController.annotationList objectAtIndex:i] titleButton].hidden = NO;
+		}
+	} else {
+		displayAllTitleMode = NO;
+		for (int i = 0; i<[mapViewController.annotationList count]; i++) {
+			[[mapViewController.annotationList objectAtIndex:i] titleButton].hidden = YES;
+		}
+	}
 }
 
 -(MapViewController*) getViewControllerOfMap:(Map*) aMap{
@@ -562,6 +574,8 @@ toMakeAnnotationType:(AnnotationType) annoType
 			[arriving setIsUp:[self checkLevel:lev2 isHigherThan:lev1]];
 			[arriving setDestination: lev1];
 			[[self getViewControllerOfMap: lev2] addAnnotation: [[arriving retain] autorelease]];
+			if (start.titleButton.hidden = YES) [start annotationViewTapped:nil];
+			if (goal.titleButton.hidden = YES) [goal annotationViewTapped:nil];
 		}
 	}	
 	[mapViewController redisplayPath];
