@@ -49,7 +49,7 @@ BOOL chosen,shopchosen;
 		
 		ShopViewController* shopViewController = [[[ShopViewController alloc] initWithShop:aShop]autorelease] ;
 		[masterViewController pushViewController:shopViewController animated:YES];
-		
+	[aShop release];
 	
 		//MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
 		//self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
@@ -75,8 +75,8 @@ BOOL chosen,shopchosen;
 			[items release];
 			//self.popoverController = pc;
 			NSLog(@"toolbar %d", [[cityMapViewController toolbar].items count ]);}
-		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
-		[self setDelegate:cityMapViewController];
+			self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
+			[self setDelegate:cityMapViewController];
 	}
 	
 }
@@ -85,10 +85,12 @@ BOOL chosen,shopchosen;
 -(void) mallChosen:(id) object{
 	//if (!chosen) {
 	//	chosen = !chosen;
-		Mall* aMall = [[Mall alloc]init];
+		Mall* aMall = [[Mall alloc]init] ;
 
 		ShopListViewController* shopListViewController = [[ShopListViewController alloc] initWithMall:aMall] ;
+	[aMall release];
 		[masterViewController pushViewController:shopListViewController animated:YES];
+	[shopListViewController release];
 		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
 		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
 		[self setDelegate: aMVC];

@@ -35,8 +35,9 @@
     [super viewDidLoad];
 
 	searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.frame.size.width, 0)];  
-	//searchBar.scopeButtonTitles=[NSArray arrayWithObjects:@"All",@"adfas",nil];
-	//searchBar.showsScopeBar =NO;
+	
+	
+
 	searchBar.showsSearchResultsButton =NO;
 	searchBar.barStyle = UIBarStyleDefault;
 	searchBar.delegate = self;
@@ -59,19 +60,11 @@
 	}
 	[self.tableView reloadData];
 	self.tableView.scrollEnabled =YES;
-	
+	/*searchBar.showsScopeBar =NO;
+		searchBar.scopeButtonTitles=[NSArray arrayWithObjects:@"All",@"adfas",nil];*/
 }
 
-- (void) doneSearching_Clicked:(id)sender {
-	
-	searchBar.text = @"";
-	[searchBar resignFirstResponder];
-	
-	self.navigationItem.rightBarButtonItem = nil;
-	self.tableView.scrollEnabled = YES;
-	
-	[self.tableView reloadData];
-}
+
 
 - (void)navigationController:(UINavigationController *)navigationController 
 	  willShowViewController:(UIViewController *)viewController animated:(BOOL)animated 
