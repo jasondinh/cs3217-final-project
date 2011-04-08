@@ -32,7 +32,9 @@
 @property (nonatomic, retain, readonly) NSString* mapName;
 @property (nonatomic, retain) NSArray* pathOnMap;
 @property CGPoint defaultCenterPoint;
+
 -(void) addAnnotation: (Annotation*) annotation;
+-(void) removeAnnotation: (Annotation*) annotation;
 -(void) addPoint: (MapPoint*) point;
 
 -(MapPoint*) getClosestMapPointToPosition:(CGPoint) pos;

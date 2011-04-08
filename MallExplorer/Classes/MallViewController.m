@@ -423,7 +423,7 @@
 											initWithTarget:self action:@selector(goalFlagMove:)];
 	[goalFlagButton addGestureRecognizer:panGesture];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startOrGoalMoved:) name:@"start or goal moved" object:nil];
-
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startOrGoalRemoved:) name:@"start or goal removed" object:nil];
 	[panGesture release];
 	[tapGesture release];
 }
@@ -488,10 +488,30 @@ toMakeAnnotationType:(AnnotationType) annoType
 		[self pathFinding];
 	}
 }
+
+-(void) startOrGoalRemoved:(NSNotification*) notification{
+	NSNumber* type = notification.object;
+	if	([type intValue] == kAnnoStart) {
+		start = nil;
+		startFlagButton.alpha = 1.0;
+		startFlagButton.userInteractionEnabled = YES;
+	}
+	if	([type intValue] == kAnnoGoal) {
+		goal = nil;
+		goalFlagButton.alpha = 1.0;
+		goalFlagButton.userInteractionEnabled = YES;
+	}
+	[mall resetPath];
+	[mapViewController redisplayPath];
+}
  
 -(void) toggleText:(UIGestureRecognizer*) gesture{
 	NSLog(@"toggle title");
 	[mapViewController toggleDisplayText];
+}
+
+-(MapViewController*) getViewControllerOfMap:(Map*) aMap{
+	return [listMapViewController objectAtIndex:[mall.mapList indexOfObject:aMap]];
 }
 
 -(void) pathFinding{
@@ -505,17 +525,16 @@ toMakeAnnotationType:(AnnotationType) annoType
 		lev1 = [p1 level];
 		lev2 = [p2 level];
 		if (![lev1 isEqual:lev2]) {
-			Annotation* departing = [[Annotation alloc] initAnnotationType:kAnnoConnector inlevel:lev1 WithPosition:[p1 position] title:[NSString stringWithFormat:@"to @", lev2.mapName] content:[NSString stringWithFormat:@"continue path to @", lev2.mapName]];
+			Annotation* departing = [[Annotation alloc] initAnnotationType:kAnnoConnector inlevel:lev1 WithPosition:[p1 position] title:[NSString stringWithFormat:@"To %@", lev2.mapName] content:[NSString stringWithFormat:@"continue path to %@", lev2.mapName]];
 			[departing setIsDepartingConnector:YES];
-			[departing setIsUp:[self checkLevel:lev1 isHigherThan:lev2]];
-			[lev1 addAnnotation: departing];
-			Annotation* arriving = [[Annotation alloc] initAnnotationType:kAnnoConnector inlevel:lev2 WithPosition:[p2 position] title:[NSString stringWithFormat:@"from @", lev1.mapName] content:[NSString stringWithFormat:@"continue path from @", lev1.mapName]];
-			[departing setIsDepartingConnector:NO];
-			[departing setIsUp:[self checkLevel:lev1 isHigherThan:lev2]];
-			[lev2 addAnnotation: arriving];
+			[departing setIsUp:[self checkLevel:lev2 isHigherThan:lev1]];
+			[[self getViewControllerOfMap: lev1] addAnnotation:departing];
+			Annotation* arriving = [[Annotation alloc] initAnnotationType:kAnnoConnector inlevel:lev2 WithPosition:[p2 position] title:[NSString stringWithFormat:@"From %@", lev1.mapName] content:[NSString stringWithFormat:@"continue path from %@", lev1.mapName]];
+			[arriving setIsDepartingConnector:NO];
+			[arriving setIsUp:[self checkLevel:lev2 isHigherThan:lev1]];
+			[[self getViewControllerOfMap: lev2] addAnnotation: arriving];
 		}
-	}
-	
+	}	
 	[mapViewController redisplayPath];
 }
 

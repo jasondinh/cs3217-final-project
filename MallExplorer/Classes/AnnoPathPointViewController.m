@@ -69,6 +69,12 @@
 											initWithTarget:self action:@selector(annoMoved:)];
 	[self.view addGestureRecognizer:panGesture];
 	[panGesture release];
+	
+	UITapGestureRecognizer* tapGesture	 = [[UITapGestureRecognizer alloc]
+											initWithTarget:self action:@selector(annoRemoved:)];
+	tapGesture.numberOfTapsRequired = 2;
+	[self.view addGestureRecognizer:tapGesture];
+	[tapGesture release];
 }
 
 -(void) annoMoved: (UIGestureRecognizer*) gesture{
@@ -82,8 +88,12 @@
 		self.view.transform = CGAffineTransformTranslate(self.view.transform, translation.x, translation.y);
 	}
 	if (gesture.state == UIGestureRecognizerStateEnded) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"annotation moved" object:self];     // notify to update the annotation position
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"annotation on map moved" object:self];     // notify to update the annotation position
 	}
+}
+
+-(void) annoRemoved: (UIGestureRecognizer*) gesture{
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"annotation on map removed" object:self];
 }
 
 #pragma mark -

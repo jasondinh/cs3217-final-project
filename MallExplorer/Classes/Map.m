@@ -36,6 +36,11 @@ const int maxNumstep = 10;
 -(void) addAnnotation: (Annotation*) annotation{
 	[annotationList addObject:annotation];
 }
+
+-(void) removeAnnotation:(Annotation*)annotation{
+	[annotationList removeObject:annotation];
+}
+
 -(void) addPoint: (MapPoint*) aPoint{
 	[pointList addObject:aPoint];
 }

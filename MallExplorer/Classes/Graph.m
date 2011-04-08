@@ -225,13 +225,13 @@
 		if ([node isEqual:goal]) {
 			break;
 		}
-		NSLog(@"Node %d has distance from start: %d", node.index, dist[node.index]);
+		//NSLog(@"Node %d has distance from start: %d", node.index, dist[node.index]);
 		NSArray* adjacentList = [self getAdjacentNodes:node];
-		NSLog(@"number of adjacent node: %d", [adjacentList count]);
+		//NSLog(@"number of adjacent node: %d", [adjacentList count]);
 		for (int i = 0; i<[adjacentList count]; i++) {
 			GraphEdge* tempEdge = [adjacentList objectAtIndex:i];
 			GraphNode* tempNode = [tempEdge getDestinationNode];
-			NSLog(@"node %d with distance %lf, edge with Weight: %lf", tempNode.index, dist[tempNode.index], tempEdge.weight);
+			//NSLog(@"node %d with distance %lf, edge with Weight: %lf", tempNode.index, dist[tempNode.index], tempEdge.weight);
 			if (dist[node.index]+tempEdge.weight < dist[tempNode.index]) {
 				dist[tempNode.index] = dist[node.index] + tempEdge.weight;
 				[tracePath replaceObjectAtIndex:tempNode.index withObject:tempEdge];

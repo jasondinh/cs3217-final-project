@@ -97,12 +97,17 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 -(NSArray*) pathFindingBetween:(Map*) map1 and: (Map*) map2{
 	return [mallGraph getShortestPathFromObject:map1 toObject:map2];
 }
--(NSArray*) findPathFrom:(CGPoint) startPos inLevel:(Map*)level1 to: (CGPoint)goalPos inLevel:(Map*) level2{
-	// reset all the path now;
-	NSLog(@"now finding path ------------------------------");
+
+-(void) resetPath{
 	for ( int i = 0; i<[mapList count]; i++) {
 		[[mapList objectAtIndex:i] resetPathOnMap];
 	}
+}
+
+-(NSArray*) findPathFrom:(CGPoint) startPos inLevel:(Map*)level1 to: (CGPoint)goalPos inLevel:(Map*) level2{
+	// reset all the path now;
+	NSLog(@"now finding path ------------------------------");
+	[self resetPath];
 	MapPoint* startPoint = [[MapPoint alloc] initWithPosition:startPos inLevel:level1  andIndex:0];
 	MapPoint* goalPoint = [[MapPoint alloc] initWithPosition:goalPos inLevel:level2 andIndex:0];
 	MapPoint* point1 = [level1 getClosestMapPointToPosition:startPos];

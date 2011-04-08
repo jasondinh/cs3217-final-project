@@ -36,8 +36,17 @@
 */
 
 -(CGRect) getAnnoTitleRect{
-	return CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y+self.view.frame.size.height+5, self.view.frame.size.width*3, 20);
+	int length = self.annotation.title.length;
+	double titleLength = length*LENGTH_PER_CHARACTER;
+	double posX;
+	if (self.view.frame.origin.x>400) {
+		posX = self.view.frame.origin.x-titleLength;
+	} else {
+		posX = self.view.frame.origin.x+ANNOTATION_VIEW_WIDTH;
+	}	
+	return CGRectMake(posX, self.view.frame.origin.y+(self.view.frame.size.height-CAPTION_HEIGHT)/2, titleLength, CAPTION_HEIGHT);
 }
+	
 
 
 -(AnnoLevelConnectorViewController*) initWithAnnotation:(AnnotationLevelConnector*)anno{

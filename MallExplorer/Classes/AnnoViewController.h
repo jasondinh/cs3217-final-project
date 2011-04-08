@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Annotation.h"
 #import "AnnotationFactory.h"
-
+#import "Constant.h"
 @interface AnnoViewController : UIViewController {
 	Annotation* annotation;
 	BOOL titleIsShown;

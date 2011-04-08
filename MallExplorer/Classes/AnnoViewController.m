@@ -25,7 +25,8 @@
 */
 
 -(CGRect) getAnnoTitleRect{
-	return CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y+self.view.frame.size.height+5, self.view.frame.size.width*3, 20);
+	int length = self.annotation.title.length;
+	return CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y+ANNOTATION_VIEW_HEIGHT, length*LENGTH_PER_CHARACTER, CAPTION_HEIGHT);
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -79,6 +80,7 @@
 
 
 - (void)dealloc {
+	[titleButton release];
     [super dealloc];
 }
 

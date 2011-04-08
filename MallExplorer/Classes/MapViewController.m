@@ -14,9 +14,11 @@
 @synthesize map;
 @synthesize displayAllTitleMode;
 
+const BOOL DEBUG = YES;
 int startPoint,endPoint;
 
 NSMutableArray* hiddenAttribute;
+NSMutableArray* pointPathList;
 
 CGRect aFrame;
 NSMutableArray* edgeList;
@@ -37,7 +39,21 @@ NSMutableArray* edgeList;
 }
 
 -(void) mapUpdate{
-	
+/*	NSLog(@"%d", [self.view.subviews count]);
+	for (int i = 0; i<[pointPathList count]; i++) {
+		[[pointPathList objectAtIndex:i] removeFromSuperview];
+	}
+	[pointPathList removeAllObjects];*/
+	NSLog(@"%d", [self.view.subviews count]);
+	for (int i = 0; i<[map.pointList count]; i++) {
+		UIImageView* point = [UIImageView imageViewWithImageNamed:@"point.png"];
+		MapPoint* aMapPoint = [map.pointList objectAtIndex:i];
+		point.center = [self translatePointToScrollViewCoordinationFromMapCoordination:aMapPoint.position];
+		[self.view addSubview:point];
+//		[pointPathList addObject:point];
+		[[self.view.subviews lastObject] performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:1.0];
+	}
+	NSLog(@"%d", [self.view.subviews count]);
 }
 
 -(UIView*) viewForZoomingInScrollView:(UIScrollView *)scrollView{
@@ -64,8 +80,10 @@ NSMutableArray* edgeList;
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale{
+	NSLog(@"scroll view did end zooming");
 	for (int i = 0; i<[annotationList count]; i++) {
 		AnnoViewController* annoVC = [annotationList objectAtIndex:i];
+		annoVC.view.transform = CGAffineTransformIdentity;
 		annoVC.view.center = [self translatePointToScrollViewCoordinationFromMapCoordination:annoVC.annotation.position];
 		annoVC.titleButton.frame = [annoVC getAnnoTitleRect];
 	}
@@ -76,6 +94,8 @@ NSMutableArray* edgeList;
 	
 	[hiddenAttribute release];
 	[self redisplayPath];
+	
+	if (DEBUG) [self mapUpdate];
 }
 
 #pragma mark -
@@ -94,7 +114,8 @@ NSMutableArray* edgeList;
 	titleButton.backgroundColor = [UIColor	colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.4];
 	titleButton.hidden = !displayAllTitleMode;
 	[displayArea addSubview:titleButton];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(annotationMoved:) name:@"annotation moved" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(annotationOnMapMoved:) name:@"annotation on map moved" object:annoView];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(annotationOnMapRemoved:) name:@"annotation on map removed" object:annoView];
 	annoView.titleButton = titleButton;
 	return YES;
 }
@@ -401,6 +422,11 @@ NSMutableArray* edgeList;
 	displayArea.maximumZoomScale = 2.0;
 	displayArea.minimumZoomScale = 0.5;
 	[displayArea setDelegate:self];
+	
+	if (DEBUG){
+		pointPathList = [[NSMutableArray alloc] init];
+		[self mapUpdate];
+	}
 	NSLog(@"%d", [displayArea.subviews count]);
 	
 }
@@ -448,7 +474,19 @@ NSMutableArray* edgeList;
 #pragma mark -
 #pragma mark Handling annotation notification
 
--(void) annotationMoved:(NSNotification*) notification{
+-(void) annotationOnMapRemoved:(NSNotification*) notification{
+	AnnoViewController* anAnnoVC = notification.object;
+	int annoType = anAnnoVC.annotation.annoType;
+	[self.map removeAnnotation:anAnnoVC.annotation];
+	[anAnnoVC.titleButton removeFromSuperview];
+	[anAnnoVC.view removeFromSuperview];
+	[anAnnoVC.view release];
+	if (annoType==kAnnoStart || annoType==kAnnoGoal) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"start or goal removed" object:[NSNumber numberWithInt:annoType]];		
+	}
+}
+
+-(void) annotationOnMapMoved:(NSNotification*) notification{
 	AnnoViewController* anAnnoVC = notification.object;
 	CGPoint newAnnoMapPosition = [self translatePointToMapCoordinationFromScrollViewCoordination:CGPointMake(anAnnoVC.view.frame.origin.x+anAnnoVC.view.frame.size.width/2, anAnnoVC.view.frame.origin.y+anAnnoVC.view.frame.size.height/2)];
 	if (![map checkPositionInsideMap:newAnnoMapPosition] || ![map checkFreeAtPoint:newAnnoMapPosition]) {
@@ -456,11 +494,11 @@ NSMutableArray* edgeList;
 		return;
 	} 
 	anAnnoVC.annotation.position = newAnnoMapPosition;
-	if (anAnnoVC.annotation.annoType == kAnnoStart|| anAnnoVC.annotation.annoType == kAnnoGoal) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"start or goal moved" object:nil];	
-	}
-	
+	anAnnoVC.titleButton.frame = [anAnnoVC getAnnoTitleRect];
 	NSLog(@"new position in map: %lf %lf", anAnnoVC.annotation.position.x, anAnnoVC.annotation.position.y);
+	if (anAnnoVC.annotation.annoType==kAnnoStart || anAnnoVC.annotation.annoType==kAnnoGoal) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"start or goal moved" object:self];		
+	}
 }
 
 -(void) toggleDisplayText{
@@ -528,7 +566,7 @@ NSMutableArray* edgeList;
 }
 
 -(void) redisplayPath{
-	NSLog(@"display path: %d", [map.pathOnMap count]);
+	NSLog(@"display path with number of edge: %d", [map.pathOnMap count]);
 	for (int i = 0; i<[edgeDisplayedList count]; i++) {
 		[[edgeDisplayedList objectAtIndex:i] removeFromSuperview];
 	}

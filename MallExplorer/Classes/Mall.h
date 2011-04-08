@@ -54,4 +54,7 @@
 -(NSArray*) findPathFrom:(CGPoint) point1 inLevel:(Map*)level1 to: (CGPoint) point2 inLevel:(Map*) level2;
 -(NSArray*) findPathFromStartAnnotation:(Annotation*) anno1 ToGoalAnnotaion:(Annotation*) anno2;
 
+// remove the path on all the maps
+-(void) resetPath;
+
 @end
