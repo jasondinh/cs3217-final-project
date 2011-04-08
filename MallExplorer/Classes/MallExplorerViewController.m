@@ -49,6 +49,8 @@ BOOL chosen,shopchosen;
 		
 		ShopViewController* shopViewController = [[[ShopViewController alloc] initWithShop:aShop]autorelease] ;
 		[masterViewController pushViewController:shopViewController animated:YES];
+		
+	
 		//MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
 		//self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
 		//[self setDelegate: aMVC];
@@ -61,7 +63,18 @@ BOOL chosen,shopchosen;
 
 	if ([[sender object] isKindOfClass:[ShopListViewController class]]) {
 		//cityMapViewController = [[[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil] retain];
-
+		UIToolbar *toolbar = ((MallViewController*)[self.viewControllers objectAtIndex:1]).toolbar;
+		if (((UIBarButtonItem*)[toolbar.items objectAtIndex:0]).title == @"Root List") {
+			NSLog(@"comehere");
+			NSLog(@"toolbar %d", [[cityMapViewController toolbar].items count ]);
+			UIBarButtonItem *barButtonItem = [toolbar.items objectAtIndex:0];	
+			NSMutableArray *items = [[cityMapViewController.toolbar items] mutableCopy];
+			[items removeObjectAtIndex:0];
+			[items insertObject:barButtonItem atIndex:0];
+			[cityMapViewController.toolbar setItems:items animated:YES];
+			[items release];
+			//self.popoverController = pc;
+			NSLog(@"toolbar %d", [[cityMapViewController toolbar].items count ]);}
 		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
 		[self setDelegate:cityMapViewController];
 	}
@@ -80,6 +93,16 @@ BOOL chosen,shopchosen;
 		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
 		[self setDelegate: aMVC];
 		[aMVC loadMaps:nil andStairs:nil withDefaultMap:nil];
+		if (((UIBarButtonItem*)[[cityMapViewController toolbar].items objectAtIndex:0]).title == @"Root List") {
+			NSLog(@"comehere");
+		UIBarButtonItem *barButtonItem = [[cityMapViewController toolbar].items objectAtIndex:0];	
+		NSMutableArray *items = [[aMVC.toolbar items] mutableCopy];
+		[items insertObject:barButtonItem atIndex:0];
+		[aMVC.toolbar setItems:items animated:YES];
+		[items release];
+		//self.popoverController = pc;
+		NSLog(@"toolbar %d", [[aMVC toolbar].items count ]);}
+
 
 	//} 
 

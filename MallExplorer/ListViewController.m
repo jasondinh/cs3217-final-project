@@ -240,14 +240,18 @@
 	for (NSString *product in listOfItems)
 	{
 		//if ([scope isEqualToString:@"All"] || [product.type isEqualToString:scope])
-		{
+		/*{
 			NSComparisonResult result = [product compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
             if (result == NSOrderedSame)
 			{
 				[self.copyListOfItems addObject:product];
 
             }
-		}
+		}*/
+		NSRange titleResultsRange = [product rangeOfString:searchText options:NSCaseInsensitiveSearch];
+		
+		if (titleResultsRange.length > 0)
+			[copyListOfItems addObject:product];
 	}
 }
 

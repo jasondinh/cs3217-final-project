@@ -42,7 +42,8 @@
 	self.contentSizeForViewInPopover = CGSizeMake(320, 850);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
 	//[self.tabBar setBackgroundColor:[UIColor whiteColor]] ;
-	[super viewDidLoad];
+	
+	
 	
 	CGRect frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width, 48);
 	UIView *v = [[UIView alloc] initWithFrame:frame];

@@ -30,7 +30,10 @@
     }
     return self;
 }*/
-
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	NSLog(@"Toolbar %d", [toolbar.items count ]);
+}
 -(Map*) createTestMap1{
 	UIImage* image = [UIImage imageNamed:@"map.jpg"];
 	NSMutableArray* pointList = [[NSMutableArray alloc] init];
