@@ -36,25 +36,24 @@
 
 -(void) addGestureRecognizer{
 	UITapGestureRecognizer* tapGesture	 = [[UITapGestureRecognizer alloc]
-											initWithTarget:self action:@selector(togglePopUp:)];
+											initWithTarget:self action:@selector(annotationViewTapped:)];
 	[tapGesture setNumberOfTapsRequired:1];
 	[self.view addGestureRecognizer:tapGesture];
 	[tapGesture release];
 	
 }
 
--(void) togglePopUp: (UIGestureRecognizer*) recognizer{
+-(void) annotationViewTapped: (UIGestureRecognizer*) recognizer{
 		if (!titleIsShown) {
 			titleIsShown = YES;
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"title is shown" object:self];
 		}
 }
 
--(AnnoViewController*) initWithAnnotation:(Annotation *)anno{
-	[self release];
-	self = [[AnnotationFactory createAnnotationViewWithAnnotation:anno] retain];
-	[self addGestureRecognizer];
-	return self;
++(AnnoViewController*) annoViewControllerWithAnnotation:(Annotation *)anno{
+	AnnoViewController* anAVC = [AnnotationFactory createAnnotationViewWithAnnotation:anno];
+	[anAVC addGestureRecognizer];
+	return anAVC;
 }
 
 

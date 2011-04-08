@@ -59,7 +59,6 @@
 - (NSString *)title;
 - (IBAction) buttonClicked:(UIButton*) sender;
 - (IBAction) selectLevelClicked:(UIBarButtonItem*) sender;
--(id)initWithCoordinate:(CLLocationCoordinate2D) coordinate;
 
 // since the data for the mall object will be populated after the mall is chosen, this method is called after init, when the app needs to load maps to mall
 -(void) loadMaps:(NSArray*) listMap andStairs:(NSArray*) stairs withDefaultMap:(Map*) defaultMap;

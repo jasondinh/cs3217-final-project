@@ -192,8 +192,9 @@
 	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 12] point2:[pointList objectAtIndex: 19] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 12] andPoint:[pointList objectAtIndex: 19]] isBidirectional:YES withTravelType:kWalk];
 	[edgeList addObject:edge];
 	[edge release];
-	CGPoint defaultPoint = CGPointMake(100, 100);
-	[aMap loadDataWithMapName:@"Level 1" withMapImage:image annotationList:nil pointList:pointList edgeList:edgeList defaultCenterPoint:defaultPoint];
+	CGPoint defaultPoint = CGPointMake(500, 500);
+	Annotation* stair1 = [Annotation annotationWithAnnotationType:kAnnoStair inlevel:aMap WithPosition:[[pointList objectAtIndex:0] position] title:@"Stair 1" content:@"Stair to level 2"];
+	[aMap loadDataWithMapName:@"Level 1" withMapImage:image annotationList:[NSArray arrayWithObject:stair1] pointList:pointList edgeList:edgeList defaultCenterPoint:defaultPoint];
 	return aMap;
 	
 }
@@ -360,7 +361,8 @@
 	[edgeList addObject:edge];
 	[edge release];
 	CGPoint defaultPoint = CGPointMake(100, 100);
-	[aMap loadDataWithMapName:@"Level 2" withMapImage:image annotationList:nil pointList:pointList edgeList:edgeList defaultCenterPoint:defaultPoint];
+	Annotation* stair1 = [Annotation annotationWithAnnotationType:kAnnoStair inlevel:aMap WithPosition:[[pointList objectAtIndex:0] position] title:@"Stair 1" content:@"Stair to level 1"];
+	[aMap loadDataWithMapName:@"Level 2" withMapImage:image annotationList:[NSArray arrayWithObject:stair1] pointList:pointList edgeList:edgeList defaultCenterPoint:defaultPoint];
 	return aMap;
 	
 }
@@ -368,6 +370,8 @@
 	Map* map1 = [mList objectAtIndex:0];
 	Map* map2 = [mList objectAtIndex:1];
 	Edge* anEdge = [[Edge alloc] initWithPoint1:[map1.pointList objectAtIndex:0] point2:[map2.pointList objectAtIndex:0] withLength:1 isBidirectional:YES withTravelType:kWalkStairCase];
+	[[map1.annotationList objectAtIndex:0]  setDestination:map2];
+	[[map2.annotationList objectAtIndex:0] setDestination:map1];
 	return [NSArray arrayWithObject:anEdge];
 }
 
@@ -424,9 +428,29 @@
 	[goalFlagButton addGestureRecognizer:panGesture];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startOrGoalMoved:) name:@"start or goal moved" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startOrGoalRemoved:) name:@"start or goal removed" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeMap:) name:@"change map" object:nil];
 	[panGesture release];
 	[tapGesture release];
 }
+
+#pragma mark -
+#pragma mark notification handling
+
+-(void) changeToMap:(MapViewController*) aMVC{
+	[mapViewController.view removeFromSuperview];
+	mapViewController = aMVC;
+	[mapViewController redisplayPath];
+	[self.view addSubview:mapViewController.view];
+	[self.view sendSubviewToBack:mapViewController.view];
+	self.titleLabel.text = mapViewController.map.mapName;
+	[self.view setNeedsDisplay];
+	
+}
+
+-(void) changeMap:(NSNotification*) notification{
+	[self choseLevel: [notification.object mapName]];
+}
+
 
 #pragma mark -
 #pragma mark event handling for toolbar button
@@ -525,14 +549,14 @@ toMakeAnnotationType:(AnnotationType) annoType
 		lev1 = [p1 level];
 		lev2 = [p2 level];
 		if (![lev1 isEqual:lev2]) {
-			Annotation* departing = [[Annotation alloc] initAnnotationType:kAnnoConnector inlevel:lev1 WithPosition:[p1 position] title:[NSString stringWithFormat:@"To %@", lev2.mapName] content:[NSString stringWithFormat:@"continue path to %@", lev2.mapName]];
+			Annotation* departing = [[Annotation annotationWithAnnotationType:kAnnoConnector inlevel:lev1 WithPosition:[p1 position] title:[NSString stringWithFormat:@"To %@", lev2.mapName] content:[NSString stringWithFormat:@"continue path to %@", lev2.mapName]] retain];
 			[departing setIsDepartingConnector:YES];
 			[departing setIsUp:[self checkLevel:lev2 isHigherThan:lev1]];
-			[[self getViewControllerOfMap: lev1] addAnnotation:departing];
-			Annotation* arriving = [[Annotation alloc] initAnnotationType:kAnnoConnector inlevel:lev2 WithPosition:[p2 position] title:[NSString stringWithFormat:@"From %@", lev1.mapName] content:[NSString stringWithFormat:@"continue path from %@", lev1.mapName]];
+			[[self getViewControllerOfMap: lev1] addAnnotation:[[departing retain] autorelease]];
+			Annotation* arriving = [[Annotation annotationWithAnnotationType:kAnnoConnector inlevel:lev2 WithPosition:[p2 position] title:[NSString stringWithFormat:@"From %@", lev1.mapName] content:[NSString stringWithFormat:@"continue path from %@", lev1.mapName]] retain];
 			[arriving setIsDepartingConnector:NO];
 			[arriving setIsUp:[self checkLevel:lev2 isHigherThan:lev1]];
-			[[self getViewControllerOfMap: lev2] addAnnotation: arriving];
+			[[self getViewControllerOfMap: lev2] addAnnotation: [[arriving retain] autorelease]];
 		}
 	}	
 	[mapViewController redisplayPath];
@@ -567,22 +591,6 @@ toMakeAnnotationType:(AnnotationType) annoType
 }
 
 
--(void) choseLevel: (NSString*) chosenLevel{
-	for (int i = 0; i<[listMapViewController count]; i++) {
-		MapViewController* aMVC = [listMapViewController objectAtIndex:i];
-		if ([aMVC.map.mapName isEqualToString:chosenLevel]) {
-			[mapViewController.view removeFromSuperview];
-			mapViewController = aMVC;
-			[mapViewController redisplayPath];
-			[self.view addSubview:mapViewController.view];
-			[self.view sendSubviewToBack:mapViewController.view];
-			self.titleLabel.text = mapViewController.map.mapName;
-			[self.view setNeedsDisplay];
-			break;
-		}
-	}
-}
-
 -(BOOL) checkLevel:(Map*) lev1 isHigherThan:(Map*) lev2{
 	int index1 = [mall.mapList indexOfObject:lev1];
 	int index2 = [mall.mapList indexOfObject:lev2];
@@ -598,6 +606,16 @@ toMakeAnnotationType:(AnnotationType) annoType
 
 #pragma mark -
 #pragma mark level list table view datasource - delegate methods
+
+-(void) choseLevel: (NSString*) chosenLevel{
+	for (int i = 0; i<[listMapViewController count]; i++) {
+		MapViewController* aMVC = [listMapViewController objectAtIndex:i];
+		if ([aMVC.map.mapName isEqualToString:chosenLevel]) {
+			[self changeToMap: aMVC];
+			break;
+		}
+	}
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	return 1;
@@ -626,26 +644,6 @@ toMakeAnnotationType:(AnnotationType) annoType
 	[self choseLevel: chosenLevel];
 	[levelListController dismissPopoverAnimated:YES];
 }
-
-
-#pragma mark -
-
-
-- (NSString *)subtitle{
-	return @"Put some text here";
-}
-- (NSString *)title{
-	return @"Parked Location";
-}
-
--(id)initWithCoordinate:(CLLocationCoordinate2D) c{
-	if(self = [super init]){
-		coordinate=c;
-		//NSLog(@"%f,%f",c.latitude,c.longitude);
-	}
-	return self;
-}
-
 
 #pragma mark -
 #pragma mark Split view support

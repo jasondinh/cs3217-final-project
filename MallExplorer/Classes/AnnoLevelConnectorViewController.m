@@ -61,12 +61,13 @@
 	} else if (!isUp && isDeparting) { // a departing connector to a lower level
 		imageName = [NSString stringWithString:@"down_arrow.png"];
 	}  else if (isUp && !isDeparting) { // an arriving connector from a lower level
-		imageName = [NSString stringWithString:@"up_arrow.png"];
+		imageName = [NSString stringWithString:@"up_red_arrow.png"];
 	}  else if (!isUp && !isDeparting) { // an arriving connector from a higher level
-		imageName = [NSString stringWithString:@"down_arrow.png"];
+		imageName = [NSString stringWithString:@"down_red_arrow.png"];
 	}	
 	UIImage* image = [UIImage imageNamed:imageName];
 	UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
+	imageView.alpha = 0.6;
 	imageView.frame = CGRectMake(0, 0, 30, 30);	
 	self.view = [[UIView alloc] initWithFrame:imageView.frame];
 	//self.view.backgroundColor = [UIColor redColor];

@@ -35,11 +35,11 @@
 }
 */
 
--(AnnoStairViewController*) initWithAnnotation:(Annotation *)anno{
+-(AnnoStairViewController*) initWithAnnotation:(AnnotationLevelConnector *)anno{
 	self = [super init];
 	if (!self) return nil;
 	self.annotation = anno;
-	NSString* imageName = [NSString stringWithString:@"icon_shop.png"];
+	NSString* imageName = [NSString stringWithString:@"icon_stair.png"];
 	UIImage* image = [UIImage imageNamed:imageName];
 	UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
 	imageView.frame = CGRectMake(0, 0, 30, 30);	
@@ -50,6 +50,19 @@
 	return self;
 }
 
+-(void) addGestureRecognizer{
+	[super addGestureRecognizer];
+	UITapGestureRecognizer* tapGesture	 = [[UITapGestureRecognizer alloc]
+											initWithTarget:self action:@selector(stairChosen:)];
+	[tapGesture setNumberOfTapsRequired:2];
+	[self.view addGestureRecognizer:tapGesture];
+	[tapGesture release];
+	
+}
+
+-(void) stairChosen:(UIGestureRecognizer*) gesture{
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"move to destination of a stair" object:self];
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.

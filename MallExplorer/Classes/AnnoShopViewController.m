@@ -49,6 +49,19 @@
 	return self;
 }
 
+-(void) addGestureRecognizer{
+	[super addGestureRecognizer];
+	UITapGestureRecognizer* tapGesture	 = [[UITapGestureRecognizer alloc]
+											initWithTarget:self action:@selector(shopChosen:)];
+	[tapGesture setNumberOfTapsRequired:1];
+	[self.view addGestureRecognizer:tapGesture];
+	[tapGesture release];
+	
+}
+
+-(void) shopChosen: (UIGestureRecognizer*) recognizer{
+	//[[NSNotificationCenter defaultCenter] postNotificationName:@"Shopview will appear" object:self];
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.

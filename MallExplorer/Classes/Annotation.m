@@ -17,16 +17,15 @@
 @synthesize content;
 @synthesize isDisplayed;
 @synthesize level;
--(Annotation*) initAnnotationType: (AnnotationType) annType inlevel:(Map*)lev WithPosition: (CGPoint) pos title:(NSString*) tit content: (NSString*) cont{
-	[self release];
-	self = [[AnnotationFactory createAnnotationType:annType] retain];
-	self.annoType = annType;
-	if (!self) return nil;
-	self.level = lev;
-	self.isDisplayed = YES;
-	self.position = pos;
-	self.title = tit;
-	self.content = cont;
-	return self;
++(Annotation*) annotationWithAnnotationType: (AnnotationType) annType inlevel:(Map*)lev WithPosition: (CGPoint) pos title:(NSString*) tit content: (NSString*) cont{
+	Annotation* anAnnotation = [AnnotationFactory createAnnotationType:annType];
+	if (!anAnnotation) return nil;
+	anAnnotation.annoType = annType;	
+	anAnnotation.level = lev;
+	anAnnotation.isDisplayed = YES;
+	anAnnotation.position = pos;
+	anAnnotation.title = tit;
+	anAnnotation.content = cont;
+	return anAnnotation;
 }
 @end
