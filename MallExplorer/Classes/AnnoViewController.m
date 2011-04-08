@@ -46,14 +46,18 @@
 -(void) annotationViewTapped: (UIGestureRecognizer*) recognizer{
 		if (!titleIsShown) {
 			titleIsShown = YES;
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"title is shown" object:self];
+			titleButton.hidden = NO;
+		} else {
+			titleIsShown = NO;
+			titleButton.hidden = YES;
 		}
+
 }
 
 +(AnnoViewController*) annoViewControllerWithAnnotation:(Annotation *)anno{
-	AnnoViewController* anAVC = [AnnotationFactory createAnnotationViewWithAnnotation:anno];
+	AnnoViewController* anAVC = [[AnnotationFactory createAnnotationViewWithAnnotation:anno] retain];
 	[anAVC addGestureRecognizer];
-	return anAVC;
+	return [anAVC autorelease];
 }
 
 

@@ -12,7 +12,6 @@
 @implementation MapViewController
 @synthesize annotationList;
 @synthesize map;
-@synthesize displayAllTitleMode;
 
 const BOOL DEBUG = YES;
 int startPoint,endPoint;
@@ -103,7 +102,7 @@ NSMutableArray* edgeList;
 }
 
 #pragma mark -
-#pragma mark add annotation methods
+#pragma mark handling annotation methods
 
 -(BOOL) addAnnotationToMap: (AnnoViewController*) annoView{
 	if (![map checkPositionInsideMap:annoView.annotation.position] || ![map checkFreeAtPoint:annoView.annotation.position]) {
@@ -116,7 +115,7 @@ NSMutableArray* edgeList;
 	//NSLog(@"%lf %lf %lf %lf", titleButton.frame.origin.x, titleButton.frame.origin.y, titleButton.frame.size.width, titleButton.frame.size.height);
 	[titleButton setTitle:annoView.annotation.title forState:UIControlStateNormal];
 	titleButton.backgroundColor = [UIColor	colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.4];
-	titleButton.hidden = !displayAllTitleMode;
+	titleButton.hidden = NO;
 	[displayArea addSubview:titleButton];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(annotationOnMapMoved:) name:@"annotation on map moved" object:annoView];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(annotationOnMapRemoved:) name:@"annotation on map removed" object:annoView];
@@ -145,6 +144,17 @@ NSMutableArray* edgeList;
 	//NSLog(@"%d", [annotationList count]);
 }
 
+-(void) removeAllAnnotationOfType:(AnnotationType) typeToRemove{
+	for (int i=[annotationList count]-1; i>=0; i--) {
+		AnnoViewController* anMVC = [annotationList objectAtIndex:i];
+		if (anMVC.annotation.annoType == typeToRemove) {
+			[map removeAnnotation:anMVC.annotation];
+			[anMVC.view removeFromSuperview];
+			[anMVC.titleButton removeFromSuperview];
+			[annotationList removeObjectAtIndex:i];
+		}
+	}
+}
 
 #pragma mark -
 #pragma mark initializers
@@ -172,9 +182,7 @@ NSMutableArray* edgeList;
 	for (int i= 0; i<[aMap.annotationList count]; i++) {
 		AnnoViewController* annoView = [AnnoViewController annoViewControllerWithAnnotation: [map.annotationList objectAtIndex:i]];
 		[annotationList addObject:annoView];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(annotationChangeToggle:) name:@"title is shown" object:nil];
 	}
-	displayAllTitleMode = NO;
 	annoBeingSelected = nil;
 	return self;
 }
@@ -512,38 +520,7 @@ NSMutableArray* edgeList;
 	}
 }
 
--(void) toggleDisplayText{
-	if (!displayAllTitleMode) {
-		displayAllTitleMode = YES;
-		for (int i = 0; i<[annotationList count]; i++) {
-			[[annotationList objectAtIndex:i] titleButton].hidden = NO;
-		}
-	} else {
-		displayAllTitleMode = NO;
-		for (int i = 0; i<[annotationList count]; i++) {
-			[[annotationList objectAtIndex:i] titleButton].hidden = YES;
-		}
-		annoBeingSelected = nil;
-	}
 
-}
-
--(void) annotationChangeToggle:(NSNotification*) notification{
-	if (!displayAllTitleMode) {
-		if (annoBeingSelected) {
-			//NSLog(@"turned off something");
-			annoBeingSelected.titleIsShown = NO;
-			annoBeingSelected.titleButton.hidden = YES;
-			//NSLog(@"anno is being display %d", annoBeingSelected.titleButton.hidden);
-		}
-		annoBeingSelected = notification.object;
-		annoBeingSelected.titleButton.hidden = NO;
-		//NSLog(@"%d",  annoBeingSelected.titleButton.hidden);
-		for (int i = 0; i<[annotationList count]; i++) {
-			//NSLog(@"anno %d is being display: %d", i, [[annotationList objectAtIndex:i] titleButton].hidden);
-		}
-	}
-}
 
 #pragma mark -
 #pragma mark path finding

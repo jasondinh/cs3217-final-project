@@ -15,7 +15,7 @@
 @synthesize toolbar;
 @synthesize detailItem;
 @synthesize popoverController;
-@synthesize toogleTextButton;
+@synthesize toggleTextButton;
 @synthesize startFlagButton;
 @synthesize goalFlagButton;
 @synthesize pathFindingButton;
@@ -203,7 +203,7 @@
 }
 
 -(Map*) createTestMap2{
-	UIImage* image = [UIImage imageNamed:@"map1.jpg"];
+	UIImage* image = [UIImage imageNamed:@"map.jpg"];
 	NSMutableArray* pointList = [[NSMutableArray alloc] init];
 	NSMutableArray* edgeList = [[NSMutableArray alloc] init];
 	Map* aMap = [[Map alloc] init];
@@ -410,11 +410,12 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+	displayAllTitleMode = YES;
 	mall = [[Mall alloc] initWithId:nil andName:nil andLongitude:nil andLatitude:nil andAddress:nil andZip:nil];
 	UITapGestureRecognizer* tapGesture	 = [[UITapGestureRecognizer alloc]
-											initWithTarget:self action:@selector(toggleText:)];
+											initWithTarget:self action:@selector(toggleDisplayCaptionMode:)];
 	[tapGesture setNumberOfTapsRequired:1];
-	[toogleTextButton addGestureRecognizer:tapGesture];
+	[toggleTextButton addGestureRecognizer:tapGesture];
 	
 	tapGesture	 = [[UITapGestureRecognizer alloc]
 											initWithTarget:self action:@selector(pathFindingClicked)];
@@ -453,7 +454,6 @@
 -(void) changeMap:(NSNotification*) notification{
 	[self choseLevel: [notification.object mapName]];
 }
-
 
 #pragma mark -
 #pragma mark event handling for toolbar button
@@ -530,11 +530,23 @@ toMakeAnnotationType:(AnnotationType) annoType
 	}
 	[mall resetPath];
 	[mapViewController redisplayPath];
+	for (int i = 0; i<[listMapViewController count]; i++) {
+		[[listMapViewController objectAtIndex:i] removeAllAnnotationOfType:kAnnoConnector];
+	}
 }
  
--(void) toggleText:(UIGestureRecognizer*) gesture{
-	//NSLog(@"toggle title");
-	[mapViewController toggleDisplayText];
+-(void) toggleDisplayCaptionMode:(UIGestureRecognizer*) gesture{
+	if (!displayAllTitleMode) {
+		displayAllTitleMode = YES;
+		for (int i = 0; i<[mapViewController.annotationList count]; i++) {
+			[[mapViewController.annotationList objectAtIndex:i] titleButton].hidden = NO;
+		}
+	} else {
+		displayAllTitleMode = NO;
+		for (int i = 0; i<[mapViewController.annotationList count]; i++) {
+			[[mapViewController.annotationList objectAtIndex:i] titleButton].hidden = YES;
+		}
+	}
 }
 
 -(MapViewController*) getViewControllerOfMap:(Map*) aMap{
@@ -552,14 +564,18 @@ toMakeAnnotationType:(AnnotationType) annoType
 		lev1 = [p1 level];
 		lev2 = [p2 level];
 		if (![lev1 isEqual:lev2]) {
-			Annotation* departing = [[Annotation annotationWithAnnotationType:kAnnoConnector inlevel:lev1 WithPosition:[p1 position] title:[NSString stringWithFormat:@"To %@", lev2.mapName] content:[NSString stringWithFormat:@"continue path to %@", lev2.mapName]] retain];
+			Annotation* departing = [Annotation annotationWithAnnotationType:kAnnoConnector inlevel:lev1 WithPosition:[p1 position] title:[NSString stringWithFormat:@"To %@", lev2.mapName] content:[NSString stringWithFormat:@"continue path to %@", lev2.mapName]];
 			[departing setIsDepartingConnector:YES];
 			[departing setIsUp:[self checkLevel:lev2 isHigherThan:lev1]];
+			[departing setDestination: lev2];
 			[[self getViewControllerOfMap: lev1] addAnnotation:[[departing retain] autorelease]];
-			Annotation* arriving = [[Annotation annotationWithAnnotationType:kAnnoConnector inlevel:lev2 WithPosition:[p2 position] title:[NSString stringWithFormat:@"From %@", lev1.mapName] content:[NSString stringWithFormat:@"continue path from %@", lev1.mapName]] retain];
+			Annotation* arriving = [Annotation annotationWithAnnotationType:kAnnoConnector inlevel:lev2 WithPosition:[p2 position] title:[NSString stringWithFormat:@"From %@", lev1.mapName] content:[NSString stringWithFormat:@"continue path from %@", lev1.mapName]] ;
 			[arriving setIsDepartingConnector:NO];
 			[arriving setIsUp:[self checkLevel:lev2 isHigherThan:lev1]];
+			[arriving setDestination: lev1];
 			[[self getViewControllerOfMap: lev2] addAnnotation: [[arriving retain] autorelease]];
+			if (start.titleButton.hidden = YES) [start annotationViewTapped:nil];
+			if (goal.titleButton.hidden = YES) [goal annotationViewTapped:nil];
 		}
 	}	
 	[mapViewController redisplayPath];
@@ -585,7 +601,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 - (IBAction) selectLevelClicked:(UIBarButtonItem*) sender{
 	UITableViewController* listTableController = [[UITableViewController alloc] initWithStyle:UITableViewStyleGrouped];
     listTableController.clearsSelectionOnViewWillAppear = NO;
-	listTableController.contentSizeForViewInPopover = CGSizeMake(200.0, 300.0);
+	listTableController.contentSizeForViewInPopover = CGSizeMake(200.0, [mall.mapList count]*50+10);
 	listTableController.tableView.delegate = self;
 	listTableController.tableView.dataSource = self;
 	levelListController = [[UIPopoverController alloc] initWithContentViewController:listTableController];

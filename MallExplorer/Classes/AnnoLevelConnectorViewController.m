@@ -67,7 +67,7 @@
 	}	
 	UIImage* image = [UIImage imageNamed:imageName];
 	UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
-	imageView.alpha = 0.6;
+	imageView.alpha = 0.75;
 	imageView.frame = CGRectMake(0, 0, 30, 30);	
 	self.view = [[UIView alloc] initWithFrame:imageView.frame];
 	//self.view.backgroundColor = [UIColor redColor];
@@ -76,7 +76,19 @@
 	return self;
 }
 
+-(void) addGestureRecognizer{
+//	[super addGestureRecognizer];
+	UITapGestureRecognizer* tapGesture	 = [[UITapGestureRecognizer alloc]
+											initWithTarget:self action:@selector(stairChosen:)];
+	[tapGesture setNumberOfTapsRequired:1];
+	[self.view addGestureRecognizer:tapGesture];
+	[tapGesture release];
+	
+}
 
+-(void) stairChosen:(UIGestureRecognizer*) gesture{
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"move to destination of a stair" object:self];
+}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.
     return YES;
