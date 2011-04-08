@@ -120,7 +120,6 @@
 	 initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 	 target:self action:@selector(doneSearching_Clicked:)] autorelease] ];*/
 	self.contentSizeForViewInPopover = CGSizeMake(320, 850);
-	[barButton release];
 	}
 
 
