@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Constant.h"
 
 
 @interface LineEdgeView : UIView {

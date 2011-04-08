@@ -28,7 +28,7 @@ NSMutableArray* edgeList;
 -(CGPoint) translatePointToScrollViewCoordinationFromMapCoordination:(CGPoint) point{
 	double newSizeWidth = mapSize.width * displayArea.zoomScale;
 	double newSizeHeight = mapSize.height * displayArea.zoomScale;
-	NSLog(@"zoom scale %lf", displayArea.zoomScale);
+	////NSLog(@"zoom scale %lf", displayArea.zoomScale);
 	return CGPointMake(point.x/mapSize.width*newSizeWidth, point.y/mapSize.height*newSizeHeight);
 }
 
@@ -39,12 +39,12 @@ NSMutableArray* edgeList;
 }
 
 -(void) mapUpdate{
-/*	NSLog(@"%d", [self.view.subviews count]);
+/*	//NSLog(@"%d", [self.view.subviews count]);
 	for (int i = 0; i<[pointPathList count]; i++) {
 		[[pointPathList objectAtIndex:i] removeFromSuperview];
 	}
 	[pointPathList removeAllObjects];*/
-	NSLog(@"%d", [self.view.subviews count]);
+	////NSLog(@"%d", [self.view.subviews count]);
 	for (int i = 0; i<[map.pointList count]; i++) {
 		UIImageView* point = [UIImageView imageViewWithImageNamed:@"point.png"];
 		MapPoint* aMapPoint = [map.pointList objectAtIndex:i];
@@ -53,7 +53,7 @@ NSMutableArray* edgeList;
 //		[pointPathList addObject:point];
 		[[self.view.subviews lastObject] performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:1.0];
 	}
-	NSLog(@"%d", [self.view.subviews count]);
+	//NSLog(@"%d", [self.view.subviews count]);
 }
 
 -(UIView*) viewForZoomingInScrollView:(UIScrollView *)scrollView{
@@ -66,7 +66,7 @@ NSMutableArray* edgeList;
 		LineEdgeView* aLine = [edgeDisplayedList objectAtIndex:i];
 		aLine.startPoint = [self translatePointToMapCoordinationFromScrollViewCoordination: aLine.startPoint];
 		aLine.goalPoint = [self translatePointToMapCoordinationFromScrollViewCoordination: aLine.goalPoint];
-		NSLog(@"before zooming %lf %lf %lf %lf", aLine.startPoint.x, aLine.startPoint.y, aLine.goalPoint.x, aLine.goalPoint.y);
+		//NSLog(@"before zooming %lf %lf %lf %lf", aLine.startPoint.x, aLine.startPoint.y, aLine.goalPoint.x, aLine.goalPoint.y);
 		[aLine removeFromSuperview];
 	}
 	hiddenAttribute = [[NSMutableArray alloc] initWithCapacity:[scrollView.subviews count]];
@@ -80,7 +80,7 @@ NSMutableArray* edgeList;
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale{
-	NSLog(@"scroll view did end zooming");
+	//NSLog(@"scroll view did end zooming");
 	for (int i = 0; i<[annotationList count]; i++) {
 		AnnoViewController* annoVC = [annotationList objectAtIndex:i];
 		annoVC.view.transform = CGAffineTransformIdentity;
@@ -109,7 +109,7 @@ NSMutableArray* edgeList;
 	[displayArea addSubview:annoView.view];
 	[annoView.view setCenter:[self translatePointToScrollViewCoordinationFromMapCoordination: annoView.annotation.position]];
 	UIButton* titleButton = [[UIButton alloc] initWithFrame:[annoView getAnnoTitleRect]];
-	NSLog(@"%lf %lf %lf %lf", titleButton.frame.origin.x, titleButton.frame.origin.y, titleButton.frame.size.width, titleButton.frame.size.height);
+	//NSLog(@"%lf %lf %lf %lf", titleButton.frame.origin.x, titleButton.frame.origin.y, titleButton.frame.size.width, titleButton.frame.size.height);
 	[titleButton setTitle:annoView.annotation.title forState:UIControlStateNormal];
 	titleButton.backgroundColor = [UIColor	colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.4];
 	titleButton.hidden = !displayAllTitleMode;
@@ -122,8 +122,8 @@ NSMutableArray* edgeList;
 
 -(AnnoViewController*) addAnnotationType:(AnnotationType) annType ToScrollViewAtPosition:(CGPoint)pos withTitle:(NSString*) title withContent:(NSString*) content {
 	Annotation* anno = [[Annotation alloc] initAnnotationType:annType inlevel:self.map WithPosition:[self translatePointToMapCoordinationFromScrollViewCoordination:pos] title:title content:content];
-	//NSLog(@"position of new annotation: %lf %lf", pos.x, pos.y);
-	//NSLog(@"position of new annotation: %lf %lf", [self translatePointToMapCoordinationFromScrollViewCoordination: pos].x, [self translatePointToMapCoordinationFromScrollViewCoordination: pos].y);
+	////NSLog(@"position of new annotation: %lf %lf", pos.x, pos.y);
+	////NSLog(@"position of new annotation: %lf %lf", [self translatePointToMapCoordinationFromScrollViewCoordination: pos].x, [self translatePointToMapCoordinationFromScrollViewCoordination: pos].y);
 	AnnoViewController* annoView = [[AnnoViewController alloc] initWithAnnotation:anno];
 	if (![self addAnnotationToMap:annoView]) return nil;
 	[annotationList addObject:annoView];
@@ -136,7 +136,7 @@ NSMutableArray* edgeList;
 	AnnoViewController* annoView = [[AnnoViewController alloc] initWithAnnotation: annotation];
 	[annotationList addObject:annoView];
 	[self addAnnotationToMap:annoView];
-	NSLog(@"%d", [annotationList count]);
+	//NSLog(@"%d", [annotationList count]);
 	[annoView release];
 }
 
@@ -177,7 +177,7 @@ NSMutableArray* edgeList;
 
 -(MapViewController*) initMallWithFrame:(CGRect) aFr{
 	aFrame = aFr;
-	NSLog(@"initMall");
+	//NSLog(@"initMall");
 	UIImage* image = [UIImage imageNamed:@"map.jpg"];
 	NSMutableArray* pointList = [[NSMutableArray alloc] init];
 	edgeList = [[NSMutableArray alloc] init];
@@ -362,14 +362,14 @@ NSMutableArray* edgeList;
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	NSLog(@"mall view did load");
+	//NSLog(@"mall view did load");
 	displayArea = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,aFrame.size.width,aFrame.size.height)];
-	NSLog(@"%lf %lf %lf %lf", displayArea.frame.origin.x, displayArea.frame.origin.y, displayArea.frame.size.width, displayArea.frame.size.height);
+	//NSLog(@"%lf %lf %lf %lf", displayArea.frame.origin.x, displayArea.frame.origin.y, displayArea.frame.size.width, displayArea.frame.size.height);
 	//displayArea = [[UIScrollView alloc] initWithFrame:CGRectMake(MAP_ORIGIN_X, MAP_ORIGIN_Y, MAP_WIDTH, MAP_HEIGHT)];
 	imageView = [[UIImageView alloc] initWithImage:self.map.imageMap];
 	[displayArea addSubview:imageView];
 	[displayArea setContentSize:imageView.bounds.size];
-	NSLog(@"annotationList count %d", [annotationList count]);
+	//NSLog(@"annotationList count %d", [annotationList count]);
 	for (int i = 0; i < [annotationList count]; i++) {
 		[self addAnnotationToMap:[annotationList objectAtIndex:i]];
 		
@@ -378,7 +378,7 @@ NSMutableArray* edgeList;
 			
 	// set off set
 	
-	NSLog(@"finish adding annotation to map");
+	//NSLog(@"finish adding annotation to map");
 	[displayArea setContentOffset:CGPointMake(0, 0)];
 	//[self.view addSubview: displayArea];
 	self.view = displayArea;
@@ -388,7 +388,7 @@ NSMutableArray* edgeList;
 	for (int i = 1; i<[annotationList count]; i++) {
 		AnnoViewController* annoView0 = [annotationList objectAtIndex:i-1];
 		AnnoViewController* annoView1 = [annotationList objectAtIndex:i];
-		NSLog(@"adding line edge between %lf %lf and %lf %lf", annoView0.annotation.position.x, annoView0.annotation.position.y, annoView1.annotation.position.x, annoView1.annotation.position.y);
+		//NSLog(@"adding line edge between %lf %lf and %lf %lf", annoView0.annotation.position.x, annoView0.annotation.position.y, annoView1.annotation.position.x, annoView1.annotation.position.y);
 		LineEdgeView* aLineView = [[LineEdgeView alloc] initWithPoint1:annoView0.annotation.position  andPoint2:annoView1.annotation.position];
 		[displayArea addSubview:aLineView];
 		[displayArea sendSubviewToBack:aLineView];
@@ -427,13 +427,13 @@ NSMutableArray* edgeList;
 		pointPathList = [[NSMutableArray alloc] init];
 		[self mapUpdate];
 	}
-	NSLog(@"%d", [displayArea.subviews count]);
+	//NSLog(@"%d", [displayArea.subviews count]);
 	
 }
 
 -(void) tapToScrollViewPoint:(UIGestureRecognizer*) gesture{
 	CGPoint aPoint = [gesture locationInView:displayArea];
-	NSLog(@"MapPoint* point = [[MapPoint alloc] initWithPosition:CGPointMake(%lf %lf) andIndex:%d]", aPoint.x, aPoint.y,[map.pointList count]);
+	//NSLog(@"MapPoint* point = [[MapPoint alloc] initWithPosition:CGPointMake(%lf %lf) andIndex:%d]", aPoint.x, aPoint.y,[map.pointList count]);
 	MapPoint* point = [[MapPoint alloc] initWithPosition:aPoint inLevel:self.map andIndex: [map.pointList count]];
 	LineEdgeView* aLine = [[LineEdgeView alloc] initWithPoint1:aPoint andPoint2:CGPointMake(aPoint.x+2, aPoint.y+2)];
 	[displayArea addSubview:aLine];
@@ -461,7 +461,7 @@ NSMutableArray* edgeList;
 	}
 	if (gesture.state == UIGestureRecognizerStateEnded) {
 		endPoint = [self getTheClosestPointToCoordination:[gesture locationInView:displayArea]];
-	NSLog(@"Edge* edge = [[Edge alloc] initWithPoint1:[map.pointList objectAtIndex: %d] point2:[map.pointList objectAtIndex: %d] withLength:[MapPoint getDistantBetweenPoint:[map.pointList objectAtIndex: %d] andPoint:[map.pointList objectAtIndex: %d]] isBidirectional:YES withTravelType:kWalk];",startPoint,endPoint,startPoint, endPoint);
+	//NSLog(@"Edge* edge = [[Edge alloc] initWithPoint1:[map.pointList objectAtIndex: %d] point2:[map.pointList objectAtIndex: %d] withLength:[MapPoint getDistantBetweenPoint:[map.pointList objectAtIndex: %d] andPoint:[map.pointList objectAtIndex: %d]] isBidirectional:YES withTravelType:kWalk];",startPoint,endPoint,startPoint, endPoint);
 	}
 
 //	Edge* edge = [[Edge alloc] initWithPoint1:[map.pointList objectAtIndex: startPoint]
@@ -495,7 +495,7 @@ NSMutableArray* edgeList;
 	} 
 	anAnnoVC.annotation.position = newAnnoMapPosition;
 	anAnnoVC.titleButton.frame = [anAnnoVC getAnnoTitleRect];
-	NSLog(@"new position in map: %lf %lf", anAnnoVC.annotation.position.x, anAnnoVC.annotation.position.y);
+	//NSLog(@"new position in map: %lf %lf", anAnnoVC.annotation.position.x, anAnnoVC.annotation.position.y);
 	if (anAnnoVC.annotation.annoType==kAnnoStart || anAnnoVC.annotation.annoType==kAnnoGoal) {
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"start or goal moved" object:self];		
 	}
@@ -520,16 +520,16 @@ NSMutableArray* edgeList;
 -(void) annotationChangeToggle:(NSNotification*) notification{
 	if (!displayAllTitleMode) {
 		if (annoBeingSelected) {
-			NSLog(@"turned off something");
+			//NSLog(@"turned off something");
 			annoBeingSelected.titleIsShown = NO;
 			annoBeingSelected.titleButton.hidden = YES;
-			NSLog(@"anno is being display %d", annoBeingSelected.titleButton.hidden);
+			//NSLog(@"anno is being display %d", annoBeingSelected.titleButton.hidden);
 		}
 		annoBeingSelected = notification.object;
 		annoBeingSelected.titleButton.hidden = NO;
-		NSLog(@"%d",  annoBeingSelected.titleButton.hidden);
+		//NSLog(@"%d",  annoBeingSelected.titleButton.hidden);
 		for (int i = 0; i<[annotationList count]; i++) {
-			NSLog(@"anno %d is being display: %d", i, [[annotationList objectAtIndex:i] titleButton].hidden);
+			//NSLog(@"anno %d is being display: %d", i, [[annotationList objectAtIndex:i] titleButton].hidden);
 		}
 	}
 }
@@ -550,10 +550,10 @@ NSMutableArray* edgeList;
 	[result addObjectsFromArray:[map findPathFrom:point1 to:point2]];
 	[result addObject:goalPoint];
 	result = [map refineAPath:result];
-	NSLog(@"path found with: %d node", [result count] );
+	//NSLog(@"path found with: %d node", [result count] );
 	for	(int i = 0; i<[result count]; i++){
 		MapPoint* aPoint = [result objectAtIndex:i];
-		NSLog(@"%lf %lf", aPoint.position.x, aPoint.position.y);
+		//NSLog(@"%lf %lf", aPoint.position.x, aPoint.position.y);
 	}
 	return result;
 }
@@ -566,7 +566,7 @@ NSMutableArray* edgeList;
 }
 
 -(void) redisplayPath{
-	NSLog(@"display path with number of edge: %d", [map.pathOnMap count]);
+	//NSLog(@"display path with number of edge: %d", [map.pathOnMap count]);
 	for (int i = 0; i<[edgeDisplayedList count]; i++) {
 		[[edgeDisplayedList objectAtIndex:i] removeFromSuperview];
 	}

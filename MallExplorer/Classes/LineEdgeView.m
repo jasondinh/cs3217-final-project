@@ -18,7 +18,7 @@
     double y = fmin(point1.y, point2.y);
 	double w = fabs(point1.x - point2.x);
 	double h = fabs(point1.y - point2.y);
-    self = [super initWithFrame:CGRectMake(x, y, w, h)];
+    self = [super initWithFrame:CGRectMake(x-DRAW_PATH_WIDTH, y-DRAW_PATH_WIDTH, w+2*DRAW_PATH_WIDTH, h+2*DRAW_PATH_WIDTH)];
     if (self) {
         // Initialization code.
 		startPoint = point1;
@@ -33,7 +33,7 @@
     double y = fmin(point1.y, point2.y);
 	double w = fabs(point1.x - point2.x);
 	double h = fabs(point1.y - point2.y);
-    self.frame = CGRectMake(x, y, w, h);
+    self.frame = CGRectMake(x-DRAW_PATH_WIDTH, y-DRAW_PATH_WIDTH, w+2*DRAW_PATH_WIDTH, h+2*DRAW_PATH_WIDTH);
     if (self) {
         // Initialization code.
 		startPoint = point1;
@@ -49,10 +49,13 @@
 - (void)drawRect:(CGRect)rect {
 	CGContextRef contextRef = UIGraphicsGetCurrentContext();
     CGFloat red[4] = {1.0f, 0.0f, 0.0f, 1.0f};
+	CGContextSetLineCap(contextRef, kCGLineCapRound);
+	CGContextSetLineJoin(contextRef, kCGLineJoinRound);
+	CGContextSetLineWidth(contextRef, DRAW_PATH_WIDTH);
     CGContextSetStrokeColor(contextRef, red);
     CGContextBeginPath(contextRef);
-	double x = self.frame.origin.x;
-	double y = self.frame.origin.y;
+	double x = self.frame.origin.x+3;
+	double y = self.frame.origin.y+3;
 	const CGPoint points[] = {CGPointMake(startPoint.x-x, startPoint.y-y),CGPointMake(goalPoint.x-x, goalPoint.y-y)};
     CGContextMoveToPoint(contextRef, startPoint.x-x, startPoint.y-y);
 //    CGContextAddLineToPoint(contextRef, goalPoint.x-x, goalPoint.y-y);
