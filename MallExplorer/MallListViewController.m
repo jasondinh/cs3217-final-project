@@ -36,28 +36,25 @@
 		self.mallList = [malls mutableCopy];
 		listOfItems = [[NSMutableArray alloc]init];
 		for (Mall* aMall in malls){
-			
 			[listOfItems addObject:aMall.name];
-					}
+		}
 	}
 	
 	return self;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	if (searching)
-		return [copyListOfItems count];
-	else {		
-		return [listOfItems count];
-	}
-}
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
+	NSString *product = nil;
+	if (self.tableView == self.searchDisplayController.searchResultsTableView)
+	{
+        product = [self.copyListOfItems objectAtIndex:indexPath.row];
+    }
+	else
+	{
+        product = [self.listOfItems objectAtIndex:indexPath.row];
+    }
+
 		
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:nil];
 	//cityMapViewController.detailItem = 
@@ -67,7 +64,7 @@
 
 
 //override
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+/*- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	//    NSLog(@"em da dc goi");
 	static NSString *CellIdentifier = @"Cell";
 	
@@ -94,7 +91,7 @@
 //	}
 	
 	return cell;
-}
+}*/
 
 
 
@@ -108,10 +105,9 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	
 	 copyListOfItems = [[NSMutableArray alloc]init];
-	self.navigationItem.title = @"Mall list";
+	 self.navigationItem.title = @"Mall list";
 	 searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-	searching = NO;
-	 letUserSelectRow = YES;
+
 	
 	 NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"Nearby",@"Favorite",nil];
 	 typeOfList = [[UISegmentedControl alloc] initWithItems:segmentArray];

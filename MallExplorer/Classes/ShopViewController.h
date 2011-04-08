@@ -13,5 +13,5 @@
 @interface ShopViewController : UITabBarController<UINavigationControllerDelegate> {
 
 }
-
+-(id)initWithShop:(Shop*)aShop;
 @end

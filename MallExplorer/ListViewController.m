@@ -11,7 +11,7 @@
 
 @implementation ListViewController
 
-@synthesize listOfItems,copyListOfItems,searchBar,typeOfList;
+@synthesize listOfItems,copyListOfItems,searchBar,typeOfList,searchWasActive,savedSearchTerm,savedScopeButtonIndex,displayController;
 #pragma mark -
 #pragma mark Initialization
 
@@ -33,13 +33,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
 	searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.frame.size.width, 0)];  
+	//searchBar.scopeButtonTitles=[NSArray arrayWithObjects:@"All",@"adfas",nil];
+	//searchBar.showsScopeBar =NO;
+	searchBar.showsSearchResultsButton =NO;
 	searchBar.barStyle = UIBarStyleDefault;
 	searchBar.delegate = self;
 	[searchBar sizeToFit];
+	displayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+	self.tableView.delegate =self;
+	//self.searchDisplayController.searchBar =searchBar;
+	self.displayController.delegate =self;
+	self.displayController.searchResultsDataSource =self;
+	self.displayController.searchResultsDelegate =self;
 	self.navigationController.delegate =self;
-
 	self.tableView.tableHeaderView = searchBar;	
+
+	self.copyListOfItems = [NSMutableArray arrayWithCapacity:[self.listOfItems count]];
+	if (self.savedSearchTerm) {
+		[self.searchDisplayController setActive:self.searchWasActive];
+		[self.searchDisplayController.searchBar setSelectedScopeButtonIndex:self.savedScopeButtonIndex];
+		[self.searchDisplayController.searchBar setText:savedSearchTerm];
+		self.savedSearchTerm =nil;
+	}
+	[self.tableView reloadData];
+	self.tableView.scrollEnabled =YES;
+	
 }
 
 - (void) doneSearching_Clicked:(id)sender {
@@ -47,8 +67,6 @@
 	searchBar.text = @"";
 	[searchBar resignFirstResponder];
 	
-	letUserSelectRow = YES;
-	searching = NO;
 	self.navigationItem.rightBarButtonItem = nil;
 	self.tableView.scrollEnabled = YES;
 	
@@ -66,6 +84,7 @@
         } else {
             NSLog(@"BACKWARD");
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"Listview will appear" object:self];
+
         }
     }
 	
@@ -93,11 +112,12 @@
     [super viewWillDisappear:animated];
 }
 */
-/*
+
 - (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-*/
+    self.searchWasActive = [self.searchDisplayController isActive];
+    self.savedSearchTerm = [self.searchDisplayController.searchBar text];
+    self.savedScopeButtonIndex = [self.searchDisplayController.searchBar selectedScopeButtonIndex];}
+
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -109,117 +129,58 @@
 #pragma mark -
 #pragma mark Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-    if (searching)
-		return 1;
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	/*
+	 If the requesting table view is the search display controller's table view, return the count of
+     the filtered list, otherwise return the count of the main list.
+	 */
+	if (tableView == self.searchDisplayController.searchResultsTableView)
+	{
+        return [self.copyListOfItems count];
+    }
 	else
-		return 1
-		;
+	{
+        return [self.listOfItems count];
+    }
 }
 
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-	if (searching)
-		return [copyListOfItems count];
-	else {
-		
-		//Number of rows it should expect should be based on the section
-
-		return [listOfItems count];
-	}
-}
 
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	//    NSLog(@"em da dc goi");
-	static NSString *CellIdentifier = @"Cell";
+	static NSString *kCellID = @"cellID";
 	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	if (cell == nil) {
-		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:CellIdentifier] autorelease];
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
+	if (cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellID] autorelease];
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
 	
-	// Set up the cell...
-	
-	if(searching)
-		cell.textLabel.text = [copyListOfItems objectAtIndex:indexPath.row];
-	else {
+	/*
+	 If the requesting table view is the search display controller's table view, configure the cell using the filtered content, otherwise use the main list.
+	 */
+	NSString *product = nil;
+	if (tableView == self.searchDisplayController.searchResultsTableView)
 		
-		//First get the dictionary object
-
-		cell.textLabel.text = [listOfItems objectAtIndex:indexPath.row];;
-	}
+	{
 	
+        product = [self.copyListOfItems objectAtIndex:indexPath.row];
+    }
+	else
+	{
+        product = [self.listOfItems objectAtIndex:indexPath.row];
+    }
+	
+	cell.textLabel.text = product;
 	return cell;
 }
 
-//RootViewController.m
-- (void) searchBarTextDidBeginEditing:(UISearchBar *)theSearchBar {
-	
-	searching = YES;
-	letUserSelectRow = YES;
-	self.tableView.scrollEnabled = YES;
-	
-	//Add the done button.
-	/*self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
-											   initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-											   target:self action:@selector(doneSearching_Clicked:)] autorelease];*/
-}
-//RootViewController.m
-- (NSIndexPath *)tableView :(UITableView *)theTableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-	if(letUserSelectRow)
-		return indexPath;
-	else
-		return nil;
-}
-//RootViewController.m
-- (void)searchBar:(UISearchBar *)theSearchBar textDidChange:(NSString *)searchText {
-	
-	//Remove all objects first.
-	[copyListOfItems removeAllObjects];
-	
-	if([searchText length] > 0) {
-		
-		searching = YES;
-		letUserSelectRow = YES;
-		self.tableView.scrollEnabled = YES;
-		[self searchTableView];
-	}
-	else {
-		
-		searching = NO;
-		letUserSelectRow = YES;
-		self.tableView.scrollEnabled = YES;
-	}
-	
-	[self.tableView reloadData];
-}
 
-- (void) searchBarSearchButtonClicked:(UISearchBar *)theSearchBar {
-	
-	[self searchTableView];
-}
 
-- (void) searchTableView {
-	NSString *searchText = searchBar.text;
-	NSMutableArray *searchArray = [[NSMutableArray alloc] init];
-	
-
-	
-	for (NSString *sTemp in listOfItems)
-	{
-		NSRange titleResultsRange = [sTemp rangeOfString:searchText options:NSCaseInsensitiveSearch];
-		
-		if (titleResultsRange.length > 0)
-			[copyListOfItems addObject:sTemp];
-	}
-	[searchArray release];
-	searchArray = nil;
-}
 
 /*
 // Override to support conditional editing of the table view.
@@ -260,9 +221,58 @@
 }
 */
 
+#pragma mark -
+#pragma mark Content Filtering
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+	/*
+	 Update the filtered array based on the search text and scope.
+	 */
+
+	
+
+	[self.copyListOfItems removeAllObjects]; // First clear the filtered array.
+	
+	/*
+	 Search the main list for products whose type matches the scope (if selected) and whose name matches searchText; add items that match to the filtered array.
+	 */
+	for (NSString *product in listOfItems)
+	{
+		//if ([scope isEqualToString:@"All"] || [product.type isEqualToString:scope])
+		{
+			NSComparisonResult result = [product compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
+            if (result == NSOrderedSame)
+			{
+				[self.copyListOfItems addObject:product];
+
+            }
+		}
+	}
+}
+
 
 #pragma mark -
-#pragma mark Table view delegate
+#pragma mark UISearchDisplayController Delegate Methods
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString scope:
+	 [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
+{
+    [self filterContentForSearchText:[self.searchDisplayController.searchBar text] scope:
+	 [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+    
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
 
 #pragma mark -
 #pragma mark Table view delegate
@@ -275,23 +285,25 @@
      */
     //detailViewController.detailItem = 
     //    [NSString stringWithFormat:@"Row %d", indexPath.row];
-	NSString *selectedItem = nil;
-	NSString *searchingText = searchBar.text;
-	if(searching && [searchingText length]!=0)
-		selectedItem = [copyListOfItems objectAtIndex:indexPath.row];
-	else {
-		
-		selectedItem = [listOfItems objectAtIndex:indexPath.row];
-	}
+	//UIViewController *detailsViewController = [[UIViewController alloc] init];
+    
+	/*
+	 If the requesting table view is the search display controller's table view, configure the next view controller using the filtered content, otherwise use the main list.
+	 */
+	NSString *product = nil;
+	if (self.tableView == self.searchDisplayController.searchResultsTableView)
+	{
+        product = [self.copyListOfItems objectAtIndex:indexPath.row];
+    }
+	else
+	{
+        product = [self.listOfItems objectAtIndex:indexPath.row];
+    }
+	//detailsViewController.title = product;
+    
+   // [[self navigationController] pushViewController:detailsViewController animated:YES];
+    //[detailsViewController release];
 	
-	//Initialize the detail view controller and display it.
- 
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:nil];
-
-	//cityMapViewController.detailItem = 
-	//[NSString stringWithFormat:@"%@", 
-	//[listOfMovies objectAtIndex:indexPath.row]];    
 }
 
 
@@ -310,6 +322,7 @@
 - (void)viewDidUnload {
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
+	self.listOfItems = nil;
 }
 
 

@@ -33,7 +33,6 @@ BOOL chosen,shopchosen;
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ListViewWillAppear:) name:@"Listview will appear" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"shop chosen" object:nil];
-
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShopViewWillAppear:) name:@"Shopview will appear"  object:nil];
 		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
 		[self setDelegate:cityMapViewController];
@@ -48,7 +47,7 @@ BOOL chosen,shopchosen;
 	//	shopchosen = !shopchosen;
 		Shop* aShop = [[Shop alloc]init];
 		
-		ShopViewController* shopViewController = [[ShopViewController alloc] initWithShop:aShop] ;
+		ShopViewController* shopViewController = [[[ShopViewController alloc] initWithShop:aShop]autorelease] ;
 		[masterViewController pushViewController:shopViewController animated:YES];
 		//MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
 		//self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
