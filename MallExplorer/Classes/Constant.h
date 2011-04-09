@@ -9,14 +9,20 @@
 #import <UIKit/UIKit.h>
 
 // Map constant
-#define MAP_ORIGIN_X 0
+#define MAP_ORIGIN_X 3
 #define MAP_ORIGIN_Y 50
-#define MAP_WIDTH	700
-#define MAP_HEIGHT	700
+#define MAP_WIDTH	697
+#define MAP_HEIGHT	648
+
+// portrait
+#define MAP_PORTRAIT_WIDTH	762
+#define MAP_PORTRAIT_HEIGHT	905
+
 
 // Annotation constants
 #define ANNOTATION_VIEW_HEIGHT 30
 #define ANNOTATION_VIEW_WIDTH 30
+
 // Annotation title:
 #define LENGTH_PER_CHARACTER 10
 #define CAPTION_HEIGHT 18

@@ -159,6 +159,25 @@ NSMutableArray* edgeList;
 #pragma mark -
 #pragma mark initializers
 
++(CGRect) getSuitableFrame{
+	CGFloat width = MAP_WIDTH, height = MAP_HEIGHT;
+	switch ([UIDevice currentDevice].orientation) {
+		case UIInterfaceOrientationLandscapeLeft:
+		case UIInterfaceOrientationLandscapeRight:			
+			width = MAP_WIDTH;
+			height = MAP_HEIGHT;
+			break;
+		case UIInterfaceOrientationPortrait:
+		case UIInterfaceOrientationPortraitUpsideDown:
+			width = MAP_PORTRAIT_WIDTH;
+			height = MAP_PORTRAIT_HEIGHT;		
+			break;
+		default:
+			break;
+	}
+	return CGRectMake(MAP_ORIGIN_X, MAP_ORIGIN_Y, width, height);
+}
+
 -(MapViewController*) initWithMapImage:(UIImage*)img 
 				withDefaultCenterPoint:(CGPoint)defaultPoint
 					withAnnotationList:(NSArray*) annList
@@ -166,7 +185,7 @@ NSMutableArray* edgeList;
 							  edgeList:(NSArray*) edgeList
 {
 	Map* aMap = [[Map alloc] initWithMapImage:img annotationList:annList pointList:pointList edgeList:edgeList defaultCenterPoint:defaultPoint];
-	return [self initMallWithFrame:CGRectMake(MAP_ORIGIN_X, MAP_ORIGIN_Y, MAP_WIDTH, MAP_HEIGHT) andMap:aMap];
+	return [self initMallWithFrame:[MapViewController getSuitableFrame] andMap:aMap];
 }
 
 -(MapViewController*) initMallWithFrame: (CGRect) aFrame andMap:(Map*) aMap{
@@ -598,7 +617,7 @@ NSMutableArray* edgeList;
 #pragma mark -
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Overriden to allow any orientation.
+
     return YES;
 }
 

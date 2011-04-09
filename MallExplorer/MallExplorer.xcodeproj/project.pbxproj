@@ -41,6 +41,12 @@
 		2899E5220DE3E06400AC0155 /* MallExplorerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* MallExplorerViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* MallExplorerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* MallExplorerViewController.m */; };
+		390C7432134F881D00785A2F /* overview_tab_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 390C7431134F881D00785A2F /* overview_tab_icon.png */; };
+		390C7434134F883300785A2F /* speechbubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 390C7433134F883300785A2F /* speechbubble.png */; };
+		390C74C4134F90CD00785A2F /* facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 390C74C3134F90CD00785A2F /* facebook_icon.png */; };
+		390C74C9134F915900785A2F /* facebook-icon_52x52.png in Resources */ = {isa = PBXBuildFile; fileRef = 390C74C8134F915900785A2F /* facebook-icon_52x52.png */; };
+		390C74EF134F942D00785A2F /* comments_tab_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 390C74EE134F942D00785A2F /* comments_tab_icon.png */; };
+		390C74F1134F945D00785A2F /* facebook_tab_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 390C74F0134F945D00785A2F /* facebook_tab_icon.png */; };
 		39358AB91340B1CA00A6B4F2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39358AB81340B1CA00A6B4F2 /* MapKit.framework */; };
 		39358AD61340B1E200A6B4F2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39358AD51340B1E200A6B4F2 /* CoreLocation.framework */; };
 		39A4DA4D1344D9F000DFD802 /* CityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A4DA481344D9F000DFD802 /* CityMapViewController.m */; };
@@ -185,6 +191,12 @@
 		28D7ACF70DDB3853001CB0EB /* MallExplorerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallExplorerViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* MallExplorer_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MallExplorer_Prefix.pch; sourceTree = "<group>"; };
+		390C7431134F881D00785A2F /* overview_tab_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = overview_tab_icon.png; sourceTree = "<group>"; };
+		390C7433134F883300785A2F /* speechbubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speechbubble.png; sourceTree = "<group>"; };
+		390C74C3134F90CD00785A2F /* facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_icon.png; sourceTree = "<group>"; };
+		390C74C8134F915900785A2F /* facebook-icon_52x52.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-icon_52x52.png"; sourceTree = "<group>"; };
+		390C74EE134F942D00785A2F /* comments_tab_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comments_tab_icon.png; sourceTree = "<group>"; };
+		390C74F0134F945D00785A2F /* facebook_tab_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_tab_icon.png; sourceTree = "<group>"; };
 		39358AB81340B1CA00A6B4F2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		39358AD51340B1E200A6B4F2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		39A4DA471344D9F000DFD802 /* CityMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CityMapViewController.h; path = ../CityMapViewController.h; sourceTree = "<group>"; };
@@ -778,6 +790,12 @@
 				275B63001346E5080063BF3D /* toogle-text-tooltips.png */,
 				275B5F3F1346806E0063BF3D /* icon_shop.png */,
 				2742DE10134510F200E4A4A0 /* vivioMap.gif */,
+				390C7431134F881D00785A2F /* overview_tab_icon.png */,
+				390C7433134F883300785A2F /* speechbubble.png */,
+				390C74C3134F90CD00785A2F /* facebook_icon.png */,
+				390C74C8134F915900785A2F /* facebook-icon_52x52.png */,
+				390C74EE134F942D00785A2F /* comments_tab_icon.png */,
+				390C74F0134F945D00785A2F /* facebook_tab_icon.png */,
 			);
 			name = Arts;
 			sourceTree = "<group>";
@@ -858,6 +876,12 @@
 				27AB9509134E3D09008085E4 /* point.png in Resources */,
 				27B119FE134F4DD0002DD271 /* down_red_arrow.png in Resources */,
 				27B11A00134F4DD9002DD271 /* up_red_arrow.png in Resources */,
+				390C7432134F881D00785A2F /* overview_tab_icon.png in Resources */,
+				390C7434134F883300785A2F /* speechbubble.png in Resources */,
+				390C74C4134F90CD00785A2F /* facebook_icon.png in Resources */,
+				390C74C9134F915900785A2F /* facebook-icon_52x52.png in Resources */,
+				390C74EF134F942D00785A2F /* comments_tab_icon.png in Resources */,
+				390C74F1134F945D00785A2F /* facebook_tab_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -30,6 +30,8 @@
 
 //@property (nonatomic, retain) UIImage* imageMap;
 
++(CGRect) getSuitableFrame;
+
 // add an annotation to the map, at the position based on scrollview coordination
 -(AnnoViewController*) addAnnotationType:(AnnotationType) annType ToScrollViewAtPosition:(CGPoint)pos withTitle:(NSString*) title withContent:(NSString*) content ;
 

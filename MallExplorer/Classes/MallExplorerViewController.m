@@ -47,7 +47,8 @@ BOOL chosen,shopchosen;
 	//	shopchosen = !shopchosen;
 		Shop* aShop = [[Shop alloc]init];
 		
-		ShopViewController* shopViewController = [[[ShopViewController alloc] initWithShop:aShop]autorelease] ;
+		ShopViewController* shopViewController = [[ShopViewController alloc] initWithShop:aShop] ;
+		//	ShopViewController* shopViewController = [[ShopViewController alloc] init];
 		[masterViewController pushViewController:shopViewController animated:YES];
 		
 	
@@ -130,7 +131,7 @@ BOOL chosen,shopchosen;
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
+    return [[self.viewControllers objectAtIndex:1] shouldAutorotateToInterfaceOrientation:interfaceOrientation];
 }
 
 - (void)didReceiveMemoryWarning {
