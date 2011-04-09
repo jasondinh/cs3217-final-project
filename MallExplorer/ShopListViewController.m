@@ -29,7 +29,6 @@
 }
 */
 
-
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -63,6 +62,10 @@
 -(void)addToFavorite:(id)sender{
 }
 -(id)initWithMall:(Mall*)mall{
+	self = [super init];
+	if (self) {
+		
+	}
 	return self;
 }
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

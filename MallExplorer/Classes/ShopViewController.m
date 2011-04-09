@@ -41,7 +41,7 @@
 }
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	self.navigationController.delegate =self;
+//	self.navigationController.delegate = self;
 	UIViewController *temp1 = [[UIViewController alloc] init] ;
 	UIViewController *temp2 = [[UIViewController alloc] init] ;
 	UIViewController *temp3 = [[UIViewController alloc] init] ;
@@ -105,9 +105,6 @@
 	[self setToolbarItems:[NSArray arrayWithObjects:FromHere,GoHere,nil] animated:YES];
 	[GoHere release];
 	[FromHere release];
-
-
-	
 }
 
 -(void) goHere:(id)sender{
@@ -117,7 +114,8 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"set start point to shop" object:self.shop];
 }
 - (void)navigationController:(UINavigationController *)navigationController 
-	  willShowViewController:(UIViewController *)viewController animated:(BOOL)animated 
+	  willShowViewController:(UIViewController *)viewController 
+					animated:(BOOL)animated
 {
 	NSLog(@"show");
 	if (viewController != self) {
