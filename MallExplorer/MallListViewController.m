@@ -7,10 +7,12 @@
 //
 
 #import "MallListViewController.h"
+#import "APIController.h"
+#import "MBProgressHUD.h"
 #import "Mall.h"
 
 @implementation MallListViewController
-@synthesize favoriteList,mallList;
+@synthesize favoriteList,mallList,progress;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -29,6 +31,46 @@
 }
 */
 
+- (void) requestDidLoad: (APIController *) apiController {
+	NSArray *malls = (NSArray *) apiController.result;
+	NSEnumerator *e = [malls objectEnumerator];
+	NSDictionary *tmpMall;
+	NSMutableArray *tmpMalls = [NSMutableArray array];
+	while (tmpMall = [e nextObject]) {
+		NSDictionary *tmp = [tmpMall valueForKey: @"mall"];
+		Mall *mall = [[Mall alloc] initWithId: [tmp valueForKey: @"id"] 
+									  andName:[tmp valueForKey: @"name"] 
+								 andLongitude:[tmp valueForKey: @"longitude"] 
+								  andLatitude:[tmp valueForKey: @"latitude"] 
+								   andAddress:[tmp valueForKey: @"address"] 
+									   andZip:[tmp valueForKey: @"zip"]];
+		
+		[tmpMalls addObject: mall];
+	}
+
+	self.mallList = [tmpMalls mutableCopy];
+
+	self.listOfItems = [[NSMutableArray alloc]init];
+	for (Mall* aMall in mallList){
+		[listOfItems addObject:aMall.name];
+	}
+	[self.tableView reloadData];
+
+	//[temp.tableView setDelegate:temp];
+	//[temp.tableView setDataSource:temp];
+	
+	//self.navigationController.toolbarHidden =NO;
+	
+	//self.toolbarHidden =NO;
+	//[temp release];
+	[progress hide:YES];
+	
+}
+- (void) requestDidStart: (APIController *) apiController {
+	[progress show:YES];
+}
+
+
 - (id) initWithMalls: (NSArray *) malls {
 	self = [super init];
 	
@@ -39,10 +81,26 @@
 			[listOfItems addObject:aMall.name];
 		}
 	}
-	
+
 	return self;
 }
-
+-(id)  init{
+	self = [super init];
+	if (self) {
+		[self loadData];
+	}
+	return self;
+}
+-(void) loadData{
+	progress = [[MBProgressHUD alloc] initWithView: self.view];
+	[self.view addSubview: progress];
+	[progress release];
+	
+	APIController *api = [[APIController alloc] init];
+	api.debugMode = YES;
+	api.delegate = self;
+	[api getAPI: @"/malls.json"];
+}
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSString *product = nil;
@@ -103,6 +161,8 @@
 	
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	
+
 	
 	 copyListOfItems = [[NSMutableArray alloc]init];
 	 self.navigationItem.title = @"Mall list";

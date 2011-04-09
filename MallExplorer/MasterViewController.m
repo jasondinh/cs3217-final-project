@@ -20,7 +20,7 @@
 #pragma mark View lifecycle
 
 - (void) requestDidLoad: (APIController *) apiController {
-	NSArray *malls = (NSArray *) apiController.result;
+	/*NSArray *malls = (NSArray *) apiController.result;
 	NSEnumerator *e = [malls objectEnumerator];
 	
 	NSDictionary *tmpMall;
@@ -35,21 +35,10 @@
 									   andZip:[tmp valueForKey: @"zip"]];
 		
 		[tmpMalls addObject: mall];
-	}
+	}*/
 	
-	MallListViewController* temp = [[MallListViewController alloc] initWithMalls: tmpMalls];
-	
-	[temp.tableView setDelegate:temp];
-	[temp.tableView setDataSource:temp];
-	
-	[self pushViewController:temp animated:YES];
-	self.navigationController.toolbarHidden =NO;
+	//MallListViewController* temp = [[MallListViewController alloc] initWithMalls: tmpMalls];
 
-  
-	self.toolbarHidden =NO;
-	[temp release];
-
-	[progress hide:YES];
 
 }
 
@@ -59,7 +48,7 @@
 
 - (void)viewDidLoad {
 	
-	progress = [[MBProgressHUD alloc] initWithView: self.view];
+	/*progress = [[MBProgressHUD alloc] initWithView: self.view];
 	
 	[self.view addSubview: progress];
 	
@@ -68,8 +57,20 @@
 	APIController *api = [[APIController alloc] init];
 	api.debugMode = YES;
 	api.delegate = self;
-	[api getAPI: @"/malls.json"];
+	[api getAPI: @"/malls.json"];*/
 	
+	
+	MallListViewController* temp = [[MallListViewController alloc] init] ;//]WithMalls: tmpMalls];
+	
+	//[temp.tableView setDelegate:temp];
+	//[temp.tableView setDataSource:temp];
+	
+	[self pushViewController:temp animated:YES];
+	self.navigationController.toolbarHidden =NO;
+	//[temp loadData];
+	self.toolbarHidden =NO;
+	[temp release];
+	[progress hide:YES];
 	
 	
 	//test api post
