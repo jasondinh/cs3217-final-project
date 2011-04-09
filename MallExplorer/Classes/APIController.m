@@ -13,7 +13,7 @@
 #import "JSON.h"
 
 @implementation APIController
-@synthesize delegate, debugMode;
+@synthesize delegate, debugMode, url, result;
 
 - (void) getAPI: (NSString *) path {
 	
@@ -64,9 +64,10 @@
 		NSLog(@"APIController: started to load");
 	}
 	
+	self.url = [request url];
 	
 	if ([delegate respondsToSelector: @selector(requestDidStart)]) {
-		[delegate requestDidStart];
+		[delegate requestDidStart: self];
 	}
 }
 
@@ -79,8 +80,10 @@
 	
 	id returnObject = [result JSONValue];
 	
+	self.result = returnObject;
+	
 	if ([delegate respondsToSelector: @selector(requestDidLoad:)]) {
-		[delegate requestDidLoad: returnObject];
+		[delegate requestDidLoad: self];
 	}
 }
 
@@ -90,12 +93,13 @@
 		NSLog(@"APIController: load failed");
 	}
 	if ([delegate respondsToSelector: @selector(requestFail)]) {
-		[delegate requestFail];
+		[delegate requestFail: self];
 	}
 }
 
 
 - (void) dealloc {
+	[url release];
 	[super dealloc];
 }
 
