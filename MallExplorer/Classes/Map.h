@@ -11,6 +11,8 @@
 #import "Graph.h"
 #import "MapPoint.h"
 #import "Edge.h"
+#import "Constant.h"
+
 @interface Map : NSObject {
 	NSMutableArray* annotationList;
 	NSMutableArray* pointList;

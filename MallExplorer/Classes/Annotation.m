@@ -8,6 +8,7 @@
 
 #import "Annotation.h"
 #import "Map.h"
+#import "Shop.h"
 #import "AnnotationFactory.h"
 
 @implementation Annotation
@@ -17,6 +18,7 @@
 @synthesize content;
 @synthesize isDisplayed;
 @synthesize level;
+@synthesize shop;
 +(Annotation*) annotationWithAnnotationType: (AnnotationType) annType inlevel:(Map*)lev WithPosition: (CGPoint) pos title:(NSString*) tit content: (NSString*) cont{
 	Annotation* anAnnotation = [[AnnotationFactory createAnnotationType:annType] retain];
 	if (!anAnnotation) return nil;
@@ -26,6 +28,12 @@
 	anAnnotation.position = pos;
 	anAnnotation.title = tit;
 	anAnnotation.content = cont;
+	anAnnotation.shop = nil;
 	return [anAnnotation autorelease];
+}
+-(void) dealloc{
+	[title release];
+	[content release];
+	[super dealloc];
 }
 @end

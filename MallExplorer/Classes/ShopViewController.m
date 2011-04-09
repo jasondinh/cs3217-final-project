@@ -8,8 +8,8 @@
 
 #import "ShopViewController.h"
 
-
 @implementation ShopViewController
+@synthesize shop;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -94,10 +94,6 @@
 	[[self tabBar] insertSubview:v atIndex:0];
 	[v release];
 
-	UIBarButtonItem* PostComment = [[UIBarButtonItem alloc]initWithTitle:@"Post Comment" 
-																   style:UIBarButtonItemStyleBordered 
-																  target:self 
-																  action:@selector(postComment:)];
 	UIBarButtonItem* FromHere = [[UIBarButtonItem alloc]initWithTitle:@"From here" 
 																   style:UIBarButtonItemStyleBordered 
 																  target:self 
@@ -106,19 +102,19 @@
 																   style:UIBarButtonItemStyleBordered 
 																  target:self 
 																  action:@selector(goHere:)];
-	[self setToolbarItems:[NSArray arrayWithObjects:PostComment,FromHere,GoHere,nil] animated:YES];
-	[PostComment release];
+	[self setToolbarItems:[NSArray arrayWithObjects:FromHere,GoHere,nil] animated:YES];
 	[GoHere release];
 	[FromHere release];
 
 
 	
 }
--(void) postComment:(id)sender{
-}
+
 -(void) goHere:(id)sender{
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"set goal point to shop" object:self.shop];
 }
 -(void) fromHere:(id)sender{
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"set start point to shop" object:self.shop];
 }
 - (void)navigationController:(UINavigationController *)navigationController 
 	  willShowViewController:(UIViewController *)viewController animated:(BOOL)animated 

@@ -433,12 +433,42 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startOrGoalMoved:) name:@"start or goal moved" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startOrGoalRemoved:) name:@"start or goal removed" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeMap:) name:@"change map" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setGoalTo:) name:@"set goal point to shop" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setStartTo:) name:@"set start point to shop" object:nil];
 	[panGesture release];
 	[tapGesture release];
 }
 
 #pragma mark -
 #pragma mark notification handling
+
+-(void) setStartTo:(NSNotification*) notification{
+	Annotation* anAnno = [notification.object annotation];
+	if ([anAnno.level isEqual:mapViewController.map]) {
+		[self changeToMap:anAnno.level];
+	}
+	if (start!= nil) {
+		MapViewController* aMVC = [self getViewControllerOfMap:start.annotation.level];
+		[aMVC removeAllAnnotationOfType:kAnnoStart];
+	}
+	Annotation* startAnno = [Annotation annotationWithAnnotationType:kAnnoStart inlevel:anAnno.level WithPosition:anAnno.position title:@"Start" content:@"Your starting position"];
+	[mapViewController addAnnotation:startAnno];
+	start = [mapViewController.annotationList lastObject];
+}
+
+-(void) setGoalTo:(NSNotification*) notification{
+	Annotation* anAnno = [notification.object annotation];
+	if ([anAnno.level isEqual:mapViewController.map]) {
+		[self changeToMap:anAnno.level];
+	}
+	if (goal!= nil) {
+		MapViewController* aMVC = [self getViewControllerOfMap:goal.annotation.level];
+		[aMVC removeAllAnnotationOfType:kAnnoGoal];
+	}
+	Annotation* goalAnno = [Annotation annotationWithAnnotationType:kAnnoGoal inlevel:anAnno.level WithPosition:anAnno.position title:@"Goal" content:@"Your destination"];
+	[mapViewController addAnnotation:goalAnno];
+	goal = [mapViewController.annotationList lastObject];
+}
 
 -(void) changeToMap:(MapViewController*) aMVC{
 	[mapViewController.view removeFromSuperview];

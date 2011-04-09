@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Annotation.h"
 
 typedef enum {
 	a, b, c
@@ -18,12 +19,14 @@ typedef enum {
 	NSString* unitNumber;
 	NSString* shopName;
 	NSMutableArray* commentList;
+	Annotation* annotation;
 }
 @property ShopCategory category;
 @property (retain) NSString* level;
 @property (retain) NSString* unitNumber;
 @property (retain) NSString* shopName;
 @property (retain) NSArray* commentList;
+@property (assign) Annotation* annotation;
 
 -(void) loadComment:(NSArray*) commentList;
 

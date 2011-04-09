@@ -46,6 +46,24 @@ const int maxNumstep = 10;
 }
 
 #pragma mark initializers
+-(void) add:(int)number PointsToGraphInBetweenPoint:(MapPoint*) point1 andPoint: (MapPoint*)point2{
+	CGPoint vector = CGPointMake(point2.position.x-point1.position.x, point2.position.y-point1.position.y);
+	NSMutableArray* anArray = [[NSMutableArray alloc ] initWithObjects:point1, nil];
+	for (int i = 1; i<=number; i++) {
+		CGPoint point = CGPointMake(point1.position.x+vector.x*i, point1.position.y+vector.y*i);
+		MapPoint* mapPoint = [[MapPoint alloc] initWithPosition:point inLevel:self andIndex:0];
+		mapPoint.index = [graph addNode:mapPoint];
+		[anArray addObject:mapPoint];
+		[mapPoint release];
+	}
+	[anArray addObject:point2];
+	for (int i = 1; i<[anArray count]; i++) {
+		MapPoint* p1 = [anArray objectAtIndex:i-1];
+		MapPoint* p2 = [anArray objectAtIndex:i];
+		[graph addEdgeBetweenNodeWithIndex:p1.index andNodeWithIndex:p2.index withWeight:[MapPoint getDistantBetweenPoint:p1 andPoint:p2]];
+	}
+	[anArray release];
+}
 
 -(void) buildGraph{
 	graph = [[Graph alloc] init];
@@ -56,14 +74,21 @@ const int maxNumstep = 10;
 		[graph addNode:aNode withIndex:aNode.index];
 		NSLog(@"%d", aNode.index);
 	}
+	double sum = 0;
+	for (int i = 0; i<[edgeList count]; i++) {
+		Edge* anEdge = [edgeList objectAtIndex: i];
+		sum = sum+ [MapPoint getDistantBetweenPoint:anEdge.pointA andPoint:anEdge.pointB];
+	}
+	double averageEdgeLength = sum/ MAX_NODES;
 	for (int i = 0; i<[edgeList count]; i++) {
 		Edge* anEdge = [edgeList objectAtIndex: i];
 		MapPoint* node1 = anEdge.pointA;
 		MapPoint* node2 = anEdge.pointB;
 		NSLog(@"%d %d", node1.index, node2.index);
-		[graph addEdgeBetweenNodeWithIndex:node1.index andNodeWithIndex:node2.index withWeight:anEdge.weight];
+		double dist = [MapPoint getDistantBetweenPoint:node1 andPoint:node2];
+		[self add:(int)(dist/averageEdgeLength)-1 pointsToGraphInBetweenPoint:node1 andPoint:node2];			
 		if (anEdge.isBidirectional) {
-			[graph addEdgeBetweenNodeWithIndex:node2.index andNodeWithIndex:node1.index withWeight:anEdge.weight];
+			[self add: (int)(dist/averageEdgeLength)-1 pointsToGraphInBetweenPoint:node2 andPoint:node1];			
 		}
 	}
 	canRefinePath = [self createBitmapFromImage];

@@ -14,6 +14,6 @@
 @synthesize level;
 @synthesize unitNumber;
 @synthesize shopName;
-
+@synthesize annotation;
 
 @end
