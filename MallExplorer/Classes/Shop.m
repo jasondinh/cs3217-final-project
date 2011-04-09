@@ -10,5 +10,10 @@
 
 
 @implementation Shop
+@synthesize category;
+@synthesize level;
+@synthesize unitNumber;
+@synthesize shopName;
+
 
 @end

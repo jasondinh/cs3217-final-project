@@ -448,7 +448,6 @@
 	[self.view sendSubviewToBack:mapViewController.view];
 	self.titleLabel.text = mapViewController.map.mapName;
 	[self.view setNeedsDisplay];
-	
 }
 
 -(void) changeMap:(NSNotification*) notification{
