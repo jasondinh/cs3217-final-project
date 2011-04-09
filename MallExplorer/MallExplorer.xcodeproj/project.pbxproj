@@ -49,6 +49,9 @@
 		390C74F1134F945D00785A2F /* facebook_tab_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 390C74F0134F945D00785A2F /* facebook_tab_icon.png */; };
 		39358AB91340B1CA00A6B4F2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39358AB81340B1CA00A6B4F2 /* MapKit.framework */; };
 		39358AD61340B1E200A6B4F2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39358AD51340B1E200A6B4F2 /* CoreLocation.framework */; };
+		395FCA211350D54500F2E3F5 /* ShopOverviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 395FCA1F1350D54500F2E3F5 /* ShopOverviewController.m */; };
+		395FCA221350D54500F2E3F5 /* ShopOverviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 395FCA201350D54500F2E3F5 /* ShopOverviewController.xib */; };
+		395FCA811350E90800F2E3F5 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 395FCA7F1350E90800F2E3F5 /* CommentViewController.m */; };
 		39A4DA4D1344D9F000DFD802 /* CityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A4DA481344D9F000DFD802 /* CityMapViewController.m */; };
 		39A4DA4E1344D9F000DFD802 /* CityMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39A4DA491344D9F000DFD802 /* CityMapViewController.xib */; };
 		39A4DA4F1344D9F000DFD802 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A4DA4B1344D9F000DFD802 /* MasterViewController.m */; };
@@ -137,7 +140,6 @@
 		E1C43600133CC23E00646BF1 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C435FE133CC23E00646BF1 /* MapViewController.xib */; };
 		E1C43604133CC24300646BF1 /* ShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C43602133CC24300646BF1 /* ShopViewController.m */; };
 		E1C43609133CC24800646BF1 /* AnnoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C43607133CC24800646BF1 /* AnnoViewController.m */; };
-		E1C4360E133CC24D00646BF1 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C4360C133CC24D00646BF1 /* CommentViewController.m */; };
 		FD9E4FF61347DB5B0027DD69 /* APIController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9E4FF51347DB5B0027DD69 /* APIController.m */; };
 /* End PBXBuildFile section */
 
@@ -199,6 +201,11 @@
 		390C74F0134F945D00785A2F /* facebook_tab_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_tab_icon.png; sourceTree = "<group>"; };
 		39358AB81340B1CA00A6B4F2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		39358AD51340B1E200A6B4F2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		395FCA1E1350D54500F2E3F5 /* ShopOverviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopOverviewController.h; sourceTree = "<group>"; };
+		395FCA1F1350D54500F2E3F5 /* ShopOverviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopOverviewController.m; sourceTree = "<group>"; };
+		395FCA201350D54500F2E3F5 /* ShopOverviewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopOverviewController.xib; sourceTree = "<group>"; };
+		395FCA7E1350E90800F2E3F5 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentViewController.h; path = ../CommentViewController.h; sourceTree = "<group>"; };
+		395FCA7F1350E90800F2E3F5 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentViewController.m; path = ../CommentViewController.m; sourceTree = "<group>"; };
 		39A4DA471344D9F000DFD802 /* CityMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CityMapViewController.h; path = ../CityMapViewController.h; sourceTree = "<group>"; };
 		39A4DA481344D9F000DFD802 /* CityMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CityMapViewController.m; path = ../CityMapViewController.m; sourceTree = "<group>"; };
 		39A4DA491344D9F000DFD802 /* CityMapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityMapViewController.xib; sourceTree = "<group>"; };
@@ -375,8 +382,6 @@
 		E1C43602133CC24300646BF1 /* ShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopViewController.m; sourceTree = "<group>"; };
 		E1C43606133CC24800646BF1 /* AnnoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnoViewController.h; sourceTree = "<group>"; };
 		E1C43607133CC24800646BF1 /* AnnoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnoViewController.m; sourceTree = "<group>"; };
-		E1C4360B133CC24D00646BF1 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
-		E1C4360C133CC24D00646BF1 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		FD9E4FF31347DB300027DD69 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		FD9E4FF41347DB5B0027DD69 /* APIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIController.h; sourceTree = "<group>"; };
 		FD9E4FF51347DB5B0027DD69 /* APIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIController.m; sourceTree = "<group>"; };
@@ -454,10 +459,10 @@
 				E1C435FD133CC23E00646BF1 /* MapViewController.m */,
 				E1C43601133CC24300646BF1 /* ShopViewController.h */,
 				E1C43602133CC24300646BF1 /* ShopViewController.m */,
-				E1C4360B133CC24D00646BF1 /* CommentViewController.h */,
-				E1C4360C133CC24D00646BF1 /* CommentViewController.m */,
 				FD9E4FF41347DB5B0027DD69 /* APIController.h */,
 				FD9E4FF51347DB5B0027DD69 /* APIController.m */,
+				395FCA7E1350E90800F2E3F5 /* CommentViewController.h */,
+				395FCA7F1350E90800F2E3F5 /* CommentViewController.m */,
 			);
 			name = Inside;
 			sourceTree = "<group>";
@@ -517,6 +522,9 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				395FCA1E1350D54500F2E3F5 /* ShopOverviewController.h */,
+				395FCA1F1350D54500F2E3F5 /* ShopOverviewController.m */,
+				395FCA201350D54500F2E3F5 /* ShopOverviewController.xib */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -882,6 +890,7 @@
 				390C74C9134F915900785A2F /* facebook-icon_52x52.png in Resources */,
 				390C74EF134F942D00785A2F /* comments_tab_icon.png in Resources */,
 				390C74F1134F945D00785A2F /* facebook_tab_icon.png in Resources */,
+				395FCA221350D54500F2E3F5 /* ShopOverviewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -907,7 +916,6 @@
 				E1C435FF133CC23E00646BF1 /* MapViewController.m in Sources */,
 				E1C43604133CC24300646BF1 /* ShopViewController.m in Sources */,
 				E1C43609133CC24800646BF1 /* AnnoViewController.m in Sources */,
-				E1C4360E133CC24D00646BF1 /* CommentViewController.m in Sources */,
 				E18A8EEB1344D0E200AB72AB /* ASIAuthenticationDialog.m in Sources */,
 				E18A8EEC1344D0E200AB72AB /* ASIDataCompressor.m in Sources */,
 				E18A8EED1344D0E200AB72AB /* ASIDataDecompressor.m in Sources */,
@@ -989,6 +997,8 @@
 				27AB9366134E1937008085E4 /* AnnoPathPointViewController.m in Sources */,
 				27AB9389134E2316008085E4 /* AnnoLevelConnectorViewController.m in Sources */,
 				27AB93A1134E25AE008085E4 /* AnnotationLevelConnector.m in Sources */,
+				395FCA211350D54500F2E3F5 /* ShopOverviewController.m in Sources */,
+				395FCA811350E90800F2E3F5 /* CommentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

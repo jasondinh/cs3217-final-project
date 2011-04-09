@@ -117,6 +117,8 @@
 
 
 - (void)dealloc {
+	[favoriteList release];
+	[shopList release];
     [super dealloc];
 }
 
