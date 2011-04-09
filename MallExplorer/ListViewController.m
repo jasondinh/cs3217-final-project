@@ -29,15 +29,10 @@
 
 #pragma mark -
 #pragma mark View lifecycle
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
 	searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.frame.size.width, 0)];  
-	
-	
-
 	searchBar.showsSearchResultsButton =NO;
 	searchBar.barStyle = UIBarStyleDefault;
 	searchBar.delegate = self;

@@ -7,6 +7,8 @@
 //
 
 #import "ShopViewController.h"
+#import "ShopOverviewController.h"
+#import "CommentViewController.h"
 
 
 @implementation ShopViewController
@@ -42,8 +44,8 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 //	self.navigationController.delegate = self;
-	UIViewController *temp1 = [[UIViewController alloc] init] ;
-	UIViewController *temp2 = [[UIViewController alloc] init] ;
+	ShopOverviewController *temp1 = [[ShopOverviewController alloc] init] ;
+	CommentViewController *temp2 = [[CommentViewController alloc] init] ;
 	UIViewController *temp3 = [[UIViewController alloc] init] ;
 	temp1.title = @"OVERVIEW";
 	temp2.title = @"COMMENTS";
@@ -59,7 +61,7 @@
 	[temp2 release];
 	[temp3 release];
 	
-	//UITextField *comment = [[UITextField alloc]init];
+/*	//UITextField *comment = [[UITextField alloc]init];
 	
 	UITextField * textFieldRounded = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
 	UITableViewController * tableview = [[UITableViewController alloc]init];
@@ -80,7 +82,7 @@
 	
 	//textFieldRounded.inputView = 
 	//self.view.contentMode = UIViewContentModeScaleToFill;
-	[temp2.view addSubview:textFieldRounded];
+	[temp2.view addSubview:textFieldRounded];*/
 	self.title =@"a shop";
 	self.contentSizeForViewInPopover = CGSizeMake(320, 850);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
@@ -139,6 +141,7 @@
 -(id)initWithShop:(Shop*)aShop{
 	self =[super init];
 	if(self){
+		theShop = aShop;
 		
 	}
 	
@@ -167,6 +170,7 @@
 
 
 - (void)dealloc {
+	[theShop release];
     [super dealloc];
 }
 
