@@ -8,15 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "JSON.h"
-
+#import <CoreData/CoreData.h>
 
 @protocol APIDelegate;
 
 @interface APIController : NSObject {
 	id<APIDelegate> delegate;	//delegate object does not get retained
 	BOOL debugMode; //set to YES to enable NSLog of output
+	
 }
-
 @property (nonatomic,assign) id<APIDelegate> delegate;
 @property BOOL debugMode;
 
@@ -43,5 +43,16 @@
  * Called when a request fail
  */
 - (void)requestFail;
+
+/**
+ * Called when a request hit the cache
+ */
+- (void)cacheRespond: (id) result;
+
+/**
+ * Called when a request hit the server
+ */
+- (void)serverRespond: (id) result;
+
 
 @end
