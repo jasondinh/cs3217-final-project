@@ -21,7 +21,6 @@
 
 - (void) requestDidLoad: (id) object {
 	NSArray *malls = (NSArray *) object;
-	
 	NSEnumerator *e = [malls objectEnumerator];
 	
 	NSDictionary *tmpMall;
@@ -40,20 +39,13 @@
 	
 	MallListViewController* temp = [[MallListViewController alloc] initWithMalls: tmpMalls];
 	
-	
-	
-	
 	[temp.tableView setDelegate:temp];
 	[temp.tableView setDataSource:temp];
 	
 	[self pushViewController:temp animated:YES];
 	self.navigationController.toolbarHidden =NO;
-	UIBarButtonItem *item = [[UIBarButtonItem alloc]   
-                             initWithBarButtonSystemItem:UIBarButtonSystemItemAdd   
-                             target:self   
-                             action:@selector(doSomething:)];  
-    self.navigationItem.rightBarButtonItem = item;  
-	self.navigationItem.title = @"Movies";   
+
+  
 	self.toolbarHidden =NO;
 	[temp release];
 
