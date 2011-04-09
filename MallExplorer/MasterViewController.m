@@ -19,8 +19,8 @@
 #pragma mark -
 #pragma mark View lifecycle
 
-- (void) requestDidLoad: (id) object {
-	NSArray *malls = (NSArray *) object;
+- (void) requestDidLoad: (APIController *) apiController {
+	NSArray *malls = (NSArray *) apiController.result;
 	NSEnumerator *e = [malls objectEnumerator];
 	
 	NSDictionary *tmpMall;
@@ -53,7 +53,7 @@
 
 }
 
-- (void) requestDidStart {
+- (void) requestDidStart: (APIController *) apiController {
 	[progress show:YES];
 }
 

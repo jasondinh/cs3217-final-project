@@ -15,8 +15,12 @@
 @interface APIController : NSObject {
 	id<APIDelegate> delegate;	//delegate object does not get retained
 	BOOL debugMode; //set to YES to enable NSLog of output
-	
+	NSURL *url;
+	id result;
 }
+
+@property (retain) NSURL *url;
+@property (assign) id result;
 @property (nonatomic,assign) id<APIDelegate> delegate;
 @property BOOL debugMode;
 
@@ -32,27 +36,27 @@
 /**
  * Called when a request start
  */
-- (void)requestDidStart;
+- (void)requestDidStart: (APIController *) apiController;
 
 /**
  * Called when a request returns a response.
  */
-- (void)requestDidLoad:(id)result;
+- (void)requestDidLoad: (APIController *) apiController;
 
 /**
  * Called when a request fail
  */
-- (void)requestFail;
+- (void)requestFail: (APIController *) apiController;
 
 /**
  * Called when a request hit the cache
  */
-- (void)cacheRespond: (id) result;
+- (void)cacheRespond: (APIController *) apiController;
 
 /**
  * Called when a request hit the server
  */
-- (void)serverRespond: (id) result;
+- (void)serverRespond: (APIController *) apiController;
 
 
 @end
