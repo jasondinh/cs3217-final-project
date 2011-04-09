@@ -49,21 +49,13 @@
 	}
 
 	self.mallList = [tmpMalls mutableCopy];
-
 	self.listOfItems = [[NSMutableArray alloc]init];
 	for (Mall* aMall in mallList){
 		[listOfItems addObject:aMall.name];
 	}
 	[self.tableView reloadData];
-
-	//[temp.tableView setDelegate:temp];
-	//[temp.tableView setDataSource:temp];
-	
-	//self.navigationController.toolbarHidden =NO;
-	
-	//self.toolbarHidden =NO;
-	//[temp release];
 	[progress hide:YES];
+
 	
 }
 - (void) requestDidStart: (APIController *) apiController {
@@ -71,7 +63,7 @@
 }
 
 
-- (id) initWithMalls: (NSArray *) malls {
+/*- (id) initWithMalls: (NSArray *) malls {
 	self = [super init];
 	
 	if (self) {
@@ -83,11 +75,11 @@
 	}
 
 	return self;
-}
+}*/
 -(id)  init{
 	self = [super init];
 	if (self) {
-		[self loadData];
+		//[self loadData];
 	}
 	return self;
 }

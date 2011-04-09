@@ -66,7 +66,7 @@
 	
 	self.url = [request url];
 	
-	if ([delegate respondsToSelector: @selector(requestDidStart)]) {
+	if ([delegate respondsToSelector: @selector(requestDidStart:)]) {
 		[delegate requestDidStart: self];
 	}
 }
@@ -92,7 +92,7 @@
 	if (debugMode) {
 		NSLog(@"APIController: load failed");
 	}
-	if ([delegate respondsToSelector: @selector(requestFail)]) {
+	if ([delegate respondsToSelector: @selector(requestFail:)]) {
 		[delegate requestFail: self];
 	}
 }

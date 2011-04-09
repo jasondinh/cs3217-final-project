@@ -203,8 +203,8 @@
 		390C74F0134F945D00785A2F /* facebook_tab_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_tab_icon.png; sourceTree = "<group>"; };
 		39358AB81340B1CA00A6B4F2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		39358AD51340B1E200A6B4F2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		395FCA1E1350D54500F2E3F5 /* ShopOverviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopOverviewController.h; sourceTree = "<group>"; };
-		395FCA1F1350D54500F2E3F5 /* ShopOverviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopOverviewController.m; sourceTree = "<group>"; };
+		395FCA1E1350D54500F2E3F5 /* ShopOverviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShopOverviewController.h; path = ../ShopOverviewController.h; sourceTree = "<group>"; };
+		395FCA1F1350D54500F2E3F5 /* ShopOverviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShopOverviewController.m; path = ../ShopOverviewController.m; sourceTree = "<group>"; };
 		395FCA201350D54500F2E3F5 /* ShopOverviewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopOverviewController.xib; sourceTree = "<group>"; };
 		395FCA7E1350E90800F2E3F5 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentViewController.h; path = ../CommentViewController.h; sourceTree = "<group>"; };
 		395FCA7F1350E90800F2E3F5 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentViewController.m; path = ../CommentViewController.m; sourceTree = "<group>"; };
@@ -457,6 +457,7 @@
 		272A0DF61346412500A0AC2E /* Inside */ = {
 			isa = PBXGroup;
 			children = (
+				395FCC6813511FA700F2E3F5 /* ShopSubviews */,
 				27AB936B134E1956008085E4 /* AnnotationViews */,
 				E1C435F7133CC23500646BF1 /* MallViewController.h */,
 				E1C435F8133CC23500646BF1 /* MallViewController.m */,
@@ -466,8 +467,6 @@
 				E1C43602133CC24300646BF1 /* ShopViewController.m */,
 				FD9E4FF41347DB5B0027DD69 /* APIController.h */,
 				FD9E4FF51347DB5B0027DD69 /* APIController.m */,
-				395FCA7E1350E90800F2E3F5 /* CommentViewController.h */,
-				395FCA7F1350E90800F2E3F5 /* CommentViewController.m */,
 			);
 			name = Inside;
 			sourceTree = "<group>";
@@ -527,9 +526,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				395FCA1E1350D54500F2E3F5 /* ShopOverviewController.h */,
-				395FCA1F1350D54500F2E3F5 /* ShopOverviewController.m */,
-				395FCA201350D54500F2E3F5 /* ShopOverviewController.xib */,
 				E1A527031350ED670010541A /* MallExplorer.xcdatamodel */,
 			);
 			name = CustomTemplate;
@@ -551,6 +547,7 @@
 				E1C435FE133CC23E00646BF1 /* MapViewController.xib */,
 				2899E5210DE3E06400AC0155 /* MallExplorerViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				395FCA201350D54500F2E3F5 /* ShopOverviewController.xib */,
 				8D1107310486CEB800E47090 /* MallExplorer-Info.plist */,
 				275B62A21346CFC70063BF3D /* MallViewController.xib */,
 			);
@@ -573,6 +570,17 @@
 				E1A525901350DAC70010541A /* CoreData.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		395FCC6813511FA700F2E3F5 /* ShopSubviews */ = {
+			isa = PBXGroup;
+			children = (
+				395FCA7E1350E90800F2E3F5 /* CommentViewController.h */,
+				395FCA7F1350E90800F2E3F5 /* CommentViewController.m */,
+				395FCA1E1350D54500F2E3F5 /* ShopOverviewController.h */,
+				395FCA1F1350D54500F2E3F5 /* ShopOverviewController.m */,
+			);
+			name = ShopSubviews;
 			sourceTree = "<group>";
 		};
 		E18A8ED41344CFD700AB72AB /* OpenSourceLibs */ = {

@@ -15,72 +15,30 @@
 #import "Mall.h"
 
 @implementation MasterViewController
-@synthesize cityMapViewController, progress;
+@synthesize cityMapViewController;
 #pragma mark -
 #pragma mark View lifecycle
 
-- (void) requestDidLoad: (APIController *) apiController {
-	/*NSArray *malls = (NSArray *) apiController.result;
-	NSEnumerator *e = [malls objectEnumerator];
-	
-	NSDictionary *tmpMall;
-	NSMutableArray *tmpMalls = [NSMutableArray array];
-	while (tmpMall = [e nextObject]) {
-		NSDictionary *tmp = [tmpMall valueForKey: @"mall"];
-		Mall *mall = [[Mall alloc] initWithId: [tmp valueForKey: @"id"] 
-									  andName:[tmp valueForKey: @"name"] 
-								 andLongitude:[tmp valueForKey: @"longitude"] 
-								  andLatitude:[tmp valueForKey: @"latitude"] 
-								   andAddress:[tmp valueForKey: @"address"] 
-									   andZip:[tmp valueForKey: @"zip"]];
-		
-		[tmpMalls addObject: mall];
-	}*/
-	
-	//MallListViewController* temp = [[MallListViewController alloc] initWithMalls: tmpMalls];
 
 
-}
-
-- (void) requestDidStart: (APIController *) apiController {
-	[progress show:YES];
-}
 
 - (void)viewDidLoad {
-	
-	/*progress = [[MBProgressHUD alloc] initWithView: self.view];
-	
-	[self.view addSubview: progress];
-	
-	[progress release];
-	
-	APIController *api = [[APIController alloc] init];
-	api.debugMode = YES;
-	api.delegate = self;
-	[api getAPI: @"/malls.json"];*/
-	
-	
+	[super viewDidLoad];	
 	MallListViewController* temp = [[MallListViewController alloc] init] ;//]WithMalls: tmpMalls];
-	
-	//[temp.tableView setDelegate:temp];
-	//[temp.tableView setDataSource:temp];
-	
 	[self pushViewController:temp animated:YES];
-	self.navigationController.toolbarHidden =NO;
-	//[temp loadData];
+	[temp loadData];
 	self.toolbarHidden =NO;
 	[temp release];
-	[progress hide:YES];
+
 	
 	
 	//test api post
-	
 	//APIController *testApi = [[APIController alloc] init];
 //	
 //	testApi.debugMode = YES;
 //	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys: @"1", @"user_id", @"5", @"comment_id", @"1", @"vote", nil];
 //	[testApi postAPI: @"/ratings" withData:dict];
-	[super viewDidLoad];
+
 }
 
 

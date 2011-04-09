@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ListViewController.h"
-
+#import "APIController.h"
 @class MBProgressHUD;
-@interface MallListViewController : ListViewController {
+@interface MallListViewController : ListViewController <APIDelegate>{
 	MBProgressHUD *progress;
 	
 	NSMutableArray* favoriteList;
@@ -19,7 +19,7 @@
 @property (retain) MBProgressHUD *progress;
 @property (nonatomic,retain) NSMutableArray* favoriteList;
 @property (nonatomic,retain) NSMutableArray* mallList;
-- (id) initWithMalls: (NSArray *) malls ;
+//- (id)initWithMalls: (NSArray *) malls ;
 -(id) init;
 -(void) loadData;
 
