@@ -9,9 +9,11 @@
 #import "ShopViewController.h"
 #import "ShopOverviewController.h"
 #import "CommentViewController.h"
+#import "Constant.h"
 
 
 @implementation ShopViewController
+@synthesize theShop;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -43,29 +45,32 @@
 }
 - (void)viewDidLoad {
 	[super viewDidLoad];
-//	self.navigationController.delegate = self;
-	ShopOverviewController *temp1 = [[ShopOverviewController alloc] init] ;
-	CommentViewController *temp2 = [[CommentViewController alloc] init] ;
-	UIViewController *temp3 = [[UIViewController alloc] init] ;
-	temp1.title = @"OVERVIEW";
-	temp2.title = @"COMMENTS";
-	temp3.title = @"FACEBOOK";
-	temp1.view.backgroundColor = [UIColor whiteColor];	
-	temp2.view.backgroundColor = [UIColor whiteColor];	
-	temp3.view.backgroundColor = [UIColor whiteColor];	
-	temp1.tabBarItem.image = [self scale:[UIImage imageNamed:@"overview_tab_icon.png" ] ToSize:CGSizeMake(26, 26) ];
-	temp2.tabBarItem.image = [self scale:[UIImage imageNamed:@"comments_tab_icon.png" ] ToSize:CGSizeMake(26, 26) ];
-	temp3.tabBarItem.image = [self scale:[UIImage imageNamed:@"facebook_tab_icon.png" ] ToSize:CGSizeMake(30, 26) ];
-	[self setViewControllers:[NSArray arrayWithObjects:temp1,temp2,temp3,nil]];
-	[temp1 release];
-	[temp2 release];
-	[temp3 release];
+	ShopOverviewController *shopOverviewController = [[ShopOverviewController alloc] init] ;
+	CommentViewController *commentController = [[CommentViewController alloc] init] ;
+	UIViewController *facebookTabController = [[UIViewController alloc] init] ;
+	shopOverviewController.title = @"OVERVIEW";
+	commentController.title = @"COMMENTS";
+	facebookTabController.title = @"FACEBOOK";
+	shopOverviewController.view.backgroundColor = [UIColor whiteColor];	
+	commentController.view.backgroundColor = [UIColor whiteColor];	
+	facebookTabController.view.backgroundColor = [UIColor whiteColor];
+	CGSize tabBarIconSize = CGSizeMake(TAB_BAR_ICON_WIDTH, TAB_BAR_ICON_HEIGHT);
+	shopOverviewController.tabBarItem.image = [self scale:[UIImage imageNamed:@"overview_tab_icon.png" ] 
+												   ToSize:tabBarIconSize ];
+	commentController.tabBarItem.image = [self scale:[UIImage imageNamed:@"comments_tab_icon.png" ]
+											  ToSize:tabBarIconSize ];
+	facebookTabController.tabBarItem.image = [self scale:[UIImage imageNamed:@"facebook_tab_icon.png" ] 
+												  ToSize:tabBarIconSize ];
+	[self setViewControllers:[NSArray arrayWithObjects:shopOverviewController,commentController,facebookTabController,nil]];
+	[shopOverviewController release];
+	[commentController release];
+	[facebookTabController release];
 	
 
 	
 
 	self.title =@"a shop";
-	self.contentSizeForViewInPopover = CGSizeMake(320, 850);
+	self.contentSizeForViewInPopover = CGSizeMake(POPOVER_WIDTH, POPOVER_HEIGHT);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
 	[self.tabBar setBackgroundColor:[UIColor whiteColor]] ;
 	
@@ -99,7 +104,6 @@
 	  willShowViewController:(UIViewController *)viewController 
 					animated:(BOOL)animated
 {
-	NSLog(@"show");
 	if (viewController != self) {
         self.navigationController.delegate = nil;
         if ([[navigationController viewControllers] containsObject:self]) {
@@ -108,7 +112,6 @@
             NSLog(@"BACKWARD");
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"Shopview will appear" object:self];
 			viewController.navigationController.delegate = viewController;
-			
         }
     }
 	

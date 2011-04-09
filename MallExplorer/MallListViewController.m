@@ -12,7 +12,7 @@
 #import "Mall.h"
 
 @implementation MallListViewController
-@synthesize favoriteList,mallList,progress;
+@synthesize favoriteList,mallList;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -115,11 +115,8 @@
         product = [self.listOfItems objectAtIndex:indexPath.row];
     }
 
-		
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:nil];
-	//cityMapViewController.detailItem = 
-	//[NSString stringWithFormat:@"%@", 
-	//[listOfMovies objectAtIndex:indexPath.row]];    
+  
 }
 
 
@@ -181,7 +178,7 @@
 	 /*self.toolbarItems =[NSMutableArray arrayWithObject: [[[UIBarButtonItem alloc]
 	 initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 	 target:self action:@selector(doneSearching_Clicked:)] autorelease] ];*/
-	self.contentSizeForViewInPopover = CGSizeMake(320, 850);
+
 	}
 
 
