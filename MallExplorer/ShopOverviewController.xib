@@ -56,7 +56,7 @@
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<bool key="IBUIShowsHorizontalScrollIndicator">NO</bool>
 						<bool key="IBUIEditable">NO</bool>
-						<string key="IBUIText">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+						<string key="IBUIText">Updating</string>
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 							<int key="IBUIAutocapitalizationType">2</int>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -139,7 +139,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Label</string>
+						<string key="IBUIText">Updating</string>
 						<reference key="IBUITextColor" ref="394453969"/>
 						<reference key="IBUIHighlightedColor" ref="680742615"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -241,7 +241,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Label</string>
+						<string key="IBUIText">Updating</string>
 						<reference key="IBUITextColor" ref="394453969"/>
 						<reference key="IBUIHighlightedColor" ref="680742615"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -257,7 +257,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Label</string>
+						<string key="IBUIText">Updating</string>
 						<reference key="IBUITextColor" ref="394453969"/>
 						<reference key="IBUIHighlightedColor" ref="680742615"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -273,7 +273,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Label</string>
+						<string key="IBUIText">Updating</string>
 						<reference key="IBUITextColor" ref="394453969"/>
 						<reference key="IBUIHighlightedColor" ref="680742615"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -289,7 +289,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Label</string>
+						<string key="IBUIText">Updating</string>
 						<reference key="IBUITextColor" ref="394453969"/>
 						<reference key="IBUIHighlightedColor" ref="680742615"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -305,7 +305,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Label</string>
+						<string key="IBUIText">Updating</string>
 						<reference key="IBUITextColor" ref="394453969"/>
 						<reference key="IBUIHighlightedColor" ref="680742615"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -418,7 +418,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="958688690"/>
 							<reference ref="616119825"/>
-							<reference ref="60928784"/>
 							<reference ref="323969234"/>
 							<reference ref="546040377"/>
 							<reference ref="622926984"/>
@@ -431,6 +430,7 @@
 							<reference ref="496788361"/>
 							<reference ref="635183784"/>
 							<reference ref="785382596"/>
+							<reference ref="60928784"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>

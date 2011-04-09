@@ -30,7 +30,8 @@
 - (void)loadView {
 }
 */
-
+#pragma mark -
+#pragma mark APIController
 - (void) requestDidLoad: (APIController *) apiController {
 	NSArray *malls = (NSArray *) apiController.result;
 	NSEnumerator *e = [malls objectEnumerator];
@@ -47,7 +48,7 @@
 		
 		[tmpMalls addObject: mall];
 	}
-
+	
 	self.mallList = [tmpMalls mutableCopy];
 	self.listOfItems = [[NSMutableArray alloc]init];
 	for (Mall* aMall in mallList){
@@ -58,6 +59,15 @@
 
 	
 }
+- (void)cacheRespond: (APIController *) apiController{
+	NSLog(@"cache did respond");
+	
+	
+}
+- (void)serverRespond: (APIController *) apiController{
+	NSLog(@"server did respond");
+}
+
 - (void) requestDidStart: (APIController *) apiController {
 	[progress show:YES];
 }

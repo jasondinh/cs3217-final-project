@@ -61,28 +61,9 @@
 	[temp2 release];
 	[temp3 release];
 	
-/*	//UITextField *comment = [[UITextField alloc]init];
+
 	
-	UITextField * textFieldRounded = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
-	UITableViewController * tableview = [[UITableViewController alloc]init];
-	[temp2.view addSubview:tableview.view];
-	tableview.view.autoresizingMask = 	UIViewAutoresizingFlexibleBottomMargin;
-	textFieldRounded.borderStyle = UITextBorderStyleRoundedRect;
-	textFieldRounded.textColor = [UIColor blackColor]; //text color
-	textFieldRounded.font = [UIFont systemFontOfSize:17.0];  //font size
-	textFieldRounded.placeholder = @"<Your comment>";  //place holder
-	textFieldRounded.backgroundColor = [UIColor whiteColor]; //background color
-	textFieldRounded.autocorrectionType = UITextAutocorrectionTypeNo;	// no auto correction support
-	
-	textFieldRounded.keyboardType = UIKeyboardTypeDefault;  // type of the keyboard
-	textFieldRounded.returnKeyType = UIReturnKeyDone;  // type of the return key
-	
-	textFieldRounded.clearButtonMode = UITextFieldViewModeWhileEditing;	// has a clear 'x' button to the right
-	textFieldRounded.delegate = self;	// let us be the delegate so we know when the keyboard's "Done" button is pressed
-	
-	//textFieldRounded.inputView = 
-	//self.view.contentMode = UIViewContentModeScaleToFill;
-	[temp2.view addSubview:textFieldRounded];*/
+
 	self.title =@"a shop";
 	self.contentSizeForViewInPopover = CGSizeMake(320, 850);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
@@ -96,10 +77,6 @@
 	[[self tabBar] insertSubview:v atIndex:0];
 	[v release];
 
-	UIBarButtonItem* PostComment = [[UIBarButtonItem alloc]initWithTitle:@"Post Comment" 
-																   style:UIBarButtonItemStyleBordered 
-																  target:self 
-																  action:@selector(postComment:)];
 	UIBarButtonItem* FromHere = [[UIBarButtonItem alloc]initWithTitle:@"From here" 
 																   style:UIBarButtonItemStyleBordered 
 																  target:self 
@@ -108,13 +85,12 @@
 																   style:UIBarButtonItemStyleBordered 
 																  target:self 
 																  action:@selector(goHere:)];
-	[self setToolbarItems:[NSArray arrayWithObjects:PostComment,FromHere,GoHere,nil] animated:YES];
-	[PostComment release];
+	[self setToolbarItems:[NSArray arrayWithObjects:FromHere,GoHere,nil] animated:YES];
+
 	[GoHere release];
 	[FromHere release];
 }
--(void) postComment:(id)sender{
-}
+
 -(void) goHere:(id)sender{
 }
 -(void) fromHere:(id)sender{
