@@ -45,12 +45,12 @@ BOOL chosen,shopchosen;
 	
 	//if (!shopchosen) {
 	//	shopchosen = !shopchosen;
-		Shop* aShop = [[Shop alloc]init];
+	Shop* aShop = [[Shop alloc]init];
 		
-		ShopViewController* shopViewController = [[ShopViewController alloc] initWithShop:aShop] ;
+	ShopViewController* shopViewController = [[ShopViewController alloc] initWithShop:aShop] ;
 		//	ShopViewController* shopViewController = [[ShopViewController alloc] init];
-		[masterViewController pushViewController:shopViewController animated:YES];
-		
+	[masterViewController pushViewController:shopViewController animated:YES];
+	masterViewController.delegate = shopViewController;
 	
 		//MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
 		//self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];

@@ -41,7 +41,7 @@
 }
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	self.navigationController.delegate =self;
+//	self.navigationController.delegate = self;
 	UIViewController *temp1 = [[UIViewController alloc] init] ;
 	UIViewController *temp2 = [[UIViewController alloc] init] ;
 	UIViewController *temp3 = [[UIViewController alloc] init] ;
@@ -110,9 +110,6 @@
 	[PostComment release];
 	[GoHere release];
 	[FromHere release];
-
-
-	
 }
 -(void) postComment:(id)sender{
 }
@@ -121,7 +118,8 @@
 -(void) fromHere:(id)sender{
 }
 - (void)navigationController:(UINavigationController *)navigationController 
-	  willShowViewController:(UIViewController *)viewController animated:(BOOL)animated 
+	  willShowViewController:(UIViewController *)viewController 
+					animated:(BOOL)animated
 {
 	NSLog(@"show");
 	if (viewController != self) {
