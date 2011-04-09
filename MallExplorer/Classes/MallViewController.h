@@ -11,11 +11,6 @@
 #import "MapViewController.h"
 #import "AnnoViewController.h"
 #import "Mall.h"
-//#import "AnnotationFactory.h"
-//#define MAP_ORIGIN_X 0
-//#define MAP_ORIGIN_Y 46
-//#define MAP_WIDTH	 703
-//#define MAP_HEIGHT	 703
 
 @interface MallViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>{
 	CLLocationCoordinate2D coordinate;

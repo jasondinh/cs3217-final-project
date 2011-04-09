@@ -390,8 +390,8 @@
 	[mall buildGraphWithMaps:listMap andStairs:stairs];
 	listMapViewController = [[NSMutableArray alloc] initWithCapacity:[listMap count]];
 	for (int i = 0; i<[listMap count]; i++) {
-		MapViewController* aMVC = [[MapViewController alloc] initMallWithFrame:CGRectMake(MAP_ORIGIN_X, MAP_ORIGIN_Y, MAP_WIDTH, MAP_HEIGHT) andMap:[listMap objectAtIndex:i]];
-		aMVC.view.frame = CGRectMake(MAP_ORIGIN_X, MAP_ORIGIN_Y, MAP_WIDTH, MAP_HEIGHT);
+		MapViewController* aMVC = [[MapViewController alloc] initMallWithFrame:[MapViewController getSuitableFrame] andMap:[listMap objectAtIndex:i]];
+		aMVC.view.frame = [MapViewController getSuitableFrame];
 		[listMapViewController addObject:aMVC];
 		if ([[listMap objectAtIndex:i] isEqual:defaultMap]) {
 			mapViewController = aMVC;
@@ -693,6 +693,27 @@ toMakeAnnotationType:(AnnotationType) annoType
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.
+	// Overriden to allow any orientation.
+	CGFloat width = mapViewController.view.frame.size.width;
+	CGFloat height = mapViewController.view.frame.size.height;
+	CGFloat newWidth, newHeight;
+	switch ([UIDevice currentDevice].orientation) {
+		case UIInterfaceOrientationLandscapeLeft:
+		case UIInterfaceOrientationLandscapeRight:			
+			newWidth = MAP_WIDTH;
+			newHeight = MAP_HEIGHT;
+			break;
+		case UIInterfaceOrientationPortrait:
+		case UIInterfaceOrientationPortraitUpsideDown:
+			newWidth = MAP_PORTRAIT_WIDTH;
+			newHeight = MAP_PORTRAIT_HEIGHT;		
+			break;
+		default:
+			return NO;
+			break;
+	}
+	mapViewController.view.frame = CGRectMake(mapViewController.view.frame.origin.x, mapViewController.view.frame.origin.y, newWidth, newHeight);
+	
     return YES;
 }
 

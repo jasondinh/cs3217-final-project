@@ -49,8 +49,8 @@
 	temp2.title = @"COMMENTS";
 	temp3.title = @"FACEBOOK";
 	temp1.view.backgroundColor = [UIColor whiteColor];	
-		temp2.view.backgroundColor = [UIColor whiteColor];	
-		temp3.view.backgroundColor = [UIColor whiteColor];	
+	temp2.view.backgroundColor = [UIColor whiteColor];	
+	temp3.view.backgroundColor = [UIColor whiteColor];	
 	temp1.tabBarItem.image = [self scale:[UIImage imageNamed:@"overview_tab_icon.png" ] ToSize:CGSizeMake(26, 26) ];
 	temp2.tabBarItem.image = [self scale:[UIImage imageNamed:@"comments_tab_icon.png" ] ToSize:CGSizeMake(26, 26) ];
 	temp3.tabBarItem.image = [self scale:[UIImage imageNamed:@"facebook_tab_icon.png" ] ToSize:CGSizeMake(30, 26) ];
@@ -79,7 +79,6 @@
 	textFieldRounded.delegate = self;	// let us be the delegate so we know when the keyboard's "Done" button is pressed
 	
 	//textFieldRounded.inputView = 
-	
 	//self.view.contentMode = UIViewContentModeScaleToFill;
 	[temp2.view addSubview:textFieldRounded];
 	self.title =@"a shop";
@@ -132,7 +131,7 @@
         } else {
             NSLog(@"BACKWARD");
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"Shopview will appear" object:self];
-			viewController.navigationController.delegate =viewController;
+			viewController.navigationController.delegate = viewController;
 			
         }
     }
@@ -140,12 +139,11 @@
     [viewController viewWillAppear:animated];
 }
 -(id)initWithShop:(Shop*)aShop{
-	//self =[super init];
-	//if(self){
+	self =[super init];
+	if(self){
 		
-
-		
-	//}
+	}
+	
 	return self;
 }
 
