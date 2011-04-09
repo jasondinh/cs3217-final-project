@@ -32,6 +32,10 @@
 	[request startAsynchronous];
 }
 
+- (void) hitCache: (NSURL *) url {
+	//try if the request hit the cache
+}
+
 - (void) postAPI: (NSString *) path withData: (NSDictionary *) data {
 	
 	NSString *fullPath = [NSString stringWithFormat: @"%@%@", API_END_POINT, path];
