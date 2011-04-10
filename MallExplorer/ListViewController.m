@@ -7,11 +7,11 @@
 //
 
 #import "ListViewController.h"
-
+#import "Constant.h"
 
 @implementation ListViewController
 
-@synthesize listOfItems,copyListOfItems,searchBar,typeOfList,searchWasActive,savedSearchTerm,savedScopeButtonIndex,displayController;
+@synthesize listOfItems,copyListOfItems,searchBar,typeOfList,searchWasActive,savedSearchTerm,savedScopeButtonIndex,displayController,progress;
 #pragma mark -
 #pragma mark Initialization
 
@@ -29,22 +29,16 @@
 
 #pragma mark -
 #pragma mark View lifecycle
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-	searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.frame.size.width, 0)];  
-	
-	
-
+	searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.frame.size.width, 0.0)];  
 	searchBar.showsSearchResultsButton =NO;
 	searchBar.barStyle = UIBarStyleDefault;
 	searchBar.delegate = self;
 	[searchBar sizeToFit];
 	displayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
 	self.tableView.delegate =self;
-	//self.searchDisplayController.searchBar =searchBar;
 	self.displayController.delegate =self;
 	self.displayController.searchResultsDataSource =self;
 	self.displayController.searchResultsDelegate =self;
@@ -60,8 +54,8 @@
 	}
 	[self.tableView reloadData];
 	self.tableView.scrollEnabled =YES;
-	/*searchBar.showsScopeBar =NO;
-		searchBar.scopeButtonTitles=[NSArray arrayWithObjects:@"All",@"adfas",nil];*/
+	self.contentSizeForViewInPopover = CGSizeMake(POPOVER_WIDTH,POPOVER_HEIGHT);
+
 }
 
 

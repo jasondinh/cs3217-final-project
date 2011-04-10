@@ -1,15 +1,16 @@
     //
-//  CommentViewController.m
+//  ShopOverviewController.m
 //  MallExplorer
 //
-//  Created by bathanh-m on 3/25/11.
+//  Created by Dam Tuan Long on 4/10/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "CommentViewController.h"
+#import "ShopOverviewController.h"
 
 
-@implementation CommentViewController
+@implementation ShopOverviewController
+@synthesize shopNameLabel,operatingHoursLabel,telLabel,websiteLabel,descriptionTextView,addressLabel,categoryLabel;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -29,6 +30,15 @@
 }
 */
 
+
+-(id)initWithShow:(Shop *) aShop{
+	self = [super init];
+	if(self){
+		
+		
+	}
+	return self;
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.

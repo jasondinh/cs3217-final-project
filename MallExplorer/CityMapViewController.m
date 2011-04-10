@@ -183,7 +183,8 @@
 	[popoverController release];
 	[toolbar release];
 	[detailItem release];
-
+	[mapView release];
+	[mapType release];
 	
 	[super dealloc];
 }

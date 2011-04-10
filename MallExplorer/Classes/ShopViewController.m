@@ -7,10 +7,13 @@
 //
 
 #import "ShopViewController.h"
+#import "ShopOverviewController.h"
+#import "CommentViewController.h"
+#import "Constant.h"
 
 @implementation ShopViewController
-@synthesize shop;
-
+@synthesize theShop;
+@synthesize annotation;
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -41,48 +44,32 @@
 }
 - (void)viewDidLoad {
 	[super viewDidLoad];
-//	self.navigationController.delegate = self;
-	UIViewController *temp1 = [[UIViewController alloc] init] ;
-	UIViewController *temp2 = [[UIViewController alloc] init] ;
-	UIViewController *temp3 = [[UIViewController alloc] init] ;
-	temp1.title = @"OVERVIEW";
-	temp2.title = @"COMMENTS";
-	temp3.title = @"FACEBOOK";
-	temp1.view.backgroundColor = [UIColor whiteColor];	
-	temp2.view.backgroundColor = [UIColor whiteColor];	
-	temp3.view.backgroundColor = [UIColor whiteColor];	
-	temp1.tabBarItem.image = [self scale:[UIImage imageNamed:@"overview_tab_icon.png" ] ToSize:CGSizeMake(26, 26) ];
-	temp2.tabBarItem.image = [self scale:[UIImage imageNamed:@"comments_tab_icon.png" ] ToSize:CGSizeMake(26, 26) ];
-	temp3.tabBarItem.image = [self scale:[UIImage imageNamed:@"facebook_tab_icon.png" ] ToSize:CGSizeMake(30, 26) ];
-	[self setViewControllers:[NSArray arrayWithObjects:temp1,temp2,temp3,nil]];
-	[temp1 release];
-	[temp2 release];
-	[temp3 release];
+	ShopOverviewController *shopOverviewController = [[ShopOverviewController alloc] init] ;
+	CommentViewController *commentController = [[CommentViewController alloc] init] ;
+	UIViewController *facebookTabController = [[UIViewController alloc] init] ;
+	shopOverviewController.title = @"OVERVIEW";
+	commentController.title = @"COMMENTS";
+	facebookTabController.title = @"FACEBOOK";
+	shopOverviewController.view.backgroundColor = [UIColor whiteColor];	
+	commentController.view.backgroundColor = [UIColor whiteColor];	
+	facebookTabController.view.backgroundColor = [UIColor whiteColor];
+	CGSize tabBarIconSize = CGSizeMake(TAB_BAR_ICON_WIDTH, TAB_BAR_ICON_HEIGHT);
+	shopOverviewController.tabBarItem.image = [self scale:[UIImage imageNamed:@"overview_tab_icon.png" ] 
+												   ToSize:tabBarIconSize ];
+	commentController.tabBarItem.image = [self scale:[UIImage imageNamed:@"comments_tab_icon.png" ]
+											  ToSize:tabBarIconSize ];
+	facebookTabController.tabBarItem.image = [self scale:[UIImage imageNamed:@"facebook_tab_icon.png" ] 
+												  ToSize:tabBarIconSize ];
+	[self setViewControllers:[NSArray arrayWithObjects:shopOverviewController,commentController,facebookTabController,nil]];
+	[shopOverviewController release];
+	[commentController release];
+	[facebookTabController release];
 	
-	//UITextField *comment = [[UITextField alloc]init];
+
 	
-	UITextField * textFieldRounded = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
-	UITableViewController * tableview = [[UITableViewController alloc]init];
-	[temp2.view addSubview:tableview.view];
-	tableview.view.autoresizingMask = 	UIViewAutoresizingFlexibleBottomMargin;
-	textFieldRounded.borderStyle = UITextBorderStyleRoundedRect;
-	textFieldRounded.textColor = [UIColor blackColor]; //text color
-	textFieldRounded.font = [UIFont systemFontOfSize:17.0];  //font size
-	textFieldRounded.placeholder = @"<Your comment>";  //place holder
-	textFieldRounded.backgroundColor = [UIColor whiteColor]; //background color
-	textFieldRounded.autocorrectionType = UITextAutocorrectionTypeNo;	// no auto correction support
-	
-	textFieldRounded.keyboardType = UIKeyboardTypeDefault;  // type of the keyboard
-	textFieldRounded.returnKeyType = UIReturnKeyDone;  // type of the return key
-	
-	textFieldRounded.clearButtonMode = UITextFieldViewModeWhileEditing;	// has a clear 'x' button to the right
-	textFieldRounded.delegate = self;	// let us be the delegate so we know when the keyboard's "Done" button is pressed
-	
-	//textFieldRounded.inputView = 
-	//self.view.contentMode = UIViewContentModeScaleToFill;
-	[temp2.view addSubview:textFieldRounded];
+
 	self.title =@"a shop";
-	self.contentSizeForViewInPopover = CGSizeMake(320, 850);
+	self.contentSizeForViewInPopover = CGSizeMake(POPOVER_WIDTH, POPOVER_HEIGHT);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
 	[self.tabBar setBackgroundColor:[UIColor whiteColor]] ;
 	
@@ -108,16 +95,15 @@
 }
 
 -(void) goHere:(id)sender{
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"set goal point to shop" object:self.shop];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"set goal point to shop" object:self.theShop];
 }
 -(void) fromHere:(id)sender{
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"set start point to shop" object:self.shop];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"set start point to shop" object:self.theShop];
 }
 - (void)navigationController:(UINavigationController *)navigationController 
 	  willShowViewController:(UIViewController *)viewController 
 					animated:(BOOL)animated
 {
-	NSLog(@"show");
 	if (viewController != self) {
         self.navigationController.delegate = nil;
         if ([[navigationController viewControllers] containsObject:self]) {
@@ -126,7 +112,6 @@
             NSLog(@"BACKWARD");
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"Shopview will appear" object:self];
 			viewController.navigationController.delegate = viewController;
-			
         }
     }
 	
@@ -135,6 +120,7 @@
 -(id)initWithShop:(Shop*)aShop{
 	self =[super init];
 	if(self){
+		theShop = aShop;
 		
 	}
 	
@@ -163,6 +149,7 @@
 
 
 - (void)dealloc {
+	[theShop release];
     [super dealloc];
 }
 

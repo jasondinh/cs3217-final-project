@@ -764,6 +764,16 @@ toMakeAnnotationType:(AnnotationType) annoType
 
 
 - (void)dealloc {
+	[mall release];
+	[toolbar release];
+	[detailItem release];
+	[popoverController release];
+	[toggleTextButton release];
+	[startFlagButton release];
+	[goalFlagButton release];
+	[pathFindingButton release];
+	[titleLabel  release];
+	
     [super dealloc];
 }
 

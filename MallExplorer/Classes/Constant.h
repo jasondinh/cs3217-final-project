@@ -36,7 +36,13 @@
 
 #define API_END_POINT @"http://cs3217.heroku.com"
 
+//UISplitView constants;
+#define POPOVER_WIDTH 320
+#define POPOVER_HEIGHT 850
 
+//ShopView constants
+#define TAB_BAR_ICON_WIDTH 30
+#define TAB_BAR_ICON_HEIGHT 30
 @protocol Constant
 
 

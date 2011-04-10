@@ -11,9 +11,10 @@
 #import "Shop.h"
 
 @interface ShopViewController : UITabBarController<UINavigationControllerDelegate> {
-	Shop* shop;
 	Annotation* annotation;
+	Shop* theShop;
 }
-@property (retain) Shop* shop;
+@property (retain) Shop* theShop;
+@property (assign) Annotation* annotation;
 -(id)initWithShop:(Shop*)aShop;
 @end

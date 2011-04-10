@@ -1,50 +1,39 @@
 //
-//  MallListViewController.m
+//  CommentViewController.m
 //  MallExplorer
 //
-//  Created by Dam Tuan Long on 3/31/11.
+//  Created by Dam Tuan Long on 4/10/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "MasterViewController.h"
-#import "CityMapViewController.h"
-#import "ListViewController.h"
-#import "MallListViewController.h"
-#import "APIController.h"
-#import "MBProgressHUD.h"
-#import "Mall.h"
+#import "CommentViewController.h"
 
-@implementation MasterViewController
-@synthesize cityMapViewController;
+
+@implementation CommentViewController
+@synthesize commentList,commentField;
+
+
+
 #pragma mark -
 #pragma mark View lifecycle
 
 
-
-
 - (void)viewDidLoad {
-	[super viewDidLoad];	
-	MallListViewController* temp = [[MallListViewController alloc] init] ;//]WithMalls: tmpMalls];
-	[self pushViewController:temp animated:YES];
-	[temp loadData];
-	self.toolbarHidden =NO;
-	[temp release];
+    [super viewDidLoad];
 
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+ 
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	commentField  = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width , 50)];
+	self.tableView.tableHeaderView = commentField;
+	commentField.borderStyle = UITextBorderStyleRoundedRect;
+	commentField.placeholder = @"Your comment";
 	
-	
-	//test api post
-	//APIController *testApi = [[APIController alloc] init];
-//	
-//	testApi.debugMode = YES;
-//	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys: @"1", @"user_id", @"5", @"comment_id", @"1", @"vote", nil];
-//	[testApi postAPI: @"/ratings" withData:dict];
-
 }
 
 
-//-(void)pushViewController:(UIViewController*) controller animated:(BOOL)animated{
-//	[self pushViewController:controller animated:animated];
-//}
 /*
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -66,15 +55,47 @@
 }
 */
 
-
+-(id)initWithShop:(Shop *)shop{
+	self= [super init];
+	if(self){
+	}
+	return self;
+}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Override to allow orientations other than the default portrait orientation.
     return YES;
 }
 
 
+#pragma mark -
+#pragma mark Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    return 1;
+}
 
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    return [commentList count];
+}
+
+
+// Customize the appearance of table view cells.
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    }
+    
+    // Configure the cell...
+    
+    return cell;
+}
 
 
 /*
@@ -118,6 +139,18 @@
 
 
 #pragma mark -
+#pragma mark Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Navigation logic may go here. Create and push another view controller.
+    /*
+    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+    // ...
+    // Pass the selected object to the new view controller.
+    [self.navigationController pushViewController:detailViewController animated:YES];
+    [detailViewController release];
+    */
+}
 
 
 #pragma mark -
@@ -137,6 +170,8 @@
 
 
 - (void)dealloc {
+	[commentList release];
+	[commentField release];
     [super dealloc];
 }
 

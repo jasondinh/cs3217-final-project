@@ -9,14 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "ListViewController.h"
 
+@interface MallListViewController : ListViewController{
 
-@interface MallListViewController : ListViewController {
+	
 	NSMutableArray* favoriteList;
 	NSMutableArray* mallList;
 }
 
 @property (nonatomic,retain) NSMutableArray* favoriteList;
 @property (nonatomic,retain) NSMutableArray* mallList;
-- (id) initWithMalls: (NSArray *) malls ;
+//- (id)initWithMalls: (NSArray *) malls ;
+-(id) init;
+-(void) loadData;
 
 @end

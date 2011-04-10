@@ -89,7 +89,12 @@ BOOL chosen,shopchosen;
 		Mall* aMall = [[Mall alloc]init];
 
 		ShopListViewController* shopListViewController = [[ShopListViewController alloc] initWithMall:aMall] ;
+<<<<<<< HEAD
 		[aMall release];
+=======
+	[aMall release];
+	masterViewController.delegate = shopListViewController;
+>>>>>>> 2a30b8246a60edabbb06f805914540400dd52d1b
 		[masterViewController pushViewController:shopListViewController animated:YES];
 		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
 		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
