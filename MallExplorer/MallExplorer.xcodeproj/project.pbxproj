@@ -13,6 +13,8 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		27029CE7134C68FD000956C8 /* map.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 27029CE5134C68FD000956C8 /* map.jpg */; };
 		27029CE8134C68FD000956C8 /* map1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 27029CE6134C68FD000956C8 /* map1.jpg */; };
+		27066DBF13511F0E00E01BFE /* PriorityQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 27066DBE13511F0E00E01BFE /* PriorityQueue.m */; };
+		27066DC21351219D00E01BFE /* PQObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27066DC11351219D00E01BFE /* PQObject.m */; };
 		2742DD0E1344DE7600E4A4A0 /* Graph.m in Sources */ = {isa = PBXBuildFile; fileRef = 2742DD091344DE7600E4A4A0 /* Graph.m */; };
 		2742DD0F1344DE7600E4A4A0 /* GraphEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2742DD0B1344DE7600E4A4A0 /* GraphEdge.m */; };
 		2742DD101344DE7600E4A4A0 /* GraphNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2742DD0D1344DE7600E4A4A0 /* GraphNode.m */; };
@@ -151,6 +153,10 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		27029CE5134C68FD000956C8 /* map.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = map.jpg; sourceTree = "<group>"; };
 		27029CE6134C68FD000956C8 /* map1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = map1.jpg; sourceTree = "<group>"; };
+		27066DBD13511F0E00E01BFE /* PriorityQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PriorityQueue.h; sourceTree = "<group>"; };
+		27066DBE13511F0E00E01BFE /* PriorityQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PriorityQueue.m; sourceTree = "<group>"; };
+		27066DC01351219D00E01BFE /* PQObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PQObject.h; sourceTree = "<group>"; };
+		27066DC11351219D00E01BFE /* PQObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PQObject.m; sourceTree = "<group>"; };
 		2742DD081344DE7600E4A4A0 /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
 		2742DD091344DE7600E4A4A0 /* Graph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Graph.m; sourceTree = "<group>"; };
 		2742DD0A1344DE7600E4A4A0 /* GraphEdge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphEdge.h; sourceTree = "<group>"; };
@@ -476,6 +482,10 @@
 				2742DD0B1344DE7600E4A4A0 /* GraphEdge.m */,
 				2742DD0C1344DE7600E4A4A0 /* GraphNode.h */,
 				2742DD0D1344DE7600E4A4A0 /* GraphNode.m */,
+				27066DBD13511F0E00E01BFE /* PriorityQueue.h */,
+				27066DBE13511F0E00E01BFE /* PriorityQueue.m */,
+				27066DC01351219D00E01BFE /* PQObject.h */,
+				27066DC11351219D00E01BFE /* PQObject.m */,
 			);
 			name = ApplicationLibrary;
 			sourceTree = "<group>";
@@ -997,6 +1007,8 @@
 				27AB9389134E2316008085E4 /* AnnoLevelConnectorViewController.m in Sources */,
 				27AB93A1134E25AE008085E4 /* AnnotationLevelConnector.m in Sources */,
 				E1A527041350ED670010541A /* MallExplorer.xcdatamodel in Sources */,
+				27066DBF13511F0E00E01BFE /* PriorityQueue.m in Sources */,
+				27066DC21351219D00E01BFE /* PQObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

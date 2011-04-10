@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "GraphNode.h"
 #import "GraphEdge.h"
+#import "PriorityQueue.h"
+#import "PQObject.h"
 
 @interface Graph : NSObject {
 	NSMutableArray* listNode;

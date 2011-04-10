@@ -249,8 +249,66 @@
 	return path;
 }
 
+-(NSArray*) dijkstraHeapFrom: (GraphNode*) start to: (GraphNode*) goal{
+	if ([start isEqual:goal]) {
+		NSArray* path = [NSArray arrayWithObject:start.object];
+		return path;
+	}
+	
+	PriorityQueue* q = [[PriorityQueue alloc] init];
+	double dist[nextNodeIndex];
+	BOOL check[nextNodeIndex];
+	int posInHeap[nextNodeIndex];
+	NSMutableArray* tracePath = [[NSMutableArray alloc] initWithCapacity:nextNodeIndex];
+	
+	for (int i = 0; i<nextNodeIndex; i++) {
+		posInHeap[i] = -1;
+		dist[i] = INFINITY;
+		check[i] = NO;
+		[tracePath addObject:[NSNull null]];
+	}
+	dist[start.index] = 0;
+	PQObject* object = [[PQObject alloc] initWithObject:start andValue:0];
+	posInHeap[start.index] = [q insertObject:object];
+	while ([q count]>0) {
+		GraphNode* node = [[q getNextObject] object];
+		check[node.index] = YES;
+		if ([node isEqual:goal]) {
+			break;
+		}
+		//NSLog(@"Node %d has distance from start: %d", node.index, dist[node.index]);
+		NSArray* adjacentList = [self getAdjacentNodes:node];
+		//NSLog(@"number of adjacent node: %d", [adjacentList count]);
+		for (int i = 0; i<[adjacentList count]; i++) {
+			GraphEdge* tempEdge = [adjacentList objectAtIndex:i];
+			GraphNode* tempNode = [tempEdge getDestinationNode];
+
+			if (!check[tempNode.index] && (dist[node.index]+tempEdge.weight < dist[tempNode.index])) {
+				dist[tempNode.index] = dist[node.index] + tempEdge.weight;
+				if (posInHeap[tempNode.index] == -1) {
+					PQObject* newObj = [[PQObject alloc] initWithObject:tempNode andValue:dist[tempNode.index]];
+					posInHeap[tempNode.index] = [q insertObject:newObj];
+				} else {
+					posInHeap[tempNode.index] = [q updateObjectAtIndex:posInHeap[tempNode.index] withNewValue:dist[tempNode.index]];
+				}
+				[tracePath replaceObjectAtIndex:tempNode.index withObject:tempEdge];
+			}
+		}
+	}
+	for (int i = 0; i<nextNodeIndex; i++) {
+		NSLog(@"dist %d is %d",i, dist[i] );
+	}
+	if (dist[goal.index] == INFINITY) {
+		return nil;
+	}
+	
+	NSMutableArray* path = [[NSMutableArray alloc] init];
+	[self getPathFrom: (GraphNode*) start to: (GraphNode*) goal withPathTrace: tracePath formPath:path];
+	return path;
+}
+
 -(NSArray*) getShortestPathFrom: (GraphNode*) start to:(GraphNode*) goal{
-	return [self dijkstraFrom:start to:goal];
+	return [self dijkstraHeapFrom:start to:goal];
 }
 
 -(NSArray*) getShortestPathFromNodeWithIndex:(int) n1 toNodeWithIndex:(int) n2{

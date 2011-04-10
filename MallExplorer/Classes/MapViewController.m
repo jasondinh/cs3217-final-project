@@ -45,18 +45,11 @@ NSMutableArray* edgeList;
 	[[self.view.subviews lastObject] performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:time];
 }
 
--(void) mapUpdate{
-/*	//NSLog(@"%d", [self.view.subviews count]);
-	for (int i = 0; i<[pointPathList count]; i++) {
-		[[pointPathList objectAtIndex:i] removeFromSuperview];
-	}
-	[pointPathList removeAllObjects];*/
-	////NSLog(@"%d", [self.view.subviews count]);
+-(void) testGraphNode{
 	for (int i = 0; i<[map.pointList count]; i++) {
 		MapPoint* aMapPoint = [map.pointList objectAtIndex:i];
-		[self addATestPoint:[self translatePointToScrollViewCoordinationFromMapCoordination: aMapPoint.position] withImage:@"point.png" withDuration:3.0];
+		[self addATestPoint:[self translatePointToScrollViewCoordinationFromMapCoordination: aMapPoint.position] withImage:@"point.png" withDuration:10.0];
 	}
-	//NSLog(@"%d", [self.view.subviews count]);
 }
 
 -(UIView*) viewForZoomingInScrollView:(UIScrollView *)scrollView{
@@ -98,7 +91,7 @@ NSMutableArray* edgeList;
 	[hiddenAttribute release];
 	[self redisplayPath];
 	
-	if (DEBUG) [self mapUpdate];
+	if (DEBUG) [self testGraphNode];
 }
 
 #pragma mark -
@@ -428,7 +421,7 @@ NSMutableArray* edgeList;
 	
 	if (DEBUG){
 		pointPathList = [[NSMutableArray alloc] init];
-		[self mapUpdate];
+		[self testGraphNode];
 	}
 	//NSLog(@"%d", [displayArea.subviews count]);
 	

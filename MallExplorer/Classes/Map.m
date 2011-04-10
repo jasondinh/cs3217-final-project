@@ -19,9 +19,10 @@
 @synthesize edgeList;
 @synthesize defaultCenterPoint;
 const double toleranceRange = 10;
+const BOOL debug = NO;
 // number of maximum steps in binery search in B->C to refine a path A->B->C by a point in between B,C
 BOOL canRefinePath;
-const int maxNumstep = 10;
+const int maxNumstep = 20;
 
 -(BOOL) isEqual:(id)o{
 	if (![o isMemberOfClass:[Map class]]) {
@@ -46,11 +47,13 @@ const int maxNumstep = 10;
 }
 
 #pragma mark initializers
--(void) add:(int)number PointsToGraphInBetweenPoint:(MapPoint*) point1 andPoint: (MapPoint*)point2{
-	CGPoint vector = CGPointMake(point2.position.x-point1.position.x, point2.position.y-point1.position.y);
+-(void) add:(int)number pointsToGraphInBetweenPoint:(MapPoint*) point1 andPoint: (MapPoint*)point2{
+	if (debug) NSLog(@"adding edge between %d %lf %lf %d %lf %lf", point1.index, point1.position.x, point1.position.y, point2.index, point2.position.x, point2.position.y);
+	CGPoint vector = CGPointMake((point2.position.x-point1.position.x)/(number+1), (point2.position.y-point1.position.y)/(number+1));
 	NSMutableArray* anArray = [[NSMutableArray alloc ] initWithObjects:point1, nil];
 	for (int i = 1; i<=number; i++) {
 		CGPoint point = CGPointMake(point1.position.x+vector.x*i, point1.position.y+vector.y*i);
+		if (debug) NSLog(@"%lf %lf", point.x, point.y);
 		MapPoint* mapPoint = [[MapPoint alloc] initWithPosition:point inLevel:self andIndex:0];
 		mapPoint.index = [graph addNode:mapPoint];
 		[anArray addObject:mapPoint];
@@ -67,12 +70,12 @@ const int maxNumstep = 10;
 
 -(void) buildGraph{
 	graph = [[Graph alloc] init];
-	NSLog(@"point list with: %d", [pointList count]);
-	NSLog(@"edge list with: %d", [edgeList count]);
+	if (debug) NSLog(@"point list with: %d", [pointList count]);
+	if (debug) NSLog(@"edge list with: %d", [edgeList count]);
 	for (int i = 0; i<[pointList count]; i++) {
 		MapPoint* aNode = [pointList objectAtIndex:i];
 		[graph addNode:aNode withIndex:aNode.index];
-		NSLog(@"%d", aNode.index);
+		if (debug) NSLog(@"%d", aNode.index);
 	}
 	double sum = 0;
 	for (int i = 0; i<[edgeList count]; i++) {
@@ -84,7 +87,7 @@ const int maxNumstep = 10;
 		Edge* anEdge = [edgeList objectAtIndex: i];
 		MapPoint* node1 = anEdge.pointA;
 		MapPoint* node2 = anEdge.pointB;
-		NSLog(@"%d %d", node1.index, node2.index);
+		if (debug) NSLog(@"%d %d", node1.index, node2.index);
 		double dist = [MapPoint getDistantBetweenPoint:node1 andPoint:node2];
 		[self add:(int)(dist/averageEdgeLength)-1 pointsToGraphInBetweenPoint:node1 andPoint:node2];			
 		if (anEdge.isBidirectional) {
@@ -233,7 +236,7 @@ const int maxNumstep = 10;
 		int red = imageData[offset+1];
 		int green = imageData[offset+2];
 		int blue = imageData[offset+3];
-		//NSLog(@"offset: %i colors: RGB A %i %i %i  %i",offset,red,green,blue,alpha);
+		//if (debug) NSLog(@"offset: %i colors: RGB A %i %i %i  %i",offset,red,green,blue,alpha);
 		UIColor* color = [UIColor colorWithRed:(red/255.0f) green:(green/255.0f) blue:(blue/255.0f) alpha:(alpha/255.0f)];
 		return color;
 	} else {
@@ -264,11 +267,11 @@ const int maxNumstep = 10;
 }
 
 -(BOOL) canTravelFrom:(CGPoint) startPos to:(CGPoint)endPos{
-	NSLog(@"checking the path between: %lf %lf %lf %lf", startPos.x, startPos.y, endPos.x, endPos.y);
+	if (debug) NSLog(@"checking the path between: %lf %lf %lf %lf", startPos.x, startPos.y, endPos.x, endPos.y);
 	CGPoint vector = {endPos.x - startPos.x, endPos.y - startPos.y};
 	int length = [MapPoint getDistantBetweenCoordination:startPos andCoordination:endPos];
 	for (int i = 1; i<length; i++) {
-		//NSLog(@"%d", i);
+		//if (debug) NSLog(@"%d", i);
 		CGPoint	newPos = {startPos.x+ (vector.x/length*i), startPos.y+(vector.y/length*i)};
 		if (![self checkFreeAtPoint:newPos]) {
 			return NO;
@@ -277,86 +280,74 @@ const int maxNumstep = 10;
 	return YES;
 }
 
--(BOOL) refinePath:(NSMutableArray*) path from:(int)i to:(int)j {
-	MapPoint* aPoint = [path objectAtIndex:i];
-	MapPoint* aPoint1 = [path objectAtIndex:j];
-	MapPoint* aPoint2 = [path objectAtIndex:j+1];
-	NSLog(@"try to shorten the segment: %lf %lf %lf %lf %lf %lf", aPoint.position.x, aPoint.position.y,aPoint1.position.x, aPoint1.position.y,aPoint2.position.x, aPoint2.position.y);
-
-	if (j+1>=[path count]) {
-		return NO;
+-(int) refinePath:(NSMutableArray*) path from:(int)i to:(int)j {
+	CGPoint aPoint = [[path objectAtIndex:i] position];
+	CGPoint aPoint1 = [[path objectAtIndex:j] position];
+	if (debug) NSLog(@"try to shorten the segment: %lf %lf %lf %lf", aPoint.x, aPoint.y,aPoint1.x, aPoint1.y);
+	if ([self canTravelFrom:aPoint to:aPoint1]) {
+		return j;
 	}
-	if ([self canTravelFrom:[[path objectAtIndex:i] position] to: [[path objectAtIndex:j+1] position]] ) {
-		[path removeObjectAtIndex:j];
-		NSLog(@"removed");
-		return YES;
-	} else {
-		int numStep = 0;
-		MapPoint* left = [path objectAtIndex:j];
-		MapPoint* right = [path objectAtIndex:j+1];
-		CGPoint leftPoint = [left position];
-		CGPoint rightPoint = [right position];
-		CGPoint holdTemp;
-		BOOL hasChosen = NO;
-		while (numStep<maxNumstep){
-			if ([MapPoint getDistantBetweenCoordination:leftPoint andCoordination:rightPoint]<5)
-			{
-				if ([self canTravelFrom:[[path objectAtIndex:i] position] to:rightPoint]) {
-					MapPoint* aPoint = [[MapPoint alloc] initWithPosition:rightPoint inLevel:self andIndex:0];
-					[path replaceObjectAtIndex:j withObject:aPoint];
-					[aPoint release];
-					break;
-				} else if (leftPoint.x!=left.position.x || leftPoint.y!=left.position.y){
-					MapPoint* aPoint = [[MapPoint alloc] initWithPosition:rightPoint inLevel:self andIndex:0];
-					[path replaceObjectAtIndex:j withObject:aPoint];
-					[aPoint release];
-					break;
-				}
-			}
-			CGPoint mid = {(leftPoint.x+rightPoint.x)/2,(leftPoint.y+rightPoint.y)/2};
-			if ([self canTravelFrom:[[path objectAtIndex:i] position] to:mid]){
-				hasChosen = YES;
-				holdTemp = mid;
-				leftPoint = mid;
+	int numStep = 0;
+	int l = i+1;
+	int r = j;
+	BOOL hasChosen = NO;
+	int holdResult = i;
+	while (numStep<maxNumstep){
+		int result;
+		if (l>=r-1)
+		{
+			if ([self canTravelFrom:aPoint to:[[path objectAtIndex:r] position]]) {
+				result = r;
 			} else {
-				rightPoint = mid;
+				result = l;
 			}
-			numStep++;
+			return result;
+			
 		}
-		if (numStep == maxNumstep) {
-			if (hasChosen) {
-				MapPoint* aPoint = [[MapPoint alloc] initWithPosition:holdTemp inLevel:self andIndex:0];
-				[path replaceObjectAtIndex:j withObject:aPoint];
-				[aPoint release];
-			}
+		int mid = (l+r)/2;
+		if ([self canTravelFrom:aPoint to: [[path objectAtIndex: mid] position]]){
+			hasChosen = YES;
+			holdResult = mid;
+			l = mid;
+		} else {
+			r = mid-1;
 		}
+		numStep++;
 	}
-	return NO;
+	if (numStep == maxNumstep) {
+		if (hasChosen) {
+			return holdResult;
+			
+		}
+	} else {
+		return i+1;
+	}
+
 
 }
 
 -(NSArray*) refineAPath:(NSArray*) aPath{
 	if (!canRefinePath) {
-		NSLog(@"cannot refine path");
+		if (debug) NSLog(@"cannot refine path");
 		return aPath;
 	}
-	NSLog(@"now refining the path: ");
+	if (debug) NSLog(@"now refining the path: ");
 	for (int i = 0; i<[aPath count]; i++) {
 		MapPoint* aPoint = [aPath objectAtIndex:i];
-		NSLog(@"%lf %lf", aPoint.position.x, aPoint.position.y);
+		if (debug) NSLog(@"%lf %lf", aPoint.position.x, aPoint.position.y);
 	}
 	NSMutableArray* path = [NSMutableArray arrayWithArray:aPath];
-	int i = 0, j = 1;
-	while (j<[path count]-1) {
-		BOOL isShortened = [self refinePath:path from:i to:j];
-		if (!isShortened) {
-			i++;
-			j++;
+	int i = 0;
+	while (i<[path count]-1) {
+		int m = [self refinePath:path from:i to:[path count] -1];
+		for (int t = m-1; t>=i+1; t--) {
+			[path removeObjectAtIndex:t];
 		}
-		NSLog(@"now the path is:");
+		i++;
+		if (debug) NSLog(@"now the path is:");
 		for (int t = 0; t<[path count]; t++) {
 			MapPoint* aPoint = [path objectAtIndex:t];
-			NSLog(@"%lf %lf", aPoint.position.x, aPoint.position.y);
+			if (debug) NSLog(@"%lf %lf", aPoint.position.x, aPoint.position.y);
 		}
 	}
 	return path;

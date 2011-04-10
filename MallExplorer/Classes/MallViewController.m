@@ -541,6 +541,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 -(void) startOrGoalMoved:(NSNotification*) notification{
 	//NSLog(@"start or goal moved");
 	if (start && goal) {
+		[self startOrGoalRemoved:nil];
 		[self pathFinding];
 	}
 }
@@ -603,8 +604,8 @@ toMakeAnnotationType:(AnnotationType) annoType
 			[arriving setIsUp:[self checkLevel:lev2 isHigherThan:lev1]];
 			[arriving setDestination: lev1];
 			[[self getViewControllerOfMap: lev2] addAnnotation: [[arriving retain] autorelease]];
-			if (start.titleButton.hidden = YES) [start annotationViewTapped:nil];
-			if (goal.titleButton.hidden = YES) [goal annotationViewTapped:nil];
+			if (start.titleButton.hidden == YES) [start annotationViewTapped:nil];
+			if (goal.titleButton.hidden == YES) [goal annotationViewTapped:nil];
 		}
 	}	
 	[mapViewController redisplayPath];
