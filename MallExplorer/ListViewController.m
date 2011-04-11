@@ -47,6 +47,7 @@
 	self.navigationController.delegate =self;
 	self.tableView.tableHeaderView = searchBar;	
 	
+		
 	self.copyListOfItems = [NSMutableArray arrayWithCapacity:[self.listOfItems count]];
 	if (self.savedSearchTerm) {
 		[self.searchDisplayController setActive:self.searchWasActive];
@@ -62,7 +63,8 @@
 }
 
 
-
+-(void) loadData:(id)sender{
+}
 - (void)navigationController:(UINavigationController *)navigationController 
 	  willShowViewController:(UIViewController *)viewController animated:(BOOL)animated 
 {

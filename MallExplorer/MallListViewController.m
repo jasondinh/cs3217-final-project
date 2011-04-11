@@ -33,7 +33,7 @@
 #pragma mark -
 #pragma mark APIController
 - (void) requestDidLoad: (APIController *) apiController {
-	NSArray *malls = (NSArray *) apiController.result;
+	/*NSArray *malls = (NSArray *) apiController.result;
 	NSEnumerator *e = [malls objectEnumerator];
 	NSDictionary *tmpMall;
 	NSMutableArray *tmpMalls = [NSMutableArray array];
@@ -55,13 +55,13 @@
 		[listOfItems addObject:aMall.name];
 	}
 	[self.tableView reloadData];
-	[progress hide:YES];
+	[progress hide:YES];*/
 
-	//[self cacheRespond:apiController];
+	[self cacheRespond:apiController];
 	
 }
 - (void)cacheRespond: (APIController *) apiController{
-	/*NSLog(@"cache did respond");
+	NSLog(@"cache did respond");
 	NSArray *malls = (NSArray *) apiController.result;
 	NSEnumerator *e = [malls objectEnumerator];
 	NSDictionary *tmpMall;
@@ -85,21 +85,99 @@
 	}
 	[self.tableView reloadData];
 	[progress hide:YES];
-	*/
-	[self serverRespond:apiController];
+	[tmpMall release];
 	
+	[self serverRespond:apiController];
+	//[self performSelector:@selector(serverRespond:) withObject:apiController afterDelay:1];
 	
 	
 }
 - (void)serverRespond: (APIController *) apiController{
-	NSLog(@"server did respond");
-	if (progress.hidden == YES) {
-		NSLog(@"cahde did respond");
-	} else {
-		NSLog(@"cache did not respond");
+
+	NSArray *malls = (NSArray *) apiController.result;
+	NSEnumerator *e = [malls objectEnumerator];
+	NSDictionary *tmpMall;
+	NSMutableArray *tmpMalls = [NSMutableArray array];
+	while (tmpMall = [e nextObject]) {
+		NSDictionary *tmp = [tmpMall valueForKey: @"mall"];
+		Mall *mall = [[Mall alloc] initWithId: [tmp valueForKey: @"id"] 
+									  andName:[tmp valueForKey: @"name"] 
+								 andLongitude:[tmp valueForKey: @"longitude"] 
+								  andLatitude:[tmp valueForKey: @"latitude"] 
+								   andAddress:[tmp valueForKey: @"address"] 
+									   andZip:[tmp valueForKey: @"zip"]];
+		
+		[tmpMalls addObject: mall];
 	}
+	//	[tmpMalls removeAllObjects];
+	tmpMall = [[Mall alloc] initWithId:123 andName:@"test" andLongitude:@"123" andLatitude:@"231" andAddress:@"asdf" andZip:12];
+	[tmpMalls insertObject:tmpMall atIndex:1];
+	[tmpMalls removeObjectAtIndex:0];
+
+	[tmpMalls insertObject:tmpMall atIndex:2];
+	
+	if ([listOfItems count] !=0) {
+		
+		NSMutableArray *removeIndexPaths = [NSMutableArray array];
+		for (int i=[mallList count]-1; i>=0 ; i--) {
+			BOOL has = NO;
+			for (int x = 0; x < [tmpMalls count]; x++) {
+				if ((((Mall*)[tmpMalls objectAtIndex:x]).mId == ((Mall*)[mallList objectAtIndex:i]).mId)) {
+					has =YES;
+				}
+				
+			}
+			if (!has) {
+				[mallList removeObjectAtIndex:i];
+				[removeIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+			}
+		}
+		
+		self.listOfItems = [[NSMutableArray alloc]init];
+		for (Mall* aMall in mallList){
+			[listOfItems addObject:aMall.name];
+		}
+
+		[self.tableView beginUpdates];
+		[self.tableView deleteRowsAtIndexPaths:removeIndexPaths withRowAnimation:UITableViewRowAnimationRight];
+		[self.tableView endUpdates];		
+		
+
+		
+		NSMutableArray *insertIndexPaths = [NSMutableArray array];
+		for (int i=0; i< [tmpMalls count]; i++) {
+			if (i >= [mallList count] || !(((Mall*)[tmpMalls objectAtIndex:i]).mId == ((Mall*)[mallList objectAtIndex:i]).mId)){
+				[mallList insertObject:((Mall*)[tmpMalls objectAtIndex:i]) atIndex:i];
+				[insertIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+
+			}
+		}
+		self.listOfItems = [[NSMutableArray alloc]init];
+		for (Mall* aMall in mallList){
+			[listOfItems addObject:aMall.name];
+		}
+		[self.tableView beginUpdates];
+		[self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationLeft];
+		[self.tableView endUpdates];
+
+		
+		
+		
+		
+	} else {
+
+		self.mallList = [tmpMalls mutableCopy];
+		self.listOfItems = [[NSMutableArray alloc]init];
+		for (Mall* aMall in mallList){
+			[listOfItems addObject:aMall.name];
+		}
+		[self.tableView reloadData];
+		
+	
+	}
+	[tmpMall release];
 	[progress hide:YES];
-	[self requestFail:apiController];
+	//[self requestFail:apiController];
 
 }
 
@@ -169,7 +247,7 @@
         product = [self.listOfItems objectAtIndex:indexPath.row];
     }
 
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:nil];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:[mallList objectAtIndex:indexPath.row]];
   
 }
 
@@ -223,6 +301,7 @@
 	 self.navigationItem.title = @"Mall list";
 	 searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
 
+	self.navigationItem.leftBarButtonItem= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(loadData:)];
 	
 	 NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"Nearby",@"Favorite",nil];
 	 typeOfList = [[UISegmentedControl alloc] initWithItems:segmentArray];
