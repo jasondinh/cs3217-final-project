@@ -11,6 +11,8 @@
 
 @implementation FacebookTabViewController
 
+#pragma mark -
+#pragma mark Initialization
 
 -(id)initWithShop:(Shop *) aShop{
 	//REQUIRES: 
@@ -53,7 +55,8 @@
     return YES;
 }
 
-
+#pragma mark -
+#pragma mark Memory management
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];

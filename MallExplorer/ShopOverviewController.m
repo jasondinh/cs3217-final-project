@@ -13,6 +13,9 @@
 @implementation ShopOverviewController
 @synthesize shopNameLabel,operatingHoursLabel,unitLabel,websiteLabel,descriptionTextView,levelLabel,categoryLabel;
 
+
+#pragma mark -
+#pragma mark Initialization
 -(id)initWithShop:(Shop *) aShop{
 	//REQUIRES:
 	//MODIFIES:self
@@ -50,7 +53,8 @@
 
 
 
-
+#pragma mark -
+#pragma mark Memory management
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.

@@ -32,12 +32,7 @@
 
 	
 	
-	//test api post
-	//APIController *testApi = [[APIController alloc] init];
-//	
-//	testApi.debugMode = YES;
-//	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys: @"1", @"user_id", @"5", @"comment_id", @"1", @"vote", nil];
-//	[testApi postAPI: @"/ratings" withData:dict];
+
 
 }
 
@@ -115,10 +110,6 @@
     return YES;
 }
 */
-
-
-#pragma mark -
-
 
 #pragma mark -
 #pragma mark Memory management

@@ -25,13 +25,7 @@ BOOL chosen,shopchosen;
     if (self) {
 		// Custom initialization
 		masterViewController= [[MasterViewController alloc] init];
-		
-//		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
-//		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
-//		[self setDelegate: aMVC];
 		cityMapViewController = [[[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil] retain];
-
-
 		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
 		[self setDelegate:cityMapViewController];
 		
@@ -43,8 +37,10 @@ BOOL chosen,shopchosen;
     }
     return self;
 }
--(void) ShopViewWillAppear:(id)sender{
-}
+
+#pragma mark -
+#pragma mark Nofications
+
 -(void) shopChosen:(id)sender{
 		Shop* aShop = [[Shop alloc]init];
 		ShopViewController* shopViewController = [[ShopViewController alloc] initWithShop:aShop] ;
@@ -52,32 +48,10 @@ BOOL chosen,shopchosen;
 		masterViewController.delegate = shopViewController;
 	
 }
--(void) ListViewWillAppear:(id)sender{
-
-	if ([[sender object] isKindOfClass:[ShopListViewController class]]) {
-		//cityMapViewController = [[[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil] retain];
-		UIToolbar *toolbar = ((MallViewController*)[self.viewControllers objectAtIndex:1]).toolbar;
-		if (((UIBarButtonItem*)[toolbar.items objectAtIndex:0]).title == @"Root List") {
-			UIBarButtonItem *barButtonItem = [toolbar.items objectAtIndex:0];	
-			NSMutableArray *items = [[cityMapViewController.toolbar items] mutableCopy];
-			[items removeObjectAtIndex:0];
-			[items insertObject:barButtonItem atIndex:0];
-			[cityMapViewController.toolbar setItems:items animated:YES];
-			[items release];
-
-		}
-		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
-		[self setDelegate:cityMapViewController];
-	}
-	
-}
 
 
 -(void) mallChosen:(id) object{
-	//if (!chosen) {
-	//	chosen = !chosen;
 		Mall* aMall = [[Mall alloc]init];
-
 		ShopListViewController* shopListViewController = [[ShopListViewController alloc] initWithMall:aMall] ;
 		[aMall release];
 		masterViewController.delegate = shopListViewController;
@@ -87,30 +61,48 @@ BOOL chosen,shopchosen;
 		[self setDelegate: aMVC];
 		[aMVC loadMaps:nil andStairs:nil withDefaultMap:nil];
 		if (((UIBarButtonItem*)[[cityMapViewController toolbar].items objectAtIndex:0]).title == @"Root List") {
-			NSLog(@"comehere");
 		UIBarButtonItem *barButtonItem = [[cityMapViewController toolbar].items objectAtIndex:0];	
 		NSMutableArray *items = [[aMVC.toolbar items] mutableCopy];
 		[items insertObject:barButtonItem atIndex:0];
 		[aMVC.toolbar setItems:items animated:YES];
 		[items release];
-		//self.popoverController = pc;
-		NSLog(@"toolbar %d", [[aMVC toolbar].items count ]);}
 
+		}
 
-	//} 
+}
 
+-(void) ListViewWillAppear:(id)sender{
+	//If a ShopListViewController will appear
+	if ([[sender object] isKindOfClass:[ShopListViewController class]]) {
+		//add the Root list button again
+		UIToolbar *toolbar = ((MallViewController*)[self.viewControllers objectAtIndex:1]).toolbar;
+		if (((UIBarButtonItem*)[toolbar.items objectAtIndex:0]).title == @"Root List") {
+			UIBarButtonItem *barButtonItem = [toolbar.items objectAtIndex:0];	
+			NSMutableArray *items = [[cityMapViewController.toolbar items] mutableCopy];
+			[items removeObjectAtIndex:0];
+			[items insertObject:barButtonItem atIndex:0];
+			[cityMapViewController.toolbar setItems:items animated:YES];
+			[items release];
+			
+		}
+		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
+		[self setDelegate:cityMapViewController];
+	}
 	
+}
+-(void) ShopViewWillAppear:(id)sender{
+	//If a Shpview will appear
 }
 
 
+
+#pragma mark -
+#pragma mark View lifecycle
 /*
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
 }
 */
-
-
-
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -139,6 +131,8 @@ BOOL chosen,shopchosen;
 
 
 - (void)dealloc {
+	[cityMapViewController release];
+	[masterViewController release];
     [super dealloc];
 }
 

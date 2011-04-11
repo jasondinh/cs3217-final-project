@@ -14,7 +14,8 @@
 @synthesize commentList,commentField;
 
 
-
+#pragma mark -
+#pragma mark Initialization
 
 -(id)initWithShop:(Shop *)shop{
 	//REQUIRES:
@@ -50,10 +51,6 @@
 	self.tableView.tableHeaderView = commentField;
 	commentField.borderStyle = UITextBorderStyleRoundedRect;
 	commentField.placeholder = @"Your comment";
-	
-
-	
-	
 }
 
 
