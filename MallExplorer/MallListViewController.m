@@ -33,8 +33,31 @@
 #pragma mark -
 #pragma mark APIController
 - (void) requestDidLoad: (APIController *) apiController {
+	NSArray *malls = (NSArray *) apiController.result;
+	NSEnumerator *e = [malls objectEnumerator];
+	NSDictionary *tmpMall;
+	NSMutableArray *tmpMalls = [NSMutableArray array];
+	while (tmpMall = [e nextObject]) {
+		NSDictionary *tmp = [tmpMall valueForKey: @"mall"];
+		Mall *mall = [[Mall alloc] initWithId: [tmp valueForKey: @"id"] 
+									  andName:[tmp valueForKey: @"name"] 
+								 andLongitude:[tmp valueForKey: @"longitude"] 
+								  andLatitude:[tmp valueForKey: @"latitude"] 
+								   andAddress:[tmp valueForKey: @"address"] 
+									   andZip:[tmp valueForKey: @"zip"]];
+		
+		[tmpMalls addObject: mall];
+	}
+	
+	self.mallList = [tmpMalls mutableCopy];
+	self.listOfItems = [[NSMutableArray alloc]init];
+	for (Mall* aMall in mallList){
+		[listOfItems addObject:aMall.name];
+	}
+	[self.tableView reloadData];
+	[progress hide:YES];
 
-	[self cacheRespond:apiController];
+	//[self cacheRespond:apiController];
 	
 }
 - (void)cacheRespond: (APIController *) apiController{

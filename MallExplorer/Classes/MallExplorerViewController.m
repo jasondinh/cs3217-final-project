@@ -43,9 +43,9 @@ BOOL chosen,shopchosen;
 #pragma mark -
 #pragma mark Nofications
 -(void) requestDidFail:(id)sender{
-	NSLog(@"REQUEST FAILED");
+/*	NSLog(@"REQUEST FAILED");
 	RequesFailViewController * requestFail = [[RequesFailViewController alloc]init];
-	[masterViewController pushViewController:requestFail animated:YES];
+	[masterViewController pushViewController:requestFail animated:YES];*/
 }
 
 -(void) shopChosen:(id)sender{
