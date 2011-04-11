@@ -13,6 +13,7 @@
 @synthesize startPoint;
 @synthesize goalPoint;
 
+
 - (id)initWithPoint1:(CGPoint)point1 andPoint2:(CGPoint) point2 {
     double x = fmin(point1.x, point2.x);
     double y = fmin(point1.y, point2.y);
@@ -25,6 +26,7 @@
 		goalPoint = point2;
     }
 	self.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+	animateCycle = MAX_PHASE_LINE;
     return self;
 }
 
@@ -47,12 +49,22 @@
 
 
 - (void)drawRect:(CGRect)rect {
+	animateCycle = (animateCycle+MAX_PHASE_LINE-DRAW_STEP_LENGTH) % MAX_PHASE_LINE;
 	CGContextRef contextRef = UIGraphicsGetCurrentContext();
     CGFloat red[4] = {1.0f, 0.0f, 0.0f, 1.0f};
+	
 	CGContextSetLineCap(contextRef, kCGLineCapRound);
 	CGContextSetLineJoin(contextRef, kCGLineJoinRound);
 	CGContextSetLineWidth(contextRef, DRAW_PATH_WIDTH);
-    CGContextSetStrokeColor(contextRef, red);
+	CGFloat lengths[] = {DRAW_DASH_LENGTH, DRAW_EMPTY_LENGTH};
+    CGContextSetLineDash (contextRef, animateCycle,
+							   lengths,
+							   2
+							   );
+	
+	CGContextSetStrokeColor(contextRef, red);
+	
+	
     CGContextBeginPath(contextRef);
 	double x = self.frame.origin.x+3;
 	double y = self.frame.origin.y+3;

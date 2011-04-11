@@ -23,6 +23,7 @@
 	AnnoViewController* annoBeingSelected;
 	double zoomScale, maxScale, minScale;
 	UIImageView* imageView;
+	NSTimer* theTimer;
 }
 
 @property (nonatomic, retain) NSArray* annotationList;

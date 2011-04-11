@@ -17,7 +17,7 @@
 #define MAP_HEIGHT	648
 
 // Graph constant
-#define MAX_NODES 600
+#define MAX_NODES 200
 
 // portrait
 #define MAP_PORTRAIT_WIDTH	762
@@ -34,6 +34,11 @@
 
 // Line view constant:
 #define DRAW_PATH_WIDTH 7
+#define DRAW_DASH_LENGTH 15
+#define DRAW_EMPTY_LENGTH 10
+#define DRAW_STEP_LENGTH 5
+#define MAX_PHASE_LINE 27
+
 //API constant
 
 #define API_END_POINT @"http://cs3217.heroku.com"

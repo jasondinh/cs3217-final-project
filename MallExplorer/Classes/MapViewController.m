@@ -415,7 +415,15 @@ NSMutableArray* edgeList;
 		pointPathList = [[NSMutableArray alloc] init];
 		[self testGraphNode];
 	}
+	theTimer =[NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector: @selector(timerLoop:) userInfo:nil repeats:YES];
+	[theTimer retain];
 	
+}
+
+-(void) timerLoop:(NSTimer*) theTimer{
+	for (int i = 0; i<[edgeDisplayedList count]; i++) {
+		[[edgeDisplayedList objectAtIndex:i] setNeedsDisplay];
+	}
 }
 
 -(void) tapToScrollViewPoint:(UIGestureRecognizer*) gesture{

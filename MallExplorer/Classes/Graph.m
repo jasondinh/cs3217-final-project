@@ -280,6 +280,7 @@
 			if (!check[tempNode.index] && (dist[node.index]+tempEdge.weight < dist[tempNode.index])) {
 				dist[tempNode.index] = dist[node.index] + tempEdge.weight;
 				PQObject* aPQObject = [pqListNode objectAtIndex:tempNode.index];
+				aPQObject.val = dist[tempNode.index];
 				if (aPQObject.posInHeap == -1) {
 					[q insertObject:aPQObject];
 				} else {
@@ -347,6 +348,7 @@
 				dist[tempNode.index] = dist[node.index] + tempEdge.weight;
 				f[tempNode.index] = dist[tempNode.index] + h[tempNode.index];
 				PQObject* aPQObject = [pqListNode objectAtIndex:tempNode.index];
+				aPQObject.val = f[tempNode.index];
 				if (aPQObject.posInHeap == -1) {
 					[q insertObject:aPQObject];
 				} else {
