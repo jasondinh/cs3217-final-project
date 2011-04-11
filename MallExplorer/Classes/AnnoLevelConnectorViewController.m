@@ -57,13 +57,13 @@
 	BOOL isDeparting = [anno isDepartingConnector];
 	NSString* imageName;
 	if (isUp && isDeparting) { // a departing connector to a higher level
-		imageName = [NSString stringWithString:@"up_arrow.png"];
-	} else if (!isUp && isDeparting) { // a departing connector to a lower level
-		imageName = [NSString stringWithString:@"down_arrow.png"];
-	}  else if (isUp && !isDeparting) { // an arriving connector from a lower level
 		imageName = [NSString stringWithString:@"up_red_arrow.png"];
-	}  else if (!isUp && !isDeparting) { // an arriving connector from a higher level
+	} else if (!isUp && isDeparting) { // a departing connector to a lower level
 		imageName = [NSString stringWithString:@"down_red_arrow.png"];
+	}  else if (isUp && !isDeparting) { // an arriving connector from a lower level
+		imageName = [NSString stringWithString:@"up_green_arrow.png"];
+	}  else if (!isUp && !isDeparting) { // an arriving connector from a higher level
+		imageName = [NSString stringWithString:@"down_green_arrow.png"];
 	}	
 	UIImage* image = [UIImage imageNamed:imageName];
 	UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
