@@ -32,7 +32,7 @@
 }*/
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	NSLog(@"Toolbar %d", [toolbar.items count ]);
+	if (debug) NSLog(@"Toolbar %d", [toolbar.items count ]);
 }
 -(Map*) createTestMap1{
 	UIImage* image = [UIImage imageNamed:@"map.jpg"];
@@ -501,7 +501,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 	if (gesture.state == UIGestureRecognizerStateEnded) {
 		double newX = button.frame.origin.x - mapViewController.view.frame.origin.x;
 		double newY = button.frame.origin.y - mapViewController.view.frame.origin.y;
-		//NSLog(@"new x new y %lf %lf", newX, newY);
+		//if (debug) NSLog(@"new x new y %lf %lf", newX, newY);
 		// bring the button to the original position
 		button.transform = CGAffineTransformIdentity;
 
@@ -512,7 +512,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 			UIScrollView* theScrollView = (UIScrollView*) mapViewController.view;
 			double x = newX + button.frame.size.width/2  + theScrollView.contentOffset.x;
 			double y = newY + button.frame.size.height/2 + theScrollView.contentOffset.y ;
-			//NSLog(@"new x new y %lf %lf", x, y);
+			//if (debug) NSLog(@"new x new y %lf %lf", x, y);
 			if (![mapViewController addAnnotationType:annoType ToScrollViewAtPosition:CGPointMake(x, y) withTitle:title withContent:content]) {
 				button.transform = CGAffineTransformIdentity;
 				return; // add to blocked position
@@ -539,7 +539,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 }
 
 -(void) startOrGoalMoved:(NSNotification*) notification{
-	//NSLog(@"start or goal moved");
+	//if (debug) NSLog(@"start or goal moved");
 	if (start && goal) {
 		[self startOrGoalRemoved:nil];
 		[self pathFinding];
@@ -701,7 +701,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 		  withBarButtonItem:(UIBarButtonItem*)barButtonItem 
 	   forPopoverController: (UIPopoverController*)pc {
 	
-    //NSLog(barButtonItem.title) ;//= @"Root List";
+    //if (debug) NSLog(barButtonItem.title) ;//= @"Root List";
     NSMutableArray *items = [[toolbar items] mutableCopy];
     [items insertObject:barButtonItem atIndex:0];
     [toolbar setItems:items animated:YES];
@@ -712,7 +712,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 - (void)splitViewController: (UISplitViewController*)svc 
      willShowViewController:(UIViewController *)aViewController 
   invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
-	  //NSLog(barButtonItem.title) ;//= @"Root List";
+	  //if (debug) NSLog(barButtonItem.title) ;//= @"Root List";
     NSMutableArray *items = [[toolbar items] mutableCopy];
     [items removeObjectAtIndex:0];
     [toolbar setItems:items animated:YES];

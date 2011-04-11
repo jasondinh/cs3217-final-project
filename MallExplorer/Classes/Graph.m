@@ -74,7 +74,6 @@
 		}
 	}
 	[adjacentList addObject:edge];
-	NSLog(@"point list with %d, adding %d to %d, making total adjacentedge list of %d", [listNode count], n1.index, n2.index, [adjacentList count]);
 
 	return YES;
 }
@@ -114,7 +113,6 @@
 
 -(NSArray*) getAdjacentNodes:(GraphNode*) node{
 	if ([listNode count]==0 || [listNode indexOfObject:node]==NSNotFound) {
-		NSLog(@"not found");
 		return nil;
 	}
 	return [listEdge objectAtIndex:node.index];
@@ -225,21 +223,15 @@
 		if ([node isEqual:goal]) {
 			break;
 		}
-		//NSLog(@"Node %d has distance from start: %d", node.index, dist[node.index]);
 		NSArray* adjacentList = [self getAdjacentNodes:node];
-		//NSLog(@"number of adjacent node: %d", [adjacentList count]);
 		for (int i = 0; i<[adjacentList count]; i++) {
 			GraphEdge* tempEdge = [adjacentList objectAtIndex:i];
 			GraphNode* tempNode = [tempEdge getDestinationNode];
-			//NSLog(@"node %d with distance %lf, edge with Weight: %lf", tempNode.index, dist[tempNode.index], tempEdge.weight);
 			if (dist[node.index]+tempEdge.weight < dist[tempNode.index]) {
 				dist[tempNode.index] = dist[node.index] + tempEdge.weight;
 				[tracePath replaceObjectAtIndex:tempNode.index withObject:tempEdge];
 			}
 		}
-	}
-	for (int i = 0; i<nextNodeIndex; i++) {
-		NSLog(@"dist %d is %lf",i, dist[i] );
 	}
 	if (dist[goal.index] == INFINITY) {
 		return nil;
@@ -279,10 +271,8 @@
 		check[node.index] = YES;
 		if ([node isEqual:goal]) {			
 			break;
-		}
-		//NSLog(@"Node %d has distance from start: %d", node.index, dist[node.index]);
+		}		
 		NSArray* adjacentList = [self getAdjacentNodes:node];
-		//NSLog(@"number of adjacent node: %d", [adjacentList count]);
 		for (int i = 0; i<[adjacentList count]; i++) {
 			GraphEdge* tempEdge = [adjacentList objectAtIndex:i];
 			GraphNode* tempNode = [tempEdge getDestinationNode];
@@ -348,9 +338,7 @@
 		if ([node isEqual:goal]) {			
 			break;
 		}
-		//NSLog(@"Node %d has distance from start: %d", node.index, dist[node.index]);
 		NSArray* adjacentList = [self getAdjacentNodes:node];
-		//NSLog(@"number of adjacent node: %d", [adjacentList count]);
 		for (int i = 0; i<[adjacentList count]; i++) {
 			GraphEdge* tempEdge = [adjacentList objectAtIndex:i];
 			GraphNode* tempNode = [tempEdge getDestinationNode];

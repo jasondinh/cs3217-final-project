@@ -10,6 +10,7 @@
 #import "Map.h"
 #import "MapPoint.h"
 #import "Graph.h"
+#import "Constant.h"
 
 @interface Mall : NSObject {
 	NSInteger mId;

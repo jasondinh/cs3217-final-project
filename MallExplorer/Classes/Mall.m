@@ -66,8 +66,8 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 	mallGraph = [[Graph alloc] init];
 	mapList = [[NSMutableArray arrayWithArray:mList] retain];
 	mapPointList = [[NSMutableArray alloc] init];
-	NSLog(@"mall with: %d level", [mapList count]);
-	NSLog(@"stair list with: %d", [stairList count]);
+	if (debug) NSLog(@"mall with: %d level", [mapList count]);
+	if (debug) NSLog(@"stair list with: %d", [stairList count]);
 	for (int i = 0; i<[mapList count]; i++) {
 		Map* aNode = [mapList objectAtIndex:i];
 		[mallGraph addNode:aNode];
@@ -78,7 +78,7 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 		node1 = [self addConnectingPoint:node1];
 		MapPoint* node2 = anEdge.pointB;
 		node2 = [self addConnectingPoint:node2];
-		NSLog(@"%@ %@", node1.level.mapName, node2.level.mapName);
+		if (debug) NSLog(@"%@ %@", node1.level.mapName, node2.level.mapName);
 		[mallGraph addEdge:node1 andObject2:node2 withWeight:1];
 		if (anEdge.isBidirectional) {
 			[mallGraph addEdge:node2 andObject2:node1 withWeight:1];
@@ -106,7 +106,7 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 
 -(NSArray*) findPathFrom:(CGPoint) startPos inLevel:(Map*)level1 to: (CGPoint)goalPos inLevel:(Map*) level2{
 	// reset all the path now;
-	NSLog(@"now finding path ------------------------------");
+	if (debug) NSLog(@"now finding path ------------------------------");
 	[self resetPath];
 	MapPoint* startPoint = [[MapPoint alloc] initWithPosition:startPos inLevel:level1  andIndex:0];
 	MapPoint* goalPoint = [[MapPoint alloc] initWithPosition:goalPos inLevel:level2 andIndex:0];

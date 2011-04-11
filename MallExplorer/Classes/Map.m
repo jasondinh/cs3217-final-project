@@ -19,7 +19,7 @@
 @synthesize edgeList;
 @synthesize defaultCenterPoint;
 const double toleranceRange = 10;
-const BOOL debug = NO;
+
 // number of maximum steps in binery search in B->C to refine a path A->B->C by a point in between B,C
 BOOL canRefinePath;
 const int maxNumstep = 20;
@@ -236,7 +236,6 @@ const int maxNumstep = 20;
 		int red = imageData[offset+1];
 		int green = imageData[offset+2];
 		int blue = imageData[offset+3];
-		//if (debug) NSLog(@"offset: %i colors: RGB A %i %i %i  %i",offset,red,green,blue,alpha);
 		UIColor* color = [UIColor colorWithRed:(red/255.0f) green:(green/255.0f) blue:(blue/255.0f) alpha:(alpha/255.0f)];
 		return color;
 	} else {
