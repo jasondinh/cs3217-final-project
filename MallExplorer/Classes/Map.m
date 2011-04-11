@@ -22,7 +22,7 @@ const double toleranceRange = 10;
 
 // number of maximum steps in binery search in B->C to refine a path A->B->C by a point in between B,C
 BOOL canRefinePath;
-const int maxNumstep = 20;
+const int maxNumstep = 100;
 
 -(BOOL) isEqual:(id)o{
 	if (![o isMemberOfClass:[Map class]]) {
@@ -143,6 +143,8 @@ const int maxNumstep = 20;
 	NSMutableArray* aPath = [[NSMutableArray alloc] initWithObjects:startPoint, nil];
 	[aPath addObjectsFromArray:[self findPathFrom:point1 to:point2]];
 	[aPath addObject:goalPoint];
+	[startPoint release];
+	[goalPoint release];
 	return [self refineAPath:[aPath autorelease]];
 }
 
@@ -279,7 +281,7 @@ const int maxNumstep = 20;
 	return YES;
 }
 
--(int) refinePath:(NSMutableArray*) path from:(int)i to:(int)j {
+-(int) refinePath:(NSArray*) path from:(int)i to:(int)j {
 	CGPoint aPoint = [[path objectAtIndex:i] position];
 	CGPoint aPoint1 = [[path objectAtIndex:j] position];
 	if (debug) NSLog(@"try to shorten the segment: %lf %lf %lf %lf", aPoint.x, aPoint.y,aPoint1.x, aPoint1.y);
@@ -326,27 +328,25 @@ const int maxNumstep = 20;
 }
 
 -(NSArray*) refineAPath:(NSArray*) aPath{
-	if (!canRefinePath) {
-		if (debug) NSLog(@"cannot refine path");
-		return aPath;
-	}
-	if (debug) NSLog(@"now refining the path: ");
-	for (int i = 0; i<[aPath count]; i++) {
-		MapPoint* aPoint = [aPath objectAtIndex:i];
-		if (debug) NSLog(@"%lf %lf", aPoint.position.x, aPoint.position.y);
-	}
 	NSMutableArray* path = [NSMutableArray arrayWithArray:aPath];
-	int i = 0;
-	while (i<[path count]-1) {
-		int m = [self refinePath:path from:i to:[path count] -1];
-		for (int t = m-1; t>=i+1; t--) {
-			[path removeObjectAtIndex:t];
-		}
-		i++;
-		if (debug) NSLog(@"now the path is:");
-		for (int t = 0; t<[path count]; t++) {
-			MapPoint* aPoint = [path objectAtIndex:t];
+	if (canRefinePath){
+		if (debug) NSLog(@"now refining the path: ");
+		for (int i = 0; i<[aPath count]; i++) {
+			MapPoint* aPoint = [aPath objectAtIndex:i];
 			if (debug) NSLog(@"%lf %lf", aPoint.position.x, aPoint.position.y);
+		}
+		int i = 0;
+		while (i<[path count]-1) {
+			int m = [self refinePath:path from:i to:[path count] -1];
+			for (int t = m-1; t>=i+1; t--) {
+				[path removeObjectAtIndex:t];
+			}
+			i++;
+			if (debug) NSLog(@"now the path is:");
+			for (int t = 0; t<[path count]; t++) {
+				MapPoint* aPoint = [path objectAtIndex:t];
+				if (debug) NSLog(@"%lf %lf", aPoint.position.x, aPoint.position.y);
+			}
 		}
 	}
 	return path;
@@ -358,6 +358,7 @@ const int maxNumstep = 20;
 		MapPoint* point2 = [aPath objectAtIndex:i+1];
 		Edge* anEdge = [[Edge alloc] initWithPoint1:point1  point2:point2 withLength:[MapPoint getDistantBetweenPoint:point1 andPoint:point2] isBidirectional:YES withTravelType:kWalk];
 		[pathOnMap addObject:anEdge];
+		[anEdge release];
 	}
 }
 -(void) resetPathOnMap{

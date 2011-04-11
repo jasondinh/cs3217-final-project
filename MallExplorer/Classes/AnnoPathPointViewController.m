@@ -56,7 +56,7 @@
 	self.view = [[UIView alloc] initWithFrame:imageView.frame];
 	//self.view.backgroundColor = [UIColor redColor];
 	[self.view addSubview: imageView];
-	[image release];
+	[imageView release];
 	return self;
 }
 

@@ -433,11 +433,12 @@ NSMutableArray* edgeList;
 	[displayArea addSubview:aLine];
 	[aLine release];
 	[map addPoint:point];
+	[point release];
 }
 
 -(int) getTheClosestPointToCoordination:(CGPoint) pos{
 	double min = INFINITY;
-	int minpos;
+	int minpos = 0;
 	for (int i = 0; i<[map.pointList count]; i++) {
 		MapPoint* aPoint = [map.pointList objectAtIndex:i];
 		double dis = sqrt((aPoint.position.x-pos.x)*(aPoint.position.x-pos.x) + (aPoint.position.y-pos.y)*(aPoint.position.y-pos.y));
@@ -514,11 +515,9 @@ NSMutableArray* edgeList;
 	NSMutableArray* result = [[NSMutableArray alloc] initWithObjects:startPoint, nil];
 	[result addObjectsFromArray:[map findPathFrom:point1 to:point2]];
 	[result addObject:goalPoint];
-	result = [map refineAPath:result];
-	for	(int i = 0; i<[result count]; i++){
-		MapPoint* aPoint = [result objectAtIndex:i];
-	}
-	return result;
+	[startPoint release];
+	[goalPoint release];	
+	return [map refineAPath:[result autorelease]];
 }
 
 // annotation's position is in map coordination
