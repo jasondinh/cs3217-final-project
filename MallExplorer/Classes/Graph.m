@@ -216,6 +216,7 @@
 	while (YES) {
 		int minPosNode = [self getNodeWithSmallestDistanceWithDistanceArray: dist andCheckArray:check];
 		if (minPosNode == -1) {
+			[tracePath release];
 			return nil;
 		}
 		check[minPosNode] = YES;
@@ -234,10 +235,12 @@
 		}
 	}
 	if (dist[goal.index] == INFINITY) {
+		[tracePath release];
 		return nil;
 	}
 	NSMutableArray* path = [[NSMutableArray alloc] init];
 	[self getPathFrom: (GraphNode*) start to: (GraphNode*) goal withPathTrace: tracePath formPath:path];
+	[tracePath release];
 	return path;
 }
 
@@ -291,8 +294,9 @@
 		}
 	}
 	[q release];
-	
+	[pqListNode release];
 	if (dist[goal.index] == INFINITY) {
+		[tracePath release];
 		return nil;
 	}
 	
@@ -359,8 +363,9 @@
 		}
 	}
 	[q release];
-	
+	[pqListNode release];
 	if (dist[goal.index] == INFINITY) {
+		[tracePath release];
 		return nil;
 	}
 	

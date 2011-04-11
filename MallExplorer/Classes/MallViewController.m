@@ -199,7 +199,9 @@
 	CGPoint defaultPoint = CGPointMake(500, 500);
 	Annotation* stair1 = [Annotation annotationWithAnnotationType:kAnnoStair inlevel:aMap WithPosition:[[pointList objectAtIndex:0] position] title:@"Stair 1" content:@"Stair to level 2"];
 	[aMap loadDataWithMapName:@"Level 1" withMapImage:image annotationList:[NSArray arrayWithObject:stair1] pointList:pointList edgeList:edgeList defaultCenterPoint:defaultPoint];
-	return aMap;
+	[pointList release];
+	[edgeList release];
+	return [aMap autorelease];
 	
 }
 
@@ -367,8 +369,9 @@
 	CGPoint defaultPoint = CGPointMake(100, 100);
 	Annotation* stair1 = [Annotation annotationWithAnnotationType:kAnnoStair inlevel:aMap WithPosition:[[pointList objectAtIndex:0] position] title:@"Stair 1" content:@"Stair to level 1"];
 	[aMap loadDataWithMapName:@"Level 2" withMapImage:image annotationList:[NSArray arrayWithObject:stair1] pointList:pointList edgeList:edgeList defaultCenterPoint:defaultPoint];
-	return aMap;
-	
+	[pointList release];
+	[edgeList release];
+	return [aMap autorelease];
 }
 -(NSArray*) createTestStair:(NSArray*) mList{
 	Map* map1 = [mList objectAtIndex:0];
@@ -376,15 +379,17 @@
 	Edge* anEdge = [[Edge alloc] initWithPoint1:[map1.pointList objectAtIndex:0] point2:[map2.pointList objectAtIndex:0] withLength:1 isBidirectional:YES withTravelType:kWalkStairCase];
 	[[map1.annotationList objectAtIndex:0]  setDestination:map2];
 	[[map2.annotationList objectAtIndex:0] setDestination:map1];
-	return [NSArray arrayWithObject:anEdge];
+	return [NSArray arrayWithObject:[anEdge autorelease]];
 }
 
 -(void) loadMaps:(NSArray *)listMap andStairs:(NSArray *)stairs withDefaultMap:(Map*) defaultMap{
 	
-	Map* map1 = [self createTestMap1];
-	Map* map2 = [self createTestMap2];
+	Map* map1 = [[self createTestMap1] retain];
+	Map* map2 = [[self createTestMap2] retain];
 	defaultMap = map1;
 	listMap = [NSArray arrayWithObjects:map1, map2, nil];
+	[map1 release];
+	[map2 release];
 	NSArray* stair = [self createTestStair:listMap];
 	stairs = stair;	
 	
@@ -417,17 +422,19 @@
 											initWithTarget:self action:@selector(toggleDisplayCaptionMode:)];
 	[tapGesture setNumberOfTapsRequired:1];
 	[toggleTextButton addGestureRecognizer:tapGesture];
+	[tapGesture release];
 	
 	tapGesture	 = [[UITapGestureRecognizer alloc]
 											initWithTarget:self action:@selector(pathFindingClicked)];
 	[tapGesture setNumberOfTapsRequired:1];
 	[pathFindingButton addGestureRecognizer:tapGesture];
-
+	[tapGesture release];
+	
 	tapGesture	 = [[UITapGestureRecognizer alloc]
 					initWithTarget:self action:@selector(resetClicked)];
 	[tapGesture setNumberOfTapsRequired:1];
 	[resetButton addGestureRecognizer:tapGesture];
-	
+	[tapGesture release];
 	UIPanGestureRecognizer* panGesture	 = [[UIPanGestureRecognizer alloc]
 											initWithTarget:self action:@selector(startFlagMove:)];
 	[startFlagButton addGestureRecognizer:panGesture];
@@ -436,13 +443,12 @@
 	panGesture	 = [[UIPanGestureRecognizer alloc]
 											initWithTarget:self action:@selector(goalFlagMove:)];
 	[goalFlagButton addGestureRecognizer:panGesture];
+	[panGesture release];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startOrGoalMoved:) name:@"start or goal moved" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startOrGoalRemoved:) name:@"start or goal removed" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeMap:) name:@"change map" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setGoalTo:) name:@"set goal point to shop" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setStartTo:) name:@"set start point to shop" object:nil];
-	[panGesture release];
-	[tapGesture release];
 }
 
 #pragma mark -
@@ -605,7 +611,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 }
 
 -(void) pathFinding{
-	NSArray* levelConnectingPoint = [mall findPathFromStartAnnotation:start.annotation ToGoalAnnotaion:goal.annotation];
+	NSArray* levelConnectingPoint = [[mall findPathFromStartAnnotation:start.annotation ToGoalAnnotaion:goal.annotation] retain];
 	// level connecting point is a series of map points that travel through several maps, to show a path between maps, from the start point to the goal point.
 	for (int i = 0; i<[levelConnectingPoint count]-1; i++) {
 		id p1 = [levelConnectingPoint objectAtIndex:i];
@@ -629,6 +635,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 			if (goal.titleButton.hidden == YES) [goal annotationViewTapped:nil];
 		}
 	}	
+	[levelConnectingPoint release];
 	[mapViewController redisplayPath];
 }
 

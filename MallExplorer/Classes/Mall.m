@@ -118,15 +118,19 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 		[pathInLevel addObject:startPoint];
 		[pathInLevel addObjectsFromArray:[level1 findPathFrom:point1 to:point2]];
 		[pathInLevel addObject:goalPoint];
-		result = [level1 refineAPath:pathInLevel];
+		result = [[level1 refineAPath:pathInLevel] retain];
+		[startPoint release];
+		[goalPoint release];	
 		[level1 addPathOnMap: result];
 		[pathInLevel release];
-		return result;
+		return [result autorelease];
 	}
 	else {
 		NSMutableArray* pathBetweenLevel = [NSMutableArray arrayWithArray:[mallGraph getShortestPathFromObject:level1 toObject: level2]];
 		[pathBetweenLevel insertObject:startPoint atIndex:0];
 		[pathBetweenLevel addObject:goalPoint];
+		[startPoint release];
+		[goalPoint release];
 		for (int i = [pathBetweenLevel count]-1; i>=0; i--) {
 			// the path between level is a mixed of map point and points that represent level.
 			// so we need to clear all the points that represent levels before continuing
