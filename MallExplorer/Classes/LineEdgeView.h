@@ -13,6 +13,7 @@
 @interface LineEdgeView : UIView {
 	CGPoint startPoint;
 	CGPoint goalPoint;
+	int animateCycle;
 }
 @property CGPoint startPoint;
 @property CGPoint goalPoint;

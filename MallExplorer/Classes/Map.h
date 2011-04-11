@@ -25,6 +25,7 @@
 	NSString* mapName;
 	NSMutableArray* pathOnMap;
 	CGPoint defaultCenterPoint;
+//	NSTime* timer;
 }
 
 @property (nonatomic, retain) NSArray* annotationList;
