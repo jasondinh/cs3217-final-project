@@ -63,13 +63,14 @@
 - (void)navigationController:(UINavigationController *)navigationController 
 	  willShowViewController:(UIViewController *)viewController animated:(BOOL)animated 
 {
+	//REQUIRES: self!=nil,navigationController!=nil,viewController!=nil
+	//MODIFIES: none
+	//EFFECTS: post nofication when backButton of navigationController is pressed
 
 	if (viewController != self) {
         self.navigationController.delegate = nil;
         if ([[navigationController viewControllers] containsObject:self]) {
-            NSLog(@"FORWARD");
         } else {
-            NSLog(@"BACKWARD");
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"Listview will appear" object:self];
 
         }

@@ -18,8 +18,6 @@
 	UIPopoverController* levelListController;
 	UIToolbar *toolbar;
 	id detailItem;
-//	IBOutlet MKMapView *mapView;
-//	IBOutlet UISegmentedControl *mapType;
 	UIImageView* toggleTextButton;
 	UIImageView* startFlagButton;
 	UIImageView* goalFlagButton;

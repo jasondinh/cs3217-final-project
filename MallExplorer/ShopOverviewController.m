@@ -45,7 +45,7 @@
     [super viewDidLoad];
 	//settings for self
 	self.view.backgroundColor = [UIColor whiteColor];
-	self.title =@"FACEBOOK";
+
 }
 
 

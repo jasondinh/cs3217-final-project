@@ -43,7 +43,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	
 	//settings for self
-	self.title = @"COMMENTS";
+
 	self.view.backgroundColor = [UIColor whiteColor];
 	//setting the textfield for entering comments.
 	commentField  = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width , 50)];

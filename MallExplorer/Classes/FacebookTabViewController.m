@@ -13,7 +13,7 @@
 
 
 -(id)initWithShop:(Shop *) aShop{
-	//REQUIRES:
+	//REQUIRES: 
 	//MODIFIES:self
 	//EFFECTS: return a FacebookTabViewController with information
 	//			obtained from aShop
@@ -42,7 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	//settings for self
-	self.title = @"FACEBOOK";
+
 	self.view.backgroundColor = [UIColor whiteColor];
 }
 

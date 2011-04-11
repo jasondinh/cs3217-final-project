@@ -30,34 +30,26 @@ BOOL chosen,shopchosen;
 //		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
 //		[self setDelegate: aMVC];
 		cityMapViewController = [[[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil] retain];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ListViewWillAppear:) name:@"Listview will appear" object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"shop chosen" object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShopViewWillAppear:) name:@"Shopview will appear"  object:nil];
+
+
 		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
 		[self setDelegate:cityMapViewController];
+		
+		//add observer for notifications
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"shop chosen" object:nil];		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ListViewWillAppear:) name:@"Listview will appear" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShopViewWillAppear:) name:@"Shopview will appear"  object:nil];
     }
     return self;
 }
 -(void) ShopViewWillAppear:(id)sender{
 }
 -(void) shopChosen:(id)sender{
-	
-	//if (!shopchosen) {
-	//	shopchosen = !shopchosen;
-	Shop* aShop = [[Shop alloc]init];
-		
-	ShopViewController* shopViewController = [[ShopViewController alloc] initWithShop:aShop] ;
-		//	ShopViewController* shopViewController = [[ShopViewController alloc] init];
-	[masterViewController pushViewController:shopViewController animated:YES];
-	masterViewController.delegate = shopViewController;
-	
-		//MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
-		//self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
-		//[self setDelegate: aMVC];
-		//[aMVC loadMaps:nil andStairs:nil withDefaultMap:nil];
-		
-	//} 
+		Shop* aShop = [[Shop alloc]init];
+		ShopViewController* shopViewController = [[ShopViewController alloc] initWithShop:aShop] ;
+		[masterViewController pushViewController:shopViewController animated:YES];
+		masterViewController.delegate = shopViewController;
 	
 }
 -(void) ListViewWillAppear:(id)sender{
@@ -66,16 +58,14 @@ BOOL chosen,shopchosen;
 		//cityMapViewController = [[[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil] retain];
 		UIToolbar *toolbar = ((MallViewController*)[self.viewControllers objectAtIndex:1]).toolbar;
 		if (((UIBarButtonItem*)[toolbar.items objectAtIndex:0]).title == @"Root List") {
-			NSLog(@"comehere");
-			NSLog(@"toolbar %d", [[cityMapViewController toolbar].items count ]);
 			UIBarButtonItem *barButtonItem = [toolbar.items objectAtIndex:0];	
 			NSMutableArray *items = [[cityMapViewController.toolbar items] mutableCopy];
 			[items removeObjectAtIndex:0];
 			[items insertObject:barButtonItem atIndex:0];
 			[cityMapViewController.toolbar setItems:items animated:YES];
 			[items release];
-			//self.popoverController = pc;
-			NSLog(@"toolbar %d", [[cityMapViewController toolbar].items count ]);}
+
+		}
 		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
 		[self setDelegate:cityMapViewController];
 	}
