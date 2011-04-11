@@ -591,10 +591,10 @@
 		395FCC6813511FA700F2E3F5 /* ShopSubviews */ = {
 			isa = PBXGroup;
 			children = (
-				395FCA7E1350E90800F2E3F5 /* CommentViewController.h */,
-				395FCA7F1350E90800F2E3F5 /* CommentViewController.m */,
 				395FCA1E1350D54500F2E3F5 /* ShopOverviewController.h */,
 				395FCA1F1350D54500F2E3F5 /* ShopOverviewController.m */,
+				395FCA7E1350E90800F2E3F5 /* CommentViewController.h */,
+				395FCA7F1350E90800F2E3F5 /* CommentViewController.m */,
 				3916ECB213536B7500929EAF /* FacebookTabViewController.h */,
 				3916ECB313536B7500929EAF /* FacebookTabViewController.m */,
 			);

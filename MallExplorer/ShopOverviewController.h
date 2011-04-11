@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Shop.h"
+@class Shop;
 
 @interface ShopOverviewController : UIViewController {
 	//OVERVIEW: this class implements the OVERVIEW tab of  ShopViewController

@@ -7,9 +7,25 @@
 //
 
 #import "FacebookTabViewController.h"
-
+#import "Shop.h"
 
 @implementation FacebookTabViewController
+
+
+-(id)initWithShop:(Shop *) aShop{
+	//REQUIRES:
+	//MODIFIES:self
+	//EFFECTS: return a FacebookTabViewController with information
+	//			obtained from aShop
+	self = [super init];
+	if(self){
+
+
+	}
+	return self;
+}
+
+
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -22,12 +38,14 @@
 }
 */
 
-/*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+	//settings for self
+	self.title = @"FACEBOOK";
+	self.view.backgroundColor = [UIColor whiteColor];
 }
-*/
+
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

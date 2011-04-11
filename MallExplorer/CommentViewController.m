@@ -7,6 +7,7 @@
 //
 
 #import "CommentViewController.h"
+#import "Shop.h"
 
 
 @implementation CommentViewController
@@ -41,11 +42,17 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	
-	//Config the textfield for entering comments.
+	//settings for self
+	self.title = @"COMMENTS";
+	self.view.backgroundColor = [UIColor whiteColor];
+	//setting the textfield for entering comments.
 	commentField  = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width , 50)];
 	self.tableView.tableHeaderView = commentField;
 	commentField.borderStyle = UITextBorderStyleRoundedRect;
 	commentField.placeholder = @"Your comment";
+	
+
+	
 	
 }
 

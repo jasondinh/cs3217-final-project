@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Shop.h"
 
 
+@class Shop;
 @interface CommentViewController : UITableViewController {
 	//OVERVIEW: this class implements the controller of COMMENTS tab in ShopViewController
 	

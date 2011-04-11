@@ -9,6 +9,7 @@
 #import "ShopViewController.h"
 #import "ShopOverviewController.h"
 #import "CommentViewController.h"
+#import "FacebookTabViewController.h"
 #import "Constant.h"
 
 @implementation ShopViewController
@@ -46,13 +47,9 @@
 	[super viewDidLoad];
 	ShopOverviewController *shopOverviewController = [[ShopOverviewController alloc] init] ;
 	CommentViewController *commentController = [[CommentViewController alloc] init] ;
-	UIViewController *facebookTabController = [[UIViewController alloc] init] ;
-	shopOverviewController.title = @"OVERVIEW";
-	commentController.title = @"COMMENTS";
-	facebookTabController.title = @"FACEBOOK";
-	shopOverviewController.view.backgroundColor = [UIColor whiteColor];	
-	commentController.view.backgroundColor = [UIColor whiteColor];	
-	facebookTabController.view.backgroundColor = [UIColor whiteColor];
+	FacebookTabViewController *facebookTabController = [[FacebookTabViewController alloc] init] ;
+
+
 	CGSize tabBarIconSize = CGSizeMake(TAB_BAR_ICON_WIDTH, TAB_BAR_ICON_HEIGHT);
 	shopOverviewController.tabBarItem.image = [self scale:[UIImage imageNamed:@"overview_tab_icon.png" ] 
 												   ToSize:tabBarIconSize ];
@@ -68,7 +65,7 @@
 
 	
 
-	self.title =@"a shop";
+	self.title = theShop.shopName;
 	self.contentSizeForViewInPopover = CGSizeMake(POPOVER_WIDTH, POPOVER_HEIGHT);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
 	[self.tabBar setBackgroundColor:[UIColor whiteColor]] ;
@@ -107,9 +104,7 @@
 	if (viewController != self) {
         self.navigationController.delegate = nil;
         if ([[navigationController viewControllers] containsObject:self]) {
-            NSLog(@"FORWARD");
         } else {
-            NSLog(@"BACKWARD");
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"Shopview will appear" object:self];
 			viewController.navigationController.delegate = viewController;
         }
@@ -121,7 +116,6 @@
 	self =[super init];
 	if(self){
 		theShop = aShop;
-		
 	}
 	
 	return self;

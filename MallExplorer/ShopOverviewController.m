@@ -7,6 +7,7 @@
 //
 
 #import "ShopOverviewController.h"
+#import "Shop.h"
 
 
 @implementation ShopOverviewController
@@ -38,12 +39,15 @@
 }
 */
 
-/*
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+	//settings for self
+	self.view.backgroundColor = [UIColor whiteColor];
+	self.title =@"FACEBOOK";
 }
-*/
+
 
 
 
