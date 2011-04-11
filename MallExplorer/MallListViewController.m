@@ -33,6 +33,12 @@
 #pragma mark -
 #pragma mark APIController
 - (void) requestDidLoad: (APIController *) apiController {
+
+	[self cacheRespond:apiController];
+	
+}
+- (void)cacheRespond: (APIController *) apiController{
+	/*NSLog(@"cache did respond");
 	NSArray *malls = (NSArray *) apiController.result;
 	NSEnumerator *e = [malls objectEnumerator];
 	NSDictionary *tmpMall;
@@ -56,21 +62,44 @@
 	}
 	[self.tableView reloadData];
 	[progress hide:YES];
-
+	*/
+	[self serverRespond:apiController];
 	
-}
-- (void)cacheRespond: (APIController *) apiController{
-	NSLog(@"cache did respond");
 	
 	
 }
 - (void)serverRespond: (APIController *) apiController{
 	NSLog(@"server did respond");
+	if (progress.hidden == YES) {
+		NSLog(@"cahde did respond");
+	} else {
+		NSLog(@"cache did not respond");
+	}
+	[progress hide:YES];
+	[self requestFail:apiController];
+
 }
 
+
+- (void)requestFail: (APIController *) apiController{
+	/*NSLog(@"request did fail");
+	//UIViewController* fail = [[UIViewController alloc] init];
+	UILabel* failLabel = [[[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)]autorelease];
+	failLabel.text =@"connect server failed";
+	failLabel.textAlignment = UITextAlignmentCenter;
+	UIButton *reload = [UIButton buttonWithType:UIButtonTypeRoundedRect] ;
+    reload.frame = CGRectMake(50,40, 200, 44); // position in the parent view and set the size of the button
+    [reload setTitle:@"RELOAD" forState:UIControlStateNormal];
+	[reload addTarget:self action:@selector(loadData:) forControlEvents:UIControlEventTouchDown];
+	[self.view addSubview:failLabel];
+	[self.view addSubview:reload];*/
+	
+}
 - (void) requestDidStart: (APIController *) apiController {
 	[progress show:YES];
 }
+
+
 
 
 /*- (id) initWithMalls: (NSArray *) malls {
@@ -93,7 +122,8 @@
 	}
 	return self;
 }
--(void) loadData{
+-(void) loadData:(id)sender{
+
 	progress = [[MBProgressHUD alloc] initWithView: self.view];
 	[self.view addSubview: progress];
 	[progress release];
@@ -150,6 +180,8 @@
 	return cell;
 }*/
 
+#pragma mark -
+#pragma mark View lifecycle
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -188,6 +220,8 @@
     return YES;
 }
 
+#pragma mark -
+#pragma mark Memory management
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.

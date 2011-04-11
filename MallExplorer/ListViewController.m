@@ -31,12 +31,14 @@
 #pragma mark View lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+	//init searchBar
 	searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.frame.size.width, 0.0)];  
 	searchBar.showsSearchResultsButton =NO;
 	searchBar.barStyle = UIBarStyleDefault;
 	searchBar.delegate = self;
 	[searchBar sizeToFit];
+	
+	//init displayController
 	displayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
 	self.tableView.delegate =self;
 	self.displayController.delegate =self;
@@ -44,7 +46,7 @@
 	self.displayController.searchResultsDelegate =self;
 	self.navigationController.delegate =self;
 	self.tableView.tableHeaderView = searchBar;	
-
+	
 	self.copyListOfItems = [NSMutableArray arrayWithCapacity:[self.listOfItems count]];
 	if (self.savedSearchTerm) {
 		[self.searchDisplayController setActive:self.searchWasActive];
@@ -52,6 +54,7 @@
 		[self.searchDisplayController.searchBar setText:savedSearchTerm];
 		self.savedSearchTerm =nil;
 	}
+	
 	[self.tableView reloadData];
 	self.tableView.scrollEnabled =YES;
 	self.contentSizeForViewInPopover = CGSizeMake(POPOVER_WIDTH,POPOVER_HEIGHT);
@@ -138,9 +141,7 @@
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	//    NSLog(@"em da dc goi");
 	static NSString *kCellID = @"cellID";
-	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
 	if (cell == nil)
 	{
@@ -151,19 +152,17 @@
 	/*
 	 If the requesting table view is the search display controller's table view, configure the cell using the filtered content, otherwise use the main list.
 	 */
-	NSString *product = nil;
+	NSString *string = nil;
 	if (tableView == self.searchDisplayController.searchResultsTableView)
-		
 	{
-	
-        product = [self.copyListOfItems objectAtIndex:indexPath.row];
+        string = [self.copyListOfItems objectAtIndex:indexPath.row];
     }
 	else
 	{
-        product = [self.listOfItems objectAtIndex:indexPath.row];
+        string = [self.listOfItems objectAtIndex:indexPath.row];
     }
 	
-	cell.textLabel.text = product;
+	cell.textLabel.text = string;
 	return cell;
 }
 
@@ -217,29 +216,16 @@
 	/*
 	 Update the filtered array based on the search text and scope.
 	 */
-
-	
-
 	[self.copyListOfItems removeAllObjects]; // First clear the filtered array.
 	
 	/*
 	 Search the main list for products whose type matches the scope (if selected) and whose name matches searchText; add items that match to the filtered array.
 	 */
-	for (NSString *product in listOfItems)
+	for (NSString *string in listOfItems)
 	{
-		//if ([scope isEqualToString:@"All"] || [product.type isEqualToString:scope])
-		/*{
-			NSComparisonResult result = [product compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
-            if (result == NSOrderedSame)
-			{
-				[self.copyListOfItems addObject:product];
-
-            }
-		}*/
-		NSRange titleResultsRange = [product rangeOfString:searchText options:NSCaseInsensitiveSearch];
-		
+		NSRange titleResultsRange = [string rangeOfString:searchText options:NSCaseInsensitiveSearch];
 		if (titleResultsRange.length > 0)
-			[copyListOfItems addObject:product];
+			[copyListOfItems addObject:string];
 	}
 }
 

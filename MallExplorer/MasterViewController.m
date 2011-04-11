@@ -26,7 +26,7 @@
 	[super viewDidLoad];	
 	MallListViewController* temp = [[MallListViewController alloc] init] ;//]WithMalls: tmpMalls];
 	[self pushViewController:temp animated:YES];
-	[temp loadData];
+	[temp loadData:nil];
 	self.toolbarHidden =NO;
 	[temp release];
 

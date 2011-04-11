@@ -722,7 +722,6 @@ toMakeAnnotationType:(AnnotationType) annoType
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Overriden to allow any orientation.
 	// Overriden to allow any orientation.
 	CGFloat width = mapViewController.view.frame.size.width;
 	CGFloat height = mapViewController.view.frame.size.height;

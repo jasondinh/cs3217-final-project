@@ -16,6 +16,9 @@
 @synthesize theShop;
 @synthesize annotation;
 
+
+#pragma mark -
+#pragma mark Initialization
 -(id)initWithShop:(Shop*)aShop{
 	//REQUIRES: aShop != nil
 	//MODIFIES: self
@@ -41,8 +44,49 @@
 */
 
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+-(void) addToFavorite:(id)sender{
+	//
+}
 
+-(void) goHere:(id)sender{
+	//REQUIRES: self=! nil, GoHere button is init-ed and pressed
+	//MODIFIES:none
+	//EFFECTS: raise notification for pressing GoHere button
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"set goal point to shop" object:self.theShop];
+}
+
+-(void) fromHere:(id)sender{
+	//REQUIRES: self=! nil, FromHere button is init-ed and pressed
+	//MODIFIES:none
+	//EFFECTS: raise notification for pressing FromHere button
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"set start point to shop" object:self.theShop];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController 
+	  willShowViewController:(UIViewController *)viewController 
+					animated:(BOOL)animated
+{
+	//REQUIRES: self!=nil,navigationController!=nil,viewController!=nil
+	//MODIFIES: none
+	//EFFECTS: post nofication when backButton of navigationController is pressed
+	if (viewController != self) {
+        self.navigationController.delegate = nil;
+        if ([[navigationController viewControllers] containsObject:self]) {
+        } else {
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"Shopview will appear" object:self];
+			viewController.navigationController.delegate = viewController;
+        }
+    }
+	
+    [viewController viewWillAppear:animated];
+}
+
+
+
+
+
+#pragma mark -
+#pragma mark View lifecycle
 
 - (UIImage*)scale:(UIImage*)original ToSize:(CGSize)size {
 	UIGraphicsBeginImageContext(size);
@@ -59,6 +103,10 @@
 	
 	return scaledImage;
 }
+
+
+
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	//settings self
@@ -102,10 +150,10 @@
 	CGSize tabBarIconSize = CGSizeMake(TAB_BAR_ICON_WIDTH, TAB_BAR_ICON_HEIGHT);
 	shopOverviewController.tabBarItem.image = [self scale:[UIImage imageNamed:@"overview_tab_icon.png" ] 
 												   ToSize:tabBarIconSize ];
-	commentController.tabBarItem.image = [self scale:[UIImage imageNamed:@"comments_tab_icon.png" ]
-											  ToSize:tabBarIconSize ];
-	facebookTabController.tabBarItem.image = [self scale:[UIImage imageNamed:@"facebook_tab_icon.png" ] 
-												  ToSize:tabBarIconSize ];
+	commentController.tabBarItem.image		= [self scale:[UIImage imageNamed:@"comments_tab_icon.png" ]
+													ToSize:tabBarIconSize ];
+	facebookTabController.tabBarItem.image	= [self scale:[UIImage imageNamed:@"facebook_tab_icon.png" ] 
+													ToSize:tabBarIconSize ];
 	
 	//clean up
 	[shopOverviewController release];
@@ -117,36 +165,7 @@
 
 }
 
--(void) goHere:(id)sender{
-	//REQUIRES: self=! nil, GoHere button is init-ed and pressed
-	//MODIFIES:none
-	//EFFECTS: raise notification for pressing GoHere button
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"set goal point to shop" object:self.theShop];
-}
--(void) fromHere:(id)sender{
-	//REQUIRES: self=! nil, FromHere button is init-ed and pressed
-	//MODIFIES:none
-	//EFFECTS: raise notification for pressing FromHere button
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"set start point to shop" object:self.theShop];
-}
-- (void)navigationController:(UINavigationController *)navigationController 
-	  willShowViewController:(UIViewController *)viewController 
-					animated:(BOOL)animated
-{
-	//REQUIRES: self!=nil,navigationController!=nil,viewController!=nil
-	//MODIFIES: none
-	//EFFECTS: post nofication when backButton of navigationController is pressed
-	if (viewController != self) {
-        self.navigationController.delegate = nil;
-        if ([[navigationController viewControllers] containsObject:self]) {
-        } else {
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"Shopview will appear" object:self];
-			viewController.navigationController.delegate = viewController;
-        }
-    }
-	
-    [viewController viewWillAppear:animated];
-}
+
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -154,6 +173,8 @@
     return YES;
 }
 
+#pragma mark -
+#pragma mark Memory management
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.

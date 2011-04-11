@@ -61,12 +61,11 @@ BOOL chosen,shopchosen;
 		[self setDelegate: aMVC];
 		[aMVC loadMaps:nil andStairs:nil withDefaultMap:nil];
 		if (((UIBarButtonItem*)[[cityMapViewController toolbar].items objectAtIndex:0]).title == @"Root List") {
-		UIBarButtonItem *barButtonItem = [[cityMapViewController toolbar].items objectAtIndex:0];	
-		NSMutableArray *items = [[aMVC.toolbar items] mutableCopy];
-		[items insertObject:barButtonItem atIndex:0];
-		[aMVC.toolbar setItems:items animated:YES];
-		[items release];
-
+			UIBarButtonItem *barButtonItem = [[cityMapViewController toolbar].items objectAtIndex:0];	
+			NSMutableArray *items = [[aMVC.toolbar items] mutableCopy];
+			[items insertObject:barButtonItem atIndex:0];
+			[aMVC.toolbar setItems:items animated:YES];
+			[items release];
 		}
 
 }
