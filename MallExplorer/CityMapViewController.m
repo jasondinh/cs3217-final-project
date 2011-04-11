@@ -8,6 +8,7 @@
 
 #import "CityMapViewController.h"
 #import "MasterViewController.h"
+#import "Mall.h"
 
 @interface CityMapViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -17,7 +18,7 @@
 
 
 @implementation CityMapViewController
-@synthesize toolbar, popoverController, detailItem;
+@synthesize toolbar, popoverController, detailItem,mallList;
 @synthesize mapView;
 @synthesize mapType;
 
@@ -53,6 +54,19 @@
     return self;
 }
 
+-(void)reloadView:(id)sender{
+
+	for (Mall* aMall in mallList){
+	
+		if (fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < 1000.0 &&
+			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <1000.0)) {
+
+			[mapView addAnnotation:aMall];
+			NSLog(@"%lf %lf",aMall.coordinate.latitude ,aMall.coordinate.longitude );
+				
+		}
+	}
+}
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -80,9 +94,7 @@
 	[mapView setDelegate:self];
 	mapView.showsUserLocation = YES;
 	mapType.selectedSegmentIndex =0;
-	CLLocationCoordinate2D mallLocation;
-	mallLocation.latitude = 1.302851; // Singapore!
-	mallLocation.longitude = 103.85523;
+
 //	MallViewController* test = [[[MallViewController alloc]initWithCoordinate:mallLocation] autorelease];
 //	[mapView addAnnotation:test];
 	

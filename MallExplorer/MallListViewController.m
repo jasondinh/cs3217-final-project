@@ -12,7 +12,7 @@
 #import "Mall.h"
 
 @implementation MallListViewController
-@synthesize favoriteList,mallList;
+@synthesize favoriteList,mallList,cityMapViewController;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -76,7 +76,10 @@
 									   andZip:[tmp valueForKey: @"zip"]];
 		
 		[tmpMalls addObject: mall];
+		[mall release];
+
 	}
+	
 	
 	self.mallList = [tmpMalls mutableCopy];
 	self.listOfItems = [[NSMutableArray alloc]init];
@@ -108,6 +111,7 @@
 									   andZip:[tmp valueForKey: @"zip"]];
 		
 		[tmpMalls addObject: mall];
+			[mall release];
 	}
 	//	[tmpMalls removeAllObjects];
 	tmpMall = [[Mall alloc] initWithId:123 andName:@"test" andLongitude:@"123" andLatitude:@"231" andAddress:@"asdf" andZip:12];
@@ -177,6 +181,8 @@
 	}
 	[tmpMall release];
 	[progress hide:YES];
+	cityMapViewController.mallList = mallList;
+	[cityMapViewController reloadView:nil];
 	//[self requestFail:apiController];
 
 }
@@ -217,10 +223,12 @@
 
 	return self;
 }*/
--(id)  init{
+-(id)  initWithCityMap:(CityMapViewController*)cityMap{
 	self = [super init];
 	if (self) {
-		//[self loadData];
+		cityMapViewController = cityMap;
+		cityMap.mallList = mallList;
+		[cityMap reloadView:nil];
 	}
 	return self;
 }
@@ -234,6 +242,7 @@
 	api.debugMode = YES;
 	api.delegate = self;
 	[api getAPI: @"/malls.json"];
+	
 }
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -310,6 +319,7 @@
 	 typeOfList.selectedSegmentIndex = 1;
 	 UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:typeOfList];
 	 self.toolbarItems = [NSMutableArray arrayWithObject:barButton];
+	[barButton release];
 	 /*self.toolbarItems =[NSMutableArray arrayWithObject: [[[UIBarButtonItem alloc]
 	 initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 	 target:self action:@selector(doneSearching_Clicked:)] autorelease] ];*/
@@ -342,6 +352,7 @@
 
 
 - (void)dealloc {
+	[cityMapViewController release];
 	[mallList release];
 	[favoriteList release];
     [super dealloc];

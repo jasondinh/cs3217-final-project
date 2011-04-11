@@ -16,6 +16,17 @@
 
 @implementation MasterViewController
 @synthesize cityMapViewController;
+
+
+-(id)initWithCityMap:(CityMapViewController*)cityMap{
+	self =[super init];
+	if (self) {
+		cityMapViewController = cityMap;
+	}
+	return self;
+}
+
+
 #pragma mark -
 #pragma mark View lifecycle
 
@@ -24,7 +35,7 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];	
-	MallListViewController* temp = [[MallListViewController alloc] init] ;//]WithMalls: tmpMalls];
+	MallListViewController* temp = [[MallListViewController alloc] initWithCityMap:cityMapViewController] ;//]WithMalls: tmpMalls];
 	[self pushViewController:temp animated:YES];
 	[temp loadData:nil];
 	self.toolbarHidden =NO;

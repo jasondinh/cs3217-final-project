@@ -25,8 +25,10 @@ BOOL chosen,shopchosen;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
 		// Custom initialization
-		masterViewController= [[MasterViewController alloc] init];
 		cityMapViewController = [[[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil] retain];
+		masterViewController= [[MasterViewController alloc] initWithCityMap:cityMapViewController];
+		//masterViewController.cityMapViewController = 
+
 		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
 		[self setDelegate:cityMapViewController];
 		
@@ -51,6 +53,7 @@ BOOL chosen,shopchosen;
 -(void) shopChosen:(id)sender{
 		Shop* aShop = [[Shop alloc]init];
 		ShopViewController* shopViewController = [[ShopViewController alloc] initWithShop:aShop] ;
+	[aShop release];
 		[masterViewController pushViewController:shopViewController animated:YES];
 		masterViewController.delegate = shopViewController;
 	
