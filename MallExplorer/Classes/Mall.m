@@ -14,6 +14,19 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 @synthesize mapList;
 @synthesize mapPointList;
 
+-(CLLocationCoordinate2D) coordinate{
+	CLLocationCoordinate2D cor;
+	cor.latitude = [latitude doubleValue];
+	cor.longitude = [longitude doubleValue];
+	return cor;
+}
+- (NSString *)subtitle{
+	return @"address";
+}
+- (NSString *)title{
+	return name;
+}
+
 - (id) initWithId: (NSInteger) _mId  
 		  andName: (NSString *) n 
 	 andLongitude: (NSString *) lon 

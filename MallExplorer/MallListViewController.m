@@ -12,7 +12,7 @@
 #import "Mall.h"
 
 @implementation MallListViewController
-@synthesize favoriteList,mallList;
+@synthesize favoriteList,mallList,cityMapViewController;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -177,6 +177,8 @@
 	}
 	[tmpMall release];
 	[progress hide:YES];
+	cityMapViewController.mallList = mallList;
+	[cityMapViewController reloadView:nil];
 	//[self requestFail:apiController];
 
 }
@@ -217,10 +219,12 @@
 
 	return self;
 }*/
--(id)  init{
+-(id)  initWithCityMap:(CityMapViewController*)cityMap{
 	self = [super init];
 	if (self) {
-		//[self loadData];
+		cityMapViewController = cityMap;
+		cityMap.mallList = mallList;
+		[cityMap reloadView:nil];
 	}
 	return self;
 }
@@ -342,6 +346,7 @@
 
 
 - (void)dealloc {
+	[cityMapViewController release];
 	[mallList release];
 	[favoriteList release];
     [super dealloc];

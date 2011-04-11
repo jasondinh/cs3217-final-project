@@ -16,10 +16,10 @@
 	id detailItem;
 	IBOutlet MKMapView *mapView;
 	IBOutlet UISegmentedControl *mapType;
-	
+	NSArray* mallList;
 
 }
-
+@property (retain ) NSArray* mallList;
 @property (nonatomic, retain) IBOutlet UIToolbar* toolbar;
 @property (nonatomic,retain) id detailItem;
 @property (nonatomic,retain)IBOutlet MKMapView *mapView;
