@@ -76,7 +76,10 @@
 									   andZip:[tmp valueForKey: @"zip"]];
 		
 		[tmpMalls addObject: mall];
+		[mall release];
+
 	}
+	
 	
 	self.mallList = [tmpMalls mutableCopy];
 	self.listOfItems = [[NSMutableArray alloc]init];
@@ -108,6 +111,7 @@
 									   andZip:[tmp valueForKey: @"zip"]];
 		
 		[tmpMalls addObject: mall];
+			[mall release];
 	}
 	//	[tmpMalls removeAllObjects];
 	tmpMall = [[Mall alloc] initWithId:123 andName:@"test" andLongitude:@"123" andLatitude:@"231" andAddress:@"asdf" andZip:12];
@@ -238,6 +242,7 @@
 	api.debugMode = YES;
 	api.delegate = self;
 	[api getAPI: @"/malls.json"];
+	
 }
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -314,6 +319,7 @@
 	 typeOfList.selectedSegmentIndex = 1;
 	 UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:typeOfList];
 	 self.toolbarItems = [NSMutableArray arrayWithObject:barButton];
+	[barButton release];
 	 /*self.toolbarItems =[NSMutableArray arrayWithObject: [[[UIBarButtonItem alloc]
 	 initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 	 target:self action:@selector(doneSearching_Clicked:)] autorelease] ];*/

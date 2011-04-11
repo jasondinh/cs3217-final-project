@@ -53,6 +53,7 @@ BOOL chosen,shopchosen;
 -(void) shopChosen:(id)sender{
 		Shop* aShop = [[Shop alloc]init];
 		ShopViewController* shopViewController = [[ShopViewController alloc] initWithShop:aShop] ;
+	[aShop release];
 		[masterViewController pushViewController:shopViewController animated:YES];
 		masterViewController.delegate = shopViewController;
 	
