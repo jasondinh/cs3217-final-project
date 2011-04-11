@@ -22,6 +22,8 @@
 	UIImageView* startFlagButton;
 	UIImageView* goalFlagButton;
 	UIImageView* pathFindingButton;
+	UIImageView* resetButton;
+	UIBarButtonItem* reset;
 	
 	// list of map view controllers
 	NSMutableArray* listMapViewController;
@@ -40,6 +42,7 @@
 @property (nonatomic, retain) IBOutlet UIImageView* startFlagButton;
 @property (nonatomic, retain) IBOutlet UIImageView* goalFlagButton;
 @property (nonatomic, retain) IBOutlet UIImageView*	pathFindingButton;
+@property (nonatomic, retain) IBOutlet UIImageView* resetButton;
 @property (nonatomic, retain) IBOutlet UIBarItem*	selectLevel;
 @property (nonatomic, retain) IBOutlet UILabel* titleLabel;
 @property (nonatomic, retain) id detailItem;

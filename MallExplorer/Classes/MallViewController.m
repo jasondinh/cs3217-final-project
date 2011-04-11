@@ -20,6 +20,7 @@
 @synthesize goalFlagButton;
 @synthesize pathFindingButton;
 @synthesize titleLabel;
+@synthesize resetButton;
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -422,6 +423,11 @@
 	[tapGesture setNumberOfTapsRequired:1];
 	[pathFindingButton addGestureRecognizer:tapGesture];
 
+	tapGesture	 = [[UITapGestureRecognizer alloc]
+					initWithTarget:self action:@selector(resetClicked)];
+	[tapGesture setNumberOfTapsRequired:1];
+	[resetButton addGestureRecognizer:tapGesture];
+	
 	UIPanGestureRecognizer* panGesture	 = [[UIPanGestureRecognizer alloc]
 											initWithTarget:self action:@selector(startFlagMove:)];
 	[startFlagButton addGestureRecognizer:panGesture];
@@ -508,6 +514,13 @@ toMakeAnnotationType:(AnnotationType) annoType
 		
 		if (newX>= 0 && newY>=0)
 		{
+			if (annoType == kAnnoStart && start) {
+				// simulate a reset
+				[start annoRemoved:nil];
+			} else if (annoType == kAnnoGoal && goal) {
+				// simulate a reset
+				[goal annoRemoved:nil];
+			}
 			//GameObject* aController = [[GameObject alloc] initWithType:objectType withShape:shapeType atX:newX+gamearea.contentOffset.x atY:newY+ gamearea.contentOffset.y  withWidth:size.width withHeight:size.height];
 			UIScrollView* theScrollView = (UIScrollView*) mapViewController.view;
 			double x = newX + button.frame.size.width/2  + theScrollView.contentOffset.x;
@@ -523,8 +536,10 @@ toMakeAnnotationType:(AnnotationType) annoType
 				goal = [mapViewController.annotationList lastObject];
 			} 
 			[self startOrGoalMoved:nil];
-			[button setUserInteractionEnabled:NO];
-			button.alpha = 0.5;
+			/*button.userInteractionEnabled = NO;
+			button.alpha = 0.5;*/
+			resetButton.userInteractionEnabled = YES;
+			resetButton.alpha = 1.0;
 		} 
 	}
 	
@@ -551,12 +566,18 @@ toMakeAnnotationType:(AnnotationType) annoType
 	if	([type intValue] == kAnnoStart) {
 		start = nil;
 		startFlagButton.alpha = 1.0;
-		startFlagButton.userInteractionEnabled = YES;
+		startFlagButton.userInteractionEnabled = YES;		
 	}
 	if	([type intValue] == kAnnoGoal) {
 		goal = nil;
 		goalFlagButton.alpha = 1.0;
 		goalFlagButton.userInteractionEnabled = YES;
+	}
+	
+	if (!start && !goal) {
+		resetButton.alpha = 0.5;
+		resetButton.userInteractionEnabled = NO;
+		
 	}
 	[mall resetPath];
 	[mapViewController redisplayPath];
@@ -609,6 +630,18 @@ toMakeAnnotationType:(AnnotationType) annoType
 		}
 	}	
 	[mapViewController redisplayPath];
+}
+
+-(void) resetClicked{
+	if (start) {
+		// simulate a double click
+		[start annoRemoved:nil];
+	}
+	if (goal) {
+		// simulate a double click
+		[goal annoRemoved:nil];
+	}
+	
 }
 
 -(void) pathFindingClicked{

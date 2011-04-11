@@ -40,6 +40,7 @@
 		27B119FE134F4DD0002DD271 /* down_red_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B119FD134F4DD0002DD271 /* down_red_arrow.png */; };
 		27B11A00134F4DD9002DD271 /* up_red_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B119FF134F4DD9002DD271 /* up_red_arrow.png */; };
 		27C14E6B13538CA600144CD3 /* up_green_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 27C14E6A13538CA600144CD3 /* up_green_arrow.png */; };
+		27C14EB913538F6500144CD3 /* reset-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 27C14EB813538F6500144CD3 /* reset-icon.png */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		2899E5220DE3E06400AC0155 /* MallExplorerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* MallExplorerViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
@@ -200,6 +201,7 @@
 		27B119FD134F4DD0002DD271 /* down_red_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down_red_arrow.png; sourceTree = "<group>"; };
 		27B119FF134F4DD9002DD271 /* up_red_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up_red_arrow.png; sourceTree = "<group>"; };
 		27C14E6A13538CA600144CD3 /* up_green_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up_green_arrow.png; sourceTree = "<group>"; };
+		27C14EB813538F6500144CD3 /* reset-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reset-icon.png"; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2899E5210DE3E06400AC0155 /* MallExplorerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MallExplorerViewController.xib; sourceTree = "<group>"; };
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
@@ -827,6 +829,7 @@
 		E1C435C8133CC12600646BF1 /* Arts */ = {
 			isa = PBXGroup;
 			children = (
+				27C14EB813538F6500144CD3 /* reset-icon.png */,
 				27C14E6A13538CA600144CD3 /* up_green_arrow.png */,
 				27B119FF134F4DD9002DD271 /* up_red_arrow.png */,
 				27B119FD134F4DD0002DD271 /* down_red_arrow.png */,
@@ -938,6 +941,7 @@
 				3916ECB613536B7500929EAF /* FacebookTabViewController.xib in Resources */,
 				3916EF24135389CA00929EAF /* RequesFailViewController.xib in Resources */,
 				27C14E6B13538CA600144CD3 /* up_green_arrow.png in Resources */,
+				27C14EB913538F6500144CD3 /* reset-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
