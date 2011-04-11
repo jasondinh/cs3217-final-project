@@ -84,8 +84,8 @@
 		[listOfItems addObject:aMall.name];
 	}
 	[self.tableView reloadData];
-	//[progress hide:YES];
-
+	[progress hide:YES];
+	[tmpMall release];
 	
 	[self serverRespond:apiController];
 	//[self performSelector:@selector(serverRespond:) withObject:apiController afterDelay:1];
@@ -142,6 +142,7 @@
 		[self.tableView deleteRowsAtIndexPaths:removeIndexPaths withRowAnimation:UITableViewRowAnimationRight];
 		[self.tableView endUpdates];		
 		
+
 		
 		NSMutableArray *insertIndexPaths = [NSMutableArray array];
 		for (int i=0; i< [tmpMalls count]; i++) {
@@ -156,9 +157,10 @@
 			[listOfItems addObject:aMall.name];
 		}
 		[self.tableView beginUpdates];
-		//[self.tableView deleteRowsAtIndexPaths:removeIndexPaths withRowAnimation:UITableViewRowAnimationTop];
 		[self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationLeft];
 		[self.tableView endUpdates];
+
+		
 		
 		
 		
@@ -174,7 +176,6 @@
 	
 	}
 	[tmpMall release];
-	[tmpMalls release];
 	[progress hide:YES];
 	//[self requestFail:apiController];
 
@@ -300,6 +301,7 @@
 	 self.navigationItem.title = @"Mall list";
 	 searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
 
+	self.navigationItem.leftBarButtonItem= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(loadData:)];
 	
 	 NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"Nearby",@"Favorite",nil];
 	 typeOfList = [[UISegmentedControl alloc] initWithItems:segmentArray];
