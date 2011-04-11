@@ -1,31 +1,15 @@
     //
-//  ShopOverviewController.m
+//  FacebookTabViewController.m
 //  MallExplorer
 //
-//  Created by Dam Tuan Long on 4/10/11.
+//  Created by Dam Tuan Long on 4/12/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "ShopOverviewController.h"
+#import "FacebookTabViewController.h"
 
 
-@implementation ShopOverviewController
-@synthesize shopNameLabel,operatingHoursLabel,unitLabel,websiteLabel,descriptionTextView,levelLabel,categoryLabel;
-
--(id)initWithShop:(Shop *) aShop{
-	//REQUIRES:
-	//MODIFIES:self
-	//EFFECTS: return a ShopOverviewController with information
-	//			obtained from aShop
-	self = [super init];
-	if(self){
-		if (aShop.shopName != nil) shopNameLabel.text = aShop.shopName;
-		if (aShop.level !=nil)    levelLabel.text = aShop.level;
-		if (aShop.unitNumber != nil) unitLabel.text = aShop.unitNumber;
-		//category
-	}
-	return self;
-}
+@implementation FacebookTabViewController
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -44,8 +28,6 @@
     [super viewDidLoad];
 }
 */
-
-
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -70,14 +52,6 @@
 
 
 - (void)dealloc {
-	[shopNameLabel release];
-	[operatingHoursLabel release];
-	[unitLabel release];
-	[websiteLabel release];
-	[descriptionTextView release];
-	[levelLabel release];
-	[categoryLabel release];
-	
     [super dealloc];
 }
 

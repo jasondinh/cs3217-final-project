@@ -29,7 +29,6 @@
 @property (retain) IBOutlet UISearchBar *searchBar;
 @property (retain) IBOutlet UISegmentedControl* typeOfList;
 @property (retain) IBOutlet UISearchDisplayController *displayController;
-
 @property (retain) NSMutableArray* copyListOfItems;
 @property (nonatomic, copy) NSString *savedSearchTerm;
 @property (nonatomic) NSInteger savedScopeButtonIndex;

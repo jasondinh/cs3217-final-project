@@ -11,13 +11,17 @@
 
 
 @interface CommentViewController : UITableViewController {
-	NSMutableArray* commentList;
-	IBOutlet UITextField* commentField;
+	//OVERVIEW: this class implements the controller of COMMENTS tab in ShopViewController
 	
-
+	NSMutableArray* commentList;			//List of comments in the shop.
+	IBOutlet UITextField* commentField;		//Text field for entering user's comments.
 }
 @property (retain) NSMutableArray* commentList;
 @property (retain) IBOutlet UITextField* commentField;
--(id)initWithShop:(Shop*)shop;
 
+-(id)initWithShop:(Shop*)aShop;
+//REQUIRES:
+//MODIFIES:self
+//EFFECTS: return a CommentViewController with commentList
+//			obtained from aShop
 @end

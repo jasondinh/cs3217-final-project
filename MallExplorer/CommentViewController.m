@@ -14,6 +14,20 @@
 
 
 
+
+-(id)initWithShop:(Shop *)shop{
+	//REQUIRES:
+	//MODIFIES:self
+	//EFFECTS: return a CommentViewController with commentList
+	//			obtained from aShop
+	
+	self= [super init];
+	if(self){
+		self.commentList = [shop.commentList mutableCopy];
+	}
+	return self;
+}
+
 #pragma mark -
 #pragma mark View lifecycle
 
@@ -26,6 +40,8 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	
+	//Config the textfield for entering comments.
 	commentField  = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width , 50)];
 	self.tableView.tableHeaderView = commentField;
 	commentField.borderStyle = UITextBorderStyleRoundedRect;
@@ -55,12 +71,6 @@
 }
 */
 
--(id)initWithShop:(Shop *)shop{
-	self= [super init];
-	if(self){
-	}
-	return self;
-}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Override to allow orientations other than the default portrait orientation.
     return YES;
