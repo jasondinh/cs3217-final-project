@@ -11,6 +11,7 @@
 #import "MallListViewController.h"
 #import "MapViewController.h"
 #import "ShopListViewController.h"
+#import "RequesFailViewController.h"
 #import "ShopViewController.h"
 #import "Shop.h"
 #import "Mall.h"
@@ -34,12 +35,18 @@ BOOL chosen,shopchosen;
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ListViewWillAppear:) name:@"Listview will appear" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShopViewWillAppear:) name:@"Shopview will appear"  object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestDidFail:) name:@"request did fail"  object:nil];
     }
     return self;
 }
 
 #pragma mark -
 #pragma mark Nofications
+-(void) requestDidFail:(id)sender{
+	NSLog(@"REQUEST FAILED");
+	RequesFailViewController * requestFail = [[RequesFailViewController alloc]init];
+	[masterViewController pushViewController:requestFail animated:YES];
+}
 
 -(void) shopChosen:(id)sender{
 		Shop* aShop = [[Shop alloc]init];

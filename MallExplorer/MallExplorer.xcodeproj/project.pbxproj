@@ -214,9 +214,9 @@
 		3916ECB213536B7500929EAF /* FacebookTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookTabViewController.h; sourceTree = "<group>"; };
 		3916ECB313536B7500929EAF /* FacebookTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookTabViewController.m; sourceTree = "<group>"; };
 		3916ECB413536B7500929EAF /* FacebookTabViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = FacebookTabViewController.xib; path = Classes/FacebookTabViewController.xib; sourceTree = "<group>"; };
-		3916EF20135389CA00929EAF /* RequesFailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequesFailViewController.h; sourceTree = "<group>"; };
-		3916EF21135389CA00929EAF /* RequesFailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequesFailViewController.m; sourceTree = "<group>"; };
-		3916EF22135389CA00929EAF /* RequesFailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RequesFailViewController.xib; sourceTree = "<group>"; };
+		3916EF20135389CA00929EAF /* RequesFailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequesFailViewController.h; path = ../RequesFailViewController.h; sourceTree = "<group>"; };
+		3916EF21135389CA00929EAF /* RequesFailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RequesFailViewController.m; path = ../RequesFailViewController.m; sourceTree = "<group>"; };
+		3916EF22135389CA00929EAF /* RequesFailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = RequesFailViewController.xib; path = ../RequesFailViewController.xib; sourceTree = "<group>"; };
 		39358AB81340B1CA00A6B4F2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		39358AD51340B1E200A6B4F2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		395FCA1E1350D54500F2E3F5 /* ShopOverviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShopOverviewController.h; path = ../ShopOverviewController.h; sourceTree = "<group>"; };
@@ -613,9 +613,6 @@
 				E18A8EF31344D0E600AB72AB /* Tapku */,
 				E18A8ED61344CFEC00AB72AB /* JSON */,
 				E18A8ED51344CFE400AB72AB /* ASIHTTPRequest */,
-				3916EF20135389CA00929EAF /* RequesFailViewController.h */,
-				3916EF21135389CA00929EAF /* RequesFailViewController.m */,
-				3916EF22135389CA00929EAF /* RequesFailViewController.xib */,
 			);
 			name = OpenSourceLibs;
 			sourceTree = "<group>";
@@ -785,6 +782,9 @@
 		E1C435C5133CC10800646BF1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				3916EF20135389CA00929EAF /* RequesFailViewController.h */,
+				3916EF21135389CA00929EAF /* RequesFailViewController.m */,
+				3916EF22135389CA00929EAF /* RequesFailViewController.xib */,
 				272A0DF61346412500A0AC2E /* Inside */,
 				272A0DF51346411200A0AC2E /* Outside */,
 			);

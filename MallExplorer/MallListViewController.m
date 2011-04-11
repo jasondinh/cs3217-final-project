@@ -93,6 +93,7 @@
 	[reload addTarget:self action:@selector(loadData:) forControlEvents:UIControlEventTouchDown];
 	[self.view addSubview:failLabel];
 	[self.view addSubview:reload];*/
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"request did fail" object:self];
 	
 }
 - (void) requestDidStart: (APIController *) apiController {
