@@ -20,17 +20,21 @@
 }
 
 -(int) findSuitablePositionForObjectAtIndex:(int) index{
-    // Maintain heap-ness
+    // Maintain heap-ness - the root node is the min.
     while(YES) {
 		if (index == 0) {
-			break;
+			return 0;
 		}
-        if([[q objectAtIndex:index] value] > [[q objectAtIndex:((index - 1)/ 2)] value]) {
+        if([[q objectAtIndex:index] val] < [[q objectAtIndex:((index - 1)/ 2)] val]) {
             [q exchangeObjectAtIndex:index withObjectAtIndex:((index - 1)/ 2)];
+			[[q objectAtIndex:(index-1)/2] setPosInHeap:index];
             index = (index - 1)/ 2;
         }
         else
+		{
+			[[q objectAtIndex:index] setPosInHeap:index];
             return index;
+		}
     }
 }
 
@@ -54,14 +58,20 @@
 		if (left > max_index) break; 
 		int min = left;
 		if (right<=max_index) {
-			if ([[q objectAtIndex:left] value] > [[q objectAtIndex:right] value]) {
+			// take the smaller of the two
+			if ([[q objectAtIndex:left] val] > [[q objectAtIndex:right] val]) {
 				min = right;
 			}
 		}
-		if ([[q objectAtIndex:i] value] > [[q objectAtIndex:min] value]) {
+		if ([[q objectAtIndex:i] val] > [[q objectAtIndex:min] val]) {
 			[q exchangeObjectAtIndex:i withObjectAtIndex:min];
+			[[q objectAtIndex:min] setPosInHeap:i];
 			i = min;
+		} else {
+			[[q objectAtIndex:i] setPosInHeap:i];
+			break;
 		}
+
 	}
 }
 
@@ -84,7 +94,7 @@
 }
 
 -(int) updateObjectAtIndex:(int)index withNewValue:(double)newVal{
-	[[q objectAtIndex:index] setValue:newVal];
+	[[q objectAtIndex:index] setVal:newVal];
 	return [self findSuitablePositionForObjectAtIndex:index];
 }
 

@@ -119,8 +119,8 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 		[pathInLevel addObjectsFromArray:[level1 findPathFrom:point1 to:point2]];
 		[pathInLevel addObject:goalPoint];
 		result = [level1 refineAPath:pathInLevel];
-		[pathInLevel release];
 		[level1 addPathOnMap: result];
+		[pathInLevel release];
 		return result;
 	}
 	else {

@@ -11,9 +11,10 @@
 
 @interface PQObject : NSObject {
 	id object;
-	double value;
+	double val;
 }
 @property (assign) id object;
-@property (assign) double value;
+@property (assign) double val;
+@property (assign) int posInHeap;
 -(PQObject*) initWithObject:(id) object andValue:(double) value;
 @end

@@ -42,4 +42,6 @@
 -(NSArray*) getShortestPathFrom: (GraphNode*) start to:(GraphNode*) goal;
 -(NSArray*) getShortestPathFromNodeWithIndex:(int) n1 toNodeWithIndex:(int) n2;
 -(NSArray*) getShortestPathFromObject: (id) obj1 toObject:(id) obj2;
+-(NSArray*) getShortestPathUsingAStarFromNodeWithIndex:(int) n1 toNodeWithIndex:(int) n2 usingEstimatingFunction:(SEL) selector;
+-(NSArray*) getShortestPathUsingAStarFrom: (id) obj1 toObject: (id) obj2 usingEstimatingFunction:(SEL) selector;
 @end

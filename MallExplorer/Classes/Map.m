@@ -47,7 +47,7 @@ const int maxNumstep = 20;
 }
 
 #pragma mark initializers
--(void) add:(int)number pointsToGraphInBetweenPoint:(MapPoint*) point1 andPoint: (MapPoint*)point2{
+-(void) add:(int)number pointsToGraphInBetweenPoint:(MapPoint*) point1 andPoint: (MapPoint*)point2 isBidirectional:(BOOL) isBidi{
 	if (debug) NSLog(@"adding edge between %d %lf %lf %d %lf %lf", point1.index, point1.position.x, point1.position.y, point2.index, point2.position.x, point2.position.y);
 	CGPoint vector = CGPointMake((point2.position.x-point1.position.x)/(number+1), (point2.position.y-point1.position.y)/(number+1));
 	NSMutableArray* anArray = [[NSMutableArray alloc ] initWithObjects:point1, nil];
@@ -64,6 +64,9 @@ const int maxNumstep = 20;
 		MapPoint* p1 = [anArray objectAtIndex:i-1];
 		MapPoint* p2 = [anArray objectAtIndex:i];
 		[graph addEdgeBetweenNodeWithIndex:p1.index andNodeWithIndex:p2.index withWeight:[MapPoint getDistantBetweenPoint:p1 andPoint:p2]];
+		if (isBidi) {
+			[graph addEdgeBetweenNodeWithIndex:p2.index andNodeWithIndex:p1.index withWeight:[MapPoint getDistantBetweenPoint:p1 andPoint:p2]];			
+		}
 	}
 	[anArray release];
 }
@@ -89,10 +92,7 @@ const int maxNumstep = 20;
 		MapPoint* node2 = anEdge.pointB;
 		if (debug) NSLog(@"%d %d", node1.index, node2.index);
 		double dist = [MapPoint getDistantBetweenPoint:node1 andPoint:node2];
-		[self add:(int)(dist/averageEdgeLength)-1 pointsToGraphInBetweenPoint:node1 andPoint:node2];			
-		if (anEdge.isBidirectional) {
-			[self add: (int)(dist/averageEdgeLength)-1 pointsToGraphInBetweenPoint:node2 andPoint:node1];			
-		}
+		[self add:(int)(dist/averageEdgeLength)-1 pointsToGraphInBetweenPoint:node1 andPoint:node2 isBidirectional:anEdge.isBidirectional];			
 	}
 	canRefinePath = [self createBitmapFromImage];
 	passAbleColor = [[self getPixelColorAtLocation:[[pointList objectAtIndex:0] position]] retain];
@@ -131,7 +131,7 @@ const int maxNumstep = 20;
 #pragma mark path finding
 
 -(NSArray*) findPathFrom:(MapPoint*) point1 to: (MapPoint*) point2{
-	return [graph getShortestPathFromNodeWithIndex:point1.index toNodeWithIndex:point2.index];
+	return [graph getShortestPathUsingAStarFromNodeWithIndex:point1.index toNodeWithIndex:point2.index usingEstimatingFunction:@selector(estimateDistanceTo:)];
 }
 
 -(NSArray*) findPathFromStartPosition:(CGPoint)startPos ToGoalPosition:(CGPoint) goalPos{
@@ -231,7 +231,7 @@ const int maxNumstep = 20;
 	if (imageData != NULL) {
 		//offset locates the pixel in the data from x,y.
 		//4 for 4 bytes of data per pixel, w is width of one row of data.
-		int offset = 4*((w*round(point.y))+round(point.x));
+		int offset = 4*(w*((int)round(point.y))+(int)round(point.x));
 		int alpha =  imageData[offset];
 		int red = imageData[offset+1];
 		int green = imageData[offset+2];

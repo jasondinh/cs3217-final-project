@@ -11,12 +11,14 @@
 
 @implementation PQObject
 @synthesize object;
-@synthesize value;
+@synthesize val;
+@synthesize posInHeap;
 -(PQObject*) initWithObject:(id) object andValue:(double) value{
 	self = [super init];
 	if (self) {
 		self.object = object;
-		self.value = value;
+		self.val = value;
+		self.posInHeap = -1;
 	}
 	return self;
 }
