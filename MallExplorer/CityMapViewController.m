@@ -70,7 +70,6 @@
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	CLLocationManager *locationManager=[[CLLocationManager alloc] init];
@@ -95,9 +94,6 @@
 	mapView.showsUserLocation = YES;
 	mapType.selectedSegmentIndex =0;
 
-//	MallViewController* test = [[[MallViewController alloc]initWithCoordinate:mallLocation] autorelease];
-//	[mapView addAnnotation:test];
-	
 	
 }
 -(MKAnnotationView *)mapView:(MKMapView*)_mapView viewForAnnotion:(id)annotation{
@@ -128,6 +124,7 @@
 	CLLocationCoordinate2D location;
 	location = newLocation.coordinate;
 	mapView.centerCoordinate =location;
+	[self reloadView:nil];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
