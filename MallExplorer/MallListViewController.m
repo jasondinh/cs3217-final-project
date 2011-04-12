@@ -242,7 +242,6 @@
 	api.debugMode = YES;
 	api.delegate = self;
 	[api getAPI: @"/malls.json"];
-	
 }
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
