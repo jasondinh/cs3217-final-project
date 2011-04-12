@@ -54,8 +54,6 @@
 		390C74F1134F945D00785A2F /* facebook_tab_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 390C74F0134F945D00785A2F /* facebook_tab_icon.png */; };
 		3916ECB513536B7500929EAF /* FacebookTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3916ECB313536B7500929EAF /* FacebookTabViewController.m */; };
 		3916ECB613536B7500929EAF /* FacebookTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3916ECB413536B7500929EAF /* FacebookTabViewController.xib */; };
-		3916EF23135389CA00929EAF /* RequesFailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3916EF21135389CA00929EAF /* RequesFailViewController.m */; };
-		3916EF24135389CA00929EAF /* RequesFailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3916EF22135389CA00929EAF /* RequesFailViewController.xib */; };
 		39358AB91340B1CA00A6B4F2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39358AB81340B1CA00A6B4F2 /* MapKit.framework */; };
 		39358AD61340B1E200A6B4F2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39358AD51340B1E200A6B4F2 /* CoreLocation.framework */; };
 		395FCA211350D54500F2E3F5 /* ShopOverviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 395FCA1F1350D54500F2E3F5 /* ShopOverviewController.m */; };
@@ -220,9 +218,6 @@
 		3916ECB213536B7500929EAF /* FacebookTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookTabViewController.h; sourceTree = "<group>"; };
 		3916ECB313536B7500929EAF /* FacebookTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookTabViewController.m; sourceTree = "<group>"; };
 		3916ECB413536B7500929EAF /* FacebookTabViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = FacebookTabViewController.xib; path = Classes/FacebookTabViewController.xib; sourceTree = "<group>"; };
-		3916EF20135389CA00929EAF /* RequesFailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequesFailViewController.h; path = ../RequesFailViewController.h; sourceTree = "<group>"; };
-		3916EF21135389CA00929EAF /* RequesFailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RequesFailViewController.m; path = ../RequesFailViewController.m; sourceTree = "<group>"; };
-		3916EF22135389CA00929EAF /* RequesFailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = RequesFailViewController.xib; path = ../RequesFailViewController.xib; sourceTree = "<group>"; };
 		39358AB81340B1CA00A6B4F2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		39358AD51340B1E200A6B4F2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		395FCA1E1350D54500F2E3F5 /* ShopOverviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShopOverviewController.h; path = ../ShopOverviewController.h; sourceTree = "<group>"; };
@@ -788,9 +783,6 @@
 		E1C435C5133CC10800646BF1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				3916EF20135389CA00929EAF /* RequesFailViewController.h */,
-				3916EF21135389CA00929EAF /* RequesFailViewController.m */,
-				3916EF22135389CA00929EAF /* RequesFailViewController.xib */,
 				272A0DF61346412500A0AC2E /* Inside */,
 				272A0DF51346411200A0AC2E /* Outside */,
 			);
@@ -942,7 +934,6 @@
 				390C74F1134F945D00785A2F /* facebook_tab_icon.png in Resources */,
 				395FCA221350D54500F2E3F5 /* ShopOverviewController.xib in Resources */,
 				3916ECB613536B7500929EAF /* FacebookTabViewController.xib in Resources */,
-				3916EF24135389CA00929EAF /* RequesFailViewController.xib in Resources */,
 				27C14E6B13538CA600144CD3 /* up_green_arrow.png in Resources */,
 				27C14EB913538F6500144CD3 /* reset-icon.png in Resources */,
 				27C3DCE213545831004A174D /* down_green_arrow.png in Resources */,
@@ -1058,7 +1049,6 @@
 				27066DBF13511F0E00E01BFE /* PriorityQueue.m in Sources */,
 				27066DC21351219D00E01BFE /* PQObject.m in Sources */,
 				3916ECB513536B7500929EAF /* FacebookTabViewController.m in Sources */,
-				3916EF23135389CA00929EAF /* RequesFailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
