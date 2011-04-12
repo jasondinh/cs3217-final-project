@@ -20,7 +20,7 @@
 @property (nonatomic,retain) NSMutableArray* favoriteList;
 @property (nonatomic,retain) NSMutableArray* mallList;
 //- (id)initWithMalls: (NSArray *) malls ;
--(id) init;
--(void) loadData;
+-(id)  initWithCityMap:(CityMapViewController*)cityMap;
+-(void) loadData:(id)sender;
 
 @end

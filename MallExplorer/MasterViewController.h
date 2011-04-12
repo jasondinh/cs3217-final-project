@@ -15,7 +15,7 @@
 }
 @property (retain) IBOutlet CityMapViewController* cityMapViewController;
 //-(void)pushViewController:(UIViewController*) controller animated:(BOOL)animated;
-
+-(id) initWithCityMap:(CityMapViewController*)cityMap;
 
 @end
 

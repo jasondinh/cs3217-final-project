@@ -30,6 +30,38 @@
 	return self;
 }
 
+
+ -(void)textFieldDidBeginEditing:(UITextField *)textField{
+
+ }
+- (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
+	[commentList insertObject:commentField.text atIndex:0];
+	[self.tableView beginUpdates];
+	[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]]  withRowAnimation:UITableViewRowAnimationFade];
+	[self.tableView endUpdates];
+	commentField.text = @"";
+	[theTextField resignFirstResponder];
+	return YES;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField{
+	return YES;
+}
+#pragma mark - UIViewController delegate methods
+
+- (void) keyboardWillShow:(NSNotification *)notif{
+    // The keyboard will be shown. If the user is editing the comments, adjust the display so that the
+    // comments field will not be covered by the keyboard.
+	NSLog(@"keyboard will show");
+}
+
+- (void) keyboardWillHide:(NSNotification *)notif{
+    // The keyboard will be hidden.
+    // view should be shifted donw to its real position.
+    NSLog(@"keyboard will hide");
+}
+
+
 #pragma mark -
 #pragma mark View lifecycle
 
@@ -44,31 +76,39 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	
 	//settings for self
-
+	commentList = [[NSMutableArray alloc] init];
 	self.view.backgroundColor = [UIColor whiteColor];
 	//setting the textfield for entering comments.
 	commentField  = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width , 50)];
 	self.tableView.tableHeaderView = commentField;
 	commentField.borderStyle = UITextBorderStyleRoundedRect;
 	commentField.placeholder = @"Your comment";
+	[commentField setDelegate:self];
+	commentField.clearButtonMode = UITextFieldViewModeWhileEditing;
 }
 
 
-/*
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+	[[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(keyboardWillShow:) 
+                                                  name:UIKeyboardWillShowNotification object:self.view.window];
+    [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(keyboardWillHide:) 
+                                                  name:UIKeyboardWillHideNotification object:self.view.window];
 }
-*/
+
 /*
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 }
 */
-/*
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
-*/
+
 /*
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
@@ -106,6 +146,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
+	cell.textLabel.text = (NSString*)[commentList objectAtIndex:indexPath.row];
     // Configure the cell...
     
     return cell;
@@ -180,6 +221,7 @@
 - (void)viewDidUnload {
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
+	self.commentField = nil;
 }
 
 

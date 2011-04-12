@@ -189,17 +189,7 @@
 
 
 - (void)requestFail: (APIController *) apiController{
-	/*NSLog(@"request did fail");
-	//UIViewController* fail = [[UIViewController alloc] init];
-	UILabel* failLabel = [[[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)]autorelease];
-	failLabel.text =@"connect server failed";
-	failLabel.textAlignment = UITextAlignmentCenter;
-	UIButton *reload = [UIButton buttonWithType:UIButtonTypeRoundedRect] ;
-    reload.frame = CGRectMake(50,40, 200, 44); // position in the parent view and set the size of the button
-    [reload setTitle:@"RELOAD" forState:UIControlStateNormal];
-	[reload addTarget:self action:@selector(loadData:) forControlEvents:UIControlEventTouchDown];
-	[self.view addSubview:failLabel];
-	[self.view addSubview:reload];*/
+
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"request did fail" object:self];
 	
 }
@@ -318,6 +308,7 @@
 	 typeOfList.selectedSegmentIndex = 1;
 	 UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:typeOfList];
 	 self.toolbarItems = [NSMutableArray arrayWithObject:barButton];
+	 
 	[barButton release];
 	 /*self.toolbarItems =[NSMutableArray arrayWithObject: [[[UIBarButtonItem alloc]
 	 initWithBarButtonSystemItem:UIBarButtonSystemItemDone

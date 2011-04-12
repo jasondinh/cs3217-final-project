@@ -11,7 +11,7 @@
 #import "MallListViewController.h"
 #import "MapViewController.h"
 #import "ShopListViewController.h"
-#import "RequesFailViewController.h"
+
 #import "ShopViewController.h"
 #import "Shop.h"
 #import "Mall.h"
@@ -137,7 +137,14 @@ BOOL chosen,shopchosen;
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
 }
-
+-(void) viewWillDisappear:(BOOL)animated{
+	[super viewWillDisappear:animated];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:@"shop chosen" object:nil];		
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:@"mall chosen" object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self  name:@"Listview will appear" object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self  name:@"Shopview will appear"  object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self  name:@"request did fail"  object:nil];
+}
 
 - (void)dealloc {
 	[cityMapViewController release];

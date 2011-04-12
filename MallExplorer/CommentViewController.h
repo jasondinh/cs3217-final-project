@@ -19,6 +19,7 @@
 @property (retain) NSMutableArray* commentList;
 @property (retain) IBOutlet UITextField* commentField;
 
+
 -(id)initWithShop:(Shop*)aShop;
 //REQUIRES:
 //MODIFIES:self
