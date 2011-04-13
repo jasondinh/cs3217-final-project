@@ -60,18 +60,28 @@ BOOL chosen,shopchosen;
 }
 
 
--(void) mallChosen:(id) object{
-	if ([masterViewController.topViewController isKindOfClass:[MallListViewController class]]) {
-
-		Mall* aMall = [[Mall alloc]init];
+-(void) mallChosen:(NSNotification*) notification{
+	id object = notification.object;
+	if ([masterViewController.topViewController isKindOfClass:[MallListViewController class]]) {		
+		Mall* aMall = object;
 		ShopListViewController* shopListViewController = [[ShopListViewController alloc] initWithMall:aMall] ;
 		[aMall release];
 		masterViewController.delegate = shopListViewController;
 		[masterViewController pushViewController:shopListViewController animated:YES];
+		
 		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
+		
+		aMVC.mall = aMall;
+		// load maps from something into a list of map =.=
+		// load stairs from something into a list of stair =.=
+		// set default map to something =.=
+		// [aMVC loadMaps: andStairs: withDefaultMap:]
+
+		
+		[aMVC loadMaps:nil andStairs:nil withDefaultMap:nil];		
+		
 		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
 		[self setDelegate: aMVC];
-		[aMVC loadMaps:nil andStairs:nil withDefaultMap:nil];
 		if (((UIBarButtonItem*)[[cityMapViewController toolbar].items objectAtIndex:0]).title == @"Root List") {
 			UIBarButtonItem *barButtonItem = [[cityMapViewController toolbar].items objectAtIndex:0];	
 			NSMutableArray *items = [[aMVC.toolbar items] mutableCopy];
