@@ -62,6 +62,8 @@
 		39A4DA4D1344D9F000DFD802 /* CityMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A4DA481344D9F000DFD802 /* CityMapViewController.m */; };
 		39A4DA4E1344D9F000DFD802 /* CityMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39A4DA491344D9F000DFD802 /* CityMapViewController.xib */; };
 		39A4DA4F1344D9F000DFD802 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A4DA4B1344D9F000DFD802 /* MasterViewController.m */; };
+		39C5E7FE1356231700757E95 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C5E7FD1356231700757E95 /* CommentCell.m */; };
+		39C5E800135623F500757E95 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39C5E7FF135623F500757E95 /* CommentCell.xib */; };
 		39E4DF0D134776DE007123EE /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39E4DF0C134776DE007123EE /* ListViewController.m */; };
 		39E4E1F31347BEF0007123EE /* MallListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39E4E1F21347BEF0007123EE /* MallListViewController.m */; };
 		39E4E2191347C14F007123EE /* ShopListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39E4E2181347C14F007123EE /* ShopListViewController.m */; };
@@ -230,6 +232,9 @@
 		39A4DA491344D9F000DFD802 /* CityMapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityMapViewController.xib; sourceTree = "<group>"; };
 		39A4DA4A1344D9F000DFD802 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MasterViewController.h; path = ../MasterViewController.h; sourceTree = "<group>"; };
 		39A4DA4B1344D9F000DFD802 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MasterViewController.m; path = ../MasterViewController.m; sourceTree = "<group>"; };
+		39C5E7FC1356231700757E95 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
+		39C5E7FD1356231700757E95 /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
+		39C5E7FF135623F500757E95 /* CommentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentCell.xib; sourceTree = "<group>"; };
 		39E4DF0B134776DE007123EE /* ListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListViewController.h; path = ../ListViewController.h; sourceTree = "<group>"; };
 		39E4DF0C134776DE007123EE /* ListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListViewController.m; path = ../ListViewController.m; sourceTree = "<group>"; };
 		39E4E1F11347BEF0007123EE /* MallListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MallListViewController.h; path = ../MallListViewController.h; sourceTree = "<group>"; };
@@ -548,6 +553,9 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				E1A527031350ED670010541A /* MallExplorer.xcdatamodel */,
+				39C5E7FC1356231700757E95 /* CommentCell.h */,
+				39C5E7FD1356231700757E95 /* CommentCell.m */,
+				39C5E7FF135623F500757E95 /* CommentCell.xib */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -937,6 +945,7 @@
 				27C14E6B13538CA600144CD3 /* up_green_arrow.png in Resources */,
 				27C14EB913538F6500144CD3 /* reset-icon.png in Resources */,
 				27C3DCE213545831004A174D /* down_green_arrow.png in Resources */,
+				39C5E800135623F500757E95 /* CommentCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1049,6 +1058,7 @@
 				27066DBF13511F0E00E01BFE /* PriorityQueue.m in Sources */,
 				27066DC21351219D00E01BFE /* PQObject.m in Sources */,
 				3916ECB513536B7500929EAF /* FacebookTabViewController.m in Sources */,
+				39C5E7FE1356231700757E95 /* CommentCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

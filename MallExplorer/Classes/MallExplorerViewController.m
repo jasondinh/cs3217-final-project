@@ -61,6 +61,8 @@ BOOL chosen,shopchosen;
 
 
 -(void) mallChosen:(id) object{
+	if ([masterViewController.topViewController isKindOfClass:[MallListViewController class]]) {
+
 		Mall* aMall = [[Mall alloc]init];
 		ShopListViewController* shopListViewController = [[ShopListViewController alloc] initWithMall:aMall] ;
 		[aMall release];
@@ -77,7 +79,7 @@ BOOL chosen,shopchosen;
 			[aMVC.toolbar setItems:items animated:YES];
 			[items release];
 		}
-
+	}
 }
 
 -(void) ListViewWillAppear:(id)sender{

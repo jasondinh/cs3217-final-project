@@ -9,6 +9,7 @@
 #import "CityMapViewController.h"
 #import "MasterViewController.h"
 #import "Mall.h"
+#import "Constant.h"
 
 @interface CityMapViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -50,6 +51,8 @@
     if (self) {
         // Custom initialization.
 		self.mapView.delegate =self;
+		fistTime = YES;
+		shouldAutoFocus = YES;
     }
     return self;
 }
@@ -58,17 +61,25 @@
 
 	for (Mall* aMall in mallList){
 	
-		if (fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < 2.0 &&
-			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <2.0)) {
+		if (fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < NEARBY_LATITUDE &&
+			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <NEARBY_LONGTITUDE)) {
 			[mapView addAnnotation:aMall];
 		}
+		if (shouldAutoFocus && fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < INSIDE_LATITUDE &&
+			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <INSIDE_LONGTITUDE) ) {
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:aMall];
+			shouldAutoFocus = NO;
+		}
 	}
+	
+
 	//
 }
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
 
 	//for (Mall *aMall in mallList) {
 		//if ([view isEqual:aMall]) {
+	if ([view.annotation isKindOfClass:[Mall class]]) 
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen in citymap" object:view.annotation];
 		//}
 	//}
@@ -91,8 +102,8 @@
 	CLLocationCoordinate2D location;
 	MKCoordinateRegion region;
 	MKCoordinateSpan span;
-	span.latitudeDelta = 0.02;
-	span.longitudeDelta = 0.02;
+	span.latitudeDelta = SPAN_LATITUDE;
+	span.longitudeDelta = SPAN_LONGTITUDE;
 	region.span = span;
 	region.center = location;
 	[mapView setRegion:region animated:YES];
@@ -130,11 +141,12 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
 	CLLocationCoordinate2D location;
 	location = newLocation.coordinate;
-	if (fabs(location.longitude - mapView.centerCoordinate.longitude) >0.1 
-		&& fabs(location.latitude - mapView.centerCoordinate.latitude)>0.1) {
+	if (fistTime) {
 		mapView.centerCoordinate =location;
+		fistTime = NO;
 	}
 	[self reloadView:nil];	
+
 
 }
 
