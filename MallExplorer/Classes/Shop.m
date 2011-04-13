@@ -14,6 +14,11 @@
 @synthesize level;
 @synthesize unitNumber;
 @synthesize shopName;
+@synthesize annotation;
+@synthesize commentList;
 
+-(void) loadComment:(NSArray*) commentList{
+	// do something
+}
 
 @end

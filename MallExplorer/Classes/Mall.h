@@ -7,11 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 #import "Map.h"
 #import "MapPoint.h"
 #import "Graph.h"
+#import "Constant.h"
 
-@interface Mall : NSObject {
+@interface Mall : NSObject <MKAnnotation> {
 	NSInteger mId;
 	NSString *name;
 	NSString *longitude;
@@ -19,7 +21,7 @@
 	NSString *address;
 	NSInteger zip;
 	NSInteger numberOfMaps;
-	
+
 	// this list holds a set of maps
 	NSMutableArray* mapList;
 	// this list holds the "connecting points" that connect map to map
@@ -38,7 +40,7 @@
 
 @property NSInteger mId;
 @property NSInteger zip;
-
+-(CLLocationCoordinate2D) coordinate;
 - (id) initWithId: (NSInteger) mId  
 		  andName: (NSString *) n 
 	 andLongitude: (NSString *) lon 
@@ -50,6 +52,9 @@
 
 //stair is an array of edge
 -(void) buildGraphWithMaps: (NSArray*) mList andStairs:(NSArray*) edgeList;
+
+- (NSString *)subtitle;
+- (NSString *)title;
 
 // find path between any two points in any two levels
 -(NSArray*) findPathFrom:(CGPoint) point1 inLevel:(Map*)level1 to: (CGPoint) point2 inLevel:(Map*) level2;

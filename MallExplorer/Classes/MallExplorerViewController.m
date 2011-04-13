@@ -11,6 +11,7 @@
 #import "MallListViewController.h"
 #import "MapViewController.h"
 #import "ShopListViewController.h"
+
 #import "ShopViewController.h"
 #import "Shop.h"
 #import "Mall.h"
@@ -24,103 +25,93 @@ BOOL chosen,shopchosen;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
 		// Custom initialization
-		masterViewController= [[MasterViewController alloc] init];
-		
-//		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
-//		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
-//		[self setDelegate: aMVC];
 		cityMapViewController = [[[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil] retain];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ListViewWillAppear:) name:@"Listview will appear" object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"shop chosen" object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShopViewWillAppear:) name:@"Shopview will appear"  object:nil];
+		masterViewController= [[MasterViewController alloc] initWithCityMap:cityMapViewController];
+		//masterViewController.cityMapViewController = 
+
 		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
 		[self setDelegate:cityMapViewController];
+		
+		//add observer for notifications
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"shop chosen" object:nil];		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ListViewWillAppear:) name:@"Listview will appear" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShopViewWillAppear:) name:@"Shopview will appear"  object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestDidFail:) name:@"request did fail"  object:nil];
     }
     return self;
 }
--(void) ShopViewWillAppear:(id)sender{
-}
--(void) shopChosen:(id)sender{
-	
-	//if (!shopchosen) {
-	//	shopchosen = !shopchosen;
-	Shop* aShop = [[Shop alloc]init];
-		
-	ShopViewController* shopViewController = [[ShopViewController alloc] initWithShop:aShop] ;
-		//	ShopViewController* shopViewController = [[ShopViewController alloc] init];
-	[masterViewController pushViewController:shopViewController animated:YES];
-	masterViewController.delegate = shopViewController;
-	
-		//MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
-		//self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
-		//[self setDelegate: aMVC];
-		//[aMVC loadMaps:nil andStairs:nil withDefaultMap:nil];
-		
-	//} 
-	
-}
--(void) ListViewWillAppear:(id)sender{
 
-	if ([[sender object] isKindOfClass:[ShopListViewController class]]) {
-		//cityMapViewController = [[[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil] retain];
-		UIToolbar *toolbar = ((MallViewController*)[self.viewControllers objectAtIndex:1]).toolbar;
-		if (((UIBarButtonItem*)[toolbar.items objectAtIndex:0]).title == @"Root List") {
-			NSLog(@"comehere");
-			NSLog(@"toolbar %d", [[cityMapViewController toolbar].items count ]);
-			UIBarButtonItem *barButtonItem = [toolbar.items objectAtIndex:0];	
-			NSMutableArray *items = [[cityMapViewController.toolbar items] mutableCopy];
-			[items removeObjectAtIndex:0];
-			[items insertObject:barButtonItem atIndex:0];
-			[cityMapViewController.toolbar setItems:items animated:YES];
-			[items release];
-			//self.popoverController = pc;
-			NSLog(@"toolbar %d", [[cityMapViewController toolbar].items count ]);}
-		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
-		[self setDelegate:cityMapViewController];
-	}
+#pragma mark -
+#pragma mark Nofications
+-(void) requestDidFail:(id)sender{
+/*	NSLog(@"REQUEST FAILED");
+	RequesFailViewController * requestFail = [[RequesFailViewController alloc]init];
+	[masterViewController pushViewController:requestFail animated:YES];*/
+}
+
+-(void) shopChosen:(id)sender{
+		Shop* aShop = [[Shop alloc]init];
+		ShopViewController* shopViewController = [[ShopViewController alloc] initWithShop:aShop] ;
+	[aShop release];
+		[masterViewController pushViewController:shopViewController animated:YES];
+		masterViewController.delegate = shopViewController;
 	
 }
 
 
 -(void) mallChosen:(id) object{
-	//if (!chosen) {
-	//	chosen = !chosen;
 		Mall* aMall = [[Mall alloc]init];
-
 		ShopListViewController* shopListViewController = [[ShopListViewController alloc] initWithMall:aMall] ;
-	[aMall release];
-	masterViewController.delegate = shopListViewController;
+		[aMall release];
+		masterViewController.delegate = shopListViewController;
 		[masterViewController pushViewController:shopListViewController animated:YES];
 		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
 		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
 		[self setDelegate: aMVC];
 		[aMVC loadMaps:nil andStairs:nil withDefaultMap:nil];
 		if (((UIBarButtonItem*)[[cityMapViewController toolbar].items objectAtIndex:0]).title == @"Root List") {
-			NSLog(@"comehere");
-		UIBarButtonItem *barButtonItem = [[cityMapViewController toolbar].items objectAtIndex:0];	
-		NSMutableArray *items = [[aMVC.toolbar items] mutableCopy];
-		[items insertObject:barButtonItem atIndex:0];
-		[aMVC.toolbar setItems:items animated:YES];
-		[items release];
-		//self.popoverController = pc;
-		NSLog(@"toolbar %d", [[aMVC toolbar].items count ]);}
+			UIBarButtonItem *barButtonItem = [[cityMapViewController toolbar].items objectAtIndex:0];	
+			NSMutableArray *items = [[aMVC.toolbar items] mutableCopy];
+			[items insertObject:barButtonItem atIndex:0];
+			[aMVC.toolbar setItems:items animated:YES];
+			[items release];
+		}
 
+}
 
-	//} 
-
+-(void) ListViewWillAppear:(id)sender{
+	//If a ShopListViewController will appear
+	if ([[sender object] isKindOfClass:[ShopListViewController class]]) {
+		//add the Root list button again
+		UIToolbar *toolbar = ((MallViewController*)[self.viewControllers objectAtIndex:1]).toolbar;
+		if (((UIBarButtonItem*)[toolbar.items objectAtIndex:0]).title == @"Root List") {
+			UIBarButtonItem *barButtonItem = [toolbar.items objectAtIndex:0];	
+			NSMutableArray *items = [[cityMapViewController.toolbar items] mutableCopy];
+			[items removeObjectAtIndex:0];
+			[items insertObject:barButtonItem atIndex:0];
+			[cityMapViewController.toolbar setItems:items animated:YES];
+			[items release];
+			
+		}
+		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
+		[self setDelegate:cityMapViewController];
+	}
 	
+}
+-(void) ShopViewWillAppear:(id)sender{
+	//If a Shpview will appear
 }
 
 
+
+#pragma mark -
+#pragma mark View lifecycle
 /*
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
 }
 */
-
-
-
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -146,9 +137,18 @@ BOOL chosen,shopchosen;
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
 }
-
+-(void) viewWillDisappear:(BOOL)animated{
+	[super viewWillDisappear:animated];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:@"shop chosen" object:nil];		
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:@"mall chosen" object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self  name:@"Listview will appear" object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self  name:@"Shopview will appear"  object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self  name:@"request did fail"  object:nil];
+}
 
 - (void)dealloc {
+	[cityMapViewController release];
+	[masterViewController release];
     [super dealloc];
 }
 

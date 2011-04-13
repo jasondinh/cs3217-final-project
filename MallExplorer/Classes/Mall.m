@@ -14,6 +14,19 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 @synthesize mapList;
 @synthesize mapPointList;
 
+-(CLLocationCoordinate2D) coordinate{
+	CLLocationCoordinate2D cor;
+	cor.latitude = [latitude doubleValue];
+	cor.longitude = [longitude doubleValue];
+	return cor;
+}
+- (NSString *)subtitle{
+	return @"address";
+}
+- (NSString *)title{
+	return name;
+}
+
 - (id) initWithId: (NSInteger) _mId  
 		  andName: (NSString *) n 
 	 andLongitude: (NSString *) lon 
@@ -66,8 +79,8 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 	mallGraph = [[Graph alloc] init];
 	mapList = [[NSMutableArray arrayWithArray:mList] retain];
 	mapPointList = [[NSMutableArray alloc] init];
-	NSLog(@"mall with: %d level", [mapList count]);
-	NSLog(@"stair list with: %d", [stairList count]);
+	if (debug) NSLog(@"mall with: %d level", [mapList count]);
+	if (debug) NSLog(@"stair list with: %d", [stairList count]);
 	for (int i = 0; i<[mapList count]; i++) {
 		Map* aNode = [mapList objectAtIndex:i];
 		[mallGraph addNode:aNode];
@@ -78,7 +91,7 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 		node1 = [self addConnectingPoint:node1];
 		MapPoint* node2 = anEdge.pointB;
 		node2 = [self addConnectingPoint:node2];
-		NSLog(@"%@ %@", node1.level.mapName, node2.level.mapName);
+		if (debug) NSLog(@"%@ %@", node1.level.mapName, node2.level.mapName);
 		[mallGraph addEdge:node1 andObject2:node2 withWeight:1];
 		if (anEdge.isBidirectional) {
 			[mallGraph addEdge:node2 andObject2:node1 withWeight:1];
@@ -106,7 +119,7 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 
 -(NSArray*) findPathFrom:(CGPoint) startPos inLevel:(Map*)level1 to: (CGPoint)goalPos inLevel:(Map*) level2{
 	// reset all the path now;
-	NSLog(@"now finding path ------------------------------");
+	if (debug) NSLog(@"now finding path ------------------------------");
 	[self resetPath];
 	MapPoint* startPoint = [[MapPoint alloc] initWithPosition:startPos inLevel:level1  andIndex:0];
 	MapPoint* goalPoint = [[MapPoint alloc] initWithPosition:goalPos inLevel:level2 andIndex:0];
@@ -118,15 +131,19 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 		[pathInLevel addObject:startPoint];
 		[pathInLevel addObjectsFromArray:[level1 findPathFrom:point1 to:point2]];
 		[pathInLevel addObject:goalPoint];
-		result = [level1 refineAPath:pathInLevel];
-		[pathInLevel release];
+		result = [[level1 refineAPath:pathInLevel] retain];
+		[startPoint release];
+		[goalPoint release];	
 		[level1 addPathOnMap: result];
-		return result;
+		[pathInLevel release];
+		return [result autorelease];
 	}
 	else {
 		NSMutableArray* pathBetweenLevel = [NSMutableArray arrayWithArray:[mallGraph getShortestPathFromObject:level1 toObject: level2]];
 		[pathBetweenLevel insertObject:startPoint atIndex:0];
 		[pathBetweenLevel addObject:goalPoint];
+		[startPoint release];
+		[goalPoint release];
 		for (int i = [pathBetweenLevel count]-1; i>=0; i--) {
 			// the path between level is a mixed of map point and points that represent level.
 			// so we need to clear all the points that represent levels before continuing

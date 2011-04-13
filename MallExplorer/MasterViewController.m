@@ -15,79 +15,36 @@
 #import "Mall.h"
 
 @implementation MasterViewController
-@synthesize cityMapViewController, progress;
+@synthesize cityMapViewController;
+
+
+-(id)initWithCityMap:(CityMapViewController*)cityMap{
+	self =[super init];
+	if (self) {
+		cityMapViewController = cityMap;
+	}
+	return self;
+}
+
+
 #pragma mark -
 #pragma mark View lifecycle
 
-- (void) requestDidLoad: (APIController *) apiController {
-	NSArray *malls = (NSArray *) apiController.result;
-	
-	NSEnumerator *e = [malls objectEnumerator];
-	
-	NSDictionary *tmpMall;
-	NSMutableArray *tmpMalls = [NSMutableArray array];
-	while (tmpMall = [e nextObject]) {
-		NSDictionary *tmp = [tmpMall valueForKey: @"mall"];
-		Mall *mall = [[Mall alloc] initWithId: [tmp valueForKey: @"id"] 
-									  andName:[tmp valueForKey: @"name"] 
-								 andLongitude:[tmp valueForKey: @"longitude"] 
-								  andLatitude:[tmp valueForKey: @"latitude"] 
-								   andAddress:[tmp valueForKey: @"address"] 
-									   andZip:[tmp valueForKey: @"zip"]];
-		
-		[tmpMalls addObject: mall];
-	}
-	
-	MallListViewController* temp = [[MallListViewController alloc] initWithMalls: tmpMalls];
-	
-	
-	
-	
-	[temp.tableView setDelegate:temp];
-	[temp.tableView setDataSource:temp];
-	
+
+
+
+- (void)viewDidLoad {
+	[super viewDidLoad];	
+	MallListViewController* temp = [[MallListViewController alloc] initWithCityMap:cityMapViewController] ;//]WithMalls: tmpMalls];
 	[self pushViewController:temp animated:YES];
-	self.navigationController.toolbarHidden =NO;
-	UIBarButtonItem *item = [[UIBarButtonItem alloc]   
-                             initWithBarButtonSystemItem:UIBarButtonSystemItemAdd   
-                             target:self   
-                             action:@selector(doSomething:)];  
-    self.navigationItem.rightBarButtonItem = item;  
-	self.navigationItem.title = @"Movies";   
+	[temp loadData:nil];
 	self.toolbarHidden =NO;
 	[temp release];
 
-	[progress hide:YES];
+	
+	
 
-}
 
-- (void) requestDidStart: (APIController *) apiController {
-	[progress show:YES];
-}
-
-- (void)viewDidLoad {
-	
-	progress = [[MBProgressHUD alloc] initWithView: self.view];
-	
-	[self.view addSubview: progress];
-	
-	[progress release];
-	
-	APIController *api = [[APIController alloc] init];
-	api.debugMode = YES;
-	api.delegate = self;
-	[api getAPI: @"/malls.json"];
-	
-	
-	
-	//test api post
-	
-	//APIController *testApi = [[APIController alloc] init];
-//	
-//	testApi.debugMode = YES;
-//	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys: @"1", @"user_id", @"5", @"comment_id", @"1", @"vote", nil];
-//	[testApi postAPI: @"/ratings" withData:dict];
-	[super viewDidLoad];
 }
 
 
@@ -164,10 +121,6 @@
     return YES;
 }
 */
-
-
-#pragma mark -
-
 
 #pragma mark -
 #pragma mark Memory management

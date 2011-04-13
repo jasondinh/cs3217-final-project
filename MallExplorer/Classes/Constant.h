@@ -8,11 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+#define debug NO
+
 // Map constant
 #define MAP_ORIGIN_X 3
 #define MAP_ORIGIN_Y 50
 #define MAP_WIDTH	697
 #define MAP_HEIGHT	648
+
+// Graph constant
+#define MAX_NODES 200
 
 // portrait
 #define MAP_PORTRAIT_WIDTH	762
@@ -29,11 +34,22 @@
 
 // Line view constant:
 #define DRAW_PATH_WIDTH 7
+#define DRAW_DASH_LENGTH 15
+#define DRAW_EMPTY_LENGTH 10
+#define DRAW_STEP_LENGTH 5
+#define MAX_PHASE_LINE 27
+
 //API constant
 
 #define API_END_POINT @"http://cs3217.heroku.com"
 
+//UISplitView constants;
+#define POPOVER_WIDTH 320
+#define POPOVER_HEIGHT 850
 
+//ShopView constants
+#define TAB_BAR_ICON_WIDTH 30
+#define TAB_BAR_ICON_HEIGHT 30
 @protocol Constant
 
 

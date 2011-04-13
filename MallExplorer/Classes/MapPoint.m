@@ -43,6 +43,10 @@
 		return YES;
 	} else return NO;
 }
+// heuristic for A*
+-(NSNumber*) estimateDistanceTo: (MapPoint*) p{
+	return [NSNumber numberWithDouble:[MapPoint getDistantBetweenPoint:self andPoint:p]];
+}
 
 -(void) dealloc{
 	[annotation release];

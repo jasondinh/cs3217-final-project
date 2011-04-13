@@ -74,7 +74,6 @@
 		}
 	}
 	[adjacentList addObject:edge];
-	NSLog(@"point list with %d, adding %d to %d, making total adjacentedge list of %d", [listNode count], n1.index, n2.index, [adjacentList count]);
 
 	return YES;
 }
@@ -114,7 +113,6 @@
 
 -(NSArray*) getAdjacentNodes:(GraphNode*) node{
 	if ([listNode count]==0 || [listNode indexOfObject:node]==NSNotFound) {
-		NSLog(@"not found");
 		return nil;
 	}
 	return [listEdge objectAtIndex:node.index];
@@ -218,6 +216,7 @@
 	while (YES) {
 		int minPosNode = [self getNodeWithSmallestDistanceWithDistanceArray: dist andCheckArray:check];
 		if (minPosNode == -1) {
+			[tracePath release];
 			return nil;
 		}
 		check[minPosNode] = YES;
@@ -225,54 +224,177 @@
 		if ([node isEqual:goal]) {
 			break;
 		}
-		//NSLog(@"Node %d has distance from start: %d", node.index, dist[node.index]);
 		NSArray* adjacentList = [self getAdjacentNodes:node];
-		//NSLog(@"number of adjacent node: %d", [adjacentList count]);
 		for (int i = 0; i<[adjacentList count]; i++) {
 			GraphEdge* tempEdge = [adjacentList objectAtIndex:i];
 			GraphNode* tempNode = [tempEdge getDestinationNode];
-			//NSLog(@"node %d with distance %lf, edge with Weight: %lf", tempNode.index, dist[tempNode.index], tempEdge.weight);
 			if (dist[node.index]+tempEdge.weight < dist[tempNode.index]) {
 				dist[tempNode.index] = dist[node.index] + tempEdge.weight;
 				[tracePath replaceObjectAtIndex:tempNode.index withObject:tempEdge];
 			}
 		}
 	}
-	for (int i = 0; i<nextNodeIndex; i++) {
-		NSLog(@"dist %d is %d",i, dist[i] );
-	}
 	if (dist[goal.index] == INFINITY) {
+		[tracePath release];
 		return nil;
 	}
 	NSMutableArray* path = [[NSMutableArray alloc] init];
 	[self getPathFrom: (GraphNode*) start to: (GraphNode*) goal withPathTrace: tracePath formPath:path];
+	[tracePath release];
 	return path;
 }
 
+-(NSArray*) dijkstraHeapFrom: (GraphNode*) start to: (GraphNode*) goal{
+	if ([start isEqual:goal]) {
+		NSArray* path = [NSArray arrayWithObject:start.object];
+		return path;
+	}
+	
+	PriorityQueue* q = [[PriorityQueue alloc] init];
+	double dist[nextNodeIndex];
+	BOOL check[nextNodeIndex];
+	NSMutableArray* tracePath = [[NSMutableArray alloc] initWithCapacity:nextNodeIndex];
+	
+	for (int i = 0; i<nextNodeIndex; i++) {
+		dist[i] = INFINITY;
+		check[i] = NO;
+		[tracePath addObject:[NSNull null]];
+	}
+	dist[start.index] = 0;
+	
+	NSMutableArray* pqListNode = [[NSMutableArray alloc] initWithCapacity:nextNodeIndex];
+	for (int i = 0; i<nextNodeIndex; i++) {
+		PQObject* pqObject = [[PQObject alloc] initWithObject:[listNode objectAtIndex:i] andValue:dist[i]];
+		[pqListNode addObject:pqObject];
+		[pqObject release];
+	}
+	[q insertObject:[pqListNode objectAtIndex:start.index]];
+	while ([q count]>0) {
+		GraphNode* node = [[q getNextObject] object];
+		check[node.index] = YES;
+		if ([node isEqual:goal]) {			
+			break;
+		}		
+		NSArray* adjacentList = [self getAdjacentNodes:node];
+		for (int i = 0; i<[adjacentList count]; i++) {
+			GraphEdge* tempEdge = [adjacentList objectAtIndex:i];
+			GraphNode* tempNode = [tempEdge getDestinationNode];
+			
+			if (!check[tempNode.index] && (dist[node.index]+tempEdge.weight < dist[tempNode.index])) {
+				dist[tempNode.index] = dist[node.index] + tempEdge.weight;
+				PQObject* aPQObject = [pqListNode objectAtIndex:tempNode.index];
+				aPQObject.val = dist[tempNode.index];
+				if (aPQObject.posInHeap == -1) {
+					[q insertObject:aPQObject];
+				} else {
+					[q updateObjectAtIndex:aPQObject.posInHeap withNewValue:dist[tempNode.index]];
+				}
+				[tracePath replaceObjectAtIndex:tempNode.index withObject:tempEdge];
+			}
+		}
+	}
+	[q release];
+	[pqListNode release];
+	if (dist[goal.index] == INFINITY) {
+		[tracePath release];
+		return nil;
+	}
+	
+	NSMutableArray* path = [[NSMutableArray alloc] init];
+	[self getPathFrom: (GraphNode*) start to: (GraphNode*) goal withPathTrace: tracePath formPath:path];
+	[tracePath release];
+	return [path autorelease];
+}
+
+-(NSArray*) AStarHeapFrom: (GraphNode*) start to: (GraphNode*) goal usingEstimatingFunction:(SEL) selector{
+	if ([start isEqual:goal]) {
+		NSArray* path = [NSArray arrayWithObject:start.object];
+		return path;
+	}
+	
+	PriorityQueue* q = [[PriorityQueue alloc] init];
+	double dist[nextNodeIndex];
+	double h[nextNodeIndex];
+	double f[nextNodeIndex];
+	BOOL check[nextNodeIndex];
+	NSMutableArray* tracePath = [[NSMutableArray alloc] initWithCapacity:nextNodeIndex];
+	
+	for (int i = 0; i<nextNodeIndex; i++) {
+		dist[i] = INFINITY;
+		f[i] = INFINITY;
+		NSNumber* aValue = [[[listNode objectAtIndex:i] object] performSelector:selector withObject:goal.object];
+		h[i] = [aValue doubleValue];
+		check[i] = NO;
+		[tracePath addObject:[NSNull null]];
+	}
+	dist[start.index] = 0;
+	f[start.index] = h[start.index];
+	
+	NSMutableArray* pqListNode = [[NSMutableArray alloc] initWithCapacity:nextNodeIndex];
+	for (int i = 0; i<nextNodeIndex; i++) {
+		PQObject* pqObject = [[PQObject alloc] initWithObject:[listNode objectAtIndex:i] andValue:f[i]];
+		[pqListNode addObject:pqObject];
+		[pqObject release];
+	}
+	[q insertObject:[pqListNode objectAtIndex:start.index]];
+	while ([q count]>0) {
+		GraphNode* node = [[q getNextObject] object];
+		check[node.index] = YES;
+		if ([node isEqual:goal]) {			
+			break;
+		}
+		NSArray* adjacentList = [self getAdjacentNodes:node];
+		for (int i = 0; i<[adjacentList count]; i++) {
+			GraphEdge* tempEdge = [adjacentList objectAtIndex:i];
+			GraphNode* tempNode = [tempEdge getDestinationNode];
+			
+			if (!check[tempNode.index] && (dist[node.index]+tempEdge.weight < dist[tempNode.index])) {
+				dist[tempNode.index] = dist[node.index] + tempEdge.weight;
+				f[tempNode.index] = dist[tempNode.index] + h[tempNode.index];
+				PQObject* aPQObject = [pqListNode objectAtIndex:tempNode.index];
+				aPQObject.val = f[tempNode.index];
+				if (aPQObject.posInHeap == -1) {
+					[q insertObject:aPQObject];
+				} else {
+					[q updateObjectAtIndex:aPQObject.posInHeap withNewValue:f[tempNode.index]];
+				}
+				[tracePath replaceObjectAtIndex:tempNode.index withObject:tempEdge];
+			}
+		}
+	}
+	[q release];
+	[pqListNode release];
+	if (dist[goal.index] == INFINITY) {
+		[tracePath release];
+		return nil;
+	}
+	
+	NSMutableArray* path = [[NSMutableArray alloc] init];
+	[self getPathFrom: (GraphNode*) start to: (GraphNode*) goal withPathTrace: tracePath formPath:path];
+	[tracePath release];
+	return [path autorelease];
+}
+
+
+
 -(NSArray*) getShortestPathFrom: (GraphNode*) start to:(GraphNode*) goal{
-	return [self dijkstraFrom:start to:goal];
+	return [self dijkstraHeapFrom:start to:goal];
 }
 
 -(NSArray*) getShortestPathFromNodeWithIndex:(int) n1 toNodeWithIndex:(int) n2{
-//	NSLog(@"get Shortest path from %d to %d", n1, n2);
-//	for (int i = 0; i<[listNode count]; i++) {
-////		NSLog(@" object %d, with index: %d, coordination %lf %lf", i, [[listNode objectAtIndex:i] index], [[[[listNode objectAtIndex:i] object ] position ]x],[[[[listNode objectAtIndex:i] object ] position ]y]);
-//		NSArray* adjacentList = [listEdge objectAtIndex:i];
-//		NSLog(@" adjacent to %d is: %d", i, [adjacentList count]);
-//		for (int i = 0; i<[adjacentList count]; i++) {
-//			GraphEdge* anEdge = [adjacentList objectAtIndex:i];
-//			NSLog(@"connect to %d with weight %lf", [anEdge getDestinationNode].index, [anEdge weight]);
-//		}
-//		
-//	}
-	NSArray* result = [self dijkstraFrom:[listNode objectAtIndex:n1] to:[listNode objectAtIndex:n2]];
-//	NSLog(@"the found path: ");
-//	for (int i = 0; i<[result count]; i++) {
-//		NSLog(@"%d", [[result objectAtIndex:i] index]);
-//	}
-	return result;
+	return [self dijkstraHeapFrom:[listNode objectAtIndex:n1] to:[listNode objectAtIndex:n2]];
 }
 
+-(NSArray*) getShortestPathUsingAStarFrom: (id) obj1 toObject: (id) obj2 usingEstimatingFunction:(SEL) selector{
+	GraphNode* node1 = [self getGraphNodeFromObject:obj1];
+	GraphNode* node2 = [self getGraphNodeFromObject:obj2];	
+	return [self AStarHeapFrom:node1 to:node2 usingEstimatingFunction:selector];
+}
+
+
+-(NSArray*) getShortestPathUsingAStarFromNodeWithIndex:(int) n1 toNodeWithIndex:(int) n2 usingEstimatingFunction:(SEL) selector{
+	return [self AStarHeapFrom:[listNode objectAtIndex:n1] to:[listNode objectAtIndex:n2] usingEstimatingFunction:selector];
+}
 -(NSArray*) getShortestPathFromObject: (id) obj1 toObject:(id) obj2{
 	GraphNode* node1 = [self getGraphNodeFromObject:obj1];
 	GraphNode* node2 = [self getGraphNodeFromObject:obj2];	

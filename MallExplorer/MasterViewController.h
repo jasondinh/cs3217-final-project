@@ -11,13 +11,11 @@
 @class CityMapViewController;
 @class MBProgressHUD;
 @interface MasterViewController : UINavigationController {
-	MBProgressHUD *progress;
 	CityMapViewController* cityMapViewController;
 }
-@property (retain) MBProgressHUD *progress;
 @property (retain) IBOutlet CityMapViewController* cityMapViewController;
 //-(void)pushViewController:(UIViewController*) controller animated:(BOOL)animated;
-
+-(id) initWithCityMap:(CityMapViewController*)cityMap;
 
 @end
 

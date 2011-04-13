@@ -56,7 +56,7 @@
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<bool key="IBUIShowsHorizontalScrollIndicator">NO</bool>
 						<bool key="IBUIEditable">NO</bool>
-						<string key="IBUIText">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+						<string key="IBUIText">Updating</string>
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 							<int key="IBUIAutocapitalizationType">2</int>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -71,7 +71,7 @@
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Singtel</string>
+						<string key="IBUIText">Updating</string>
 						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Helvetica-Bold</string>
 							<double key="NSSize">28</double>
@@ -139,7 +139,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Label</string>
+						<string key="IBUIText">Updating</string>
 						<reference key="IBUITextColor" ref="394453969"/>
 						<reference key="IBUIHighlightedColor" ref="680742615"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -155,7 +155,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText"> TEL       :</string>
+						<string key="IBUIText"> Unit      :</string>
 						<reference key="IBUIFont" ref="332330170"/>
 						<reference key="IBUITextColor" ref="394453969"/>
 						<reference key="IBUIHighlightedColor" ref="680742615"/>
@@ -165,14 +165,14 @@
 					<object class="IBUILabel" id="854367221">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">296</int>
-						<string key="NSFrame">{{2, 306}, {82, 35}}</string>
+						<string key="NSFrame">{{2, 306}, {85, 35}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText"> Address:</string>
+						<string key="IBUIText"> Level      :</string>
 						<reference key="IBUIFont" ref="332330170"/>
 						<reference key="IBUITextColor" ref="394453969"/>
 						<reference key="IBUIHighlightedColor" ref="680742615"/>
@@ -241,7 +241,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Label</string>
+						<string key="IBUIText">Updating</string>
 						<reference key="IBUITextColor" ref="394453969"/>
 						<reference key="IBUIHighlightedColor" ref="680742615"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -257,7 +257,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Label</string>
+						<string key="IBUIText">Updating</string>
 						<reference key="IBUITextColor" ref="394453969"/>
 						<reference key="IBUIHighlightedColor" ref="680742615"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -273,7 +273,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Label</string>
+						<string key="IBUIText">Updating</string>
 						<reference key="IBUITextColor" ref="394453969"/>
 						<reference key="IBUIHighlightedColor" ref="680742615"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -289,7 +289,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Label</string>
+						<string key="IBUIText">Updating</string>
 						<reference key="IBUITextColor" ref="394453969"/>
 						<reference key="IBUIHighlightedColor" ref="680742615"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -305,7 +305,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Label</string>
+						<string key="IBUIText">Updating</string>
 						<reference key="IBUITextColor" ref="394453969"/>
 						<reference key="IBUIHighlightedColor" ref="680742615"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -333,14 +333,6 @@
 						<reference key="destination" ref="766721923"/>
 					</object>
 					<int key="connectionID">3</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">addressLabel</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="767174431"/>
-					</object>
-					<int key="connectionID">25</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -376,19 +368,27 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">telLabel</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="496372533"/>
-					</object>
-					<int key="connectionID">30</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">websiteLabel</string>
 						<reference key="source" ref="841351856"/>
 						<reference key="destination" ref="323969234"/>
 					</object>
 					<int key="connectionID">31</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">levelLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="767174431"/>
+					</object>
+					<int key="connectionID">35</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">unitLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="496372533"/>
+					</object>
+					<int key="connectionID">36</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -418,7 +418,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="958688690"/>
 							<reference ref="616119825"/>
-							<reference ref="60928784"/>
 							<reference ref="323969234"/>
 							<reference ref="546040377"/>
 							<reference ref="622926984"/>
@@ -431,6 +430,7 @@
 							<reference ref="496788361"/>
 							<reference ref="635183784"/>
 							<reference ref="785382596"/>
+							<reference ref="60928784"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -554,7 +554,7 @@
 					<string>UIResponder</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABAAAAAw4AAAA</bytes>
+						<bytes key="NSTransformStruct">AUAAAABDmQAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
@@ -572,14 +572,14 @@
 					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">P4AAAL+AAADC4gAAw7OAAA</bytes>
 					</object>
-					<string>{{694, 264}, {768, 1024}}</string>
+					<string>{{925, 256}, {768, 1024}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">P4AAAL+AAAAAAAAAxHqAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABCrAAAw6mAAA</bytes>
+						<bytes key="NSTransformStruct">AULUAABDmQAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
@@ -602,7 +602,7 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">AUKsAABDxAAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABC1AAAw9SAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
@@ -626,7 +626,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">31</int>
+			<int key="maxID">36</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -645,19 +645,19 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>addressLabel</string>
 							<string>categoryLabel</string>
 							<string>descriptionTextView</string>
+							<string>levelLabel</string>
 							<string>operatingHoursLabel</string>
 							<string>shopNameLabel</string>
-							<string>telLabel</string>
+							<string>unitLabel</string>
 							<string>websiteLabel</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UILabel</string>
-							<string>UILabel</string>
 							<string>UITextView</string>
+							<string>UILabel</string>
 							<string>UILabel</string>
 							<string>UILabel</string>
 							<string>UILabel</string>
@@ -668,20 +668,16 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>addressLabel</string>
 							<string>categoryLabel</string>
 							<string>descriptionTextView</string>
+							<string>levelLabel</string>
 							<string>operatingHoursLabel</string>
 							<string>shopNameLabel</string>
-							<string>telLabel</string>
+							<string>unitLabel</string>
 							<string>websiteLabel</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">addressLabel</string>
-								<string key="candidateClassName">UILabel</string>
-							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">categoryLabel</string>
 								<string key="candidateClassName">UILabel</string>
@@ -689,6 +685,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">descriptionTextView</string>
 								<string key="candidateClassName">UITextView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">levelLabel</string>
+								<string key="candidateClassName">UILabel</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">operatingHoursLabel</string>
@@ -699,7 +699,7 @@
 								<string key="candidateClassName">UILabel</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">telLabel</string>
+								<string key="name">unitLabel</string>
 								<string key="candidateClassName">UILabel</string>
 							</object>
 							<object class="IBToOneOutletInfo">

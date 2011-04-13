@@ -23,6 +23,7 @@
 	AnnoViewController* annoBeingSelected;
 	double zoomScale, maxScale, minScale;
 	UIImageView* imageView;
+	NSTimer* theTimer;
 }
 
 @property (nonatomic, retain) NSArray* annotationList;
@@ -37,8 +38,9 @@
 
 // add an annotation to the map, since this is the model, the annotation's position is in map's coordination
 -(void) addAnnotation: (Annotation*) annotation;
-// remove an annovation 
+// remove annotations
 -(void) removeAllLevelConnectorAnnotation;
+-(void) removeAllAnnotationOfType:(AnnotationType)typeToRemove;
 
 -(MapViewController*) initWithMapImage:(UIImage*)img 
 				withDefaultCenterPoint:(CGPoint)defaultPoint

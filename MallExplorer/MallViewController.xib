@@ -90,37 +90,19 @@
 					<object class="IBUIToolbar" id="475789778">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{0, 704}, {1024, 44}}</string>
+						<string key="NSFrame">{{0, 705}, {1024, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<object class="NSMutableArray" key="IBUIItems">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBUIBarButtonItem" id="730621890">
-								<string key="IBUITitle">Item</string>
-								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-								<int key="IBUIStyle">1</int>
-								<reference key="IBUIToolbar" ref="475789778"/>
-							</object>
-							<object class="IBUIBarButtonItem" id="803722101">
-								<string key="IBUITitle">Item</string>
-								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-								<int key="IBUIStyle">1</int>
-								<reference key="IBUIToolbar" ref="475789778"/>
-							</object>
-							<object class="IBUIBarButtonItem" id="264627297">
-								<string key="IBUITitle">Item</string>
-								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-								<int key="IBUIStyle">1</int>
-								<reference key="IBUIToolbar" ref="475789778"/>
-							</object>
 						</object>
 					</object>
 					<object class="IBUIImageView" id="319218950">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{489, 0}, {45, 45}}</string>
+						<string key="NSFrame">{{245, 704}, {45, 45}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
@@ -131,7 +113,7 @@
 					<object class="IBUIImageView" id="362126929">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{542, 0}, {45, 45}}</string>
+						<string key="NSFrame">{{298, 704}, {45, 45}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
@@ -142,7 +124,7 @@
 					<object class="IBUIImageView" id="739989884">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{428, 2}, {40, 40}}</string>
+						<string key="NSFrame">{{184, 706}, {40, 40}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
@@ -153,7 +135,7 @@
 					<object class="IBUIImageView" id="832159856">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{604, 0}, {42, 43}}</string>
+						<string key="NSFrame">{{360, 704}, {42, 43}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
@@ -177,6 +159,19 @@
 						<reference key="IBUIHighlightedColor" ref="261580667"/>
 						<int key="IBUIBaselineAdjustment">1</int>
 						<float key="IBUIMinimumFontSize">10</float>
+					</object>
+					<object class="IBUIImageView" id="241687751">
+						<reference key="NSNextResponder" ref="191373211"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{421, 704}, {48, 45}}</string>
+						<reference key="NSSuperview" ref="191373211"/>
+						<float key="IBUIAlpha">0.5</float>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">reset-icon.png</string>
+						</object>
 					</object>
 				</object>
 				<string key="NSFrameSize">{1024, 748}</string>
@@ -267,6 +262,14 @@
 					</object>
 					<int key="connectionID">34</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">resetButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="241687751"/>
+					</object>
+					<int key="connectionID">38</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -282,14 +285,15 @@
 						<reference key="object" ref="191373211"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="475789778"/>
 							<reference ref="888511731"/>
-							<reference ref="362126929"/>
-							<reference ref="319218950"/>
-							<reference ref="739989884"/>
-							<reference ref="832159856"/>
 							<reference ref="892082841"/>
 							<reference ref="1047219544"/>
+							<reference ref="319218950"/>
+							<reference ref="362126929"/>
+							<reference ref="739989884"/>
+							<reference ref="832159856"/>
+							<reference ref="475789778"/>
+							<reference ref="241687751"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -318,26 +322,8 @@
 						<reference key="object" ref="475789778"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="730621890"/>
-							<reference ref="803722101"/>
-							<reference ref="264627297"/>
 						</object>
 						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">12</int>
-						<reference key="object" ref="730621890"/>
-						<reference key="parent" ref="475789778"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">13</int>
-						<reference key="object" ref="803722101"/>
-						<reference key="parent" ref="475789778"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">14</int>
-						<reference key="object" ref="264627297"/>
-						<reference key="parent" ref="475789778"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">19</int>
@@ -374,6 +360,11 @@
 						<reference key="object" ref="1047219544"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">37</int>
+						<reference key="object" ref="241687751"/>
+						<reference key="parent" ref="191373211"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -384,9 +375,6 @@
 					<string>-2.CustomClassName</string>
 					<string>1.IBEditorWindowLastContentRect</string>
 					<string>1.IBPluginDependency</string>
-					<string>12.IBPluginDependency</string>
-					<string>13.IBPluginDependency</string>
-					<string>14.IBPluginDependency</string>
 					<string>19.IBPluginDependency</string>
 					<string>19.IBViewBoundsToFrameTransform</string>
 					<string>20.IBPluginDependency</string>
@@ -400,34 +388,34 @@
 					<string>28.IBViewBoundsToFrameTransform</string>
 					<string>30.IBPluginDependency</string>
 					<string>30.IBViewBoundsToFrameTransform</string>
+					<string>37.IBPluginDependency</string>
+					<string>37.IBViewBoundsToFrameTransform</string>
 					<string>6.IBPluginDependency</string>
 					<string>6.IBViewBoundsToFrameTransform</string>
 					<string>9.IBPluginDependency</string>
+					<string>9.IBViewBoundsToFrameTransform</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>MallViewController</string>
 					<string>UIResponder</string>
-					<string>{{785, 263}, {1024, 768}}</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>{{470, 510}, {1024, 768}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABD9IAAwigAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABD9IAAwiwAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABEB4AAwigAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABEB4AAwiwAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDtAAAwhQAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABD1gAAwiAAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABEFMAAwiAAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABEFwAAwiQAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -440,9 +428,16 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABDvIAAw7GAAA</bytes>
+					</object>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">P4AAAL+AAABBQAAAwqYAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAAAAAAAAxDrAAA</bytes>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -461,7 +456,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">34</int>
+			<int key="maxID">38</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -508,6 +503,7 @@
 							<string>detailItem</string>
 							<string>goalFlagButton</string>
 							<string>pathFindingButton</string>
+							<string>resetButton</string>
 							<string>selectLevel</string>
 							<string>startFlagButton</string>
 							<string>titleLabel</string>
@@ -517,6 +513,7 @@
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
+							<string>UIImageView</string>
 							<string>UIImageView</string>
 							<string>UIImageView</string>
 							<string>UIBarItem</string>
@@ -533,6 +530,7 @@
 							<string>detailItem</string>
 							<string>goalFlagButton</string>
 							<string>pathFindingButton</string>
+							<string>resetButton</string>
 							<string>selectLevel</string>
 							<string>startFlagButton</string>
 							<string>titleLabel</string>
@@ -551,6 +549,10 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">pathFindingButton</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">resetButton</string>
 								<string key="candidateClassName">UIImageView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
@@ -880,6 +882,7 @@
 				<string>PathFinding.png</string>
 				<string>green_flag_icon.png</string>
 				<string>red_flag_icon.png</string>
+				<string>reset-icon.png</string>
 				<string>toogle-text-tooltips.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
@@ -887,6 +890,7 @@
 				<string>{50, 50}</string>
 				<string>{128, 128}</string>
 				<string>{128, 128}</string>
+				<string>{165, 165}</string>
 				<string>{36, 36}</string>
 			</object>
 		</object>

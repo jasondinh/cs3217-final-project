@@ -20,6 +20,7 @@
 @synthesize goalFlagButton;
 @synthesize pathFindingButton;
 @synthesize titleLabel;
+@synthesize resetButton;
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -32,7 +33,7 @@
 }*/
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	NSLog(@"Toolbar %d", [toolbar.items count ]);
+	if (debug) NSLog(@"Toolbar %d", [toolbar.items count ]);
 }
 -(Map*) createTestMap1{
 	UIImage* image = [UIImage imageNamed:@"map.jpg"];
@@ -198,7 +199,9 @@
 	CGPoint defaultPoint = CGPointMake(500, 500);
 	Annotation* stair1 = [Annotation annotationWithAnnotationType:kAnnoStair inlevel:aMap WithPosition:[[pointList objectAtIndex:0] position] title:@"Stair 1" content:@"Stair to level 2"];
 	[aMap loadDataWithMapName:@"Level 1" withMapImage:image annotationList:[NSArray arrayWithObject:stair1] pointList:pointList edgeList:edgeList defaultCenterPoint:defaultPoint];
-	return aMap;
+	[pointList release];
+	[edgeList release];
+	return [aMap autorelease];
 	
 }
 
@@ -366,8 +369,9 @@
 	CGPoint defaultPoint = CGPointMake(100, 100);
 	Annotation* stair1 = [Annotation annotationWithAnnotationType:kAnnoStair inlevel:aMap WithPosition:[[pointList objectAtIndex:0] position] title:@"Stair 1" content:@"Stair to level 1"];
 	[aMap loadDataWithMapName:@"Level 2" withMapImage:image annotationList:[NSArray arrayWithObject:stair1] pointList:pointList edgeList:edgeList defaultCenterPoint:defaultPoint];
-	return aMap;
-	
+	[pointList release];
+	[edgeList release];
+	return [aMap autorelease];
 }
 -(NSArray*) createTestStair:(NSArray*) mList{
 	Map* map1 = [mList objectAtIndex:0];
@@ -375,15 +379,17 @@
 	Edge* anEdge = [[Edge alloc] initWithPoint1:[map1.pointList objectAtIndex:0] point2:[map2.pointList objectAtIndex:0] withLength:1 isBidirectional:YES withTravelType:kWalkStairCase];
 	[[map1.annotationList objectAtIndex:0]  setDestination:map2];
 	[[map2.annotationList objectAtIndex:0] setDestination:map1];
-	return [NSArray arrayWithObject:anEdge];
+	return [NSArray arrayWithObject:[anEdge autorelease]];
 }
 
 -(void) loadMaps:(NSArray *)listMap andStairs:(NSArray *)stairs withDefaultMap:(Map*) defaultMap{
 	
-	Map* map1 = [self createTestMap1];
-	Map* map2 = [self createTestMap2];
+	Map* map1 = [[self createTestMap1] retain];
+	Map* map2 = [[self createTestMap2] retain];
 	defaultMap = map1;
 	listMap = [NSArray arrayWithObjects:map1, map2, nil];
+	[map1 release];
+	[map2 release];
 	NSArray* stair = [self createTestStair:listMap];
 	stairs = stair;	
 	
@@ -416,12 +422,19 @@
 											initWithTarget:self action:@selector(toggleDisplayCaptionMode:)];
 	[tapGesture setNumberOfTapsRequired:1];
 	[toggleTextButton addGestureRecognizer:tapGesture];
+	[tapGesture release];
 	
 	tapGesture	 = [[UITapGestureRecognizer alloc]
 											initWithTarget:self action:@selector(pathFindingClicked)];
 	[tapGesture setNumberOfTapsRequired:1];
 	[pathFindingButton addGestureRecognizer:tapGesture];
-
+	[tapGesture release];
+	
+	tapGesture	 = [[UITapGestureRecognizer alloc]
+					initWithTarget:self action:@selector(resetClicked)];
+	[tapGesture setNumberOfTapsRequired:1];
+	[resetButton addGestureRecognizer:tapGesture];
+	[tapGesture release];
 	UIPanGestureRecognizer* panGesture	 = [[UIPanGestureRecognizer alloc]
 											initWithTarget:self action:@selector(startFlagMove:)];
 	[startFlagButton addGestureRecognizer:panGesture];
@@ -430,15 +443,44 @@
 	panGesture	 = [[UIPanGestureRecognizer alloc]
 											initWithTarget:self action:@selector(goalFlagMove:)];
 	[goalFlagButton addGestureRecognizer:panGesture];
+	[panGesture release];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startOrGoalMoved:) name:@"start or goal moved" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startOrGoalRemoved:) name:@"start or goal removed" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeMap:) name:@"change map" object:nil];
-	[panGesture release];
-	[tapGesture release];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setGoalTo:) name:@"set goal point to shop" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setStartTo:) name:@"set start point to shop" object:nil];
 }
 
 #pragma mark -
 #pragma mark notification handling
+
+-(void) setStartTo:(NSNotification*) notification{
+	Annotation* anAnno = [notification.object annotation];
+	if ([anAnno.level isEqual:mapViewController.map]) {
+		[self changeToMap:anAnno.level];
+	}
+	if (start!= nil) {
+		MapViewController* aMVC = [self getViewControllerOfMap:start.annotation.level];
+		[aMVC removeAllAnnotationOfType:kAnnoStart];
+	}
+	Annotation* startAnno = [Annotation annotationWithAnnotationType:kAnnoStart inlevel:anAnno.level WithPosition:anAnno.position title:@"Start" content:@"Your starting position"];
+	[mapViewController addAnnotation:startAnno];
+	start = [mapViewController.annotationList lastObject];
+}
+
+-(void) setGoalTo:(NSNotification*) notification{
+	Annotation* anAnno = [notification.object annotation];
+	if ([anAnno.level isEqual:mapViewController.map]) {
+		[self changeToMap:anAnno.level];
+	}
+	if (goal!= nil) {
+		MapViewController* aMVC = [self getViewControllerOfMap:goal.annotation.level];
+		[aMVC removeAllAnnotationOfType:kAnnoGoal];
+	}
+	Annotation* goalAnno = [Annotation annotationWithAnnotationType:kAnnoGoal inlevel:anAnno.level WithPosition:anAnno.position title:@"Goal" content:@"Your destination"];
+	[mapViewController addAnnotation:goalAnno];
+	goal = [mapViewController.annotationList lastObject];
+}
 
 -(void) changeToMap:(MapViewController*) aMVC{
 	[mapViewController.view removeFromSuperview];
@@ -471,18 +513,25 @@ toMakeAnnotationType:(AnnotationType) annoType
 	if (gesture.state == UIGestureRecognizerStateEnded) {
 		double newX = button.frame.origin.x - mapViewController.view.frame.origin.x;
 		double newY = button.frame.origin.y - mapViewController.view.frame.origin.y;
-		//NSLog(@"new x new y %lf %lf", newX, newY);
+		//if (debug) NSLog(@"new x new y %lf %lf", newX, newY);
 		// bring the button to the original position
 		button.transform = CGAffineTransformIdentity;
 
 		
 		if (newX>= 0 && newY>=0)
 		{
+			if (annoType == kAnnoStart && start) {
+				// simulate a reset
+				[start annoRemoved:nil];
+			} else if (annoType == kAnnoGoal && goal) {
+				// simulate a reset
+				[goal annoRemoved:nil];
+			}
 			//GameObject* aController = [[GameObject alloc] initWithType:objectType withShape:shapeType atX:newX+gamearea.contentOffset.x atY:newY+ gamearea.contentOffset.y  withWidth:size.width withHeight:size.height];
 			UIScrollView* theScrollView = (UIScrollView*) mapViewController.view;
 			double x = newX + button.frame.size.width/2  + theScrollView.contentOffset.x;
 			double y = newY + button.frame.size.height/2 + theScrollView.contentOffset.y ;
-			//NSLog(@"new x new y %lf %lf", x, y);
+			if (debug) NSLog(@"new x new y %lf %lf", x, y);
 			if (![mapViewController addAnnotationType:annoType ToScrollViewAtPosition:CGPointMake(x, y) withTitle:title withContent:content]) {
 				button.transform = CGAffineTransformIdentity;
 				return; // add to blocked position
@@ -493,8 +542,10 @@ toMakeAnnotationType:(AnnotationType) annoType
 				goal = [mapViewController.annotationList lastObject];
 			} 
 			[self startOrGoalMoved:nil];
-			[button setUserInteractionEnabled:NO];
-			button.alpha = 0.5;
+			/*button.userInteractionEnabled = NO;
+			button.alpha = 0.5;*/
+			resetButton.userInteractionEnabled = YES;
+			resetButton.alpha = 1.0;
 		} 
 	}
 	
@@ -509,8 +560,9 @@ toMakeAnnotationType:(AnnotationType) annoType
 }
 
 -(void) startOrGoalMoved:(NSNotification*) notification{
-	//NSLog(@"start or goal moved");
+	//if (debug) NSLog(@"start or goal moved");
 	if (start && goal) {
+		[self startOrGoalRemoved:nil];
 		[self pathFinding];
 	}
 }
@@ -520,12 +572,18 @@ toMakeAnnotationType:(AnnotationType) annoType
 	if	([type intValue] == kAnnoStart) {
 		start = nil;
 		startFlagButton.alpha = 1.0;
-		startFlagButton.userInteractionEnabled = YES;
+		startFlagButton.userInteractionEnabled = YES;		
 	}
 	if	([type intValue] == kAnnoGoal) {
 		goal = nil;
 		goalFlagButton.alpha = 1.0;
 		goalFlagButton.userInteractionEnabled = YES;
+	}
+	
+	if (!start && !goal) {
+		resetButton.alpha = 0.5;
+		resetButton.userInteractionEnabled = NO;
+		
 	}
 	[mall resetPath];
 	[mapViewController redisplayPath];
@@ -553,7 +611,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 }
 
 -(void) pathFinding{
-	NSArray* levelConnectingPoint = [mall findPathFromStartAnnotation:start.annotation ToGoalAnnotaion:goal.annotation];
+	NSArray* levelConnectingPoint = [[mall findPathFromStartAnnotation:start.annotation ToGoalAnnotaion:goal.annotation] retain];
 	// level connecting point is a series of map points that travel through several maps, to show a path between maps, from the start point to the goal point.
 	for (int i = 0; i<[levelConnectingPoint count]-1; i++) {
 		id p1 = [levelConnectingPoint objectAtIndex:i];
@@ -573,11 +631,24 @@ toMakeAnnotationType:(AnnotationType) annoType
 			[arriving setIsUp:[self checkLevel:lev2 isHigherThan:lev1]];
 			[arriving setDestination: lev1];
 			[[self getViewControllerOfMap: lev2] addAnnotation: [[arriving retain] autorelease]];
-			if (start.titleButton.hidden = YES) [start annotationViewTapped:nil];
-			if (goal.titleButton.hidden = YES) [goal annotationViewTapped:nil];
+			if (start.titleButton.hidden == YES) [start annotationViewTapped:nil];
+			if (goal.titleButton.hidden == YES) [goal annotationViewTapped:nil];
 		}
 	}	
+	[levelConnectingPoint release];
 	[mapViewController redisplayPath];
+}
+
+-(void) resetClicked{
+	if (start) {
+		// simulate a double click
+		[start annoRemoved:nil];
+	}
+	if (goal) {
+		// simulate a double click
+		[goal annoRemoved:nil];
+	}
+	
 }
 
 -(void) pathFindingClicked{
@@ -670,7 +741,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 		  withBarButtonItem:(UIBarButtonItem*)barButtonItem 
 	   forPopoverController: (UIPopoverController*)pc {
 	
-    //NSLog(barButtonItem.title) ;//= @"Root List";
+    //if (debug) NSLog(barButtonItem.title) ;//= @"Root List";
     NSMutableArray *items = [[toolbar items] mutableCopy];
     [items insertObject:barButtonItem atIndex:0];
     [toolbar setItems:items animated:YES];
@@ -681,7 +752,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 - (void)splitViewController: (UISplitViewController*)svc 
      willShowViewController:(UIViewController *)aViewController 
   invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
-	  //NSLog(barButtonItem.title) ;//= @"Root List";
+	  //if (debug) NSLog(barButtonItem.title) ;//= @"Root List";
     NSMutableArray *items = [[toolbar items] mutableCopy];
     [items removeObjectAtIndex:0];
     [toolbar setItems:items animated:YES];
@@ -691,7 +762,6 @@ toMakeAnnotationType:(AnnotationType) annoType
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Overriden to allow any orientation.
 	// Overriden to allow any orientation.
 	CGFloat width = mapViewController.view.frame.size.width;
 	CGFloat height = mapViewController.view.frame.size.height;
