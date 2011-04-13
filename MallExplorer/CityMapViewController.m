@@ -9,6 +9,7 @@
 #import "CityMapViewController.h"
 #import "MasterViewController.h"
 #import "Mall.h"
+#import "Constant.h"
 
 @interface CityMapViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -49,7 +50,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization.
-
+		self.mapView.delegate =self;
+		fistTime = YES;
+		shouldAutoFocus = YES;
     }
     return self;
 }
@@ -58,16 +61,31 @@
 
 	for (Mall* aMall in mallList){
 	
-		if (fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < 1000.0 &&
-			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <1000.0)) {
-
+		if (fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < NEARBY_LATITUDE &&
+			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <NEARBY_LONGTITUDE)) {
 			[mapView addAnnotation:aMall];
-			NSLog(@"%lf %lf",aMall.coordinate.latitude ,aMall.coordinate.longitude );
-				
+		}
+		if (shouldAutoFocus && fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < INSIDE_LATITUDE &&
+			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <INSIDE_LONGTITUDE) ) {
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:aMall];
+			shouldAutoFocus = NO;
 		}
 	}
-}
+	
 
+	//
+}
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
+
+	//for (Mall *aMall in mallList) {
+		//if ([view isEqual:aMall]) {
+	if ([view.annotation isKindOfClass:[Mall class]]) 
+				[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen in citymap" object:view.annotation];
+		//}
+	//}
+
+
+}
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
@@ -75,7 +93,6 @@
 	CLLocationManager *locationManager=[[CLLocationManager alloc] init];
 	locationManager.delegate=self;
 	locationManager.desiredAccuracy=kCLLocationAccuracyNearestTenMeters;
-	
 	[locationManager startUpdatingLocation];
 	
 	[mapView setMapType:MKMapTypeStandard];
@@ -85,8 +102,8 @@
 	CLLocationCoordinate2D location;
 	MKCoordinateRegion region;
 	MKCoordinateSpan span;
-	span.latitudeDelta = 0.02;
-	span.longitudeDelta = 0.02;
+	span.latitudeDelta = SPAN_LATITUDE;
+	span.longitudeDelta = SPAN_LONGTITUDE;
 	region.span = span;
 	region.center = location;
 	[mapView setRegion:region animated:YES];
@@ -102,6 +119,7 @@
 	else {
 		MKPinAnnotationView* annView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"s"];
 		annView.animatesDrop =YES;
+		annView.canShowCallout =YES;
 		return annView;
 	}
 	
@@ -123,8 +141,13 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
 	CLLocationCoordinate2D location;
 	location = newLocation.coordinate;
-	mapView.centerCoordinate =location;
-	[self reloadView:nil];
+	if (fistTime) {
+		mapView.centerCoordinate =location;
+		fistTime = NO;
+	}
+	[self reloadView:nil];	
+
+
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{

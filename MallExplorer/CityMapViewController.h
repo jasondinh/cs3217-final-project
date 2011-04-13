@@ -17,6 +17,8 @@
 	IBOutlet MKMapView *mapView;
 	IBOutlet UISegmentedControl *mapType;
 	NSArray* mallList;
+	BOOL fistTime;
+	BOOL shouldAutoFocus;
 
 }
 @property (retain ) NSArray* mallList;

@@ -50,6 +50,15 @@
 //ShopView constants
 #define TAB_BAR_ICON_WIDTH 30
 #define TAB_BAR_ICON_HEIGHT 30
+
+
+//Constants for CityMapViewController
+#define SPAN_LONGTITUDE 0.02
+#define SPAN_LATITUDE 0.02
+#define NEARBY_LONGTITUDE 0.2
+#define NEARBY_LATITUDE 0.2
+#define INSIDE_LONGTITUDE 0.0005
+#define INSIDE_LATITUDE 0.0005
 @protocol Constant
 
 
