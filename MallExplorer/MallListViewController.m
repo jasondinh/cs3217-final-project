@@ -10,6 +10,7 @@
 #import "APIController.h"
 #import "MBProgressHUD.h"
 #import "Mall.h"
+#import "EGORefreshTableHeaderView.h"
 
 @implementation MallListViewController
 @synthesize favoriteList,mallList,cityMapViewController;
@@ -32,34 +33,7 @@
 */
 #pragma mark -
 #pragma mark APIController
-- (void) requestDidLoad: (APIController *) apiController {
-	/*NSArray *malls = (NSArray *) apiController.result;
-	NSEnumerator *e = [malls objectEnumerator];
-	NSDictionary *tmpMall;
-	NSMutableArray *tmpMalls = [NSMutableArray array];
-	while (tmpMall = [e nextObject]) {
-		NSDictionary *tmp = [tmpMall valueForKey: @"mall"];
-		Mall *mall = [[Mall alloc] initWithId: [tmp valueForKey: @"id"] 
-									  andName:[tmp valueForKey: @"name"] 
-								 andLongitude:[tmp valueForKey: @"longitude"] 
-								  andLatitude:[tmp valueForKey: @"latitude"] 
-								   andAddress:[tmp valueForKey: @"address"] 
-									   andZip:[tmp valueForKey: @"zip"]];
-		
-		[tmpMalls addObject: mall];
-	}
-	
-	self.mallList = [tmpMalls mutableCopy];
-	self.listOfItems = [[NSMutableArray alloc]init];
-	for (Mall* aMall in mallList){
-		[listOfItems addObject:aMall.name];
-	}
-	[self.tableView reloadData];
-	[progress hide:YES];*/
 
-	[self cacheRespond:apiController];
-	
-}
 
 - (void)cacheRespond: (APIController *) apiController{
 	NSArray *malls = (NSArray *) apiController.result;
@@ -96,6 +70,7 @@
 	
 }
 - (void)serverRespond: (APIController *) apiController{
+	
 	NSLog( @"mall list after: %d", [mallList count]);
 	NSArray *malls = (NSArray *) apiController.result;
 	NSEnumerator *e = [malls objectEnumerator];
@@ -191,7 +166,9 @@
 	[progress hide:YES];
 	cityMapViewController.mallList = mallList;
 	[cityMapViewController reloadView:nil];
-
+	if (_reloading){
+		[self doneLoadingTableViewData];
+	}
 		//[self requestFail:apiController];
 
 }
@@ -203,6 +180,7 @@
 	
 }
 - (void) requestDidStart: (APIController *) apiController {
+	_reloading = YES;
 	[progress show:YES];
 }
 
@@ -301,10 +279,63 @@
 #pragma mark -
 #pragma mark View lifecycle
 
+- (void)doneLoadingTableViewData{
+	
+	//  model should call this when its done loading
+	_reloading = NO;
+	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+	
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
+	
+	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+	
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+	
+	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+	
+}
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+	[self loadData: nil];
+	
+	//[self reloadTableViewDataSource];
+	//[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+	
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+	
+	return _reloading; // should return if data source model is reloading
+	
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+	
+	return [NSDate date]; // should return date data source was last changed
+	
+}
+
+
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	if (_refreshHeaderView == nil) {
+		
+		EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
+		view.delegate = self;
+		[self.tableView addSubview:view];
+		_refreshHeaderView = view;
+		[view release];
+		
+	}
+	
+	
 	// Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
 	
@@ -317,7 +348,7 @@
 	 self.navigationItem.title = @"Mall list";
 	 searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
 
-	self.navigationItem.leftBarButtonItem= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(loadData:)];
+	//self.navigationItem.leftBarButtonItem= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(loadData:)];
 	
 	 NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"Nearby",@"Favorite",nil];
 	 typeOfList = [[UISegmentedControl alloc] initWithItems:segmentArray];
