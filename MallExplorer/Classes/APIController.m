@@ -157,75 +157,78 @@
 	if ([self.path isEqualToString: @"/malls.json"]) {
 		NSArray *tmp = (NSArray *) returnObject;
 		
+		MallExplorerAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+		NSManagedObjectContext *context = [appDelegate managedObjectContext];
+		NSError *error;
+		
+		//delete all
+		
+		NSFetchRequest * allMalls = [[NSFetchRequest alloc] init];
+		[allMalls setEntity:[NSEntityDescription entityForName:@"Mall" inManagedObjectContext:context]];
+		[allMalls setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+		
+		NSArray * malls = [context executeFetchRequest:allMalls error:&error];
+		[allMalls release];
+		//error handling goes here
+		for (NSManagedObject * mall in malls) {
+			[context deleteObject:mall];
+		}
+		
 		[tmp enumerateObjectsWithOptions: NSEnumerationConcurrent usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 			
 			NSDictionary *mall = (NSDictionary *) obj;
 			
 			mall = [mall valueForKey: @"mall"];
 			
-			MallExplorerAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+			//add new
 			
-			//search for mall with corresponding id
+			NSManagedObject *tmpMall = [NSEntityDescription 
+										insertNewObjectForEntityForName: @"Mall"
+										inManagedObjectContext: context];
 			
-			NSManagedObjectContext *context = [appDelegate managedObjectContext];
-			NSError *error;
-			NSFetchRequest *fetchRequest =  [[NSFetchRequest alloc] init];
+			[fields enumerateObjectsWithOptions: NSEnumerationConcurrent usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+				[tmpMall setValue: [mall valueForKey: obj] forKey:obj];
+			}];
 			
-			NSEntityDescription *entity = [NSEntityDescription entityForName: @"Mall" inManagedObjectContext: context];
+			[tmpMall setValue: [NSString stringWithFormat: @"%@", [mall valueForKey: @"id"]] forKey: @"id"];
+			[tmpMall setValue: [NSString stringWithFormat: @"%@", [mall valueForKey: @"zip"]] forKey: @"zip"];
 			
-			[fetchRequest setEntity: entity];
-			
-			[fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"id == %@", [mall valueForKey: @"id"]]];
-			
-			//NSLog(@"anything %@", [mall valueForKey: @"id"]);
-			
-			NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-			
-			[fetchRequest release];
-			
-			BOOL exist;
-			
-			if ([fetchedObjects count] >0) {
-				exist = TRUE;
+			if (![context save: &error]) {
+				NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 			}
-			else {
-				exist = FALSE;
-			}
-			//if exist => replace
-			if (exist) {
-				NSLog(@"%@", @"EXIST");
-				
-				
-			}
-			//if none => insert new cache
-			else {
-				NSLog(@"%@", @"NOT EXIST");
-				NSManagedObject *tmpMall = [NSEntityDescription 
-										 insertNewObjectForEntityForName: @"Mall"
-										 inManagedObjectContext: context];
-				
-				[fields enumerateObjectsWithOptions: NSEnumerationConcurrent usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-					[tmpMall setValue: [mall valueForKey: obj] forKey:obj];
-				}];
-				
-				[tmpMall setValue: [NSString stringWithFormat: @"%@", [mall valueForKey: @"id"]] forKey: @"id"];
-				[tmpMall setValue: [NSString stringWithFormat: @"%@", [mall valueForKey: @"zip"]] forKey: @"zip"];
-				
-				
-				/*[mall setValue:  forKey:@"id"];
-				[mall setValue: @"City Hall" forKey: @"name"];
-				[mall setValue: @"Whatever" forKey: @"address"];
-				[mall setValue: @"1.1" forKey: @"latitude"];
-				[mall setValue: @"1.1" forKey: @"longitude"];
-				[mall setValue: @"12345" forKey: @"zip"];*/
-				
-				
-				NSError *error;
-				context = [appDelegate managedObjectContext];
-				if (![context save: &error]) {
-					NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-				}
-			}
+			
+			
+			//NSFetchRequest *fetchRequest =  [[NSFetchRequest alloc] init];
+//			
+//			NSEntityDescription *entity = [NSEntityDescription entityForName: @"Mall" inManagedObjectContext: context];
+//			
+//			[fetchRequest setEntity: entity];
+//			
+//			[fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"id == %@", [mall valueForKey: @"id"]]];
+//			
+//			//NSLog(@"anything %@", [mall valueForKey: @"id"]);
+//			
+//			NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+//			
+//			[fetchRequest release];
+//			
+//			BOOL exist;
+//			
+//			if ([fetchedObjects count] >0) {
+//				exist = TRUE;
+//			}
+//			else {
+//				exist = FALSE;
+//			}
+//			//if exist => replace
+//			if (exist) {
+//				NSLog(@"%@", @"EXIST");
+//				
+//				
+//			}
+//			//if none => insert new cache
+//			else {
+
 		}];
 	}
 	

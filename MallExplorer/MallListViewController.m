@@ -122,7 +122,7 @@
 //	[tmpMalls insertObject:tmpMall atIndex:2];
 	
 	if ([listOfItems count] !=0) {
-		
+		NSMutableArray *reloadIndexPaths = [NSMutableArray array];
 		NSMutableArray *removeIndexPaths = [NSMutableArray array];
 		for (int i=[mallList count]-1; i>=0 ; i--) {
 			BOOL has = NO;
@@ -130,6 +130,11 @@
 				NSLog(@"%d %d", ((Mall*)[tmpMalls objectAtIndex:x]).mId, ((Mall*)[mallList objectAtIndex:i]).mId);
 				if ((((Mall*)[tmpMalls objectAtIndex:x]).mId == ((Mall*)[mallList objectAtIndex:i]).mId)) {
 					has =YES;
+					
+					if (![((Mall*)[tmpMalls objectAtIndex:x]).name isEqualToString:((Mall*)[mallList objectAtIndex:i]).name]) {
+						[mallList replaceObjectAtIndex: i withObject: [tmpMalls objectAtIndex: x]];
+						[reloadIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+					}
 				}
 				
 			}
@@ -144,9 +149,9 @@
 			[listOfItems addObject:aMall.name];
 		}
 
-		[self.tableView beginUpdates];
-		[self.tableView deleteRowsAtIndexPaths:removeIndexPaths withRowAnimation:UITableViewRowAnimationRight];
-		[self.tableView endUpdates];		
+//		[self.tableView beginUpdates];
+//		
+//		[self.tableView endUpdates];		
 		
 
 		
@@ -163,6 +168,8 @@
 			[listOfItems addObject:aMall.name];
 		}
 		[self.tableView beginUpdates];
+		[self.tableView reloadRowsAtIndexPaths:reloadIndexPaths withRowAnimation:UITableViewRowAnimationMiddle];
+		[self.tableView deleteRowsAtIndexPaths:removeIndexPaths withRowAnimation:UITableViewRowAnimationRight];
 		[self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationLeft];
 		[self.tableView endUpdates];
 
