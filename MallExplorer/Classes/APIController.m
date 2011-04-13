@@ -33,11 +33,12 @@
 	self.path = path;
 	
 	if ([path isEqualToString: @"/malls.json"]) {
-		//if ([delegate respondsToSelector: @selector(cacheRespond:)]) {
-			id respond = [self mapListCache];
-		self.result = respond;
 		if ([delegate respondsToSelector: @selector(cacheRespond:)]) {
-			[delegate cacheRespond: self];
+			NSArray *respond = [self mapListCache];
+			if ([respond count] > 0) {
+				self.result = respond;	
+				[delegate cacheRespond: self];
+			}
 		}
 		//NSLog([respond description]);
 			//[delegate cacheRespond: return];
