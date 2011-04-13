@@ -32,37 +32,31 @@
 
 - (void) testCoreData {
 	NSManagedObjectContext *context = [self managedObjectContext];
-	NSManagedObject *mall = [NSEntityDescription 
+/*	NSManagedObject *mall = [NSEntityDescription 
 							 insertNewObjectForEntityForName: @"Mall"
 							 inManagedObjectContext: context];
 	
-	[mall setValue: [NSNumber numberWithInt: 1] forKey:@"id"];
-	[mall setValue: @"Vivo" forKey: @"name"];
+	[mall setValue: [NSNumber numberWithInt: 2] forKey:@"id"];
+	[mall setValue: @"City Hall" forKey: @"name"];
 	[mall setValue: @"Whatever" forKey: @"address"];
 	[mall setValue: @"1.1" forKey: @"latitude"];
 	[mall setValue: @"1.1" forKey: @"longitude"];
 	[mall setValue: @"12345" forKey: @"zip"];
 	
-	NSManagedObject *map = [NSEntityDescription 
-							 insertNewObjectForEntityForName: @"Map"
-							 inManagedObjectContext: context];
 	
-	[map setValue: [NSNumber numberWithInt: 1] forKey: @"id"];
-	[map setValue: @"01" forKey:@"level"];
-	[map setValue: mall forKey: @"mall"];
-	
-	
-	NSError *error;
 	
 	if (![context save: &error]) {
 		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 	}
-	
+	 */
+	NSError *error;
 	NSFetchRequest *fetchRequest =  [[NSFetchRequest alloc] init];
 	
 	NSEntityDescription *entity = [NSEntityDescription entityForName: @"Mall" inManagedObjectContext: context];
 	
 	[fetchRequest setEntity: entity];
+	
+	[fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"id == %d", 1]];
 	
 	NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
 	

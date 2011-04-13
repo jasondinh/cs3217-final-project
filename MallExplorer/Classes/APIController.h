@@ -12,15 +12,16 @@
 
 @protocol APIDelegate;
 
-@interface APIController : NSObject {
+@interface APIController : NSObject <NSCopying> {
 	id<APIDelegate> delegate;	//delegate object does not get retained
 	BOOL debugMode; //set to YES to enable NSLog of output
 	NSURL *url;
 	id result;
+	NSString *path;
 }
-
+@property (retain) NSString *path;
 @property (retain) NSURL *url;
-@property (assign) id result;
+@property (retain) id result;
 @property (nonatomic,assign) id<APIDelegate> delegate;
 @property BOOL debugMode;
 

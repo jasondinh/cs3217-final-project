@@ -11,17 +11,42 @@
 #import "ASIFormDataRequest.h"
 #import "Constant.h"
 #import "JSON.h"
-
+#import "MallExplorerAppDelegate.h"
 @implementation APIController
-@synthesize delegate, debugMode, url, result;
+@synthesize delegate, debugMode, url, result, path;
+
+- (id) initCopy: (APIController *) toBeCopied {
+	self = [super init];
+	if (self) {
+		self.delegate = toBeCopied.delegate;
+		self.debugMode = toBeCopied.debugMode;
+		self.url = [[toBeCopied.url copy] autorelease];
+		self.result = [[toBeCopied.result copy] autorelease]; //potential bug
+		self.path = [[toBeCopied.path copy] autorelease];
+	}
+	return self;
+}
 
 - (void) getAPI: (NSString *) path {
 	
+	//depend on path, try to query cache here
+	self.path = path;
 	
+	if ([path isEqualToString: @"/malls.json"]) {
+		//if ([delegate respondsToSelector: @selector(cacheRespond:)]) {
+			id respond = [self mapListCache];
+		self.result = respond;
+		if ([delegate respondsToSelector: @selector(cacheRespond:)]) {
+			[delegate cacheRespond: self];
+		}
+		//NSLog([respond description]);
+			//[delegate cacheRespond: return];
+		//}
+	}
 	
 	NSString *fullPath = [NSString stringWithFormat: @"%@%@", API_END_POINT, path];
 	if (debugMode) {
-		NSLog(@"APIController: getAPI with path: %@", fullPath);
+		NSLog(@"APIController: getAPI with path: %@, url: %@", path, fullPath);
 	}
 	NSURL *url = [NSURL URLWithString: fullPath];
 	ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL: url];
@@ -32,11 +57,45 @@
 	[request startAsynchronous];
 }
 
-- (void) hitCache: (NSURL *) url {
-	//try if the request hit the cache
+
+- (id) mapListCache {
+	NSArray *fields = [NSArray arrayWithObjects: @"address", @"id", @"latitude", @"longitude", @"name", @"zip", nil];
+	NSLog(@"a");
+	MallExplorerAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+	NSManagedObjectContext *context = [appDelegate managedObjectContext];
+		
+	NSError *error;
+	
+	NSFetchRequest *fetchRequest =  [[NSFetchRequest alloc] init];
+	
+	NSEntityDescription *entity = [NSEntityDescription entityForName: @"Mall" inManagedObjectContext: context];
+	
+	[fetchRequest setEntity: entity];
+	
+	//[fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"id == %d", 1]];
+	
+	NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	NSMutableArray *results = [NSMutableArray array];
+	for (NSManagedObject *info in fetchedObjects) {
+		NSMutableDictionary *tmp = [NSMutableDictionary dictionary];
+		
+		[fields enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id x, NSUInteger index, BOOL *stop){
+			[tmp setObject:[info valueForKey: x] forKey: x];
+		}];
+		NSDictionary *tmpDic = [NSDictionary dictionaryWithObject: tmp forKey: @"mall"];
+		
+		[results addObject: tmpDic];
+	}
+	
+	[fetchRequest release];
+	return results;
 }
 
+
 - (void) postAPI: (NSString *) path withData: (NSDictionary *) data {
+	
+	//post API never hit cache
 	
 	NSString *fullPath = [NSString stringWithFormat: @"%@%@", API_END_POINT, path];
 	
@@ -61,6 +120,7 @@
 	[request setDidFinishSelector: @selector(APIFinished:)];
 	[request setDidStartSelector: @selector(APIStarted:)];
 	[request startAsynchronous];
+	
 }
 
 - (void) APIStarted: (ASIHTTPRequest *) request {
@@ -76,18 +136,101 @@
 }
 
 - (void) APIFinished: (ASIHTTPRequest *) request {
+	
+	
+	NSArray *fields = [NSArray arrayWithObjects: @"address", @"latitude", @"longitude", @"name", nil];
+	//if cache existed => replace cache
+	//it it doesn't, insert new cache
+	
 	if (debugMode) {
 		NSLog(@"APIController: finished load with data: %@", [request responseString]);
 	}
 	
-	NSString *result = [request responseString];
+	NSString *resultString = [request responseString];
 	
-	id returnObject = [result JSONValue];
+	id returnObject = [resultString JSONValue];
+	
+	//NSLog(@"%@", [returnObject description]);
 	
 	self.result = returnObject;
 	
-	if ([delegate respondsToSelector: @selector(requestDidLoad:)]) {
-		[delegate requestDidLoad: self];
+	if ([self.path isEqualToString: @"/malls.json"]) {
+		NSArray *tmp = (NSArray *) returnObject;
+		
+		[tmp enumerateObjectsWithOptions: NSEnumerationConcurrent usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+			
+			NSDictionary *mall = (NSDictionary *) obj;
+			
+			mall = [mall valueForKey: @"mall"];
+			
+			MallExplorerAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+			
+			//search for mall with corresponding id
+			
+			NSManagedObjectContext *context = [appDelegate managedObjectContext];
+			NSError *error;
+			NSFetchRequest *fetchRequest =  [[NSFetchRequest alloc] init];
+			
+			NSEntityDescription *entity = [NSEntityDescription entityForName: @"Mall" inManagedObjectContext: context];
+			
+			[fetchRequest setEntity: entity];
+			
+			[fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"id == %@", [mall valueForKey: @"id"]]];
+			
+			//NSLog(@"anything %@", [mall valueForKey: @"id"]);
+			
+			NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+			
+			[fetchRequest release];
+			
+			BOOL exist;
+			
+			if ([fetchedObjects count] >0) {
+				exist = TRUE;
+			}
+			else {
+				exist = FALSE;
+			}
+			//if exist => replace
+			if (exist) {
+				NSLog(@"%@", @"EXIST");
+				
+				
+			}
+			//if none => insert new cache
+			else {
+				NSLog(@"%@", @"NOT EXIST");
+				NSManagedObject *tmpMall = [NSEntityDescription 
+										 insertNewObjectForEntityForName: @"Mall"
+										 inManagedObjectContext: context];
+				
+				[fields enumerateObjectsWithOptions: NSEnumerationConcurrent usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+					[tmpMall setValue: [mall valueForKey: obj] forKey:obj];
+				}];
+				
+				[tmpMall setValue: [NSString stringWithFormat: @"%@", [mall valueForKey: @"id"]] forKey: @"id"];
+				[tmpMall setValue: [NSString stringWithFormat: @"%@", [mall valueForKey: @"zip"]] forKey: @"zip"];
+				
+				
+				/*[mall setValue:  forKey:@"id"];
+				[mall setValue: @"City Hall" forKey: @"name"];
+				[mall setValue: @"Whatever" forKey: @"address"];
+				[mall setValue: @"1.1" forKey: @"latitude"];
+				[mall setValue: @"1.1" forKey: @"longitude"];
+				[mall setValue: @"12345" forKey: @"zip"];*/
+				
+				
+				NSError *error;
+				context = [appDelegate managedObjectContext];
+				if (![context save: &error]) {
+					NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+				}
+			}
+		}];
+	}
+	
+	if ([delegate respondsToSelector: @selector(serverRespond:)]) {
+		[delegate serverRespond: self];
 	}
 }
 
@@ -101,10 +244,19 @@
 	}
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+	APIController *api = [[APIController alloc] initCopy: self];
+	return [api autorelease];
+}
+
 
 - (void) dealloc {
+	[result release];
+	[path release];
 	[url release];
 	[super dealloc];
 }
+
+
 
 @end

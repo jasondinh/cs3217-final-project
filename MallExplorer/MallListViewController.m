@@ -60,6 +60,7 @@
 	[self cacheRespond:apiController];
 	
 }
+
 - (void)cacheRespond: (APIController *) apiController{
 	NSLog(@"cache did respond");
 	NSArray *malls = (NSArray *) apiController.result;
@@ -68,7 +69,7 @@
 	NSMutableArray *tmpMalls = [NSMutableArray array];
 	while (tmpMall = [e nextObject]) {
 		NSDictionary *tmp = [tmpMall valueForKey: @"mall"];
-		Mall *mall = [[Mall alloc] initWithId: [tmp valueForKey: @"id"] 
+		Mall *mall = [[Mall alloc] initWithId: [[tmp valueForKey: @"id"] intValue]
 									  andName:[tmp valueForKey: @"name"] 
 								 andLongitude:[tmp valueForKey: @"longitude"] 
 								  andLatitude:[tmp valueForKey: @"latitude"] 
@@ -89,21 +90,21 @@
 	[self.tableView reloadData];
 	[progress hide:YES];
 	[tmpMall release];
-	
-	[self serverRespond:apiController];
+	NSLog( @"mall list before: %d", [mallList count]);
+	//[self serverRespond:apiController];
 	//[self performSelector:@selector(serverRespond:) withObject:apiController afterDelay:1];
 	
 	
 }
 - (void)serverRespond: (APIController *) apiController{
-
+	NSLog( @"mall list after: %d", [mallList count]);
 	NSArray *malls = (NSArray *) apiController.result;
 	NSEnumerator *e = [malls objectEnumerator];
 	NSDictionary *tmpMall;
 	NSMutableArray *tmpMalls = [NSMutableArray array];
 	while (tmpMall = [e nextObject]) {
 		NSDictionary *tmp = [tmpMall valueForKey: @"mall"];
-		Mall *mall = [[Mall alloc] initWithId: [tmp valueForKey: @"id"] 
+		Mall *mall = [[Mall alloc] initWithId: [[tmp valueForKey: @"id"] intValue]
 									  andName:[tmp valueForKey: @"name"] 
 								 andLongitude:[tmp valueForKey: @"longitude"] 
 								  andLatitude:[tmp valueForKey: @"latitude"] 
@@ -114,11 +115,11 @@
 			[mall release];
 	}
 	//	[tmpMalls removeAllObjects];
-	tmpMall = [[Mall alloc] initWithId:123 andName:@"test" andLongitude:@"123" andLatitude:@"231" andAddress:@"asdf" andZip:12];
-	[tmpMalls insertObject:tmpMall atIndex:1];
-	[tmpMalls removeObjectAtIndex:0];
-
-	[tmpMalls insertObject:tmpMall atIndex:2];
+	//tmpMall = [[Mall alloc] initWithId:123 andName:@"test" andLongitude:@"123" andLatitude:@"231" andAddress:@"asdf" andZip:12];
+//	[tmpMalls insertObject:tmpMall atIndex:1];
+//	[tmpMalls removeObjectAtIndex:0];
+//
+//	[tmpMalls insertObject:tmpMall atIndex:2];
 	
 	if ([listOfItems count] !=0) {
 		
@@ -126,6 +127,7 @@
 		for (int i=[mallList count]-1; i>=0 ; i--) {
 			BOOL has = NO;
 			for (int x = 0; x < [tmpMalls count]; x++) {
+				NSLog(@"%d %d", ((Mall*)[tmpMalls objectAtIndex:x]).mId, ((Mall*)[mallList objectAtIndex:i]).mId);
 				if ((((Mall*)[tmpMalls objectAtIndex:x]).mId == ((Mall*)[mallList objectAtIndex:i]).mId)) {
 					has =YES;
 				}

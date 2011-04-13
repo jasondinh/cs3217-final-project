@@ -377,7 +377,7 @@
 		E18A8F9E1344D21C00AB72AB /* UIView+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TKCategory.m"; sourceTree = "<group>"; };
 		E18A8FD21344D24200AB72AB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E1A525901350DAC70010541A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		E1A527031350ED670010541A /* MallExplorer.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = MallExplorer.xcdatamodel; sourceTree = "<group>"; };
+		E1A527031350ED670010541A /* MallExplorer.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; name = MallExplorer.xcdatamodel; path = ../MallExplorer.xcdatamodel; sourceTree = "<group>"; };
 		E1C435CD133CC1CF00646BF1 /* Mall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mall.h; sourceTree = "<group>"; };
 		E1C435CE133CC1CF00646BF1 /* Mall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mall.m; sourceTree = "<group>"; };
 		E1C435D0133CC1D200646BF1 /* Map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
@@ -440,6 +440,7 @@
 				E1C435C5133CC10800646BF1 /* Controllers */,
 				1D3623240D0F684500981E51 /* MallExplorerAppDelegate.h */,
 				1D3623250D0F684500981E51 /* MallExplorerAppDelegate.m */,
+				E1A527031350ED670010541A /* MallExplorer.xcdatamodel */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -547,7 +548,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				E1A527031350ED670010541A /* MallExplorer.xcdatamodel */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
