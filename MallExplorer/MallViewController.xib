@@ -101,7 +101,7 @@
 					</object>
 					<object class="IBUIImageView" id="319218950">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{245, 704}, {45, 45}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -112,7 +112,7 @@
 					</object>
 					<object class="IBUIImageView" id="362126929">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{298, 704}, {45, 45}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -123,7 +123,7 @@
 					</object>
 					<object class="IBUIImageView" id="739989884">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{184, 706}, {40, 40}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -134,7 +134,7 @@
 					</object>
 					<object class="IBUIImageView" id="832159856">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{360, 704}, {42, 43}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -162,7 +162,7 @@
 					</object>
 					<object class="IBUIImageView" id="241687751">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{421, 704}, {48, 45}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<float key="IBUIAlpha">0.5</float>
