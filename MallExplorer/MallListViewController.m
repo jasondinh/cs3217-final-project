@@ -61,14 +61,13 @@
 	
 }
 - (void)cacheRespond: (APIController *) apiController{
-	NSLog(@"cache did respond");
 	NSArray *malls = (NSArray *) apiController.result;
 	NSEnumerator *e = [malls objectEnumerator];
 	NSDictionary *tmpMall;
 	NSMutableArray *tmpMalls = [NSMutableArray array];
 	while (tmpMall = [e nextObject]) {
 		NSDictionary *tmp = [tmpMall valueForKey: @"mall"];
-		Mall *mall = [[Mall alloc] initWithId: [tmp valueForKey: @"id"] 
+		Mall *mall = [[Mall alloc] initWithId:[tmp valueForKey: @"id"] 
 									  andName:[tmp valueForKey: @"name"] 
 								 andLongitude:[tmp valueForKey: @"longitude"] 
 								  andLatitude:[tmp valueForKey: @"latitude"] 
@@ -91,7 +90,6 @@
 	[tmpMall release];
 	
 	[self serverRespond:apiController];
-	//[self performSelector:@selector(serverRespond:) withObject:apiController afterDelay:1];
 	
 	
 }
@@ -103,7 +101,7 @@
 	NSMutableArray *tmpMalls = [NSMutableArray array];
 	while (tmpMall = [e nextObject]) {
 		NSDictionary *tmp = [tmpMall valueForKey: @"mall"];
-		Mall *mall = [[Mall alloc] initWithId: [tmp valueForKey: @"id"] 
+		Mall *mall = [[Mall alloc] initWithId:[tmp valueForKey: @"id"] 
 									  andName:[tmp valueForKey: @"name"] 
 								 andLongitude:[tmp valueForKey: @"longitude"] 
 								  andLatitude:[tmp valueForKey: @"latitude"] 
@@ -111,7 +109,7 @@
 									   andZip:[tmp valueForKey: @"zip"]];
 		
 		[tmpMalls addObject: mall];
-			[mall release];
+		[mall release];
 	}
 	//	[tmpMalls removeAllObjects];
 	tmpMall = [[Mall alloc] initWithId:123 andName:@"test" andLongitude:@"123" andLatitude:@"231" andAddress:@"asdf" andZip:12];
@@ -183,7 +181,8 @@
 	[progress hide:YES];
 	cityMapViewController.mallList = mallList;
 	[cityMapViewController reloadView:nil];
-	//[self requestFail:apiController];
+
+		//[self requestFail:apiController];
 
 }
 
@@ -232,6 +231,7 @@
 	api.debugMode = YES;
 	api.delegate = self;
 	[api getAPI: @"/malls.json"];
+
 }
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -249,7 +249,15 @@
   
 }
 
+-(void) cityMapSelectedMall:(id)sender{
+	for (int i =0;i<[listOfItems count];i++){
+		if ([listOfItems objectAtIndex:i] == ((Mall*)[sender object]).name) {
+			[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];			
+		}
+	}
+	
 
+}
 //override
 /*- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	//    NSLog(@"em da dc goi");
@@ -308,7 +316,7 @@
 	 typeOfList.selectedSegmentIndex = 1;
 	 UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:typeOfList];
 	 self.toolbarItems = [NSMutableArray arrayWithObject:barButton];
-	 
+	 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cityMapSelectedMall:) name:@"mall chosen in citymap" object:nil];	
 	[barButton release];
 	 /*self.toolbarItems =[NSMutableArray arrayWithObject: [[[UIBarButtonItem alloc]
 	 initWithBarButtonSystemItem:UIBarButtonSystemItemDone

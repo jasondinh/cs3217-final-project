@@ -49,7 +49,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization.
-
+		self.mapView.delegate =self;
     }
     return self;
 }
@@ -58,16 +58,23 @@
 
 	for (Mall* aMall in mallList){
 	
-		if (fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < 1000.0 &&
-			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <1000.0)) {
-
+		if (fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < 2.0 &&
+			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <2.0)) {
 			[mapView addAnnotation:aMall];
-			NSLog(@"%lf %lf",aMall.coordinate.latitude ,aMall.coordinate.longitude );
-				
 		}
 	}
+	//
 }
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
 
+	//for (Mall *aMall in mallList) {
+		//if ([view isEqual:aMall]) {
+				[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen in citymap" object:view.annotation];
+		//}
+	//}
+
+
+}
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
@@ -75,7 +82,6 @@
 	CLLocationManager *locationManager=[[CLLocationManager alloc] init];
 	locationManager.delegate=self;
 	locationManager.desiredAccuracy=kCLLocationAccuracyNearestTenMeters;
-	
 	[locationManager startUpdatingLocation];
 	
 	[mapView setMapType:MKMapTypeStandard];
@@ -102,6 +108,7 @@
 	else {
 		MKPinAnnotationView* annView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"s"];
 		annView.animatesDrop =YES;
+		annView.canShowCallout =YES;
 		return annView;
 	}
 	
@@ -123,8 +130,12 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
 	CLLocationCoordinate2D location;
 	location = newLocation.coordinate;
-	mapView.centerCoordinate =location;
-	[self reloadView:nil];
+	if (fabs(location.longitude - mapView.centerCoordinate.longitude) >0.1 
+		&& fabs(location.latitude - mapView.centerCoordinate.latitude)>0.1) {
+		mapView.centerCoordinate =location;
+	}
+	[self reloadView:nil];	
+
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
