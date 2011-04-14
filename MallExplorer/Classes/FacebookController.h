@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Facebook.h"
 
-
-@interface FacebookController : NSObject {
-
+@interface FacebookController : NSObject <FBSessionDelegate> {
+	Facebook *facebook;
 }
+
+@property (retain) Facebook *facebook;
+
+- (void) checkInatLongitude: (NSString *) lon andLat: (NSString *) lat andShopName: (NSString *) shopName;
 
 @end
