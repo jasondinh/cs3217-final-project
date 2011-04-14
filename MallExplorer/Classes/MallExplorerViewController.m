@@ -17,6 +17,7 @@
 #import "Mall.h"
 
 #import <CoreLocation/CoreLocation.h>
+#import "FacebookController.h"
 @implementation MallExplorerViewController
 BOOL chosen,shopchosen;
 
@@ -128,7 +129,12 @@ BOOL chosen,shopchosen;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
+	
 	[super viewDidLoad];
+	//FacebookController *fbController = [[FacebookController alloc] init];
+	
+	//[fbController performSelector: @selector(authorize) withObject:nil afterDelay:2];
+	//[fbController authorize];
 }
 
 
