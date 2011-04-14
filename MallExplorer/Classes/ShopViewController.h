@@ -20,7 +20,7 @@
 }
 @property (retain) Shop* theShop;
 @property (assign) Annotation* annotation;
--(id)initWithShop:(Shop*)aShop;
+-(id)loadShop:(Shop*)aShop;
 //REQUIRES:
 //MODIFIES:self
 //EFFECTS: return a ShopViewController with information

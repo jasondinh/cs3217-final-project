@@ -222,16 +222,13 @@
 	{
         product = [self.listOfItems objectAtIndex:indexPath.row];
     }
-	if (typeOfList.selectedSegmentIndex ==0) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" 
-															object:[mallList objectAtIndex:indexPath.row]];
 
-	} else if (typeOfList.selectedSegmentIndex ==1) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" 
-															object:[nearbyList objectAtIndex:indexPath.row]];
-		
-	} else if (typeOfList.selectedSegmentIndex ==2) {
-	}
+		for(Mall* aMall in mallList){
+			if (aMall.name == product) 
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" 
+															object:aMall];
+		}
+
 }
 
 -(void) cityMapSelectedMall:(id)sender{

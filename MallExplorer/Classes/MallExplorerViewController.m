@@ -53,9 +53,9 @@ BOOL chosen,shopchosen;
 }
 
 -(void) shopChosen:(id)sender{
-		Shop* aShop = [[Shop alloc]init];
-		ShopViewController* shopViewController = [[ShopViewController alloc] initWithShop:aShop] ;
-	[aShop release];
+	NSLog(((Shop*)[sender object]).shopName);
+		ShopViewController* shopViewController = [[ShopViewController alloc] init] ;
+	[shopViewController loadShop:(Shop*)[sender object]];
 		[masterViewController pushViewController:shopViewController animated:YES];
 		masterViewController.delegate = shopViewController;
 	

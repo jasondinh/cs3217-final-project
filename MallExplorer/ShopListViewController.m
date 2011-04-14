@@ -49,7 +49,6 @@
 -(void)serverRespond:(APIController *)apiController{
 	
 	NSArray *shops = (NSArray *) apiController.result;
-	NSLog([shops description]);
 	NSMutableArray *tmpShops = [NSMutableArray array];
 	[shops enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		NSDictionary *tmp = [obj valueForKey: @"shop"];
@@ -68,7 +67,7 @@
 	}
 	[self.tableView reloadData];
 	[progress hide:YES];
-	[self doneLoadingTableViewData];
+
 	if (_reloading){
 		[self doneLoadingTableViewData];
 	}
@@ -77,13 +76,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	listOfItems = [[NSMutableArray alloc] init];
-	//[listOfItems addObject:@"KFC"];
-//	[listOfItems addObject:@"Mac Donald"];
-//	[listOfItems addObject:@"KKK"];
-//	[listOfItems addObject:@"Triumph"];
-//	[listOfItems addObject:@"abc"];
-//	[listOfItems addObject:@"Lucky Chinatown"];
-//	[listOfItems addObject:@"Hougang Green Shopping Mall"];
 	copyListOfItems = [[NSMutableArray alloc]init];
 	self.navigationItem.title = @"Shop list";
 	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -105,10 +97,8 @@
 -(void)addToFavorite:(id)sender{
 }
 -(id)initWithMall:(Mall*)mall{
-	self = [super init];
-	if (self) {
 		self.mall = mall;
-	}
+
 	return self;
 }
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -130,10 +120,12 @@
 	}
 	
 	//Initialize the detail view controller and display it.
-	
-	Mall * chosenMall = [[[Mall alloc] init] autorelease];
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen" object:chosenMall];
-	
+
+	for(Shop* aShop in shopList){
+		if (aShop.shopName == selectedItem) 
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen" 
+																object:aShop];
+	}	
 	//cityMapViewController.detailItem = 
 	//[NSString stringWithFormat:@"%@", 
 	//[listOfMovies objectAtIndex:indexPath.row]];    

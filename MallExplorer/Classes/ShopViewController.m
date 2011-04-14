@@ -19,17 +19,65 @@
 
 #pragma mark -
 #pragma mark Initialization
--(id)initWithShop:(Shop*)aShop{
+-(id)loadShop:(Shop*)aShop{
 	//REQUIRES: aShop != nil
 	//MODIFIES: self
 	//EFFECTS: return a ShopViewController with information
 	//			obtained from aShop
-	self =[super init];
-	if(self){
-		theShop = aShop;
-	}
+
+		
+	self.theShop = aShop;
+	//settings self
+	self.title = self.theShop.shopName;
+	self.contentSizeForViewInPopover = CGSizeMake(POPOVER_WIDTH, POPOVER_HEIGHT);
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
+	[self.tabBar setBackgroundColor:[UIColor whiteColor]] ;
 	
-	return self;
+	CGRect frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width, 48);
+	UIView *v = [[UIView alloc] initWithFrame:frame];
+	[v setBackgroundColor:[UIColor whiteColor]];
+	[v setAlpha:0.7];
+	[[self tabBar] insertSubview:v atIndex:0];
+	[v release];
+	
+	UIBarButtonItem* FromHere = [[UIBarButtonItem alloc]initWithTitle:@"From here" 
+																style:UIBarButtonItemStyleBordered 
+															   target:self 
+															   action:@selector(fromHere:)];
+	UIBarButtonItem* GoHere = [[UIBarButtonItem alloc]initWithTitle:@"Go here" 
+															  style:UIBarButtonItemStyleBordered 
+															 target:self 
+															 action:@selector(goHere:)];
+	[self setToolbarItems:[NSArray arrayWithObjects:FromHere,GoHere,nil] animated:YES];
+	//clean up
+	[GoHere release];
+	[FromHere release];
+	
+	
+	
+	//add 3 new controllers for 3 tabs
+	
+	ShopOverviewController *shopOverviewController = [[ShopOverviewController alloc] initWithShop:theShop] ;
+	CommentViewController *commentController = [[CommentViewController alloc] init] ;
+	FacebookTabViewController *facebookTabController = [[FacebookTabViewController alloc] init] ;
+	[self setViewControllers:[NSArray arrayWithObjects:shopOverviewController,commentController,facebookTabController,nil]];
+	
+	//add icons and titles for 3 controllers
+	shopOverviewController.title =@"OVERVIEW";
+	commentController.title =@"COMMENTS";
+	facebookTabController.title =@"FACEBOOK";
+	CGSize tabBarIconSize = CGSizeMake(TAB_BAR_ICON_WIDTH, TAB_BAR_ICON_HEIGHT);
+	shopOverviewController.tabBarItem.image = [self scale:[UIImage imageNamed:@"overview_tab_icon.png" ] 
+												   ToSize:tabBarIconSize ];
+	commentController.tabBarItem.image		= [self scale:[UIImage imageNamed:@"comments_tab_icon.png" ]
+											   ToSize:tabBarIconSize ];
+	facebookTabController.tabBarItem.image	= [self scale:[UIImage imageNamed:@"facebook_tab_icon.png" ] 
+												  ToSize:tabBarIconSize ];
+	
+	//clean up
+	[shopOverviewController release];
+	[commentController release];
+	[facebookTabController release];
 }
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -109,56 +157,7 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	//settings self
-	self.title = theShop.shopName;
-	self.contentSizeForViewInPopover = CGSizeMake(POPOVER_WIDTH, POPOVER_HEIGHT);
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
-	[self.tabBar setBackgroundColor:[UIColor whiteColor]] ;
-	
-	CGRect frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width, 48);
-	UIView *v = [[UIView alloc] initWithFrame:frame];
-	[v setBackgroundColor:[UIColor whiteColor]];
-	[v setAlpha:0.7];
-	[[self tabBar] insertSubview:v atIndex:0];
-	[v release];
-	
-	UIBarButtonItem* FromHere = [[UIBarButtonItem alloc]initWithTitle:@"From here" 
-																style:UIBarButtonItemStyleBordered 
-															   target:self 
-															   action:@selector(fromHere:)];
-	UIBarButtonItem* GoHere = [[UIBarButtonItem alloc]initWithTitle:@"Go here" 
-															  style:UIBarButtonItemStyleBordered 
-															 target:self 
-															 action:@selector(goHere:)];
-	[self setToolbarItems:[NSArray arrayWithObjects:FromHere,GoHere,nil] animated:YES];
-	//clean up
-	[GoHere release];
-	[FromHere release];
-	
-	
-	
-	//add 3 new controllers for 3 tabs
-	ShopOverviewController *shopOverviewController = [[ShopOverviewController alloc] init] ;
-	CommentViewController *commentController = [[CommentViewController alloc] init] ;
-	FacebookTabViewController *facebookTabController = [[FacebookTabViewController alloc] init] ;
-	[self setViewControllers:[NSArray arrayWithObjects:shopOverviewController,commentController,facebookTabController,nil]];
-	
-	//add icons and titles for 3 controllers
-	shopOverviewController.title =@"OVERVIEW";
-	commentController.title =@"COMMENTS";
-	facebookTabController.title =@"FACEBOOK";
-	CGSize tabBarIconSize = CGSizeMake(TAB_BAR_ICON_WIDTH, TAB_BAR_ICON_HEIGHT);
-	shopOverviewController.tabBarItem.image = [self scale:[UIImage imageNamed:@"overview_tab_icon.png" ] 
-												   ToSize:tabBarIconSize ];
-	commentController.tabBarItem.image		= [self scale:[UIImage imageNamed:@"comments_tab_icon.png" ]
-													ToSize:tabBarIconSize ];
-	facebookTabController.tabBarItem.image	= [self scale:[UIImage imageNamed:@"facebook_tab_icon.png" ] 
-													ToSize:tabBarIconSize ];
-	
-	//clean up
-	[shopOverviewController release];
-	[commentController release];
-	[facebookTabController release];
+
 	
 
 	
