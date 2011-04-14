@@ -18,6 +18,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import "FacebookController.h"
+#import "APIController.h"
 @implementation MallExplorerViewController
 BOOL chosen,shopchosen;
 
@@ -62,6 +63,7 @@ BOOL chosen,shopchosen;
 
 
 -(void) mallChosen:(NSNotification*) notification{
+	
 	id object = notification.object;
 	if ([masterViewController.topViewController isKindOfClass:[MallListViewController class]]) {		
 		Mall* aMall = object;
@@ -69,7 +71,7 @@ BOOL chosen,shopchosen;
 		[aMall release];
 		masterViewController.delegate = shopListViewController;
 		[masterViewController pushViewController:shopListViewController animated:YES];
-		
+		[shopListViewController loadData:nil];
 		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
 		
 		aMVC.mall = aMall;
@@ -79,9 +81,16 @@ BOOL chosen,shopchosen;
 		// [aMVC loadMaps: andStairs: withDefaultMap:]
 
 		
-		[aMVC loadMaps:nil andStairs:nil withDefaultMap:nil];		
+				
 		
 		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
+		
+		[self loadMaps];
+		[self loadStairs];
+		
+		[aMVC loadMaps:nil andStairs:nil withDefaultMap:nil];
+		
+		
 		[self setDelegate: aMVC];
 		if (((UIBarButtonItem*)[[cityMapViewController toolbar].items objectAtIndex:0]).title == @"Root List") {
 			UIBarButtonItem *barButtonItem = [[cityMapViewController toolbar].items objectAtIndex:0];	
@@ -91,6 +100,40 @@ BOOL chosen,shopchosen;
 			[items release];
 		}
 	}
+}
+
+-(void) loadShops {
+	
+}
+
+- (void) loadMaps {
+	APIController *api = [[APIController alloc] init];
+	api.debugMode = YES;
+	api.delegate = self;
+	Mall* theMall = [[self.viewControllers objectAtIndex:1] mall];
+	NSInteger mId = theMall.mId;
+	[api getAPI: [NSString stringWithFormat: @"/malls/%d/maps.json", mId]];
+	
+	//load point
+	
+	//load annotation + shop of Map
+	
+	//load edges
+	
+}
+
+- (void) finishedLoading {
+	
+}
+
+- (void) serverRespond: (APIController *) api {
+	NSLog([[api result] description]);
+}
+
+- (void) loadStairs {
+	//APIController *api = [[APIController alloc] init];
+//	api.delegate = self;
+	
 }
 
 -(void) ListViewWillAppear:(id)sender{

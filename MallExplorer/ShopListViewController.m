@@ -7,10 +7,10 @@
 //
 
 #import "ShopListViewController.h"
-
+#import "Shop.h"
 
 @implementation ShopListViewController
-@synthesize thisLevelList,shopList;
+@synthesize thisLevelList,shopList, mall;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -28,12 +28,47 @@
 - (void)loadView {
 }
 */
+
 -(void)loadData:(id)sender{
+	
+	APIController *api = [[APIController alloc] init];
+	api.debugMode = YES;
+	api.delegate = self;
+	NSInteger mId = mall.mId;
+	[api getAPI: [NSString stringWithFormat: @"/malls/%d/shops.json", mId]];
+	
 	if (_reloading){
 		[self doneLoadingTableViewData];
 	}
 }
+
+-(void) cacheRespond:(APIController *)apiController {
+	
+}
+
 -(void)serverRespond:(APIController *)apiController{
+	
+	NSArray *shops = (NSArray *) apiController.result;
+	NSLog([shops description]);
+	NSMutableArray *tmpShops = [NSMutableArray array];
+	[shops enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		NSDictionary *tmp = [obj valueForKey: @"shop"];
+		Shop *shop = [[Shop alloc] initWithId: [[tmp valueForKey: @"id"] intValue] 
+									 andLevel:[[[tmp valueForKey: @"map"] valueForKey: @"map"] valueForKey: @"level"] 
+									  andUnit:[tmp valueForKey: @"unit"] 
+								  andShopName:[tmp valueForKey: @"name"] 
+							   andDescription:[tmp valueForKey: @"description"]];
+		[tmpShops addObject: shop];
+	}];
+	
+	self.shopList = [tmpShops mutableCopy];
+	self.listOfItems = [[NSMutableArray alloc]init];
+	for (Shop* aShop in shopList){
+		[listOfItems addObject:aShop.shopName];
+	}
+	[self.tableView reloadData];
+	[progress hide:YES];
+	[self doneLoadingTableViewData];
 	if (_reloading){
 		[self doneLoadingTableViewData];
 	}
@@ -42,13 +77,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	listOfItems = [[NSMutableArray alloc] init];
-	[listOfItems addObject:@"KFC"];
-	[listOfItems addObject:@"Mac Donald"];
-	[listOfItems addObject:@"KKK"];
-	[listOfItems addObject:@"Triumph"];
-	[listOfItems addObject:@"abc"];
-	[listOfItems addObject:@"Lucky Chinatown"];
-	[listOfItems addObject:@"Hougang Green Shopping Mall"];
+	//[listOfItems addObject:@"KFC"];
+//	[listOfItems addObject:@"Mac Donald"];
+//	[listOfItems addObject:@"KKK"];
+//	[listOfItems addObject:@"Triumph"];
+//	[listOfItems addObject:@"abc"];
+//	[listOfItems addObject:@"Lucky Chinatown"];
+//	[listOfItems addObject:@"Hougang Green Shopping Mall"];
 	copyListOfItems = [[NSMutableArray alloc]init];
 	self.navigationItem.title = @"Shop list";
 	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -72,7 +107,7 @@
 -(id)initWithMall:(Mall*)mall{
 	self = [super init];
 	if (self) {
-		
+		self.mall = mall;
 	}
 	return self;
 }
@@ -125,6 +160,7 @@
 
 
 - (void)dealloc {
+	[mall release];
 	[thisLevelList release];
 	[shopList release];
     [super dealloc];

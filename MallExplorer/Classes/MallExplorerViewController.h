@@ -15,6 +15,9 @@
 @interface MallExplorerViewController : UISplitViewController<MKMapViewDelegate,CLLocationManagerDelegate> {
 	CityMapViewController* cityMapViewController;
 	MasterViewController* masterViewController;
+	
+	NSArray *maps;
+	NSArray *stairs;
 }
 
 

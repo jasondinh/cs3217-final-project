@@ -115,8 +115,7 @@ const int maxNumstep = 100;
 }
 
 -(void) loadDataWithMapName:(NSString*) mName withMapImage:(UIImage*) img annotationList:(NSArray*) annList pointList:(NSArray*) pList edgeList:(NSArray*) edgeList defaultCenterPoint:(CGPoint) dfCenterPoint{
-//	self = [super init];
-//	if (!self) return nil;
+
 	imageMap = img;
 	mapName = mName;
 	self.annotationList = [NSMutableArray arrayWithArray:annList];

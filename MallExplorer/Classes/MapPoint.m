@@ -21,7 +21,7 @@ static int nextNodeIndex = 0;
 		self.position = pos;
 		self.index = nextNodeIndex++;
 		self.level = map;
-		NSLog(@"id is %d", nextNodeIndex);
+		//NSLog(@"id is %d", nextNodeIndex);
 	}
 	return self;
 }
