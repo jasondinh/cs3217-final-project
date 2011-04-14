@@ -86,6 +86,7 @@
 		E110CA9F135731EC00A2BB1E /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = E110CA91135731EC00A2BB1E /* Facebook.m */; };
 		E110CAA0135731EC00A2BB1E /* FBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = E110CA94135731EC00A2BB1E /* FBLoginDialog.m */; };
 		E110CAA1135731EC00A2BB1E /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = E110CA96135731EC00A2BB1E /* FBDialog.m */; };
+		E110CC1B135755C000A2BB1E /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E110CC1A135755C000A2BB1E /* icon.png */; };
 		E18A8EEB1344D0E200AB72AB /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = E18A8ED81344D0E200AB72AB /* ASIAuthenticationDialog.m */; };
 		E18A8EEC1344D0E200AB72AB /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = E18A8EDB1344D0E200AB72AB /* ASIDataCompressor.m */; };
 		E18A8EED1344D0E200AB72AB /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = E18A8EDD1344D0E200AB72AB /* ASIDataDecompressor.m */; };
@@ -284,6 +285,7 @@
 		E110CA94135731EC00A2BB1E /* FBLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLoginDialog.m; sourceTree = "<group>"; };
 		E110CA95135731EC00A2BB1E /* FBDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBDialog.h; sourceTree = "<group>"; };
 		E110CA96135731EC00A2BB1E /* FBDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBDialog.m; sourceTree = "<group>"; };
+		E110CC1A135755C000A2BB1E /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		E18A8ED71344D0E200AB72AB /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		E18A8ED81344D0E200AB72AB /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		E18A8ED91344D0E200AB72AB /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -571,6 +573,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				E110CC1A135755C000A2BB1E /* icon.png */,
 				E18A8ED41344CFD700AB72AB /* OpenSourceLibs */,
 				E1C435C8133CC12600646BF1 /* Arts */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -1006,6 +1009,7 @@
 				39C5E9651356679200757E95 /* whiteArrow.png in Resources */,
 				39C5E9661356679200757E95 /* whiteArrow@2x.png in Resources */,
 				E110CA97135731EC00A2BB1E /* FBDialog.bundle in Resources */,
+				E110CC1B135755C000A2BB1E /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

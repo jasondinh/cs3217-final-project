@@ -130,6 +130,7 @@ static NSString* kSDKVersion = @"2";
   // her credentials in order to authorize the application.
   BOOL didOpenOtherApp = NO;
   UIDevice *device = [UIDevice currentDevice];
+	/*
   if ([device respondsToSelector:@selector(isMultitaskingSupported)] && [device isMultitaskingSupported]) {
     if (tryFBAppAuth) {
       NSString *fbAppUrl = [FBRequest serializeURL:kFBAppAuthURL params:params];
@@ -144,16 +145,17 @@ static NSString* kSDKVersion = @"2";
       didOpenOtherApp = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:fbAppUrl]];
     }
   }
+	 */
 
   // If single sign-on failed, open an inline login dialog. This will require the user to
   // enter his or her credentials.
-  if (!didOpenOtherApp) {
+  //if (!didOpenOtherApp) {
     [_loginDialog release];
     _loginDialog = [[FBLoginDialog alloc] initWithURL:loginDialogURL
                                           loginParams:params
                                              delegate:self];
     [_loginDialog show];
-  }
+  //}
 }
 
 /**
