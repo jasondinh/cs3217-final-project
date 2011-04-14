@@ -12,11 +12,11 @@
 
 
 @interface ShopListViewController : ListViewController {
-	NSMutableArray* favoriteList;
+	NSMutableArray* thisLevelList;
 	NSMutableArray* shopList;
 
 }
-@property (nonatomic,retain) NSMutableArray* favoriteList;
+@property (nonatomic,retain) NSMutableArray* thisLevelList;
 @property (nonatomic,retain) NSMutableArray* shopList;
 
 -(id)initWithMall:(Mall*)mall;

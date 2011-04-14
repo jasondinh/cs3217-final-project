@@ -10,7 +10,7 @@
 
 
 @implementation ShopListViewController
-@synthesize favoriteList,shopList;
+@synthesize thisLevelList,shopList;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -28,7 +28,16 @@
 - (void)loadView {
 }
 */
-
+-(void)loadData:(id)sender{
+	if (_reloading){
+		[self doneLoadingTableViewData];
+	}
+}
+-(void)serverRespond:(APIController *)apiController{
+	if (_reloading){
+		[self doneLoadingTableViewData];
+	}
+}
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,15 +53,16 @@
 	self.navigationItem.title = @"Shop list";
 	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
 
-	NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"This level",@"Favorite",nil];
+	//NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"This level",@"Favorite",nil];
+	NSArray* segmentArray = [NSArray arrayWithObjects:@"ALl",@"This level",nil];
 	typeOfList = [[UISegmentedControl alloc] initWithItems:segmentArray];
 	[typeOfList sizeToFit];
 	typeOfList.segmentedControlStyle = UISegmentedControlStyleBar;
 	typeOfList.selectedSegmentIndex = 1;
 	UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:typeOfList];
-	UIBarButtonItem* category = [[UIBarButtonItem alloc]initWithTitle:@"category" style:UIBarButtonItemStyleBordered target:self action:@selector(category:) ];
-	[self setToolbarItems:[NSMutableArray arrayWithObjects:barButton,category,nil] animated:YES];
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
+	// UIBarButtonItem* category = [[UIBarButtonItem alloc]initWithTitle:@"category" style:UIBarButtonItemStyleBordered target:self action:@selector(category:) ];
+	[self setToolbarItems:[NSMutableArray arrayWithObjects:barButton,nil] animated:YES];
+	//self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
 	
 }
 -(void)category:(id)sender{
@@ -115,7 +125,7 @@
 
 
 - (void)dealloc {
-	[favoriteList release];
+	[thisLevelList release];
 	[shopList release];
     [super dealloc];
 }

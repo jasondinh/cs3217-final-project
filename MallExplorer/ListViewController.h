@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "APIController.h"
-@class MBProgressHUD;
+#import "EGORefreshTableHeaderView.h"
+#import "MBProgressHUD.h"
 
 @interface ListViewController : UITableViewController <UISearchDisplayDelegate, UISearchBarDelegate,UINavigationControllerDelegate
 , APIDelegate>{
@@ -23,6 +24,10 @@
     BOOL			searchWasActive;
 	
 	MBProgressHUD *progress;
+	//  Reloading var should really be your tableviews datasource
+	//  Putting it here for demo purposes 
+	BOOL _reloading;
+	EGORefreshTableHeaderView *_refreshHeaderView;
 
 }
 @property (retain) NSArray* listOfItems;

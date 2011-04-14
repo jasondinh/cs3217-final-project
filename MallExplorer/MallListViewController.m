@@ -148,7 +148,7 @@
 	cityMapViewController.mallList = mallList;
 	[cityMapViewController reloadView:nil];
 	if (_reloading){
-		[self doneLoadingTableViewData];
+	[self doneLoadingTableViewData];
 	}
 
 }
@@ -198,20 +198,19 @@
 	api.debugMode = YES;
 	api.delegate = self;
 	[api getAPI: @"/malls.json"];
-	[self populateNearbyList:nil ];
+	typeOfList.selectedSegmentIndex =0;
 
 }
 
 -(void) populateNearbyList:(id)sender{
 	CLLocationCoordinate2D coordinate = self.cityMapViewController.mapView.userLocation.coordinate;
-
-	NSLog(@"nearby %f %f",coordinate.latitude,coordinate.longitude);
-	/*for (Mall* aMall in listOfItems) {
-		if (fabs([aMall coordinate].latitude - coordinate.latitude)<NEARBY_LATITUDE &&
-			fabs([aMall coordinate].longitude -coordinate.longitude) <NEARBY_LONGITUDE) {
-			NSLog(@"nearby %@",aMall.name);
+	[nearbyList removeAllObjects];
+	for (Mall* aMall in mallList) {
+		if (fabs([aMall.latitude doubleValue]- coordinate.latitude)<NEARBY_LATITUDE &&
+			fabs([aMall.longitude doubleValue] -coordinate.longitude) <NEARBY_LONGITUDE) {
+			[nearbyList addObject:aMall];
 		}
-	}*/
+	}
 }
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSString *product = nil;
@@ -223,15 +222,25 @@
 	{
         product = [self.listOfItems objectAtIndex:indexPath.row];
     }
+	if (typeOfList.selectedSegmentIndex ==0) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" 
+															object:[mallList objectAtIndex:indexPath.row]];
 
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:[mallList objectAtIndex:indexPath.row]];
-  
+	} else if (typeOfList.selectedSegmentIndex ==1) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" 
+															object:[nearbyList objectAtIndex:indexPath.row]];
+		
+	} else if (typeOfList.selectedSegmentIndex ==2) {
+	}
 }
 
 -(void) cityMapSelectedMall:(id)sender{
 	for (int i =0;i<[listOfItems count];i++){
+		
 		if ([listOfItems objectAtIndex:i] == ((Mall*)[sender object]).name) {
-			[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];			
+			[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] 
+										animated:YES 
+								  scrollPosition:UITableViewScrollPositionMiddle];			
 		}
 	}
 	
@@ -270,61 +279,13 @@
 #pragma mark -
 #pragma mark View lifecycle
 
-- (void)doneLoadingTableViewData{
-	
-	//  model should call this when its done loading
-	_reloading = NO;
-	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
-	
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
-	
-	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
-	
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-	
-	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
-	
-}
-
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
-	[self loadData: nil];
-	
-	//[self reloadTableViewDataSource];
-	//[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
-	
-}
-
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
-	
-	return _reloading; // should return if data source model is reloading
-	
-}
-
-- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
-	
-	return [NSDate date]; // should return date data source was last changed
-	
-}
 
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	if (_refreshHeaderView == nil) {
-		
-		EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
-		view.delegate = self;
-		[self.tableView addSubview:view];
-		_refreshHeaderView = view;
-		[view release];
-		
-	}
+
 	
 	
 	// Uncomment the following line to preserve selection between presentations.
@@ -341,7 +302,8 @@
 
 	//self.navigationItem.leftBarButtonItem= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(loadData:)];
 	
-	 NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"Nearby",@"Favorite",nil];
+	// NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"Nearby",@"Favorite",nil];
+	 NSArray* segmentArray = [NSArray arrayWithObjects:@"All",@"Nearby",nil];
 	 typeOfList = [[UISegmentedControl alloc] initWithItems:segmentArray];
 	 [typeOfList addTarget:self action:@selector(changeListType:) forControlEvents:UIControlEventValueChanged];
 	 [typeOfList sizeToFit];
@@ -351,17 +313,26 @@
 	 self.toolbarItems = [NSMutableArray arrayWithObject:barButton];
 	 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cityMapSelectedMall:) name:@"mall chosen in citymap" object:nil];	
 	 [barButton release];
-	 /*self.toolbarItems =[NSMutableArray arrayWithObject: [[[UIBarButtonItem alloc]
-	 initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-	 target:self action:@selector(doneSearching_Clicked:)] autorelease] ];*/
 
 	}
 
 -(void)changeListType:(id)sender{
 	
 	if(typeOfList.selectedSegmentIndex==0){ // List
-			}
+		[listOfItems removeAllObjects];
+		for (Mall* aMall in mallList) {
+			[listOfItems addObject:aMall.name];
+		}
+		[self.tableView reloadData];
+		}
 	else if (typeOfList.selectedSegmentIndex==1){ //neabry
+		
+		[self populateNearbyList:nil ];
+		[listOfItems removeAllObjects];
+		for (Mall* aMall in nearbyList) {
+			[listOfItems addObject:aMall.name];
+		}
+		[self.tableView reloadData];
 	}
 	else if (typeOfList.selectedSegmentIndex==2){//favorite
 		

@@ -15,11 +15,9 @@
 	CityMapViewController *cityMapViewController;
 	NSMutableArray* nearbyList;
 	NSMutableArray* mallList;
-	EGORefreshTableHeaderView *_refreshHeaderView;
+
 	
-	//  Reloading var should really be your tableviews datasource
-	//  Putting it here for demo purposes 
-	BOOL _reloading;
+
 }
 @property (retain) CityMapViewController* cityMapViewController;
 @property (nonatomic,retain) NSMutableArray* nearbyList;
