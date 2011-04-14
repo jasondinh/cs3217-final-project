@@ -40,9 +40,6 @@
 				[delegate cacheRespond: self];
 			}
 		}
-		//NSLog([respond description]);
-			//[delegate cacheRespond: return];
-		//}
 	}
 	
 	NSString *fullPath = [NSString stringWithFormat: @"%@%@", API_END_POINT, path];
