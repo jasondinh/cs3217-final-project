@@ -13,7 +13,7 @@
 @synthesize annotationList;
 @synthesize map;
 
-const BOOL DEBUG = YES;
+const BOOL DEBUG = NO;
 int startPoint,endPoint;
 
 NSMutableArray* hiddenAttribute;

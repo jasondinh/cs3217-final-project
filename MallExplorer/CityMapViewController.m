@@ -19,7 +19,7 @@
 
 
 @implementation CityMapViewController
-@synthesize toolbar, popoverController, detailItem,mallList;
+@synthesize toolbar, popoverController, detailItem,mallList,backToCurrentLocation;
 @synthesize mapView;
 @synthesize mapType;
 
@@ -75,6 +75,20 @@
 
 	//
 }
+-(IBAction)backToCurrentLocation:(id)sender{
+
+			
+			MKCoordinateRegion region;
+			MKCoordinateSpan span;
+			span.latitudeDelta = SPAN_LATITUDE;
+			span.longitudeDelta = SPAN_LONGTITUDE;
+			region.span = span;
+			region.center = mapView.userLocation.coordinate;
+			[mapView setRegion:region animated:YES];
+
+	
+	
+}
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
 
 	//for (Mall *aMall in mallList) {
@@ -94,7 +108,6 @@
 	locationManager.delegate=self;
 	locationManager.desiredAccuracy=kCLLocationAccuracyNearestTenMeters;
 	[locationManager startUpdatingLocation];
-	
 	[mapView setMapType:MKMapTypeStandard];
 	[mapView setScrollEnabled:YES];
 	[mapView setZoomEnabled:YES];
@@ -212,6 +225,7 @@
 
 
 - (void)dealloc {
+	[backToCurrentLocation release];
 	[popoverController release];
 	[toolbar release];
 	[detailItem release];
