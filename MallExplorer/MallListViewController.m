@@ -214,7 +214,7 @@
 }
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSString *product = nil;
-	if (self.tableView == self.searchDisplayController.searchResultsTableView)
+	if (displayController.active)
 	{
         product = [self.copyListOfItems objectAtIndex:indexPath.row];
     }
@@ -232,14 +232,29 @@
 }
 
 -(void) mallChosen:(id)sender{
-	for (int i =0;i<[listOfItems count];i++){
-		
-		if ([listOfItems objectAtIndex:i] == ((Mall*)[sender object]).name) {
-			[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] 
-										animated:YES 
-								  scrollPosition:UITableViewScrollPositionMiddle];			
+	if (!displayController.active)
+	{
+		NSLog(@"a");
+		for (int i =0;i<[listOfItems count];i++){
+			if ([listOfItems objectAtIndex:i] == ((Mall*)[sender object]).name) {
+				[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] 
+											animated:YES 
+									  scrollPosition:UITableViewScrollPositionMiddle];			
+			}
 		}
-	}
+    }
+	else
+	{
+		NSLog(((Mall*)[sender object]).name);
+		for (int i =0;i<[copyListOfItems count];i++){
+			if ([copyListOfItems objectAtIndex:i] == ((Mall*)[sender object]).name) {
+				[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] 
+											animated:YES 
+									  scrollPosition:UITableViewScrollPositionMiddle];			
+			}
+		}
+    }
+
 	
 
 }
@@ -340,9 +355,10 @@
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
 	NSString *product = nil;
-	if (self.tableView == self.searchDisplayController.searchResultsTableView)
+	if (self.displayController.active)
 	{
         product = [self.copyListOfItems objectAtIndex:indexPath.row];
+		NSLog(product);
     }
 	else
 	{
