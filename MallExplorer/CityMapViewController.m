@@ -58,22 +58,33 @@
 }
 
 -(void)reloadView:(id)sender{
-
+	for (id<MKAnnotation> currentAnnotation in mapView.annotations) {			
+		BOOL has = NO;
+		for (Mall* aMall in mallList){
+			if ([currentAnnotation isMemberOfClass:[Mall class]] && ((Mall*)currentAnnotation).mId ==aMall.mId) {
+				has = YES;
+			}
+		}
+		if (!has && currentAnnotation != mapView.userLocation) 
+			[mapView removeAnnotation:currentAnnotation];
+	}
 	for (Mall* aMall in mallList){
-	
-		//if (fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < NEARBY_LATITUDE &&
-		//	fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <NEARBY_LONGITUDE)) {
+		BOOL has = NO;
+		for (id<MKAnnotation> currentAnnotation in mapView.annotations) {       
+			if ([currentAnnotation isMemberOfClass:[Mall class]] && ((Mall*)currentAnnotation).mId ==aMall.mId) {
+				has = YES;
+			}
+		}
+		if (!has) 
 			[mapView addAnnotation:aMall];
-		//}
 		if (shouldAutoFocus && fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < INSIDE_LATITUDE &&
 			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <INSIDE_LONGITUDE) ) {
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"mall enter" object:aMall];
 			shouldAutoFocus = NO;
 		}
 	}
-	
 
-	//
+
 }
 -(IBAction)backToCurrentLocation:(id)sender{
 			MKCoordinateRegion region;
@@ -144,7 +155,7 @@
     }
     pin.pinColor = MKPinAnnotationColorRed;
     pin.canShowCallout = YES;
-    pin.animatesDrop = YES;
+    pin.animatesDrop = NO;
 	
     // now we'll add the right callout button
     UIButton *detailButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];

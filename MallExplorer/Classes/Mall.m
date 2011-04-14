@@ -21,7 +21,9 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 	return cor;
 }
 - (NSString *)subtitle{
-	return @"address";
+	if (self.address !=nil) {
+		return address;
+	}
 }
 - (NSString *)title{
 	return name;
