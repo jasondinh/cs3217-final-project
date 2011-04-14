@@ -10,7 +10,7 @@
 #import "Shop.h"
 
 @implementation ShopListViewController
-@synthesize thisLevelList,shopList, mall;
+@synthesize thisLevelList,shopList, mall,delegate;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -90,7 +90,29 @@
 	// UIBarButtonItem* category = [[UIBarButtonItem alloc]initWithTitle:@"category" style:UIBarButtonItemStyleBordered target:self action:@selector(category:) ];
 	[self setToolbarItems:[NSMutableArray arrayWithObjects:barButton,nil] animated:YES];
 	//self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"shop chosen" object:nil];	
 	
+}
+-(void)shopChosen:(id)sender{
+	for (int i =0;i<[listOfItems count];i++){
+		
+		if ([listOfItems objectAtIndex:i] == ((Shop*)[sender object]).shopName) {
+			[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] 
+										animated:YES 
+								  scrollPosition:UITableViewScrollPositionMiddle];			
+		}
+	}
+	
+}
+
+-(void) populateNearbyList:(id)sender{
+	//CLLocationCoordinate2D coordinate = self.cityMapViewController.mapView.userLocation.coordinate;
+	[thisLevelList removeAllObjects];
+	for (Shop* aShop in shopList) {
+		//if () {
+		//	
+		//}
+	}
 }
 -(void)category:(id)sender{
 }
@@ -130,7 +152,25 @@
 	//[NSString stringWithFormat:@"%@", 
 	//[listOfMovies objectAtIndex:indexPath.row]];    
 }
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
+	NSString *string = nil;
+	if (self.tableView == self.searchDisplayController.searchResultsTableView)
+	{
+        string = [self.copyListOfItems objectAtIndex:indexPath.row];
+    }
+	else
+	{
+        string = [self.listOfItems objectAtIndex:indexPath.row];
+    }
+	
+	for(Shop* aShop in shopList){
+		if (aShop.shopName == string) 
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"shop enter" 
+																object:aShop];
+	}
+	
+}- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.
     return YES;
 }

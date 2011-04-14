@@ -212,7 +212,7 @@
 	{
         string = [self.listOfItems objectAtIndex:indexPath.row];
     }
-	
+	cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
 	cell.textLabel.text = string;
 	return cell;
 }

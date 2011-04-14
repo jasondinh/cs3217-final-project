@@ -30,7 +30,7 @@
 	//settings self
 	self.title = self.theShop.shopName;
 	self.contentSizeForViewInPopover = CGSizeMake(POPOVER_WIDTH, POPOVER_HEIGHT);
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
+	//self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
 	[self.tabBar setBackgroundColor:[UIColor whiteColor]] ;
 	
 	CGRect frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width, 48);

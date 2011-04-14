@@ -225,13 +225,13 @@
 
 		for(Mall* aMall in mallList){
 			if (aMall.name == product) 
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" 
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen"
 															object:aMall];
 		}
 
 }
 
--(void) cityMapSelectedMall:(id)sender{
+-(void) mallChosen:(id)sender{
 	for (int i =0;i<[listOfItems count];i++){
 		
 		if ([listOfItems objectAtIndex:i] == ((Mall*)[sender object]).name) {
@@ -308,7 +308,7 @@
 	 typeOfList.selectedSegmentIndex = 0;
 	 UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:typeOfList];
 	 self.toolbarItems = [NSMutableArray arrayWithObject:barButton];
-	 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cityMapSelectedMall:) name:@"mall chosen in citymap" object:nil];	
+	 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];	
 	 [barButton release];
 
 	}
@@ -334,8 +334,28 @@
 	else if (typeOfList.selectedSegmentIndex==2){//favorite
 		
 	}
+	
 }
 
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
+	NSString *product = nil;
+	if (self.tableView == self.searchDisplayController.searchResultsTableView)
+	{
+        product = [self.copyListOfItems objectAtIndex:indexPath.row];
+    }
+	else
+	{
+        product = [self.listOfItems objectAtIndex:indexPath.row];
+    }
+	
+	for(Mall* aMall in mallList){
+		if (aMall.name == product) 
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"mall enter" 
+																object:aMall];
+	}
+	
+}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.
     return YES;
