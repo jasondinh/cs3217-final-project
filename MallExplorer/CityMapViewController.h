@@ -16,6 +16,7 @@
 	id detailItem;
 	IBOutlet MKMapView *mapView;
 	IBOutlet UISegmentedControl *mapType;
+	IBOutlet UIBarButtonItem *backToCurrentLocation;
 	NSArray* mallList;
 	BOOL fistTime;
 	BOOL shouldAutoFocus;
@@ -26,6 +27,9 @@
 @property (nonatomic,retain) id detailItem;
 @property (nonatomic,retain)IBOutlet MKMapView *mapView;
 @property (nonatomic,retain)IBOutlet UISegmentedControl* mapType;
+@property (nonatomic,retain) 	IBOutlet UIBarButtonItem *backToCurrentLocation;
+
+-(IBAction)backToCurrentLocation:(id)sender;
 - (IBAction)changeType:(id)sender;
 -(void)reloadView:(id)sender;
 @end
