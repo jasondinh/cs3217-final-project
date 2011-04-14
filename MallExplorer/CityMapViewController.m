@@ -62,11 +62,11 @@
 	for (Mall* aMall in mallList){
 	
 		if (fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < NEARBY_LATITUDE &&
-			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <NEARBY_LONGTITUDE)) {
+			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <NEARBY_LONGITUDE)) {
 			[mapView addAnnotation:aMall];
 		}
 		if (shouldAutoFocus && fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < INSIDE_LATITUDE &&
-			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <INSIDE_LONGTITUDE) ) {
+			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <INSIDE_LONGITUDE) ) {
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:aMall];
 			shouldAutoFocus = NO;
 		}
@@ -81,7 +81,7 @@
 			MKCoordinateRegion region;
 			MKCoordinateSpan span;
 			span.latitudeDelta = SPAN_LATITUDE;
-			span.longitudeDelta = SPAN_LONGTITUDE;
+			span.longitudeDelta = SPAN_LONGITUDE;
 			region.span = span;
 			region.center = mapView.userLocation.coordinate;
 			[mapView setRegion:region animated:YES];
@@ -116,7 +116,7 @@
 	MKCoordinateRegion region;
 	MKCoordinateSpan span;
 	span.latitudeDelta = SPAN_LATITUDE;
-	span.longitudeDelta = SPAN_LONGTITUDE;
+	span.longitudeDelta = SPAN_LONGITUDE;
 	region.span = span;
 	region.center = location;
 	[mapView setRegion:region animated:YES];

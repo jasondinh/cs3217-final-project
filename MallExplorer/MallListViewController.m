@@ -11,9 +11,9 @@
 #import "MBProgressHUD.h"
 #import "Mall.h"
 #import "EGORefreshTableHeaderView.h"
-
+#import "Constant.h"
 @implementation MallListViewController
-@synthesize favoriteList,mallList,cityMapViewController;
+@synthesize nearbyList,mallList,cityMapViewController;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -63,15 +63,11 @@
 	[self.tableView reloadData];
 	[progress hide:YES];
 	[tmpMall release];
-	NSLog( @"mall list before: %d", [mallList count]);
-	//[self serverRespond:apiController];
-	//[self performSelector:@selector(serverRespond:) withObject:apiController afterDelay:1];
 	
 	
 }
 - (void)serverRespond: (APIController *) apiController{
-	
-	NSLog( @"mall list after: %d", [mallList count]);
+
 	NSArray *malls = (NSArray *) apiController.result;
 	NSEnumerator *e = [malls objectEnumerator];
 	NSDictionary *tmpMall;
@@ -88,12 +84,7 @@
 		[tmpMalls addObject: mall];
 		[mall release];
 	}
-	//	[tmpMalls removeAllObjects];
-	//tmpMall = [[Mall alloc] initWithId:123 andName:@"test" andLongitude:@"123" andLatitude:@"231" andAddress:@"asdf" andZip:12];
-//	[tmpMalls insertObject:tmpMall atIndex:1];
-//	[tmpMalls removeObjectAtIndex:0];
-//
-//	[tmpMalls insertObject:tmpMall atIndex:2];
+
 	
 	if ([listOfItems count] !=0) {
 		NSMutableArray *reloadIndexPaths = [NSMutableArray array];
@@ -101,7 +92,6 @@
 		for (int i=[mallList count]-1; i>=0 ; i--) {
 			BOOL has = NO;
 			for (int x = 0; x < [tmpMalls count]; x++) {
-				NSLog(@"%d %d", ((Mall*)[tmpMalls objectAtIndex:x]).mId, ((Mall*)[mallList objectAtIndex:i]).mId);
 				if ((((Mall*)[tmpMalls objectAtIndex:x]).mId == ((Mall*)[mallList objectAtIndex:i]).mId)) {
 					has =YES;
 					
@@ -122,10 +112,7 @@
 		for (Mall* aMall in mallList){
 			[listOfItems addObject:aMall.name];
 		}
-
-//		[self.tableView beginUpdates];
-//		
-//		[self.tableView endUpdates];		
+	
 		
 
 		
@@ -146,10 +133,6 @@
 		[self.tableView deleteRowsAtIndexPaths:removeIndexPaths withRowAnimation:UITableViewRowAnimationRight];
 		[self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationLeft];
 		[self.tableView endUpdates];
-
-		
-		
-		
 		
 	} else {
 
@@ -158,9 +141,7 @@
 		for (Mall* aMall in mallList){
 			[listOfItems addObject:aMall.name];
 		}
-		[self.tableView reloadData];
-		
-	
+		[self.tableView reloadData];	
 	}
 	[tmpMall release];
 	[progress hide:YES];
@@ -169,13 +150,11 @@
 	if (_reloading){
 		[self doneLoadingTableViewData];
 	}
-		//[self requestFail:apiController];
 
 }
 
 
 - (void)requestFail: (APIController *) apiController{
-
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"request did fail" object:self];
 	
 }
@@ -219,9 +198,21 @@
 	api.debugMode = YES;
 	api.delegate = self;
 	[api getAPI: @"/malls.json"];
+	[self populateNearbyList:nil ];
 
 }
 
+-(void) populateNearbyList:(id)sender{
+	CLLocationCoordinate2D coordinate = self.cityMapViewController.mapView.userLocation.coordinate;
+
+	NSLog(@"nearby %f %f",coordinate.latitude,coordinate.longitude);
+	/*for (Mall* aMall in listOfItems) {
+		if (fabs([aMall coordinate].latitude - coordinate.latitude)<NEARBY_LATITUDE &&
+			fabs([aMall coordinate].longitude -coordinate.longitude) <NEARBY_LONGITUDE) {
+			NSLog(@"nearby %@",aMall.name);
+		}
+	}*/
+}
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSString *product = nil;
 	if (self.tableView == self.searchDisplayController.searchResultsTableView)
@@ -343,7 +334,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	
 
-	
+	nearbyList = [[NSMutableArray alloc]init];
 	 copyListOfItems = [[NSMutableArray alloc]init];
 	 self.navigationItem.title = @"Mall list";
 	 searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -352,20 +343,30 @@
 	
 	 NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"Nearby",@"Favorite",nil];
 	 typeOfList = [[UISegmentedControl alloc] initWithItems:segmentArray];
+	 [typeOfList addTarget:self action:@selector(changeListType:) forControlEvents:UIControlEventValueChanged];
 	 [typeOfList sizeToFit];
 	 typeOfList.segmentedControlStyle = UISegmentedControlStyleBar;
-	 typeOfList.selectedSegmentIndex = 1;
+	 typeOfList.selectedSegmentIndex = 0;
 	 UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:typeOfList];
 	 self.toolbarItems = [NSMutableArray arrayWithObject:barButton];
 	 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cityMapSelectedMall:) name:@"mall chosen in citymap" object:nil];	
-	[barButton release];
+	 [barButton release];
 	 /*self.toolbarItems =[NSMutableArray arrayWithObject: [[[UIBarButtonItem alloc]
 	 initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 	 target:self action:@selector(doneSearching_Clicked:)] autorelease] ];*/
 
 	}
 
-
+-(void)changeListType:(id)sender{
+	
+	if(typeOfList.selectedSegmentIndex==0){ // List
+			}
+	else if (typeOfList.selectedSegmentIndex==1){ //neabry
+	}
+	else if (typeOfList.selectedSegmentIndex==2){//favorite
+		
+	}
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.
@@ -393,7 +394,7 @@
 - (void)dealloc {
 	[cityMapViewController release];
 	[mallList release];
-	[favoriteList release];
+	[nearbyList release];
     [super dealloc];
 }
 

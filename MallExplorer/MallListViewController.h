@@ -13,7 +13,7 @@
 @interface MallListViewController : ListViewController <EGORefreshTableHeaderDelegate>{
 
 	CityMapViewController *cityMapViewController;
-	NSMutableArray* favoriteList;
+	NSMutableArray* nearbyList;
 	NSMutableArray* mallList;
 	EGORefreshTableHeaderView *_refreshHeaderView;
 	
@@ -22,7 +22,7 @@
 	BOOL _reloading;
 }
 @property (retain) CityMapViewController* cityMapViewController;
-@property (nonatomic,retain) NSMutableArray* favoriteList;
+@property (nonatomic,retain) NSMutableArray* nearbyList;
 @property (nonatomic,retain) NSMutableArray* mallList;
 //- (id)initWithMalls: (NSArray *) malls ;
 -(id)  initWithCityMap:(CityMapViewController*)cityMap;
