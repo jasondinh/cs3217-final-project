@@ -7,7 +7,7 @@
 //
 
 #import "Edge.h"
-
+#import "MapPoint.h"
 
 @implementation Edge
 @synthesize pointA;
@@ -27,6 +27,13 @@
 	return self;
 }
 
+-(Edge*) initWithPoint1:(MapPoint*) pA point2:(MapPoint*) pB{
+	return [self initWithPoint1:pA point2:pB withLength:[MapPoint getDistantBetweenPoint:pA andPoint:pB] isBidirectional:YES withTravelType:kWalk];
+}
 
+
+-(Edge*) initWithPoint1:(MapPoint*) pA point2:(MapPoint*) pB withLength:(double) w{
+	return [self initWithPoint1:pA point2:pB withLength:w isBidirectional:YES withTravelType:kWalk];
+}
 
 @end

@@ -27,4 +27,9 @@ typedef enum{
 @property double weight;
 @property TravelType travelType;
 -(Edge*) initWithPoint1:(MapPoint*) pA point2:(MapPoint*) pB withLength:(double) weight isBidirectional:(BOOL) isBidi withTravelType:(TravelType) travelType;
+
+-(Edge*) initWithPoint1:(MapPoint*) pA point2:(MapPoint*) pB;
+
+-(Edge*) initWithPoint1:(MapPoint*) pA point2:(MapPoint*) pB withLength:(double) w;
+
 @end

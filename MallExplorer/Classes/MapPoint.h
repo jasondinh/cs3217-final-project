@@ -23,7 +23,13 @@
 @property int index;
 @property (nonatomic, retain) Annotation* annotation;
 @property (assign) Map* level;
+
 -(MapPoint*) initWithPosition:(CGPoint)pos inLevel:(Map*)map andIndex:(int) ind;
+
+-(MapPoint*) initWithPosition:(CGPoint)pos andIndex:(int) ind;
+
+-(MapPoint*) initWithPosition:(CGPoint)pos;
+
 -(NSNumber*) estimateDistanceTo: (MapPoint*) p;
 +(double) getDistantBetweenPoint:(MapPoint*) p1 andPoint: (MapPoint*) p2;
 +(double) getDistantBetweenPoint:(MapPoint*) p1 andCoordination: (CGPoint) p2;

@@ -66,6 +66,16 @@
 // data for shop list view controller
 @property (retain) NSArray* mapNameList;
 
+// load data functions
+
+-(NSArray*)createPointListFromDictionary:(NSDictionary*) aPointList;
+-(NSArray*)createMapFromDictionary:(NSDictionary*) aMap;
+-(NSArray*)createMapListFromDictionary:(NSDictionary*) aMapList;
+-(NSArray*)createAnnotationListFromDictionary:(NSDictionary*) anAnnoList; 
+-(NSArray*)createEdgeListFromDictionary:(NSDictionary*) anEdgeList;
+-(NSArray*)createStairListFromDictionary:(NSDictionary*) aStairList;
+
+
 
 -(NSArray*) getAllShopFromThisMall;
 

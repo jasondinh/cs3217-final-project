@@ -7,7 +7,7 @@
 //
 
 #import "MapPoint.h"
-
+static int nextNodeIndex = 0;
 
 @implementation MapPoint
 @synthesize position;
@@ -19,10 +19,21 @@
 	self = [super init];
 	if (self) {
 		self.position = pos;
-		self.index = ind;
+		self.index = nextNodeIndex++;
 		self.level = map;
+		NSLog(@"id is %d", nextNodeIndex);
 	}
 	return self;
+}
+
+-(MapPoint*) initWithPosition:(CGPoint) pos andIndex:(int) ind{
+	return [self initWithPosition:pos inLevel:nil andIndex:ind];
+}
+
+-(MapPoint*) initWithPosition:(CGPoint) pos{
+//	nextNodeIndex++;
+	return [self initWithPosition:pos andIndex:0];
+
 }
 
 +(double) getDistantBetweenPoint:(MapPoint*) p1 andPoint: (MapPoint*) p2{

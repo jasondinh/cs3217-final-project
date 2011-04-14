@@ -103,9 +103,31 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 	
 }
 
--(void) loadMaps:(NSArray*) mList{
+#pragma mark -
+#pragma mark load data functions
+
+// load data functions
+
+-(NSArray*)createPointListFromDictionary:(NSDictionary*) aPointList{
 	
 }
+-(NSArray*)createMapFromDictionary:(NSDictionary*) aMap{
+	
+}
+-(NSArray*)createMapListFromDictionary:(NSDictionary*) aMapList{
+	
+}
+-(NSArray*)createAnnotationListFromDictionary:(NSDictionary*) anAnnoList{
+	
+}
+-(NSArray*)createEdgeListFromDictionary:(NSDictionary*) anEdgeList{
+	
+}
+-(NSArray*)createStairListFromDictionary:(NSDictionary*) aStairList{
+	
+}
+
+#pragma mark -
 
 -(NSArray*) pathFindingBetween:(Map*) map1 and: (Map*) map2{
 	return [mallGraph getShortestPathFromObject:map1 toObject:map2];
@@ -147,7 +169,8 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 		for (int i = [pathBetweenLevel count]-1; i>=0; i--) {
 			// the path between level is a mixed of map point and points that represent level.
 			// so we need to clear all the points that represent levels before continuing
-			if ([[pathBetweenLevel objectAtIndex:i] isMemberOfClass:[Map class]]) [pathBetweenLevel removeObjectAtIndex:i];
+			if ([[pathBetweenLevel objectAtIndex:i] isMemberOfClass:[Map class]]) 
+				[pathBetweenLevel removeObjectAtIndex:i];
 		}
 		for (int i = 0; i<[pathBetweenLevel count]-1; i++) {
 			id p1 = [pathBetweenLevel objectAtIndex:i];

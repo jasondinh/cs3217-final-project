@@ -77,8 +77,9 @@ const int maxNumstep = 100;
 	if (debug) NSLog(@"edge list with: %d", [edgeList count]);
 	for (int i = 0; i<[pointList count]; i++) {
 		MapPoint* aNode = [pointList objectAtIndex:i];
-		[graph addNode:aNode withIndex:aNode.index];
-		if (debug) NSLog(@"%d", aNode.index);
+		aNode.index = i;
+		[graph addNode:aNode withIndex:i];
+		if (debug) NSLog(@"%d", i);
 	}
 	double sum = 0;
 	for (int i = 0; i<[edgeList count]; i++) {
@@ -122,6 +123,17 @@ const int maxNumstep = 100;
 	self.pointList = [NSMutableArray arrayWithArray:pList] ;
 	self.edgeList = [NSArray arrayWithArray:edgeList];
 	self.defaultCenterPoint = dfCenterPoint;
+	for (int i = 0; i<[annotationList count]; i++) {
+		Annotation* anAnno = [annotationList objectAtIndex:i];
+		anAnno.level = self;
+	}
+
+	for (int i = 0; i<[pointList count]; i++) {
+		MapPoint* mapPoint = [pointList	objectAtIndex:i];
+		mapPoint.level = self;
+	}
+	
+	
 	// building graph of this map
 	[self buildGraph];
 	//return self;
