@@ -133,8 +133,8 @@
 }
 -(void)mallChosen:(id)sender{
 	for (id<MKAnnotation> currentAnnotation in mapView.annotations) {       
-		if ([currentAnnotation  isEqual:[sender object]]) {
-
+		if (currentAnnotation!=mapView.userLocation && ((Mall*)currentAnnotation).mId  == ((Mall*)[sender object]).mId) {
+		
 			[mapView setCenterCoordinate:currentAnnotation.coordinate animated:YES];
 			[mapView selectAnnotation:currentAnnotation animated:YES];
 		}

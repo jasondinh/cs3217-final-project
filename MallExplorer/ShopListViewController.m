@@ -37,9 +37,7 @@
 	NSInteger mId = mall.mId;
 	[api getAPI: [NSString stringWithFormat: @"/malls/%d/shops.json", mId]];
 	
-	if (_reloading){
-		[self doneLoadingTableViewData];
-	}
+
 }
 
 -(void) cacheRespond:(APIController *)apiController {
@@ -67,17 +65,23 @@
 	}
 	[self.tableView reloadData];
 	[progress hide:YES];
-
+	NSLog(@"ceom");
 	if (_reloading){
+		NSLog(@"ceom");
 		[self doneLoadingTableViewData];
 	}
 }
+- (void) requestDidStart: (APIController *) apiController {
+	_reloading = YES;
+	[progress show:YES];
+}
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
 	listOfItems = [[NSMutableArray alloc] init];
 	copyListOfItems = [[NSMutableArray alloc]init];
-	self.navigationItem.title = @"Shop list";
+	self.navigationItem.title = mall.name;
 	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
 
 	//NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"This level",@"Favorite",nil];
