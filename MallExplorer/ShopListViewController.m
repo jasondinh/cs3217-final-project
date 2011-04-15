@@ -32,7 +32,7 @@
 -(void)loadData:(id)sender{
 	
 	APIController *api = [[APIController alloc] init];
-	api.debugMode = YES;
+	api.debugMode = NO;
 	api.delegate = self;
 	NSInteger mId = mall.mId;
 	[api getAPI: [NSString stringWithFormat: @"/malls/%d/shops.json", mId]];

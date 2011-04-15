@@ -535,14 +535,14 @@
 
 -(void) loadMaps:(NSArray *)listMap andStairs:(NSArray *)stairs withDefaultMap:(Map*) defaultMap{
 	
-	Map* map1 = [[self createTestMap1] retain];
-	Map* map2 = [[self createTestMap2] retain];
-	defaultMap = map1;
-	listMap = [NSArray arrayWithObjects:map1, map2, nil];
-	[map1 release];
-	[map2 release];
-	NSArray* stair = [self createTestStair:listMap];
-	stairs = stair;	
+	//Map* map1 = [[self createTestMap1] retain];
+//	Map* map2 = [[self createTestMap2] retain];
+//	defaultMap = map1;
+//	listMap = [NSArray arrayWithObjects:map1, map2, nil];
+//	[map1 release];
+//	[map2 release];
+//	NSArray* stair = [self createTestStair:listMap];
+//	stairs = stair;	
 	
 	[mall buildGraphWithMaps:listMap andStairs:stairs];
 	listMapViewController = [[NSMutableArray alloc] initWithCapacity:[listMap count]];
