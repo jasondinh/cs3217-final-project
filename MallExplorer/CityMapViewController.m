@@ -58,26 +58,35 @@
 }
 
 -(void)reloadView:(id)sender{
-
-	for (Mall* aMall in mallList){
-	
-		if (fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < NEARBY_LATITUDE &&
-			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <NEARBY_LONGITUDE)) {
-			[mapView addAnnotation:aMall];
+	for (id<MKAnnotation> currentAnnotation in mapView.annotations) {			
+		BOOL has = NO;
+		for (Mall* aMall in mallList){
+			if ([currentAnnotation isMemberOfClass:[Mall class]] && ((Mall*)currentAnnotation).mId ==aMall.mId) {
+				has = YES;
+			}
 		}
+		if (!has && currentAnnotation != mapView.userLocation) 
+			[mapView removeAnnotation:currentAnnotation];
+	}
+	for (Mall* aMall in mallList){
+		BOOL has = NO;
+		for (id<MKAnnotation> currentAnnotation in mapView.annotations) {       
+			if ([currentAnnotation isMemberOfClass:[Mall class]] && ((Mall*)currentAnnotation).mId ==aMall.mId) {
+				has = YES;
+			}
+		}
+		if (!has) 
+			[mapView addAnnotation:aMall];
 		if (shouldAutoFocus && fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < INSIDE_LATITUDE &&
 			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <INSIDE_LONGITUDE) ) {
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:aMall];
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"mall enter" object:aMall];
 			shouldAutoFocus = NO;
 		}
 	}
-	
 
-	//
+
 }
 -(IBAction)backToCurrentLocation:(id)sender{
-
-			
 			MKCoordinateRegion region;
 			MKCoordinateSpan span;
 			span.latitudeDelta = SPAN_LATITUDE;
@@ -85,19 +94,13 @@
 			region.span = span;
 			region.center = mapView.userLocation.coordinate;
 			[mapView setRegion:region animated:YES];
-
-	
 	
 }
+
+
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
-
-	//for (Mall *aMall in mallList) {
-		//if ([view isEqual:aMall]) {
 	if ([view.annotation isKindOfClass:[Mall class]]) 
-				[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen in citymap" object:view.annotation];
-		//}
-	//}
-
+				[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:view.annotation];
 
 }
 
@@ -123,19 +126,60 @@
 	[mapView setDelegate:self];
 	mapView.showsUserLocation = YES;
 	mapType.selectedSegmentIndex =0;
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
 
 	
 }
--(MKAnnotationView *)mapView:(MKMapView*)_mapView viewForAnnotion:(id)annotation{
-	if (annotation == _mapView.userLocation)
-		return nil;	
-	else {
-		MKPinAnnotationView* annView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"s"];
-		annView.animatesDrop =YES;
-		annView.canShowCallout =YES;
-		return annView;
+-(void)mallChosen:(id)sender{
+	for (id<MKAnnotation> currentAnnotation in mapView.annotations) {       
+		if ([currentAnnotation  isEqual:[sender object]]) {
+
+			[mapView setCenterCoordinate:currentAnnotation.coordinate animated:YES];
+			[mapView selectAnnotation:currentAnnotation animated:YES];
+		}
 	}
 	
+	
+}
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+	if (annotation == self.mapView.userLocation) {
+		return nil;
+	}
+    // Boilerplate pin annotation code
+    MKPinAnnotationView *pin = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: @"map"];
+    if (pin == nil) {
+        pin = [[[MKPinAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: @"map"] autorelease];
+    } else {
+        pin.annotation = annotation;
+    }
+    pin.pinColor = MKPinAnnotationColorRed;
+    pin.canShowCallout = YES;
+    pin.animatesDrop = NO;
+	
+    // now we'll add the right callout button
+    UIButton *detailButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+	
+    // customize this line to fit the structure of your code.  basically
+    // you just need to find an integer value that matches your object in some way:
+    // its index in your array of MKAnnotation items, or an id of some sort, etc
+    // 
+    // here I'll assume you have an annotation array that is a property of the current
+    // class and we just want to store the index of this annotation.
+    NSInteger annotationValue = [self.mapView.annotations indexOfObject:annotation];
+	
+    // set the tag property of the button to the index
+    detailButton.tag = annotationValue;
+	
+    // tell the button what to do when it gets touched
+    [detailButton addTarget:self action:@selector(rightCalloutAccessoryViewSelected:) forControlEvents:UIControlEventTouchUpInside];
+	
+    pin.rightCalloutAccessoryView = detailButton;
+    return pin;
+}
+
+-(void) rightCalloutAccessoryViewSelected:(id)sender{
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall enter" object:[mapView.annotations objectAtIndex:((UIButton*)sender).tag]];
 }
 
 - (IBAction)changeType:(id)sender{

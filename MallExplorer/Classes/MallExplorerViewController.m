@@ -37,8 +37,10 @@ BOOL chosen,shopchosen;
 		[self setDelegate:cityMapViewController];
 		
 		//add observer for notifications
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"shop chosen" object:nil];		
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
+		//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"shop chosen" object:nil];	
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopEnter:) name:@"shop enter" object:nil];	
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallEnter:) name:@"mall enter" object:nil];	
+		//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ListViewWillAppear:) name:@"Listview will appear" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShopViewWillAppear:) name:@"Shopview will appear"  object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestDidFail:) name:@"request did fail"  object:nil];
@@ -53,20 +55,8 @@ BOOL chosen,shopchosen;
 	RequesFailViewController * requestFail = [[RequesFailViewController alloc]init];
 	[masterViewController pushViewController:requestFail animated:YES];*/
 }
-
--(void) shopChosen:(id)sender{
-		Shop* aShop = [[Shop alloc]init];
-		ShopViewController* shopViewController = [[ShopViewController alloc] initWithShop:aShop] ;
-	[aShop release];
-		[masterViewController pushViewController:shopViewController animated:YES];
-		masterViewController.delegate = shopViewController;
-	
-}
-
-
--(void) mallChosen:(NSNotification*) notification{
-	
-	id object = notification.object;
+-(void) mallEnter:(id)sender{
+	id object = [sender object];
 	if ([masterViewController.topViewController isKindOfClass:[MallListViewController class]]) {		
 		Mall* aMall = object;
 		ShopListViewController* shopListViewController = [[ShopListViewController alloc] initWithMall:aMall] ;
@@ -77,13 +67,6 @@ BOOL chosen,shopchosen;
 		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
 		
 		aMVC.mall = aMall;
-		// load maps from something into a list of map =.=
-		// load stairs from something into a list of stair =.=
-		// set default map to something =.=
-		// [aMVC loadMaps: andStairs: withDefaultMap:]
-
-		
-				
 		
 		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
 		
@@ -97,10 +80,27 @@ BOOL chosen,shopchosen;
 			UIBarButtonItem *barButtonItem = [[cityMapViewController toolbar].items objectAtIndex:0];	
 			NSMutableArray *items = [[aMVC.toolbar items] mutableCopy];
 			[items insertObject:barButtonItem atIndex:0];
+			
 			[aMVC.toolbar setItems:items animated:YES];
 			[items release];
 		}
 	}
+	
+}
+-(void) shopEnter:(id)sender{
+	NSLog(((Shop*)[sender object]).shopName);
+		ShopViewController* shopViewController = [[ShopViewController alloc] init] ;
+		[shopViewController loadShop:(Shop*)[sender object]];
+		[masterViewController pushViewController:shopViewController animated:YES];
+		masterViewController.delegate = shopViewController;
+	
+}
+
+
+-(void) mallChosen:(NSNotification*) notification{
+	
+	
+
 }
 
 - (void) loadPointsWithMapId: (NSInteger) mId {

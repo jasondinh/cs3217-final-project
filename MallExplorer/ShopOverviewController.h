@@ -11,7 +11,7 @@
 
 @interface ShopOverviewController : UIViewController {
 	//OVERVIEW: this class implements the OVERVIEW tab of  ShopViewController
-	
+	Shop* theShop;
 	
 	//UILavbel and text view for display shop's information.
 	IBOutlet UILabel* shopNameLabel;
@@ -22,6 +22,7 @@
 	IBOutlet UILabel* websiteLabel;
 	IBOutlet UITextView * descriptionTextView;
 }
+@property (retain) 	Shop* theShop;
 @property (retain) IBOutlet UILabel* shopNameLabel;
 @property (retain) IBOutlet UILabel* categoryLabel;
 @property (retain) IBOutlet UILabel* operatingHoursLabel;

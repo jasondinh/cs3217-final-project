@@ -10,7 +10,7 @@
 #import "Shop.h"
 
 @implementation ShopListViewController
-@synthesize thisLevelList,shopList, mall;
+@synthesize thisLevelList,shopList, mall,delegate;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -67,7 +67,7 @@
 	}
 	[self.tableView reloadData];
 	[progress hide:YES];
-	[self doneLoadingTableViewData];
+
 	if (_reloading){
 		[self doneLoadingTableViewData];
 	}
@@ -76,13 +76,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	listOfItems = [[NSMutableArray alloc] init];
-	//[listOfItems addObject:@"KFC"];
-//	[listOfItems addObject:@"Mac Donald"];
-//	[listOfItems addObject:@"KKK"];
-//	[listOfItems addObject:@"Triumph"];
-//	[listOfItems addObject:@"abc"];
-//	[listOfItems addObject:@"Lucky Chinatown"];
-//	[listOfItems addObject:@"Hougang Green Shopping Mall"];
 	copyListOfItems = [[NSMutableArray alloc]init];
 	self.navigationItem.title = @"Shop list";
 	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -97,17 +90,37 @@
 	// UIBarButtonItem* category = [[UIBarButtonItem alloc]initWithTitle:@"category" style:UIBarButtonItemStyleBordered target:self action:@selector(category:) ];
 	[self setToolbarItems:[NSMutableArray arrayWithObjects:barButton,nil] animated:YES];
 	//self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"shop chosen" object:nil];	
 	
+}
+-(void)shopChosen:(id)sender{
+	for (int i =0;i<[listOfItems count];i++){
+		
+		if ([listOfItems objectAtIndex:i] == ((Shop*)[sender object]).shopName) {
+			[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] 
+										animated:YES 
+								  scrollPosition:UITableViewScrollPositionMiddle];			
+		}
+	}
+	
+}
+
+-(void) populateNearbyList:(id)sender{
+	//CLLocationCoordinate2D coordinate = self.cityMapViewController.mapView.userLocation.coordinate;
+	[thisLevelList removeAllObjects];
+	for (Shop* aShop in shopList) {
+		//if () {
+		//	
+		//}
+	}
 }
 -(void)category:(id)sender{
 }
 -(void)addToFavorite:(id)sender{
 }
 -(id)initWithMall:(Mall*)mall{
-	self = [super init];
-	if (self) {
 		self.mall = mall;
-	}
+
 	return self;
 }
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -129,15 +142,35 @@
 	}
 	
 	//Initialize the detail view controller and display it.
-	
-	Mall * chosenMall = [[[Mall alloc] init] autorelease];
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen" object:chosenMall];
-	
+
+	for(Shop* aShop in shopList){
+		if (aShop.shopName == selectedItem) 
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen" 
+																object:aShop];
+	}	
 	//cityMapViewController.detailItem = 
 	//[NSString stringWithFormat:@"%@", 
 	//[listOfMovies objectAtIndex:indexPath.row]];    
 }
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
+	NSString *string = nil;
+	if (self.tableView == self.searchDisplayController.searchResultsTableView)
+	{
+        string = [self.copyListOfItems objectAtIndex:indexPath.row];
+    }
+	else
+	{
+        string = [self.listOfItems objectAtIndex:indexPath.row];
+    }
+	
+	for(Shop* aShop in shopList){
+		if (aShop.shopName == string) 
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"shop enter" 
+																object:aShop];
+	}
+	
+}- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.
     return YES;
 }

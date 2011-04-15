@@ -11,7 +11,7 @@
 
 
 @implementation ShopOverviewController
-@synthesize shopNameLabel,operatingHoursLabel,unitLabel,websiteLabel,descriptionTextView,levelLabel,categoryLabel;
+@synthesize shopNameLabel,operatingHoursLabel,unitLabel,websiteLabel,descriptionTextView,levelLabel,categoryLabel,theShop;
 
 
 #pragma mark -
@@ -23,9 +23,9 @@
 	//			obtained from aShop
 	self = [super init];
 	if(self){
-		if (aShop.shopName != nil) shopNameLabel.text = aShop.shopName;
-		if (aShop.level !=nil)    levelLabel.text = aShop.level;
-		if (aShop.unitNumber != nil) unitLabel.text = aShop.unitNumber;
+		NSLog(@"asfasfsfsafsd");
+		NSLog([aShop description]);
+		self.theShop =aShop;
 		//category
 	}
 	return self;
@@ -48,6 +48,10 @@
     [super viewDidLoad];
 	//settings for self
 	self.view.backgroundColor = [UIColor whiteColor];
+	if (theShop.shopName != nil) shopNameLabel.text = theShop.shopName;
+	if (theShop.level !=nil)    levelLabel.text = theShop.level;
+	if (theShop.unitNumber != nil) unitLabel.text = theShop.unitNumber;
+	descriptionTextView.text = theShop.description;
 
 }
 
@@ -78,6 +82,7 @@
 
 
 - (void)dealloc {
+	[theShop release];
 	[shopNameLabel release];
 	[operatingHoursLabel release];
 	[unitLabel release];
