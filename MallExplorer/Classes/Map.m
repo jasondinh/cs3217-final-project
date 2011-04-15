@@ -49,6 +49,7 @@ const int maxNumstep = 100;
 
 #pragma mark initializers
 -(void) add:(int)number pointsToGraphInBetweenPoint:(MapPoint*) point1 andPoint: (MapPoint*)point2 isBidirectional:(BOOL) isBidi{
+	if (!point1 || !point2) return;
 	if (debug) NSLog(@"adding edge between %d %lf %lf %d %lf %lf", point1.index, point1.position.x, point1.position.y, point2.index, point2.position.x, point2.position.y);
 	CGPoint vector = CGPointMake((point2.position.x-point1.position.x)/(number+1), (point2.position.y-point1.position.y)/(number+1));
 	NSMutableArray* anArray = [[NSMutableArray alloc ] initWithObjects:point1, nil];
@@ -118,7 +119,7 @@ const int maxNumstep = 100;
 	return self;
 }
 
--(Map*) initWithMapId:(NSInteger) mapid withLevel:(NSInteger) lev withURL:(NSString*) url{
+-(Map*) initWithMapId:(NSInteger) mapid withLevel:(NSString *) lev withURL:(NSString*) url{
 	self = [super init];
 	if (self) {
 		self.pathOnMap = [[NSMutableArray alloc] init];
@@ -128,7 +129,7 @@ const int maxNumstep = 100;
 		[request setCompletionBlock:^{
 			NSLog(@"%@", @"done loading image");
 			imageMap = [[UIImage imageWithData: [request responseData]] retain];
-			mapName = [[NSString stringWithFormat:@"Level %d", lev] retain];
+			mapName = [[NSString stringWithFormat:@"Level %@", lev] retain];
 		}];		
 		[request startAsynchronous];
 		

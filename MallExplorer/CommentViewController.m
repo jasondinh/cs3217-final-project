@@ -144,13 +144,9 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-		//cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 300) reuseIdentifier:CellIdentifier];
-		cell.bounds = CGRectMake(0, 0, self.view.frame.size.width, 300);
-		UILabel* name = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 20)];
-		name.text =@"asdfasfsd";
-		[cell addSubview:name];
+
     }
-    
+    cell.textLabel.text = [commentList objectAtIndex:indexPath.row];
 	//cell.textLabel.text = (NSString*)[commentList objectAtIndex:indexPath.row];
     // Configure the cell...
     

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define debug NO
+#define debug YES
 
 // Map constant
 #define MAP_ORIGIN_X 3

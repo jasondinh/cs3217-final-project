@@ -23,8 +23,7 @@
 	//			obtained from aShop
 	self = [super init];
 	if(self){
-		NSLog(@"asfasfsfsafsd");
-		NSLog([aShop description]);
+
 		self.theShop =aShop;
 		//category
 	}
@@ -51,7 +50,7 @@
 	if (theShop.shopName != nil) shopNameLabel.text = theShop.shopName;
 	if (theShop.level !=nil)    levelLabel.text = theShop.level;
 	if (theShop.unitNumber != nil) unitLabel.text = theShop.unitNumber;
-	descriptionTextView.text = theShop.description;
+	if(theShop.description != [NSNull null]) descriptionTextView.text = theShop.description;
 
 }
 

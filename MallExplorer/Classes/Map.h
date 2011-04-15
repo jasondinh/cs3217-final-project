@@ -49,7 +49,7 @@
 
 
 
--(Map*) initWithMapId:(NSInteger) mName withLevel:(NSInteger) img withURL:(NSString*) url;
+-(Map*) initWithMapId:(NSInteger) mapid withLevel:(NSString *) lev withURL:(NSString*) url;
 
 -(void) loadDataWithMapName:(NSString*) mName annotationList:(NSArray*) annList pointList:(NSArray*) pList edgeList:(NSArray*) edgeList;
 

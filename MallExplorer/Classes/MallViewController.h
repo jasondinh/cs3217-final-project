@@ -47,6 +47,7 @@
 @property (nonatomic, retain) IBOutlet UILabel* titleLabel;
 @property (nonatomic, retain) id detailItem;
 @property (nonatomic, retain) UIPopoverController* popoverController;
+@property (nonatomic,retain) UIPopoverController* levelListController;
 @property (nonatomic, retain) Mall* mall;
 
 

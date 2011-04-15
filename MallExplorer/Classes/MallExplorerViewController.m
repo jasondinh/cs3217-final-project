@@ -22,7 +22,7 @@
 @implementation MallExplorerViewController
 @synthesize maps, stairs, mapsLoaded, stairsLoaded, pointsLoaded, edgesLoaded, annotationsLoaded;
 
-BOOL chosen,shopchosen;
+
 
 // The designated initializer. Override to perform setup that is required before the view is loaded.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -65,7 +65,7 @@ BOOL chosen,shopchosen;
 		[masterViewController pushViewController:shopListViewController animated:YES];
 		[shopListViewController loadData:nil];
 		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
-		
+		shopListViewController.delegate = aMVC;
 		aMVC.mall = aMall;
 		
 		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
@@ -208,7 +208,7 @@ BOOL chosen,shopchosen;
 			NSDictionary *tmpMap = [obj valueForKey: @"map"];
 			
 			Map* aMap  = [[Map alloc] initWithMapId: [[tmpMap valueForKey: @"id"] intValue] 
-										  withLevel: [[tmpMap valueForKey: @"level"] intValue] 
+										  withLevel: [tmpMap valueForKey: @"level"]
 											withURL: [tmpMap valueForKey: @"url"]];
 
 			if (maps == nil) {
@@ -374,12 +374,17 @@ BOOL chosen,shopchosen;
 
 - (void) loadStairs {
 	NSLog(@"%@", @"loadStairs");
+
+		
+	
 	APIController *api = [[APIController alloc] init];
 	api.debugMode = YES;
 	api.delegate = self;
-	Mall* theMall = [[self.viewControllers objectAtIndex:1] mall];
+
+		Mall* theMall = [[self.viewControllers objectAtIndex:1] mall];
 	NSInteger mId = theMall.mId;
 	[api getAPI: [NSString stringWithFormat: @"/malls/%d/stairs.json", mId]];
+	
 	
 }
 

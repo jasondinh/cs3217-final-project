@@ -7,6 +7,7 @@
 //
 
 #import "ShopListViewController.h"
+#import "MallViewController.h"
 #import "Shop.h"
 
 @implementation ShopListViewController
@@ -30,6 +31,9 @@
 */
 
 -(void)loadData:(id)sender{
+	progress = [[MBProgressHUD alloc] initWithView: self.view];
+	[self.view addSubview: progress];
+	[progress release];
 	
 	APIController *api = [[APIController alloc] init];
 	api.debugMode = NO;
@@ -67,6 +71,7 @@
 	[progress hide:YES];
 	if (_reloading)
 		[self doneLoadingTableViewData];
+	self.typeOfList.selectedSegmentIndex = 0;
 	
 }
 - (void) requestDidStart: (APIController *) apiController {
@@ -77,13 +82,14 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+	thisLevelList = [[NSMutableArray alloc]init];
 	listOfItems = [[NSMutableArray alloc] init];
 	copyListOfItems = [[NSMutableArray alloc]init];
 	self.navigationItem.title = mall.name;
 	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
 
 	//NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"This level",@"Favorite",nil];
-	NSArray* segmentArray = [NSArray arrayWithObjects:@"ALl",@"This level",nil];
+	NSArray* segmentArray = [NSArray arrayWithObjects:@"All",@"This level",nil];
 	typeOfList = [[UISegmentedControl alloc] initWithItems:segmentArray];
 	[typeOfList addTarget:self action:@selector(changeListType:) forControlEvents:UIControlEventValueChanged];
 	[typeOfList sizeToFit];
@@ -155,14 +161,28 @@
 -(void) populateLevelList:(id)sender{
 	//CLLocationCoordinate2D coordinate = self.cityMapViewController.mapView.userLocation.coordinate;
 	[thisLevelList removeAllObjects];
+	NSArray *listOfString = [((MallViewController*)self.delegate).titleLabel.text componentsSeparatedByString: @" "	];
+	
+	NSString *_level = [listOfString lastObject];
+	NSLog(_level);
+	for (Shop* aShop in shopList) {
+		
+		if([aShop.level isEqualToString:_level]){
+			NSLog(_level);
+			[thisLevelList addObject:aShop];		
+		}
+
+		
+	}
+	NSLog(@"%d" , [thisLevelList count]);
 	
 }
 -(void)category:(id)sender{
 }
 -(void)addToFavorite:(id)sender{
 }
--(id)initWithMall:(Mall*)mall{
-		self.mall = mall;
+-(id)initWithMall:(Mall*)_mall{
+		self.mall = _mall;
 
 	return self;
 }

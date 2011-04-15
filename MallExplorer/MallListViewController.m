@@ -234,10 +234,8 @@
 -(void) mallChosen:(id)sender{
 	if (!displayController.active)
 	{
-		NSLog(((Mall*)[sender object]).name);
 	
 		for (int i =0;i<[listOfItems count];i++){
-					NSLog([[listOfItems objectAtIndex:i] description]);
 			if ([[listOfItems objectAtIndex:i] isEqualToString: ((Mall*)[sender object]).name]) {
 		
 				[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] 
@@ -249,7 +247,6 @@
     }
 	else
 	{
-		NSLog(((Mall*)[sender object]).name);
 		for (int i =0;i<[copyListOfItems count];i++){
 			if ([[copyListOfItems objectAtIndex:i] isEqualToString:((Mall*)[sender object]).name]) {
 				[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] 
