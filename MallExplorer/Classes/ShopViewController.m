@@ -156,7 +156,7 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	[super viewDidLoad];
-<<<<<<< HEAD
+
 	NSLog(@"view did load");
 	//settings self
 	self.title = theShop.shopName;
@@ -208,9 +208,7 @@
 	[shopOverviewController release];
 	[commentController release];
 	[facebookTabController release];
-=======
 
->>>>>>> 8a88da49be2b758603606c7d1d08fc469c49b7da
 	
 
 	
