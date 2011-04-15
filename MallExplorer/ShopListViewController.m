@@ -32,7 +32,7 @@
 -(void)loadData:(id)sender{
 	
 	APIController *api = [[APIController alloc] init];
-	api.debugMode = YES;
+	api.debugMode = NO;
 	api.delegate = self;
 	NSInteger mId = mall.mId;
 	[api getAPI: [NSString stringWithFormat: @"/malls/%d/shops.json", mId]];
@@ -49,7 +49,6 @@
 -(void)serverRespond:(APIController *)apiController{
 	
 	NSArray *shops = (NSArray *) apiController.result;
-	NSLog([shops description]);
 	NSMutableArray *tmpShops = [NSMutableArray array];
 	[shops enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		NSDictionary *tmp = [obj valueForKey: @"shop"];

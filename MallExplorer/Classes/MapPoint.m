@@ -14,6 +14,7 @@ static int nextNodeIndex = 0;
 @synthesize annotation;
 @synthesize index;
 @synthesize level;
+@synthesize pId;
 
 -(MapPoint*) initWithPosition:(CGPoint) pos inLevel:(Map*)map andIndex:(int) ind{
 	self = [super init];
@@ -28,6 +29,12 @@ static int nextNodeIndex = 0;
 
 -(MapPoint*) initWithPosition:(CGPoint) pos andIndex:(int) ind{
 	return [self initWithPosition:pos inLevel:nil andIndex:ind];
+}
+
+-(MapPoint*) initWithPosition:(CGPoint)pos andPointId:(NSInteger)pointId{
+	[self initWithPosition:pos];
+	self.pId = pointId;
+	return self;
 }
 
 -(MapPoint*) initWithPosition:(CGPoint) pos{

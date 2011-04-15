@@ -14,6 +14,8 @@
 #import "Constant.h"
 
 @interface Map : NSObject {
+	NSInteger mId;
+	NSInteger level;
 	NSMutableArray* annotationList;
 	NSMutableArray* pointList;
 	NSArray* edgeList;
@@ -28,6 +30,8 @@
 //	NSTime* timer;
 }
 
+@property NSInteger mId;
+@property NSInteger level;
 @property (nonatomic, retain) NSArray* annotationList;
 @property (nonatomic, retain, readonly) UIImage* imageMap;
 @property (nonatomic, retain) NSArray* pointList;
@@ -43,9 +47,16 @@
 -(MapPoint*) getClosestMapPointToPosition:(CGPoint) pos;
 -(MapPoint*) getClosestMapPointToAnnotation:(Annotation*) anno;
 
-//-(Map*) init//MapName:(NSString*) mName withMapImage:(UIImage*) img annotationList:(NSArray*) annList pointList:(NSArray*) pointList edgeList:(NSArray*) edgeList defaultCenterPoint:(CGPoint) dfCenterPoint;
+
+
+-(Map*) initWithMapId:(NSInteger) mName withLevel:(NSInteger) img withURL:(NSString*) url;
+
+-(void) loadDataWithMapName:(NSString*) mName annotationList:(NSArray*) annList pointList:(NSArray*) pList edgeList:(NSArray*) edgeList;
 
 -(void) loadDataWithMapName:(NSString*) mName withMapImage:(UIImage*) img annotationList:(NSArray*) annList pointList:(NSArray*) pointList edgeList:(NSArray*) edgeList defaultCenterPoint:(CGPoint) dfCenterPoint;
+
+// called when all properties have been set
+-(void) buildMap;
 
 -(Map*) initWithAnObject:(id) object;
 

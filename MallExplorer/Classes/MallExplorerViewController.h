@@ -16,10 +16,25 @@
 	CityMapViewController* cityMapViewController;
 	MasterViewController* masterViewController;
 	
-	NSArray *maps;
-	NSArray *stairs;
+	NSMutableArray *maps;
+	NSMutableArray *stairs;
+	
+	BOOL mapsLoaded;
+	BOOL stairsLoaded;
+	BOOL pointsLoaded;
+	BOOL edgesLoaded;
+	BOOL annotationsLoaded;
+	int numberMapLoaded;
+	int numWaiting;
 }
 
+@property (retain) NSArray *maps;
+@property (retain) NSArray *stairs;
 
+@property BOOL mapsLoaded;
+@property BOOL stairsLoaded;
+@property BOOL pointsLoaded;
+@property BOOL edgesLoaded;
+@property BOOL annotationsLoaded;
 @end
 

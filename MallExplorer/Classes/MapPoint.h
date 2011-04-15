@@ -18,9 +18,11 @@
 	// this annotation is used for searching for an annotation of a given type (shop of a given type)
 	Annotation* annotation; 
 	Map* level;
+	NSInteger pId;
 }
 @property CGPoint position;
 @property int index;
+@property int pId;
 @property (nonatomic, retain) Annotation* annotation;
 @property (assign) Map* level;
 
@@ -29,6 +31,8 @@
 -(MapPoint*) initWithPosition:(CGPoint)pos andIndex:(int) ind;
 
 -(MapPoint*) initWithPosition:(CGPoint)pos;
+
+-(MapPoint*) initWithPosition:(CGPoint)pos andPointId:(NSInteger)pId;
 
 -(NSNumber*) estimateDistanceTo: (MapPoint*) p;
 +(double) getDistantBetweenPoint:(MapPoint*) p1 andPoint: (MapPoint*) p2;

@@ -7,7 +7,7 @@
 //  Author: Tran Cong Hoang
 
 #import "Map.h"
-
+#import "ASIHTTPRequest.h"
 
 @implementation Map
 
@@ -18,6 +18,7 @@
 @synthesize pathOnMap;
 @synthesize edgeList;
 @synthesize defaultCenterPoint;
+@synthesize mId, level;
 const double toleranceRange = 10;
 
 // number of maximum steps in binery search in B->C to refine a path A->B->C by a point in between B,C
@@ -29,7 +30,7 @@ const int maxNumstep = 100;
 		return NO;
 	}
 	Map* obj = (Map*) o;
-	if ((mapName==nil && obj.mapName==nil) ||[mapName isEqualToString:obj.mapName]){
+	if (self.mId == obj.mId){
 		return YES;
 	} else return NO;
 }
@@ -110,9 +111,57 @@ const int maxNumstep = 100;
 	self = [super init];
 	if (self) {
 		self.pathOnMap = [[NSMutableArray alloc] init];
+		self.annotationList = [NSMutableArray array];
+		self.pointList = [NSMutableArray array];
+		self.edgeList = [NSMutableArray array];
 	}
 	return self;
 }
+
+-(Map*) initWithMapId:(NSInteger) mapid withLevel:(NSInteger) lev withURL:(NSString*) url{
+	self = [super init];
+	if (self) {
+		self.pathOnMap = [[NSMutableArray alloc] init];
+		self.mId = mapid;
+		self.level = lev;
+		__block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
+		[request setCompletionBlock:^{
+			NSLog(@"%@", @"done loading image");
+			imageMap = [[UIImage imageWithData: [request responseData]] retain];
+			mapName = [[NSString stringWithFormat:@"Level %d", lev] retain];
+		}];		
+		[request startAsynchronous];
+		
+		
+	}
+	return self;
+
+}
+
+-(void) loadDataWithMapName:(NSString*) mName annotationList:(NSArray*) annList pointList:(NSArray*) pList edgeList:(NSArray*) edgeList{
+	
+	mapName = mName;
+	self.annotationList = [NSMutableArray arrayWithArray:annList];
+	self.pointList = [NSMutableArray arrayWithArray:pList] ;
+	self.edgeList = [NSArray arrayWithArray:edgeList];
+	self.defaultCenterPoint = CGPointMake(imageMap.size.width/2, imageMap.size.height/2);
+	for (int i = 0; i<[annotationList count]; i++) {
+		Annotation* anAnno = [annotationList objectAtIndex:i];
+		anAnno.level = self;
+	}
+	
+	for (int i = 0; i<[pointList count]; i++) {
+		MapPoint* mapPoint = [pointList	objectAtIndex:i];
+		mapPoint.level = self;
+	}
+	
+	
+	// building graph of this map
+	[self buildGraph];
+	//return self;
+}
+
+
 
 -(void) loadDataWithMapName:(NSString*) mName withMapImage:(UIImage*) img annotationList:(NSArray*) annList pointList:(NSArray*) pList edgeList:(NSArray*) edgeList defaultCenterPoint:(CGPoint) dfCenterPoint{
 
@@ -137,6 +186,24 @@ const int maxNumstep = 100;
 	[self buildGraph];
 	//return self;
 }
+
+-(void) buildMap{
+	for (int i = 0; i<[annotationList count]; i++) {
+		Annotation* anAnno = [annotationList objectAtIndex:i];
+		anAnno.level = self;
+	}
+	
+	for (int i = 0; i<[pointList count]; i++) {
+		MapPoint* mapPoint = [pointList	objectAtIndex:i];
+		mapPoint.level = self;
+	}
+	
+	
+	// building graph of this map
+	[self buildGraph];
+	//return self;
+}
+
 
 #pragma mark -
 #pragma mark path finding

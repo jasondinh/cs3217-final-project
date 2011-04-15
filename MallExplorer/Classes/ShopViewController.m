@@ -25,6 +25,7 @@
 	//EFFECTS: return a ShopViewController with information
 	//			obtained from aShop
 	self =[super init];
+	NSLog(@"init");
 	if(self){
 		theShop = aShop;
 	}
@@ -109,6 +110,7 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	[super viewDidLoad];
+	NSLog(@"view did load");
 	//settings self
 	self.title = theShop.shopName;
 	self.contentSizeForViewInPopover = CGSizeMake(POPOVER_WIDTH, POPOVER_HEIGHT);
