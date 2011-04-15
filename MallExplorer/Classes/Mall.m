@@ -13,6 +13,7 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 @synthesize name, longitude, latitude, address, mId, zip;
 @synthesize mapList;
 @synthesize mapPointList;
+@synthesize mapLoaded;
 
 -(CLLocationCoordinate2D) coordinate{
 	CLLocationCoordinate2D cor;
@@ -49,6 +50,7 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 		self.mapList = nil;
 		mapList = nil;
 		mapPointList = nil;
+		mapLoaded = NO;
 	}
 	return self;
 }
@@ -99,6 +101,7 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 			[mallGraph addEdge:node2 andObject2:node1 withWeight:1];
 		}
 	}
+	mapLoaded = YES;
 }
 
 -(void)addMap:(Map*) aMap{

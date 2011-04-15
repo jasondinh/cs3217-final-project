@@ -51,7 +51,7 @@
 #pragma mark -
 #pragma mark Nofications
 -(void) requestDidFail:(id)sender{
-/*	NSLog(@"REQUEST FAILED");
+/*	if (debug) NSLog(@"REQUEST FAILED");
 	RequesFailViewController * requestFail = [[RequesFailViewController alloc]init];
 	[masterViewController pushViewController:requestFail animated:YES];*/
 }
@@ -85,10 +85,11 @@
 			[items release];
 		}
 	}
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopListLoaded:) name:@"shop list loaded" object:nil];
 	
 }
 -(void) shopEnter:(id)sender{
-	NSLog(((Shop*)[sender object]).shopName);
+	if (debug) NSLog(((Shop*)[sender object]).shopName);
 		ShopViewController* shopViewController = [[ShopViewController alloc] init] ;
 		[shopViewController loadShop:(Shop*)[sender object]];
 		[masterViewController pushViewController:shopViewController animated:YES];
@@ -96,6 +97,9 @@
 	
 }
 
+-(void) shopListLoaded:(NSNotification*) notify{
+	shopList = [notify.object retain];
+}
 
 -(void) mallChosen:(NSNotification*) notification{
 	
@@ -125,11 +129,12 @@
 }
 
 - (void) loadMaps {
-	NSLog(@"%@", @"loadMaps");
+	Mall* theMall = [[self.viewControllers objectAtIndex:1] mall];
+	//if (theMall.mapLoaded) return;
+	if (debug) NSLog(@"%@", @"loadMaps");
 	APIController *api = [[APIController alloc] init];
 	api.debugMode = NO;
 	api.delegate = self;
-	Mall* theMall = [[self.viewControllers objectAtIndex:1] mall];
 	numberMapLoaded = 0;
 	NSInteger mId = theMall.mId;
 	[api getAPI: [NSString stringWithFormat: @"/malls/%d/maps.json", mId]];
@@ -145,6 +150,29 @@
 
 -(void) finishedLoading{	
 	MallViewController* theMVC = [self.viewControllers objectAtIndex:1];
+	for (int i = 0; i<[shopList count]; i++) {
+		Shop* aShop = [shopList objectAtIndex:i];
+		Map* map = nil;
+		NSLog(@"%@", aShop.level);
+		for (int j = 0; j<[maps count]; j++) {
+			if ([[[maps objectAtIndex:j] level] isEqual: aShop.level]) {
+				map = [maps objectAtIndex:j];
+				break;
+			}
+		}
+
+		NSLog(@"shop %d pid %d", i, aShop.pId);
+		for (int j = 0; j<[map.pointList count]; j++) {
+			NSLog(@"point pid %d", [[map.pointList objectAtIndex:j] pId]);
+			if ([[map.pointList objectAtIndex:j] pId] == aShop.pId) {
+				aShop.annotation = [Annotation annotationWithAnnotationType:kAnnoShop inlevel:map WithPosition:[[map.pointList objectAtIndex:j] position] title:aShop.shopName content:@"content"];
+				break;
+			}
+		}
+		
+		[map addAnnotation:aShop.annotation];
+	}
+	[shopList  release];
 	[theMVC loadMaps:maps andStairs:stairs withDefaultMap:[maps objectAtIndex:0]];
 }
 
@@ -152,7 +180,7 @@
 	if ([api.path rangeOfString: @"stairs.json"].location != NSNotFound) {		
 		self.stairs = [NSMutableArray array];
 		NSArray *result = (NSArray *) api.result;
-		NSLog(@"number of stairs: %d", [result count] );
+		if (debug) NSLog(@"number of stairs: %d", [result count] );
 		for (id obj in result) {
 			Map* aMap1 = nil;
 			Map* aMap2 = nil;
@@ -178,13 +206,13 @@
 			
 			NSInteger p1 = [[tmpStair valueForKey: @"first_point_id"] intValue];
 			NSInteger p2 = [[tmpStair valueForKey: @"second_point_id"] intValue];			
-			NSLog(@"map %d point %d map %d point %d", aMap1.mId, p1, aMap2.mId, p2);
+			if (debug) NSLog(@"map %d point %d map %d point %d", aMap1.mId, p1, aMap2.mId, p2);
 			
 			for (int i = 0; i<[aMap1.pointList count]; i++) {
 				MapPoint* aPoint = [aMap1.pointList objectAtIndex:i];
 				if (aPoint.pId == p1) {
 					point1 = aPoint;
-					NSLog(@"cai dm day roi map1 %d", point1.pId);
+					if (debug) NSLog(@"cai dm day roi map1 %d", point1.pId);
 					break;
 				} 
 			}
@@ -193,15 +221,15 @@
 				MapPoint* aPoint = [aMap2.pointList objectAtIndex:i];
 				if (aPoint.pId == p2) {
 					point2 = aPoint;
- 				NSLog(@"cai dm day roi map2 %d", point2.pId);
+ 				if (debug) NSLog(@"cai dm day roi map2 %d", point2.pId);
 					break;
 				} 
 			}
 			
 			Edge* anEdge = [[Edge alloc] initWithPoint1:point1 point2:point2];
-			NSLog(@"edge: %d %d", anEdge.pointA.pId, anEdge.pointB.pId);
+			if (debug) NSLog(@"edge: %d %d", anEdge.pointA.pId, anEdge.pointB.pId);
 			[stairs addObject:anEdge];
-			NSLog(@"%d", [stairs count]);
+			if (debug) NSLog(@"%d", [stairs count]);
 			[anEdge release];
 			
 		}
@@ -240,7 +268,7 @@
 		
 	}
 	else if ([api.path rangeOfString: @"points.json"].location != NSNotFound) { 
-		NSLog([[api result] description]);
+		if (debug) NSLog([[api result] description]);
 		numWaiting--;
 		NSMutableArray *points = [NSMutableArray array];
 		
@@ -258,10 +286,11 @@
 			[points addObject: point];
 		}
 		
-		
+		NSLog(@"the points' map is %d", mId);
 		if (mId != 0) {
 			for (int i = 0; i<[maps count]; i++) {
 				Map* aMap = [maps objectAtIndex:i];
+				NSLog(@"points' map is %d", aMap.mId);
 				if (aMap.mId == mId)
 				{
 					aMap.pointList = points;
@@ -381,11 +410,11 @@
 	}
 	
 
-	NSLog([[api result] description]);
+	if (debug) NSLog([[api result] description]);
 }
 
 - (void) loadStairs {
-	NSLog(@"%@", @"loadStairs");
+	if (debug) NSLog(@"%@", @"loadStairs");
 
 		
 	

@@ -22,8 +22,10 @@ typedef enum {
 	NSMutableArray* commentList;
 	Annotation* annotation;
 	NSString *description;
+	NSInteger pId;
 }
 @property NSInteger sId;
+@property NSInteger pId;
 @property ShopCategory category;
 @property (retain) NSString* level;
 @property (retain) NSString* unitNumber;

@@ -15,7 +15,7 @@
 @synthesize unitNumber;
 @synthesize shopName;
 @synthesize annotation;
-@synthesize commentList, description, sId;
+@synthesize commentList, description, sId, pId;
 
 -(void) loadComment:(NSArray*) commentList{
 	// do something

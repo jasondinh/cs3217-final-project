@@ -601,10 +601,22 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeMap:) name:@"change map" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setGoalTo:) name:@"set goal point to shop" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setStartTo:) name:@"set start point to shop" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"this shop is chosen" object:nil];
 }
 
 #pragma mark -
 #pragma mark notification handling
+
+-(void) shopChosen:(NSNotification*) notification{
+	Annotation* anAnno = [notification.object annotation];
+	if ([anAnno.level isEqual:mapViewController.map]) {
+		[mapViewController focusToAMapPosition:anAnno.position];
+	} else {
+		[self changeToMap:[self getViewControllerOfMap:anAnno.level]];
+		[mapViewController focusToAMapPosition:anAnno.position];
+	}
+
+}
 
 -(void) setStartTo:(NSNotification*) notification{
 	Annotation* anAnno = [notification.object annotation];

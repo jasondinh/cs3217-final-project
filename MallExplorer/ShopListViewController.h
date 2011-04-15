@@ -16,7 +16,9 @@
 	NSMutableArray* shopList;
 	Mall *mall;
 	id delegate;
+	BOOL shopLoaded;
 }
+@property BOOL shopLoaded;
 @property (retain) 	id delegate;
 @property (nonatomic,retain) Mall *mall;
 @property (nonatomic,retain) NSMutableArray* thisLevelList;

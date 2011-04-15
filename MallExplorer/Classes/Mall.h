@@ -21,7 +21,7 @@
 	NSString *address;
 	NSInteger zip;
 	NSInteger numberOfMaps;
-
+	BOOL mapLoaded;
 	// this list holds a set of maps
 	NSMutableArray* mapList;
 	// this list holds the "connecting points" that connect map to map
@@ -36,7 +36,7 @@
 @property (retain) NSString *address;
 @property (retain) NSArray* mapList;
 @property (retain) NSArray* mapPointList;
-
+@property BOOL mapLoaded;
 
 @property NSInteger mId;
 @property NSInteger zip;

@@ -19,6 +19,7 @@
 	NSMutableArray *maps;
 	NSMutableArray *stairs;
 	
+	NSArray* shopList;
 	BOOL mapsLoaded;
 	BOOL stairsLoaded;
 	BOOL pointsLoaded;

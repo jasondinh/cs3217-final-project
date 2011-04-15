@@ -9,9 +9,9 @@
 #import "ShopListViewController.h"
 #import "MallViewController.h"
 #import "Shop.h"
-
+#import "Annotation.h"
 @implementation ShopListViewController
-@synthesize thisLevelList,shopList, mall,delegate;
+@synthesize thisLevelList,shopList, mall,delegate, shopLoaded;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -59,9 +59,11 @@
 									  andUnit:[tmp valueForKey: @"unit"] 
 								  andShopName:[tmp valueForKey: @"name"] 
 							   andDescription:[tmp valueForKey: @"description"]];
+		NSInteger pid = [[tmp valueForKey: @"point_id"] intValue];
+		shop.pId = pid;
 		[tmpShops addObject: shop];
 	}];
-	
+	NSLog([apiController.result description]);
 	self.shopList = [tmpShops mutableCopy];
 	self.listOfItems = [[NSMutableArray alloc]init];
 	for (Shop* aShop in shopList){
@@ -72,6 +74,8 @@
 	if (_reloading)
 		[self doneLoadingTableViewData];
 	self.typeOfList.selectedSegmentIndex = 0;
+	self.shopLoaded = YES;
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"shop list loaded" object:shopList];
 	
 }
 - (void) requestDidStart: (APIController *) apiController {
@@ -102,6 +106,8 @@
 	[self setToolbarItems:[NSMutableArray arrayWithObjects:barButton,nil] animated:YES];
 	//self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"shop chosen" object:nil];	
+	
+	shopLoaded = NO;
 	
 }
 
@@ -154,6 +160,8 @@
 			}
 		}
     }
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen" object:sender];
 	
 	
 }
