@@ -98,7 +98,27 @@ const int maxNumstep = 100;
 		[self add:(int)(dist/averageEdgeLength)-1 pointsToGraphInBetweenPoint:node1 andPoint:node2 isBidirectional:anEdge.isBidirectional];			
 	}
 	canRefinePath = [self createBitmapFromImage];
-	passAbleColor = [[self getPixelColorAtLocation:[[pointList objectAtIndex:0] position]] retain];
+//	passAbleColor = [[self getPixelColorAtLocation:[[pointList objectAtIndex:0] position]] retain];
+	int chosen = 0;
+	int max = 0;
+	for (int i = 0; i<[pointList count]; i++)
+	{
+		MapPoint* p1 = [pointList objectAtIndex:i];
+		int num = 0;
+		for (int j = 0; j<[pointList count]; j++) {
+			MapPoint* p2 = [pointList objectAtIndex:j];
+			if ([self getColorDifferenceBetween:[self getPixelColorAtLocation:p1.position] and:[self getPixelColorAtLocation:p2.position]] <= toleranceRange) {
+				num++;
+			}
+		}
+		if (num>max) {
+			max = num;
+			chosen = i;
+		}
+		
+	}
+	passAbleColor = [[self getPixelColorAtLocation:[[pointList objectAtIndex:chosen] position]] retain];
+
 }
 
 -(Map*) initWithAnObject:(id) object{

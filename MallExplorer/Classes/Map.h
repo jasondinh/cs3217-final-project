@@ -47,7 +47,7 @@
 -(MapPoint*) getClosestMapPointToPosition:(CGPoint) pos;
 -(MapPoint*) getClosestMapPointToAnnotation:(Annotation*) anno;
 
-
+-(double) getColorDifferenceBetween:(UIColor*) colorA and: (UIColor*) colorB;
 
 -(Map*) initWithMapId:(NSInteger) mapid withLevel:(NSString *) lev withURL:(NSString*) url;
 
