@@ -14,7 +14,7 @@
 @synthesize facebook;
 
 - (id) init {
-	NSLog(@"init");
+
 	self = [super init];
 	
 	if (self != nil) {

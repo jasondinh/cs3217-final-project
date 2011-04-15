@@ -178,7 +178,8 @@ NSMutableArray* edgeList;
 -(MapViewController*) initWithMapImage:(UIImage*)img 
 				withDefaultCenterPoint:(CGPoint)defaultPoint
 					withAnnotationList:(NSArray*) annList
-							 pointList:(NSArray*) pointList
+							 pointList:(NSArray*) pointList		
+
 							  edgeList:(NSArray*) edgeList
 {
 	Map* aMap = [[Map alloc] initWithMapImage:img annotationList:annList pointList:pointList edgeList:edgeList defaultCenterPoint:defaultPoint];

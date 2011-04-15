@@ -265,7 +265,6 @@
 }
 //override
 /*- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	//    NSLog(@"em da dc goi");
 	static NSString *CellIdentifier = @"Cell";
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -359,20 +358,18 @@
 
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
-	NSString *product = nil;
+	NSString *string = nil;
 	if (self.displayController.active)
 	{
-        product = [self.copyListOfItems objectAtIndex:indexPath.row];
-		NSLog(product);
+        string = [self.copyListOfItems objectAtIndex:indexPath.row];
     }
 	else
 	{
-		NSLog(product);
-        product = [self.listOfItems objectAtIndex:indexPath.row];
+        string = [self.listOfItems objectAtIndex:indexPath.row];
     }
 	
 	for(Mall* aMall in mallList){
-		if (aMall.name == product) 
+		if (aMall.name == string) 
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"mall enter" 
 																object:aMall];
 	}

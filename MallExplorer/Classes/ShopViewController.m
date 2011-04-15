@@ -19,6 +19,25 @@
 
 #pragma mark -
 #pragma mark Initialization
+
+- (UIImage*)scale:(UIImage*)original ToSize:(CGSize)size {
+	UIGraphicsBeginImageContext(size);
+	//REQUIRES: original != nil
+	//MODIFIES: none
+	//EFFECTS: return the original but resized to 'size'
+	
+	CGContextRef context = UIGraphicsGetCurrentContext();
+	CGContextTranslateCTM(context, 0.0, size.height);
+	CGContextScaleCTM(context, 1.0, -1.0);
+	CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, size.width, size.height), original.CGImage);
+	UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+	
+	return scaledImage;
+}
+
+
+
 -(id)loadShop:(Shop*)aShop{
 	//REQUIRES: aShop != nil
 	//MODIFIES: self
@@ -77,6 +96,7 @@
 	[shopOverviewController release];
 	[commentController release];
 	[facebookTabController release];
+	return self;
 }
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -135,22 +155,6 @@
 #pragma mark -
 #pragma mark View lifecycle
 
-- (UIImage*)scale:(UIImage*)original ToSize:(CGSize)size {
-	UIGraphicsBeginImageContext(size);
-	//REQUIRES: original != nil
-	//MODIFIES: none
-	//EFFECTS: return the original but resized to 'size'
-	
-	CGContextRef context = UIGraphicsGetCurrentContext();
-	CGContextTranslateCTM(context, 0.0, size.height);
-	CGContextScaleCTM(context, 1.0, -1.0);
-	CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, size.width, size.height), original.CGImage);
-	UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-	UIGraphicsEndImageContext();
-	
-	return scaledImage;
-}
-
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -161,7 +165,7 @@
 	//settings self
 	self.title = theShop.shopName;
 	self.contentSizeForViewInPopover = CGSizeMake(POPOVER_WIDTH, POPOVER_HEIGHT);
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
+	//self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
 	[self.tabBar setBackgroundColor:[UIColor whiteColor]] ;
 	
 	CGRect frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width, 48);

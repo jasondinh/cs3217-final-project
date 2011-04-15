@@ -65,11 +65,9 @@
 	}
 	[self.tableView reloadData];
 	[progress hide:YES];
-	NSLog(@"ceom");
-	if (_reloading){
-		NSLog(@"ceom");
+	if (_reloading)
 		[self doneLoadingTableViewData];
-	}
+	
 }
 - (void) requestDidStart: (APIController *) apiController {
 	_reloading = YES;
@@ -87,36 +85,77 @@
 	//NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"This level",@"Favorite",nil];
 	NSArray* segmentArray = [NSArray arrayWithObjects:@"ALl",@"This level",nil];
 	typeOfList = [[UISegmentedControl alloc] initWithItems:segmentArray];
+	[typeOfList addTarget:self action:@selector(changeListType:) forControlEvents:UIControlEventValueChanged];
 	[typeOfList sizeToFit];
 	typeOfList.segmentedControlStyle = UISegmentedControlStyleBar;
-	typeOfList.selectedSegmentIndex = 1;
+	typeOfList.selectedSegmentIndex = 0;
 	UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:typeOfList];
+	
+
 	// UIBarButtonItem* category = [[UIBarButtonItem alloc]initWithTitle:@"category" style:UIBarButtonItemStyleBordered target:self action:@selector(category:) ];
 	[self setToolbarItems:[NSMutableArray arrayWithObjects:barButton,nil] animated:YES];
 	//self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"shop chosen" object:nil];	
 	
 }
--(void)shopChosen:(id)sender{
-	for (int i =0;i<[listOfItems count];i++){
-		
-		if ([listOfItems objectAtIndex:i] == ((Shop*)[sender object]).shopName) {
-			[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] 
-										animated:YES 
-								  scrollPosition:UITableViewScrollPositionMiddle];			
+
+-(void)changeListType:(id)sender{
+	
+	if(typeOfList.selectedSegmentIndex==0){ // List
+		[listOfItems removeAllObjects];
+		for (Shop* aShop in shopList) {
+			[listOfItems addObject:aShop.shopName];
 		}
+		[self.tableView reloadData];
+	}
+	else if (typeOfList.selectedSegmentIndex==1){ //This level
+		
+		[self populateLevelList:nil ];
+		[listOfItems removeAllObjects];
+		for (Shop* aShop in thisLevelList) {
+			[listOfItems addObject:aShop.shopName];
+		}
+		[self.tableView reloadData];
+	}
+	else if (typeOfList.selectedSegmentIndex==2){//favorite
+		
 	}
 	
 }
+-(void)shopChosen:(id)sender{
+	if (!displayController.active)
+	{
 
--(void) populateNearbyList:(id)sender{
+		
+		for (int i =0;i<[listOfItems count];i++){
+			if ([[listOfItems objectAtIndex:i] isEqualToString: ((Shop*)[sender object]).shopName]) {
+				
+				[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] 
+											animated:YES 
+									  scrollPosition:UITableViewScrollPositionMiddle];	
+				
+			}
+		}
+    }
+	else
+	{
+		for (int i =0;i<[copyListOfItems count];i++){
+			if ([[copyListOfItems objectAtIndex:i] isEqualToString:((Shop*)[sender object]).shopName]) {
+				[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] 
+											animated:YES 
+									  scrollPosition:UITableViewScrollPositionMiddle];		
+				
+			}
+		}
+    }
+	
+	
+}
+
+-(void) populateLevelList:(id)sender{
 	//CLLocationCoordinate2D coordinate = self.cityMapViewController.mapView.userLocation.coordinate;
 	[thisLevelList removeAllObjects];
-	for (Shop* aShop in shopList) {
-		//if () {
-		//	
-		//}
-	}
+	
 }
 -(void)category:(id)sender{
 }
@@ -128,33 +167,22 @@
 	return self;
 }
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	NSString *string = nil;
+	if (displayController.active)
+	{
+        string = [self.copyListOfItems objectAtIndex:indexPath.row];
+    }
+	else
+	{
+        string = [self.listOfItems objectAtIndex:indexPath.row];
+    }
 	
-    /*
-     When a row is selected, set the detail view controller's detail item to 
-     the item associated with the selected row.
-     */
-    //detailViewController.detailItem = 
-    //    [NSString stringWithFormat:@"Row %d", indexPath.row];
-	NSString *selectedItem = nil;
-	NSString *searchingText = searchBar.text;
-	if(searchWasActive &&
-	   [searchingText length]!=0)
-		selectedItem = [copyListOfItems objectAtIndex:indexPath.row];
-	else {
-		
-		selectedItem = [listOfItems objectAtIndex:indexPath.row];
+	for(Shop* aShop in shopList){
+		if (aShop.shopName == string) 
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen"
+																object:aShop];
 	}
 	
-	//Initialize the detail view controller and display it.
-
-	for(Shop* aShop in shopList){
-		if (aShop.shopName == selectedItem) 
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen" 
-																object:aShop];
-	}	
-	//cityMapViewController.detailItem = 
-	//[NSString stringWithFormat:@"%@", 
-	//[listOfMovies objectAtIndex:indexPath.row]];    
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
