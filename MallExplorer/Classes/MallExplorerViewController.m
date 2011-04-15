@@ -152,11 +152,12 @@
 	if ([api.path rangeOfString: @"stairs.json"].location != NSNotFound) {		
 		self.stairs = [NSMutableArray array];
 		NSArray *result = (NSArray *) api.result;
-		Map* aMap1 = nil;
-		Map* aMap2 = nil;
-		id point1 = nil;
-		id point2 = nil;
+		NSLog(@"number of stairs: %d", [result count] );
 		for (id obj in result) {
+			Map* aMap1 = nil;
+			Map* aMap2 = nil;
+			MapPoint* point1 = nil;
+			MapPoint* point2 = nil;
 			NSDictionary *tmpStair = [obj valueForKey: @"stair"];
 			NSInteger mId1 = [[tmpStair valueForKey: @"map_id"] intValue];
 			NSInteger mId2 = [[tmpStair valueForKey: @"map_second_id"] intValue];
@@ -175,24 +176,34 @@
 				}
 			}	
 			
-			NSInteger p1 = [[tmpStair valueForKey: @"annotation_first_id"] intValue];
-			NSInteger p2 = [[tmpStair valueForKey: @"annotation_second_id"] intValue];			
+			NSInteger p1 = [[tmpStair valueForKey: @"first_point_id"] intValue];
+			NSInteger p2 = [[tmpStair valueForKey: @"second_point_id"] intValue];			
+			NSLog(@"map %d point %d map %d point %d", aMap1.mId, p1, aMap2.mId, p2);
+			
 			for (int i = 0; i<[aMap1.pointList count]; i++) {
 				MapPoint* aPoint = [aMap1.pointList objectAtIndex:i];
 				if (aPoint.pId == p1) {
 					point1 = aPoint;
+					NSLog(@"cai dm day roi map1 %d", point1.pId);
 					break;
 				} 
 			}
+			
 			for (int i = 0; i<[aMap2.pointList count]; i++) {
 				MapPoint* aPoint = [aMap2.pointList objectAtIndex:i];
 				if (aPoint.pId == p2) {
 					point2 = aPoint;
+ 				NSLog(@"cai dm day roi map2 %d", point2.pId);
 					break;
 				} 
 			}
+			
 			Edge* anEdge = [[Edge alloc] initWithPoint1:point1 point2:point2];
+			NSLog(@"edge: %d %d", anEdge.pointA.pId, anEdge.pointB.pId);
 			[stairs addObject:anEdge];
+			NSLog(@"%d", [stairs count]);
+			[anEdge release];
+			
 		}
 		[self finishedLoading];
 		return;
@@ -229,6 +240,7 @@
 		
 	}
 	else if ([api.path rangeOfString: @"points.json"].location != NSNotFound) { 
+		NSLog([[api result] description]);
 		numWaiting--;
 		NSMutableArray *points = [NSMutableArray array];
 		

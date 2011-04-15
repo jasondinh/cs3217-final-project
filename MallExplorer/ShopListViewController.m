@@ -164,17 +164,12 @@
 	NSArray *listOfString = [((MallViewController*)self.delegate).titleLabel.text componentsSeparatedByString: @" "	];
 	
 	NSString *_level = [listOfString lastObject];
-	NSLog(_level);
 	for (Shop* aShop in shopList) {
-		
-		if([aShop.level isEqualToString:_level]){
-			NSLog(_level);
+		if([aShop.level isEqualToString:_level])
 			[thisLevelList addObject:aShop];		
-		}
 
-		
 	}
-	NSLog(@"%d" , [thisLevelList count]);
+
 	
 }
 -(void)category:(id)sender{

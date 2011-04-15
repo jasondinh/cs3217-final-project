@@ -95,7 +95,12 @@ NSMutableArray* edgeList;
 #pragma mark handling annotation methods
 
 -(BOOL) addAnnotationToMap: (AnnoViewController*) annoView{
-	if (![map checkPositionInsideMap:annoView.annotation.position] || ![map checkFreeAtPoint:annoView.annotation.position]) {
+	if (![map checkPositionInsideMap:annoView.annotation.position])
+		
+	// || ![map checkFreeAtPoint:annoView.annotation.position]) {
+	{
+		
+	
 		return NO; // cannot add
 	} 
 	
@@ -488,7 +493,8 @@ NSMutableArray* edgeList;
 -(void) annotationOnMapMoved:(NSNotification*) notification{
 	AnnoViewController* anAnnoVC = notification.object;
 	CGPoint newAnnoMapPosition = [self translatePointToMapCoordinationFromScrollViewCoordination:CGPointMake(anAnnoVC.view.frame.origin.x+anAnnoVC.view.frame.size.width/2, anAnnoVC.view.frame.origin.y+anAnnoVC.view.frame.size.height/2)];
-	if (![map checkPositionInsideMap:newAnnoMapPosition] || ![map checkFreeAtPoint:newAnnoMapPosition]) {
+	if (![map checkPositionInsideMap:newAnnoMapPosition])// || ![map checkFreeAtPoint:newAnnoMapPosition]) {
+	{
 		[anAnnoVC invalidatePosition];
 		return;
 	} 

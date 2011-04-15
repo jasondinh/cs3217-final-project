@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define debug YES
+#define debug NO
 
 // Map constant
 #define MAP_ORIGIN_X 3
@@ -41,7 +41,8 @@
 
 //API constant
 
-#define API_END_POINT @"http://cs3217.heroku.com"
+//#define API_END_POINT @"http://cs3217.heroku.com"
+#define API_END_POINT @"http://macmini.dyndns.biz:3000"
 
 //UISplitView constants;
 #define POPOVER_WIDTH 320
@@ -57,8 +58,8 @@
 #define SPAN_LATITUDE 0.02
 #define NEARBY_LONGITUDE 0.2
 #define NEARBY_LATITUDE 0.2
-#define INSIDE_LONGITUDE 0.0005
-#define INSIDE_LATITUDE 0.0005
+#define INSIDE_LONGITUDE 0.002
+#define INSIDE_LATITUDE 0.002
 
 #define FB_APP_ID @"126549780707590"
 @protocol Constant

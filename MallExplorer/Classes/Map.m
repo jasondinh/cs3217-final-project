@@ -132,8 +132,6 @@ const int maxNumstep = 100;
 			mapName = [[NSString stringWithFormat:@"Level %@", lev] retain];
 		}];		
 		[request startAsynchronous];
-		
-		
 	}
 	return self;
 
@@ -193,6 +191,7 @@ const int maxNumstep = 100;
 		Annotation* anAnno = [annotationList objectAtIndex:i];
 		anAnno.level = self;
 	}
+	
 	
 	for (int i = 0; i<[pointList count]; i++) {
 		MapPoint* mapPoint = [pointList	objectAtIndex:i];
