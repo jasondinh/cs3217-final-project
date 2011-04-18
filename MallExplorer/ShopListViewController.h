@@ -5,7 +5,7 @@
 //  Created by Dam Tuan Long on 4/3/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
-
+//	Owner : Dam Tuan Long
 #import <UIKit/UIKit.h>
 #import "ListViewController.h"
 #import "Mall.h"
@@ -24,5 +24,11 @@
 @property (nonatomic,retain) NSMutableArray* thisLevelList;
 @property (nonatomic,retain) NSMutableArray* shopList;
 -(id)initWithMall:(Mall*)mall;
--(void)addToFavorite:(id)sender;
+//REQUIRES:
+//MODIFIES: self
+//EFFECTS: return a ShopListViewController.
+
+
+
+//-(void)addToFavorite:(id)sender;
 @end

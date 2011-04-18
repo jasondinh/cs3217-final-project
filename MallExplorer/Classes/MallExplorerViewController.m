@@ -31,16 +31,11 @@
 		// Custom initialization
 		cityMapViewController = [[[CityMapViewController alloc] initWithNibName:@"CityMapViewController" bundle:nil] retain];
 		masterViewController= [[MasterViewController alloc] initWithCityMap:cityMapViewController];
-		//masterViewController.cityMapViewController = 
-
 		self.viewControllers = [NSArray arrayWithObjects: masterViewController, cityMapViewController, nil];
 		[self setDelegate:cityMapViewController];
-		
-		//add observer for notifications
-		//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"shop chosen" object:nil];	
+		//add observers for notifications
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopEnter:) name:@"shop enter" object:nil];	
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallEnter:) name:@"mall enter" object:nil];	
-		//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ListViewWillAppear:) name:@"Listview will appear" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShopViewWillAppear:) name:@"Shopview will appear"  object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestDidFail:) name:@"request did fail"  object:nil];
@@ -153,7 +148,6 @@
 	for (int i = 0; i<[shopList count]; i++) {
 		Shop* aShop = [shopList objectAtIndex:i];
 		Map* map = nil;
-		NSLog(@"%@", aShop.level);
 		for (int j = 0; j<[maps count]; j++) {
 			if ([[[maps objectAtIndex:j] level] isEqual: aShop.level]) {
 				map = [maps objectAtIndex:j];

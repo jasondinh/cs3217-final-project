@@ -42,7 +42,6 @@
 	[request setPostValue: facebook.accessToken forKey: @"access_token"];
 	[request setPostValue: @"aaaaaaa" forKey: @"message"];
 	[request setPostValue: @"162222677131935" forKey: @"place"];
-	
 	[request startAsynchronous];
 	
 }

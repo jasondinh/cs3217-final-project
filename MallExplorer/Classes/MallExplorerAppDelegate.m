@@ -25,8 +25,6 @@
     [self.window addSubview:mallExplorer.view];
     [self.window makeKeyAndVisible];
 	
-	//[self testCoreData];
-	
 	return YES;
 }
 

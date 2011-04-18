@@ -5,7 +5,7 @@
 //  Created by Dam Tuan Long on 4/2/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
-
+//	Owner : Dam Tuan Long
 #import "ListViewController.h"
 #import "Constant.h"
 
@@ -25,6 +25,8 @@
     return self;
 }
 */
+#pragma mark -
+#pragma mark EGORefresh support
 
 - (void)doneLoadingTableViewData{
 	
@@ -70,10 +72,9 @@
 #pragma mark View lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
 	if (_refreshHeaderView == nil) {
-		
-		EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
+		EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height,
+																									  self.view.frame.size.width, self.tableView.bounds.size.height)];
 		view.delegate = self;
 		[self.tableView addSubview:view];
 		_refreshHeaderView = view;
@@ -113,6 +114,10 @@
 
 
 -(void) loadData:(id)sender{
+	//REQUIRES:self != nil
+	//MODIFIES: listOfItem
+	//EFFECTS: override this method, used to load data for tableview
+	
 }
 - (void)navigationController:(UINavigationController *)navigationController 
 	  willShowViewController:(UIViewController *)viewController animated:(BOOL)animated 
@@ -126,7 +131,6 @@
         if ([[navigationController viewControllers] containsObject:self]) {
         } else {
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"Listview will appear" object:self];
-
         }
     }
 	
@@ -328,10 +332,6 @@
 	{
         product = [self.listOfItems objectAtIndex:indexPath.row];
     }
-	//detailsViewController.title = product;
-    
-   // [[self navigationController] pushViewController:detailsViewController animated:YES];
-    //[detailsViewController release];
 	
 }
 

@@ -5,7 +5,7 @@
 //  Created by Dam Tuan Long on 4/3/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
-
+//	Owner : Dam Tuan Long
 #import "ShopListViewController.h"
 #import "MallViewController.h"
 #import "Shop.h"
@@ -185,8 +185,10 @@
 -(void)addToFavorite:(id)sender{
 }
 -(id)initWithMall:(Mall*)_mall{
-		self.mall = _mall;
-
+	//REQUIRES:
+	//MODIFIES: self
+	//EFFECTS: return a ShopListViewController.
+	self.mall = _mall;
 	return self;
 }
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

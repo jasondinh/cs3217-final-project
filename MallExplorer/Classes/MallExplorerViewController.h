@@ -10,9 +10,10 @@
 #import <MapKit/MapKit.h>
 #import "MasterViewController.h"
 #import "CityMapViewController.h"
+#import "APIController.h"
 
 
-@interface MallExplorerViewController : UISplitViewController<MKMapViewDelegate,CLLocationManagerDelegate> {
+@interface MallExplorerViewController : UISplitViewController<MKMapViewDelegate,CLLocationManagerDelegate,APIDelegate> {
 	CityMapViewController* cityMapViewController;
 	MasterViewController* masterViewController;
 	

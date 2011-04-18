@@ -5,7 +5,7 @@
 //  Created by Dam Tuan Long on 4/3/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
-
+// Owner: Dam Tuan Long
 #import "MallListViewController.h"
 #import "APIController.h"
 #import "MBProgressHUD.h"
@@ -86,10 +86,10 @@
 	}
 
 	
-	if ([listOfItems count] !=0) {
+	if ([listOfItems count] !=0) {// Cache did respond
 		NSMutableArray *reloadIndexPaths = [NSMutableArray array];
 		NSMutableArray *removeIndexPaths = [NSMutableArray array];
-		for (int i=[mallList count]-1; i>=0 ; i--) {
+		for (int i=[mallList count]-1; i>=0 ; i--) {// remove rows
 			BOOL has = NO;
 			for (int x = 0; x < [tmpMalls count]; x++) {
 				if ((((Mall*)[tmpMalls objectAtIndex:x]).mId == ((Mall*)[mallList objectAtIndex:i]).mId)) {
@@ -117,7 +117,7 @@
 
 		
 		NSMutableArray *insertIndexPaths = [NSMutableArray array];
-		for (int i=0; i< [tmpMalls count]; i++) {
+		for (int i=0; i< [tmpMalls count]; i++) {//insert rows
 			if (i >= [mallList count] || !(((Mall*)[tmpMalls objectAtIndex:i]).mId == ((Mall*)[mallList objectAtIndex:i]).mId)){
 				[mallList insertObject:((Mall*)[tmpMalls objectAtIndex:i]) atIndex:i];
 				[insertIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
@@ -128,13 +128,14 @@
 		for (Mall* aMall in mallList){
 			[listOfItems addObject:aMall.name];
 		}
+		//update table
 		[self.tableView beginUpdates];
 		[self.tableView reloadRowsAtIndexPaths:reloadIndexPaths withRowAnimation:UITableViewRowAnimationMiddle];
 		[self.tableView deleteRowsAtIndexPaths:removeIndexPaths withRowAnimation:UITableViewRowAnimationRight];
 		[self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationLeft];
 		[self.tableView endUpdates];
 		
-	} else {
+	} else { // cache did not respond
 
 		self.mallList = [tmpMalls mutableCopy];
 		self.listOfItems = [[NSMutableArray alloc]init];
@@ -148,7 +149,7 @@
 	cityMapViewController.mallList = mallList;
 	[cityMapViewController reloadView:nil];
 	if (_reloading){
-	[self doneLoadingTableViewData];
+		[self doneLoadingTableViewData];
 	}
 
 }
@@ -165,7 +166,8 @@
 
 
 
-
+#pragma mark -
+#pragma mark initialization
 /*- (id) initWithMalls: (NSArray *) malls {
 	self = [super init];
 	
@@ -260,6 +262,30 @@
 	
 
 }
+-(void)changeListType:(id)sender{
+	
+	if(typeOfList.selectedSegmentIndex==0){ // List
+		[listOfItems removeAllObjects];
+		for (Mall* aMall in mallList) {
+			[listOfItems addObject:aMall.name];
+		}
+		[self.tableView reloadData];
+	}
+	else if (typeOfList.selectedSegmentIndex==1){ //neabry
+		
+		[self populateNearbyList:nil ];
+		[listOfItems removeAllObjects];
+		for (Mall* aMall in nearbyList) {
+			[listOfItems addObject:aMall.name];
+		}
+		[self.tableView reloadData];
+	}
+	else if (typeOfList.selectedSegmentIndex==2){//favorite
+		
+	}
+	
+}
+
 //override
 /*- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *CellIdentifier = @"Cell";
@@ -313,8 +339,9 @@
 	 self.navigationItem.title = @"Mall list";
 	 searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
 
-	//self.navigationItem.leftBarButtonItem= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(loadData:)];
-	
+	//self.navigationItem.leftBarButtonItem= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh 
+	//																					 target:self 
+	//																					 action:@selector(loadData:)];
 	// NSArray* segmentArray = [NSArray arrayWithObjects:@"List",@"Nearby",@"Favorite",nil];
 	 NSArray* segmentArray = [NSArray arrayWithObjects:@"All",@"Nearby",nil];
 	 typeOfList = [[UISegmentedControl alloc] initWithItems:segmentArray];
@@ -324,34 +351,15 @@
 	 typeOfList.selectedSegmentIndex = 0;
 	 UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:typeOfList];
 	 self.toolbarItems = [NSMutableArray arrayWithObject:barButton];
-	 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mallChosen:) name:@"mall chosen" object:nil];	
 	 [barButton release];
+	 [[NSNotificationCenter defaultCenter] addObserver:self 
+											  selector:@selector(mallChosen:)
+												  name:@"mall chosen" 
+												object:nil];	
+
 
 	}
 
--(void)changeListType:(id)sender{
-	
-	if(typeOfList.selectedSegmentIndex==0){ // List
-		[listOfItems removeAllObjects];
-		for (Mall* aMall in mallList) {
-			[listOfItems addObject:aMall.name];
-		}
-		[self.tableView reloadData];
-		}
-	else if (typeOfList.selectedSegmentIndex==1){ //neabry
-		
-		[self populateNearbyList:nil ];
-		[listOfItems removeAllObjects];
-		for (Mall* aMall in nearbyList) {
-			[listOfItems addObject:aMall.name];
-		}
-		[self.tableView reloadData];
-	}
-	else if (typeOfList.selectedSegmentIndex==2){//favorite
-		
-	}
-	
-}
 
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{

@@ -41,9 +41,6 @@
 	self.toolbarHidden =NO;
 	[temp release];
 
-	
-	
-
 
 }
 
@@ -90,7 +87,6 @@
     return YES;
 }
 */
-
 
 /*
 // Override to support editing the table view.
