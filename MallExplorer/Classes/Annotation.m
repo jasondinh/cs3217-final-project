@@ -32,6 +32,8 @@
 	return [anAnnotation autorelease];
 }
 -(void) dealloc{
+	[level release];
+	[shop release];
 	[title release];
 	[content release];
 	[super dealloc];

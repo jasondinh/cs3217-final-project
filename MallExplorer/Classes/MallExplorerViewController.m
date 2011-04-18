@@ -62,12 +62,16 @@
 		shopListViewController.delegate = aMVC;
 		aMVC.mall = aMall;
 		
-		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
-		
-		[self loadMaps];
-		
-		[aMVC loadMaps:nil andStairs:nil withDefaultMap:nil];
-		
+		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];	
+		if (!aMall.mapLoaded) {
+			[self loadMaps];				
+		}
+		else {
+			[aMVC display];
+		}
+
+
+
 		
 		[self setDelegate: aMVC];
 		if (((UIBarButtonItem*)[[cityMapViewController toolbar].items objectAtIndex:0]).title == @"Root List") {
@@ -145,14 +149,17 @@
 }
 
 - (void) finishedLoadingMap {
-	for	(int i = 0; i<[maps count]; i++)
-	{
-		[[maps objectAtIndex:i] buildMap];
-	}
+	NSLog(@"loaddddddddddddddd xongggggggggggggggggggg");
+//	for	(int i = 0; i<[maps count]; i++)
+//	{
+//		[[maps objectAtIndex:i] buildMap];
+//	}	
+	NSLog(@"loaddddddddddddddd xongggggggggggggggggggg");
 	[self loadStairs];
 }
 
 -(void) finishedLoading{	
+	NSLog(@"loaddddddddddddddd xongggggggggggggggggggg");
 	MallViewController* theMVC = [self.viewControllers objectAtIndex:1];
 	for (int i = 0; i<[shopList count]; i++) {
 		Shop* aShop = [shopList objectAtIndex:i];
@@ -164,9 +171,15 @@
 			}
 		}
 
+<<<<<<< HEAD
 		//NSLog(@"shop %d pid %d", i, aShop.pId);
 		for (int j = 0; j<[map.pointList count]; j++) {
 			//NSLog(@"point pid %d", [[map.pointList objectAtIndex:j] pId]);
+=======
+//		NSLog(@"shop %d pid %d", i, aShop.pId);
+		for (int j = 0; j<[map.pointList count]; j++) {
+//			NSLog(@"point pid %d", [[map.pointList objectAtIndex:j] pId]);
+>>>>>>> 5bdb2a322723c98d44387048ed2da4e05fb22e5d
 			if ([[map.pointList objectAtIndex:j] pId] == aShop.pId) {
 				aShop.annotation = [Annotation annotationWithAnnotationType:kAnnoShop inlevel:map WithPosition:[[map.pointList objectAtIndex:j] position] title:aShop.shopName content:@"content"];
 				break;
@@ -177,6 +190,7 @@
 	}
 	[shopList  release];
 	[theMVC loadMaps:maps andStairs:stairs withDefaultMap:[maps objectAtIndex:0]];
+	NSLog(@"loaddddddddddddddd xongggggggggggggggggggg");
 }
 
 - (void) serverRespond: (APIController *) api {

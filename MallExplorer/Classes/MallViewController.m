@@ -22,546 +22,51 @@
 @synthesize titleLabel;
 @synthesize resetButton;
 @synthesize levelListController;
- // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-/*
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization.
+@synthesize mapDataLoaded;
 
-    }
-    return self;
-}*/
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	if (debug) NSLog(@"Toolbar %d", [toolbar.items count ]);
 }
--(Map*) createTestMap1{
-	UIImage* image = [UIImage imageNamed:@"map.jpg"];
-	NSMutableArray* pointList = [[NSMutableArray alloc] init];
-	NSMutableArray* edgeList = [[NSMutableArray alloc] init];
-	Map* aMap = [[Map alloc] init];
-//	MapPoint* point = [[MapPoint alloc] initWithPosition:CGPointMake(31.000000, 30.000000) inLevel:aMap andIndex:0];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(126.000000, 33.000000) inLevel:aMap andIndex:1];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(297.000000, 69.000000) inLevel:aMap andIndex:2];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(249.000000, 16.000000) inLevel:aMap andIndex:3];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(101.000000, 197.000000) inLevel:aMap andIndex:4];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(22.000000, 185.000000) inLevel:aMap andIndex:5];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(90.000000, 282.000000) inLevel:aMap andIndex:6];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(71.000000, 331.000000) inLevel:aMap andIndex:7];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(32.000000, 373.000000) inLevel:aMap andIndex:8];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(176.000000, 462.000000) inLevel:aMap andIndex:9];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(335.000000, 469.000000) inLevel:aMap andIndex:10];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(407.000000, 277.000000) inLevel:aMap andIndex:11];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(556.000000, 279.000000) inLevel:aMap andIndex:12];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(688.000000, 278.000000) inLevel:aMap andIndex:13];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(403.000000, 115.000000) inLevel:aMap andIndex:14];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(535.000000, 59.000000) inLevel:aMap andIndex:15];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(537.000000, 184.000000) inLevel:aMap andIndex:16];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(534.000000, 121.000000) inLevel:aMap andIndex:17];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(685.000000, 139.000000) inLevel:aMap andIndex:18];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(442.000000, 319.000000) inLevel:aMap andIndex:19];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(455.000000, 424.000000) inLevel:aMap andIndex:20];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(530.000000, 448.000000) inLevel:aMap andIndex:21];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(529.000000, 387.000000) inLevel:aMap andIndex:22];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(545.000000, 516.000000) inLevel:aMap andIndex:23];
-//	[pointList addObject:point];
-//	[point release];
 
-	MapPoint* point = [[MapPoint alloc] initWithPosition:CGPointMake(31.000000, 30.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(126.000000, 33.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(297.000000, 69.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(249.000000, 16.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(101.000000, 197.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(22.000000, 185.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(90.000000, 282.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(71.000000, 331.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(32.000000, 373.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(176.000000, 462.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(335.000000, 469.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(407.000000, 277.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(556.000000, 279.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(688.000000, 278.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(403.000000, 115.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(535.000000, 59.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(537.000000, 184.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(534.000000, 121.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(685.000000, 139.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(442.000000, 319.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(455.000000, 424.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(530.000000, 448.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(529.000000, 387.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(545.000000, 516.000000)];
-	[pointList addObject:point];
-	[point release];
-	
-	
-	
-	Edge* edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 0] point2:[pointList objectAtIndex: 1] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 0] andPoint:[pointList objectAtIndex: 1]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 1] point2:[pointList objectAtIndex: 3] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 1] andPoint:[pointList objectAtIndex: 3]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 3] point2:[pointList objectAtIndex: 2] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 3] andPoint:[pointList objectAtIndex: 2]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 2] point2:[pointList objectAtIndex: 1] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 2] andPoint:[pointList objectAtIndex: 1]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 1] point2:[pointList objectAtIndex: 4] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 1] andPoint:[pointList objectAtIndex: 4]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 4] point2:[pointList objectAtIndex: 5] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 4] andPoint:[pointList objectAtIndex: 5]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 4] point2:[pointList objectAtIndex: 6] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 4] andPoint:[pointList objectAtIndex: 6]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 6] point2:[pointList objectAtIndex: 7] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 6] andPoint:[pointList objectAtIndex: 7]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 7] point2:[pointList objectAtIndex: 8] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 7] andPoint:[pointList objectAtIndex: 8]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 8] point2:[pointList objectAtIndex: 9] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 8] andPoint:[pointList objectAtIndex: 9]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 9] point2:[pointList objectAtIndex: 10] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 9] andPoint:[pointList objectAtIndex: 10]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 4] point2:[pointList objectAtIndex: 11] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 4] andPoint:[pointList objectAtIndex: 11]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 11] point2:[pointList objectAtIndex: 14] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 11] andPoint:[pointList objectAtIndex: 14]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 14] point2:[pointList objectAtIndex: 17] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 14] andPoint:[pointList objectAtIndex: 17]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 17] point2:[pointList objectAtIndex: 15] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 17] andPoint:[pointList objectAtIndex: 15]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 17] point2:[pointList objectAtIndex: 16] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 17] andPoint:[pointList objectAtIndex: 16]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 17] point2:[pointList objectAtIndex: 18] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 17] andPoint:[pointList objectAtIndex: 18]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 14] point2:[pointList objectAtIndex: 15] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 14] andPoint:[pointList objectAtIndex: 15]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 14] point2:[pointList objectAtIndex: 16] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 14] andPoint:[pointList objectAtIndex: 16]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 16] point2:[pointList objectAtIndex: 18] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 16] andPoint:[pointList objectAtIndex: 18]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 11] point2:[pointList objectAtIndex: 19] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 11] andPoint:[pointList objectAtIndex: 19]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 19] point2:[pointList objectAtIndex: 20] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 19] andPoint:[pointList objectAtIndex: 20]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 20] point2:[pointList objectAtIndex: 21] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 20] andPoint:[pointList objectAtIndex: 21]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 21] point2:[pointList objectAtIndex: 22] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 21] andPoint:[pointList objectAtIndex: 22]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 21] point2:[pointList objectAtIndex: 23] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 21] andPoint:[pointList objectAtIndex: 23]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 11] point2:[pointList objectAtIndex: 12] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 11] andPoint:[pointList objectAtIndex: 12]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 12] point2:[pointList objectAtIndex: 13] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 12] andPoint:[pointList objectAtIndex: 13]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 12] point2:[pointList objectAtIndex: 19] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 12] andPoint:[pointList objectAtIndex: 19]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	CGPoint defaultPoint = CGPointMake(500, 500);
-	Annotation* stair1 = [Annotation annotationWithAnnotationType:kAnnoStair inlevel:aMap WithPosition:[[pointList objectAtIndex:0] position] title:@"Stair 1" content:@"Stair to level 2"];
-	[aMap loadDataWithMapName:@"Level 1" withMapImage:image annotationList:[NSArray arrayWithObject:stair1] pointList:pointList edgeList:edgeList defaultCenterPoint:defaultPoint];
-	[pointList release];
-	[edgeList release];
-	return [aMap autorelease];
-	
-}
-
--(Map*) createTestMap2{
-	UIImage* image = [UIImage imageNamed:@"map.jpg"];
-	NSMutableArray* pointList = [[NSMutableArray alloc] init];
-	NSMutableArray* edgeList = [[NSMutableArray alloc] init];
-	Map* aMap = [[Map alloc] init];
-//	MapPoint* point = [[MapPoint alloc] initWithPosition:CGPointMake(31.000000, 30.000000) inLevel:aMap andIndex:0];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(126.000000, 33.000000) inLevel:aMap andIndex:1];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(297.000000, 69.000000) inLevel:aMap andIndex:2];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(249.000000, 16.000000) inLevel:aMap andIndex:3];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(101.000000, 197.000000) inLevel:aMap andIndex:4];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(22.000000, 185.000000) inLevel:aMap andIndex:5];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(90.000000, 282.000000) inLevel:aMap andIndex:6];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(71.000000, 331.000000) inLevel:aMap andIndex:7];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(32.000000, 373.000000) inLevel:aMap andIndex:8];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(176.000000, 462.000000) inLevel:aMap andIndex:9];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(335.000000, 469.000000) inLevel:aMap andIndex:10];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(407.000000, 277.000000) inLevel:aMap andIndex:11];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(556.000000, 279.000000) inLevel:aMap andIndex:12];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(688.000000, 278.000000) inLevel:aMap andIndex:13];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(403.000000, 115.000000) inLevel:aMap andIndex:14];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(535.000000, 59.000000) inLevel:aMap andIndex:15];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(537.000000, 184.000000) inLevel:aMap andIndex:16];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(534.000000, 121.000000) inLevel:aMap andIndex:17];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(685.000000, 139.000000) inLevel:aMap andIndex:18];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(442.000000, 319.000000) inLevel:aMap andIndex:19];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(455.000000, 424.000000) inLevel:aMap andIndex:20];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(530.000000, 448.000000) inLevel:aMap andIndex:21];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(529.000000, 387.000000) inLevel:aMap andIndex:22];
-//	[pointList addObject:point];
-//	[point release];
-//	point = [[MapPoint alloc] initWithPosition:CGPointMake(545.000000, 516.000000) inLevel:aMap andIndex:23];
-//	[pointList addObject:point];
-//	[point release];
-	
-	
-	MapPoint* point = [[MapPoint alloc] initWithPosition:CGPointMake(31.000000, 30.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(126.000000, 33.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(297.000000, 69.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(249.000000, 16.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(101.000000, 197.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(22.000000, 185.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(90.000000, 282.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(71.000000, 331.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(32.000000, 373.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(176.000000, 462.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(335.000000, 469.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(407.000000, 277.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(556.000000, 279.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(688.000000, 278.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(403.000000, 115.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(535.000000, 59.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(537.000000, 184.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(534.000000, 121.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(685.000000, 139.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(442.000000, 319.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(455.000000, 424.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(530.000000, 448.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(529.000000, 387.000000)];
-	[pointList addObject:point];
-	[point release];
-	point = [[MapPoint alloc] initWithPosition:CGPointMake(545.000000, 516.000000)];
-	[pointList addObject:point];
-	[point release];
-	
-	Edge* edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 0] point2:[pointList objectAtIndex: 1] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 0] andPoint:[pointList objectAtIndex: 1]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 1] point2:[pointList objectAtIndex: 3] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 1] andPoint:[pointList objectAtIndex: 3]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 3] point2:[pointList objectAtIndex: 2] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 3] andPoint:[pointList objectAtIndex: 2]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 2] point2:[pointList objectAtIndex: 1] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 2] andPoint:[pointList objectAtIndex: 1]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 1] point2:[pointList objectAtIndex: 4] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 1] andPoint:[pointList objectAtIndex: 4]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 4] point2:[pointList objectAtIndex: 5] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 4] andPoint:[pointList objectAtIndex: 5]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 4] point2:[pointList objectAtIndex: 6] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 4] andPoint:[pointList objectAtIndex: 6]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 6] point2:[pointList objectAtIndex: 7] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 6] andPoint:[pointList objectAtIndex: 7]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 7] point2:[pointList objectAtIndex: 8] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 7] andPoint:[pointList objectAtIndex: 8]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 8] point2:[pointList objectAtIndex: 9] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 8] andPoint:[pointList objectAtIndex: 9]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 9] point2:[pointList objectAtIndex: 10] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 9] andPoint:[pointList objectAtIndex: 10]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 4] point2:[pointList objectAtIndex: 11] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 4] andPoint:[pointList objectAtIndex: 11]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 11] point2:[pointList objectAtIndex: 14] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 11] andPoint:[pointList objectAtIndex: 14]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 14] point2:[pointList objectAtIndex: 17] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 14] andPoint:[pointList objectAtIndex: 17]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 17] point2:[pointList objectAtIndex: 15] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 17] andPoint:[pointList objectAtIndex: 15]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 17] point2:[pointList objectAtIndex: 16] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 17] andPoint:[pointList objectAtIndex: 16]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 17] point2:[pointList objectAtIndex: 18] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 17] andPoint:[pointList objectAtIndex: 18]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 14] point2:[pointList objectAtIndex: 15] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 14] andPoint:[pointList objectAtIndex: 15]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 14] point2:[pointList objectAtIndex: 16] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 14] andPoint:[pointList objectAtIndex: 16]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 16] point2:[pointList objectAtIndex: 18] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 16] andPoint:[pointList objectAtIndex: 18]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 11] point2:[pointList objectAtIndex: 19] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 11] andPoint:[pointList objectAtIndex: 19]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 19] point2:[pointList objectAtIndex: 20] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 19] andPoint:[pointList objectAtIndex: 20]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 20] point2:[pointList objectAtIndex: 21] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 20] andPoint:[pointList objectAtIndex: 21]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 21] point2:[pointList objectAtIndex: 22] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 21] andPoint:[pointList objectAtIndex: 22]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 21] point2:[pointList objectAtIndex: 23] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 21] andPoint:[pointList objectAtIndex: 23]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 11] point2:[pointList objectAtIndex: 12] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 11] andPoint:[pointList objectAtIndex: 12]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 12] point2:[pointList objectAtIndex: 13] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 12] andPoint:[pointList objectAtIndex: 13]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	edge = [[Edge alloc] initWithPoint1:[pointList objectAtIndex: 12] point2:[pointList objectAtIndex: 19] withLength:[MapPoint getDistantBetweenPoint:[pointList objectAtIndex: 12] andPoint:[pointList objectAtIndex: 19]] isBidirectional:YES withTravelType:kWalk];
-	[edgeList addObject:edge];
-	[edge release];
-	CGPoint defaultPoint = CGPointMake(100, 100);
-	Annotation* stair1 = [Annotation annotationWithAnnotationType:kAnnoStair inlevel:aMap WithPosition:[[pointList objectAtIndex:0] position] title:@"Stair 1" content:@"Stair to level 1"];
-	[aMap loadDataWithMapName:@"Level 2" withMapImage:image annotationList:[NSArray arrayWithObject:stair1] pointList:pointList edgeList:edgeList defaultCenterPoint:defaultPoint];
-	[pointList release];
-	[edgeList release];
-	return [aMap autorelease];
-}
--(NSArray*) createTestStair:(NSArray*) mList{
-	Map* map1 = [mList objectAtIndex:0];
-	Map* map2 = [mList objectAtIndex:1];
-	Edge* anEdge = [[Edge alloc] initWithPoint1:[map1.pointList objectAtIndex:0] point2:[map2.pointList objectAtIndex:0] withLength:1 isBidirectional:YES withTravelType:kWalkStairCase];
-	[[map1.annotationList objectAtIndex:0]  setDestination:map2];
-	[[map2.annotationList objectAtIndex:0] setDestination:map1];
-	return [NSArray arrayWithObject:[anEdge autorelease]];
-}
-
--(void) loadMaps:(NSArray *)listMap andStairs:(NSArray *)stairs withDefaultMap:(Map*) defaultMap{
-	
-	//Map* map1 = [[self createTestMap1] retain];
-//	Map* map2 = [[self createTestMap2] retain];
-//	defaultMap = map1;
-//	listMap = [NSArray arrayWithObjects:map1, map2, nil];
-//	[map1 release];
-//	[map2 release];
-//	NSArray* stair = [self createTestStair:listMap];
-//	stairs = stair;	
-	
-	[mall buildGraphWithMaps:listMap andStairs:stairs];
-	listMapViewController = [[NSMutableArray alloc] initWithCapacity:[listMap count]];
-	for (int i = 0; i<[listMap count]; i++) {
-		MapViewController* aMVC = [[MapViewController alloc] initMallWithFrame:[MapViewController getSuitableFrame] andMap:[listMap objectAtIndex:i]];
+-(void) display{
+	listMapViewController = [[NSMutableArray alloc] initWithCapacity:[mall.mapList count]];
+	for (int i = 0; i<[mall.mapList count]; i++) {
+		MapViewController* aMVC = [[MapViewController alloc] initMallWithFrame:[MapViewController getSuitableFrame] andMap:[mall.mapList objectAtIndex:i]];
 		aMVC.view.frame = [MapViewController getSuitableFrame];
 		[listMapViewController addObject:aMVC];
-		if ([[listMap objectAtIndex:i] isEqual:defaultMap]) {
+		if ([[mall.mapList objectAtIndex:i] isEqual:mall.defaultMap]) {
 			mapViewController = aMVC;
 		}
 		[aMVC release];
 	}
-	self.titleLabel.text = defaultMap.mapName;
+	
+	self.titleLabel.text = mall.defaultMap.mapName;
 	[self.view addSubview: mapViewController.view];
 	[self.view sendSubviewToBack:mapViewController.view];
 	[self.view setNeedsDisplay];
+	
+}
+
+
+-(void) loadMaps:(NSArray *)listMap andStairs:(NSArray *)stairs withDefaultMap:(Map*) defaultMap{
+	double CurrentTime = CACurrentMediaTime(); 
+	if (!self.mapDataLoaded) {
+		for (int i = 0; i<[listMap count]; i++) {
+			Map* aMap = [listMap objectAtIndex:i];
+			[aMap buildMap];
+		}
+		[mall buildGraphWithMaps:listMap andStairs:stairs];
+		mapDataLoaded = TRUE;
+	}
+	mall.defaultMap = defaultMap;
+	double length = CACurrentMediaTime() - CurrentTime;
+	length = length/1000;
+	NSLog(@"the time is: %lf", length);
+	[self display];
 //	[mapViewController 
 }
+
 
 #pragma mark viewDidLoad
 
@@ -611,13 +116,23 @@
 	Annotation* anAnno = [notification.object annotation];
 	NSLog(@"%@", anAnno.title);
 	NSLog(@"this shop is chosen: %lf %lf", anAnno.position.x, anAnno.position.y);
-	if (![anAnno.level isEqual:mapViewController.map]) {
+	if ([anAnno.level isEqual:mapViewController.map]) {
 		[mapViewController focusToAMapPosition:anAnno.position];
 	} else {
 		[self changeToMap:anAnno.level];
 		[mapViewController focusToAMapPosition:anAnno.position];
 	}
 
+}
+
+-(void) startOrGoalAdded:(Annotation*) annotation{
+	if (annotation.level!= mapViewController.map) {
+		[self changeToMap: annotation.level];
+	}
+	[mapViewController focusToAMapPosition:annotation.position];
+	[self startOrGoalMoved:nil];
+	resetButton.alpha = 1.0;
+	resetButton.userInteractionEnabled = YES;
 }
 
 -(void) setStartTo:(NSNotification*) notification{
@@ -635,7 +150,7 @@
 	Annotation* startAnno = [Annotation annotationWithAnnotationType:kAnnoStart inlevel:anAnno.level WithPosition:anAnno.position title:@"Start" content:@"Your starting position"];
 	[mapViewController addAnnotation:startAnno];
 	start = [mapViewController.annotationList lastObject];
-	[self startOrGoalMoved:nil];
+	[self startOrGoalAdded:startAnno];
 }
 
 -(void) setGoalTo:(NSNotification*) notification{
@@ -652,13 +167,13 @@
 	Annotation* goalAnno = [Annotation annotationWithAnnotationType:kAnnoGoal inlevel:anAnno.level WithPosition:anAnno.position title:@"Goal" content:@"Your destination"];
 	[mapViewController addAnnotation:goalAnno];
 	goal = [mapViewController.annotationList lastObject];
-	[self startOrGoalMoved:nil];
+	[self startOrGoalAdded:goalAnno];
 }
 
 -(void) changeToMap:(Map*)aMap{
 	if (mapViewController.map!=aMap) {
 		if ([self.mall.mapList indexOfObject:aMap]!=NSNotFound) {
-			[self changeToMap: [self getViewControllerOfMap:aMap]];					
+			[self changeToMapViewController: [self getViewControllerOfMap:aMap]];					
 		}
 	}
 }
@@ -724,11 +239,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 			} else if (annoType == kAnnoGoal) {
 				goal = [mapViewController.annotationList lastObject];
 			} 
-			[self startOrGoalMoved:nil];
-			/*button.userInteractionEnabled = NO;
-			button.alpha = 0.5;*/
-			resetButton.userInteractionEnabled = YES;
-			resetButton.alpha = 1.0;
+			[self startOrGoalAdded:[[mapViewController.annotationList lastObject] annotation]];
 		} 
 	}
 	
@@ -995,7 +506,9 @@ toMakeAnnotationType:(AnnotationType) annoType
 	[goalFlagButton release];
 	[pathFindingButton release];
 	[titleLabel  release];
-	
+	[resetButton release];
+	[selectLevel release];
+	[levelListController release];
     [super dealloc];
 }
 

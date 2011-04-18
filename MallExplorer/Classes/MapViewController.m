@@ -13,7 +13,7 @@
 @synthesize annotationList;
 @synthesize map;
 
-const BOOL DEBUG = NO;
+const BOOL DEBUG = YES;
 int startPoint,endPoint;
 
 NSMutableArray* hiddenAttribute;
@@ -48,6 +48,12 @@ NSMutableArray* edgeList;
 	for (int i = 0; i<[map.pointList count]; i++) {
 		MapPoint* aMapPoint = [map.pointList objectAtIndex:i];
 		[self addATestPoint:[self translatePointToScrollViewCoordinationFromMapCoordination: aMapPoint.position] withImage:@"point.png" withDuration:10.0];
+	}
+	for (int i = 0; i<[map.edgeList count]; i++) {
+		Edge* edge = [map.edgeList objectAtIndex:i];
+		LineEdgeView* aLine = [[LineEdgeView alloc] initWithPoint1:[self translatePointToScrollViewCoordinationFromMapCoordination:edge.pointA.position] andPoint2: [self translatePointToScrollViewCoordinationFromMapCoordination:edge.pointB.position]];
+		[self.view addSubview:aLine];
+		[aLine performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:5];
 	}
 }
 
