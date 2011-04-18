@@ -24,6 +24,8 @@
 	BOOL mapLoaded;
 	// this list holds a set of maps
 	NSMutableArray* mapList;
+	// this holds the default map
+	Map* defaultMap;
 	// this list holds the "connecting points" that connect map to map
 	// this list form a graph that is used for searching path between different levels
 	NSMutableArray* mapPointList;
@@ -36,6 +38,7 @@
 @property (retain) NSString *address;
 @property (retain) NSArray* mapList;
 @property (retain) NSArray* mapPointList;
+@property (retain) Map* defaultMap;
 @property BOOL mapLoaded;
 
 @property NSInteger mId;

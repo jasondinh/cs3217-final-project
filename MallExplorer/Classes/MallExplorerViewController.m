@@ -63,12 +63,16 @@
 		shopListViewController.delegate = aMVC;
 		aMVC.mall = aMall;
 		
-		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];
-		
-		[self loadMaps];
-		
-		[aMVC loadMaps:nil andStairs:nil withDefaultMap:nil];
-		
+		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];	
+		if (!aMall.mapLoaded) {
+			[self loadMaps];				
+		}
+		else {
+			[aMVC display];
+		}
+
+
+
 		
 		[self setDelegate: aMVC];
 		if (((UIBarButtonItem*)[[cityMapViewController toolbar].items objectAtIndex:0]).title == @"Root List") {

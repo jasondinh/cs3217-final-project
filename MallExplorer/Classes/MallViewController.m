@@ -22,38 +22,51 @@
 @synthesize titleLabel;
 @synthesize resetButton;
 @synthesize levelListController;
+@synthesize mapDataLoaded;
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	if (debug) NSLog(@"Toolbar %d", [toolbar.items count ]);
 }
 
--(void) loadMaps:(NSArray *)listMap andStairs:(NSArray *)stairs withDefaultMap:(Map*) defaultMap{
-	double CurrentTime = CACurrentMediaTime(); 
-	for (int i = 0; i<[listMap count]; i++) {
-		Map* aMap = [listMap objectAtIndex:i];
-		[aMap buildMap];
-	}
-	[mall buildGraphWithMaps:listMap andStairs:stairs];
-	listMapViewController = [[NSMutableArray alloc] initWithCapacity:[listMap count]];
-	for (int i = 0; i<[listMap count]; i++) {
-		MapViewController* aMVC = [[MapViewController alloc] initMallWithFrame:[MapViewController getSuitableFrame] andMap:[listMap objectAtIndex:i]];
+-(void) display{
+	listMapViewController = [[NSMutableArray alloc] initWithCapacity:[mall.mapList count]];
+	for (int i = 0; i<[mall.mapList count]; i++) {
+		MapViewController* aMVC = [[MapViewController alloc] initMallWithFrame:[MapViewController getSuitableFrame] andMap:[mall.mapList objectAtIndex:i]];
 		aMVC.view.frame = [MapViewController getSuitableFrame];
 		[listMapViewController addObject:aMVC];
-		if ([[listMap objectAtIndex:i] isEqual:defaultMap]) {
+		if ([[mall.mapList objectAtIndex:i] isEqual:mall.defaultMap]) {
 			mapViewController = aMVC;
 		}
 		[aMVC release];
 	}
-	self.titleLabel.text = defaultMap.mapName;
+	
+	self.titleLabel.text = mall.defaultMap.mapName;
 	[self.view addSubview: mapViewController.view];
 	[self.view sendSubviewToBack:mapViewController.view];
 	[self.view setNeedsDisplay];
+	
+}
+
+
+-(void) loadMaps:(NSArray *)listMap andStairs:(NSArray *)stairs withDefaultMap:(Map*) defaultMap{
+	double CurrentTime = CACurrentMediaTime(); 
+	if (!self.mapDataLoaded) {
+		for (int i = 0; i<[listMap count]; i++) {
+			Map* aMap = [listMap objectAtIndex:i];
+			[aMap buildMap];
+		}
+		[mall buildGraphWithMaps:listMap andStairs:stairs];
+		mapDataLoaded = TRUE;
+	}
+	mall.defaultMap = defaultMap;
 	double length = CACurrentMediaTime() - CurrentTime;
 	length = length/1000;
 	NSLog(@"the time is: %lf", length);
+	[self display];
 //	[mapViewController 
 }
+
 
 #pragma mark viewDidLoad
 
@@ -493,7 +506,9 @@ toMakeAnnotationType:(AnnotationType) annoType
 	[goalFlagButton release];
 	[pathFindingButton release];
 	[titleLabel  release];
-	
+	[resetButton release];
+	[selectLevel release];
+	[levelListController release];
     [super dealloc];
 }
 

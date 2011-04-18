@@ -14,6 +14,7 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 @synthesize mapList;
 @synthesize mapPointList;
 @synthesize mapLoaded;
+@synthesize defaultMap;
 
 -(CLLocationCoordinate2D) coordinate{
 	CLLocationCoordinate2D cor;
