@@ -45,11 +45,6 @@
 }
 
 -(void) cacheRespond:(APIController *)apiController {
-	
-}
-
--(void)serverRespond:(APIController *)apiController{
-	
 	NSArray *shops = (NSArray *) apiController.result;
 	NSMutableArray *tmpShops = [NSMutableArray array];
 	[shops enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -63,7 +58,7 @@
 		shop.pId = pid;
 		[tmpShops addObject: shop];
 	}];
-	NSLog([apiController.result description]);
+	//NSLog([apiController.result description]);
 	self.shopList = [tmpShops mutableCopy];
 	self.listOfItems = [[NSMutableArray alloc]init];
 	for (Shop* aShop in shopList){
@@ -76,6 +71,94 @@
 	self.typeOfList.selectedSegmentIndex = 0;
 	self.shopLoaded = YES;
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"shop list loaded" object:shopList];
+}
+
+-(void)serverRespond:(APIController *)apiController{
+	
+	NSArray *malls = (NSArray *) apiController.result;
+	NSEnumerator *e = [malls objectEnumerator];
+	NSDictionary *tmpMall;
+	NSMutableArray *tmpMalls = [NSMutableArray array];
+	while (tmpMall = [e nextObject]) {
+		NSDictionary *tmp = [tmpMall valueForKey: @"shop"];
+		
+		Shop *mall = [[Shop alloc] initWithId: [[tmp valueForKey: @"id"] intValue] 
+									 andLevel:[[[tmp valueForKey: @"map"] valueForKey: @"map"] valueForKey: @"level"] 
+									  andUnit:[tmp valueForKey: @"unit"] 
+								  andShopName:[tmp valueForKey: @"name"] 
+							   andDescription:[tmp valueForKey: @"description"]];
+		
+		[tmpMalls addObject: mall];
+		[mall release];
+	}
+	
+	
+	if ([listOfItems count] !=0) {// Cache did respond
+		NSMutableArray *reloadIndexPaths = [NSMutableArray array];
+		NSMutableArray *removeIndexPaths = [NSMutableArray array];
+		for (int i=[shopList count]-1; i>=0 ; i--) {// remove rows
+			BOOL has = NO;
+			for (int x = 0; x < [tmpMalls count]; x++) {
+				if ((((Shop*)[tmpMalls objectAtIndex:x]).sId == ((Shop*)[shopList objectAtIndex:i]).sId)) {
+					has =YES;
+					
+					if (![((Shop*)[tmpMalls objectAtIndex:x]).shopName isEqualToString:((Shop*)[shopList objectAtIndex:i]).shopName]) {
+						[shopList replaceObjectAtIndex: i withObject: [tmpMalls objectAtIndex: x]];
+						[reloadIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+					}
+				}
+				
+			}
+			if (!has) {
+				[shopList removeObjectAtIndex:i];
+				[removeIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+			}
+		}
+		
+		self.listOfItems = [[NSMutableArray alloc]init];
+		for (Shop* aMall in shopList){
+			[listOfItems addObject:aMall.shopName];
+		}
+		
+		
+		
+		
+		NSMutableArray *insertIndexPaths = [NSMutableArray array];
+		for (int i=0; i< [tmpMalls count]; i++) {//insert rows
+			if (i >= [shopList count] || !(((Shop*)[tmpMalls objectAtIndex:i]).sId == ((Shop*)[shopList objectAtIndex:i]).sId)){
+				[shopList insertObject:((Shop*)[tmpMalls objectAtIndex:i]) atIndex:i];
+				[insertIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+				
+			}
+		}
+		self.listOfItems = [[NSMutableArray alloc]init];
+		for (Shop* aMall in shopList){
+			[listOfItems addObject:aMall.shopName];
+		}
+		//update table
+		[self.tableView beginUpdates];
+		[self.tableView reloadRowsAtIndexPaths:reloadIndexPaths withRowAnimation:UITableViewRowAnimationMiddle];
+		[self.tableView deleteRowsAtIndexPaths:removeIndexPaths withRowAnimation:UITableViewRowAnimationRight];
+		[self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationLeft];
+		[self.tableView endUpdates];
+		
+	} else { // cache did not respond
+		
+		self.shopList = [tmpMalls mutableCopy];
+		self.listOfItems = [[NSMutableArray alloc]init];
+		for (Shop* aMall in shopList){
+			[listOfItems addObject:aMall.shopName];
+		}
+		[self.tableView reloadData];	
+	}
+	[tmpMall release];
+	[progress hide:YES];
+	//cityMapViewController.shopList = shopList;
+	//[cityMapViewController reloadView:nil];
+	if (_reloading){
+		[self doneLoadingTableViewData];
+	}
+	
 	
 }
 - (void) requestDidStart: (APIController *) apiController {
@@ -106,7 +189,7 @@
 	[self setToolbarItems:[NSMutableArray arrayWithObjects:barButton,nil] animated:YES];
 	//self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"shop chosen" object:nil];	
-	
+	[barButton release];
 	shopLoaded = NO;
 	
 }
@@ -210,8 +293,32 @@
 	}
 	
 }
-
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	static NSString *kCellID = @"cellID";
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
+	if (cell == nil)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellID] autorelease];
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	}
+	
+	/*
+	 If the requesting table view is the search display controller's table view, configure the cell using the filtered content, otherwise use the main list.
+	 */
+	NSString *string = nil;
+	if (tableView == self.searchDisplayController.searchResultsTableView)
+	{
+        string = [self.copyListOfItems objectAtIndex:indexPath.row];
+    }
+	else
+	{
+        string = [self.listOfItems objectAtIndex:indexPath.row];
+    }
+	//cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+	cell.textLabel.text = string;
+	return cell;
+}
+/*- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
 	NSString *string = nil;
 	if (self.tableView == self.searchDisplayController.searchResultsTableView)
 	{
@@ -228,7 +335,8 @@
 																object:aShop];
 	}
 	
-}- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+}*/
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.
     return YES;
 }

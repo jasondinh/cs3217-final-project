@@ -203,6 +203,12 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 }
 
 - (void) dealloc  {
+	[name release];
+	[latitude release];
+	[longitude release];
+	[address release];
+	[mapList release];
+	[mapPointList release];
 	[super dealloc];
 }
 @end

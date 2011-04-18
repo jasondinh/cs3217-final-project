@@ -55,7 +55,6 @@
 	if ([masterViewController.topViewController isKindOfClass:[MallListViewController class]]) {		
 		Mall* aMall = object;
 		ShopListViewController* shopListViewController = [[ShopListViewController alloc] initWithMall:aMall] ;
-		[aMall release];
 		masterViewController.delegate = shopListViewController;
 		[masterViewController pushViewController:shopListViewController animated:YES];
 		[shopListViewController loadData:nil];
@@ -94,6 +93,7 @@
 		[shopViewController loadShop:(Shop*)[sender object]];
 	UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController: shopViewController];
 	[popover presentPopoverFromRect:CGRectMake(0, 0, 1000, 1000) inView: [[[self viewControllers] objectAtIndex:1] view] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+	[popover release];
 	//popover.passthroughViews = [NSArray arrayWithObject: [[[self viewControllers] objectAtIndex:1] view]];
 	//[[[self viewControllers] objectAtIndex:1] presentPopoverFromRect:CGRectMake(0, 0, 0, 0) inView: permittedArrowDirections:<#(UIPopoverArrowDirection)arrowDirections#> animated:<#(BOOL)animated#>
 		//[masterViewController pushViewController:shopViewController animated:YES];
@@ -164,9 +164,9 @@
 			}
 		}
 
-		NSLog(@"shop %d pid %d", i, aShop.pId);
+		//NSLog(@"shop %d pid %d", i, aShop.pId);
 		for (int j = 0; j<[map.pointList count]; j++) {
-			NSLog(@"point pid %d", [[map.pointList objectAtIndex:j] pId]);
+			//NSLog(@"point pid %d", [[map.pointList objectAtIndex:j] pId]);
 			if ([[map.pointList objectAtIndex:j] pId] == aShop.pId) {
 				aShop.annotation = [Annotation annotationWithAnnotationType:kAnnoShop inlevel:map WithPosition:[[map.pointList objectAtIndex:j] position] title:aShop.shopName content:@"content"];
 				break;
@@ -180,6 +180,7 @@
 }
 
 - (void) serverRespond: (APIController *) api {
+	
 	if ([api.path rangeOfString: @"stairs.json"].location != NSNotFound) {		
 		self.stairs = [NSMutableArray array];
 		NSArray *result = (NSArray *) api.result;
@@ -414,6 +415,7 @@
 	
 
 	if (debug) NSLog([[api result] description]);
+	[api release];
 }
 
 - (void) loadStairs {

@@ -28,13 +28,25 @@
 }
 
 - (void) getAPI: (NSString *) path {
-	
+	[self retain];
 	//depend on path, try to query cache here
 	self.path = path;
 	
 	if ([path isEqualToString: @"/malls.json"]) {
 		if ([delegate respondsToSelector: @selector(cacheRespond:)]) {
 			NSArray *respond = [self mapListCache];
+			if ([respond count] > 0) {
+				self.result = respond;	
+				[delegate cacheRespond: self];
+			}
+		}
+	}
+	else if ([path rangeOfString: @"/shops.json"].location != NSNotFound) {
+		NSArray *tmp = [path componentsSeparatedByString: @"/"];
+		
+		NSString *mallId = [tmp objectAtIndex: 2];
+		if ([delegate respondsToSelector: @selector(cacheRespond:)]) {
+			NSArray *respond = [self shopListCache: mallId];
 			if ([respond count] > 0) {
 				self.result = respond;	
 				[delegate cacheRespond: self];
@@ -55,10 +67,54 @@
 	[request startAsynchronous];
 }
 
+- (id) shopListCache: (NSString *) mall_id {
+	NSArray *fields = [NSArray arrayWithObjects: @"description", @"id", @"name", @"point_id", @"unit", nil];
+	MallExplorerAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+	NSManagedObjectContext *context = [appDelegate managedObjectContext];
+	
+	NSError *error;
+	
+	NSFetchRequest *fetchRequest =  [[NSFetchRequest alloc] init];
+	
+	NSEntityDescription *entity = [NSEntityDescription entityForName: @"Shop" inManagedObjectContext: context];
+	
+	[fetchRequest setEntity: entity];
+	
+	[fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"mall_id == %@", mall_id]];
+	
+	NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	NSMutableArray *results = [NSMutableArray array];
+	
+	for (NSManagedObject *info in fetchedObjects) {
+		NSMutableDictionary *tmp = [NSMutableDictionary dictionary];
+		
+		[fields enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id x, NSUInteger index, BOOL *stop){
+		//	[tmp setObject:[info valueForKey: x] forKey: x];
+		}];
+		
+		NSDictionary *tmpMap = [NSDictionary dictionaryWithObject: [info valueForKey: @"level"] forKey:@"level"];
+		
+		[tmp setObject: [NSDictionary dictionaryWithObject:tmpMap forKey:@"map"] forKey:@"map"];
+		[tmp setObject: [info valueForKey: @"id"] forKey:@"id"];
+		[tmp setObject: @"a" forKey:@"description"];
+		[tmp setObject: [info valueForKey: @"name"] forKey:@"name"];
+		[tmp setObject: [info valueForKey: @"point_id"] forKey:@"point_id"];
+		[tmp setObject: [info valueForKey: @"unit"] forKey:@"unit"];
+		[tmp setObject: [info valueForKey: @"mall_id"] forKey:@"mall_id"];
+		NSDictionary *tmpDic = [NSDictionary dictionaryWithObject: tmp forKey: @"shop"];
+		
+		[results addObject: tmpDic];
+	}
+	
+	[fetchRequest release];
+	NSLog(@"shoplistlog %@", [results description]);
+	return results;
+	
+}
 
 - (id) mapListCache {
 	NSArray *fields = [NSArray arrayWithObjects: @"address", @"id", @"latitude", @"longitude", @"name", @"zip", nil];
-	NSLog(@"a");
 	MallExplorerAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
 	NSManagedObjectContext *context = [appDelegate managedObjectContext];
 		
@@ -92,7 +148,7 @@
 
 
 - (void) postAPI: (NSString *) path withData: (NSDictionary *) data {
-	
+	[self retain];
 	//post API never hit cache
 	
 	NSString *fullPath = [NSString stringWithFormat: @"%@%@", API_END_POINT, path];
@@ -134,14 +190,14 @@
 }
 
 - (void) APIFinished: (ASIHTTPRequest *) request {
+	[self release];
 	
 	
-	NSArray *fields = [NSArray arrayWithObjects: @"address", @"latitude", @"longitude", @"name", nil];
 	//if cache existed => replace cache
 	//it it doesn't, insert new cache
 	
 	if (debugMode) {
-		NSLog(@"APIController: finished load with data: %@", [request responseString]);
+		//NSLog(@"APIController: finished load with data: %@", [request responseString]);
 	}
 	
 	NSString *resultString = [request responseString];
@@ -153,6 +209,7 @@
 	self.result = returnObject;
 	
 	if ([self.path isEqualToString: @"/malls.json"]) {
+		NSArray *fields = [NSArray arrayWithObjects: @"address", @"latitude", @"longitude", @"name", nil];
 		NSArray *tmp = (NSArray *) returnObject;
 		
 		MallExplorerAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
@@ -194,39 +251,109 @@
 			if (![context save: &error]) {
 				NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 			}
+		}];
+	}
+	
+	else if ([path rangeOfString: @"/shops.json"].location != NSNotFound) {
+		/*
+		MallExplorerAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+		NSManagedObjectContext *context = [appDelegate managedObjectContext];
+		
+		NSManagedObject *shop = [NSEntityDescription 
+								 insertNewObjectForEntityForName: @"Shop"
+								 inManagedObjectContext: context];
+		
+		[shop setValue: @"2" forKey:@"id"];
+		[shop setValue: @"City Hall" forKey: @"name"];
+		[shop setValue: @"Whatever" forKey: @"description"];
+		[shop setValue: @"10" forKey: @"mall_id"];
+		[shop setValue: @"10" forKey: @"point_id"];
+		[shop setValue: @"12345" forKey: @"unit"];
+		[shop setValue: @"12345" forKey: @"level"];
+		
+		
+		NSError *error;
+		if (![context save: &error]) {
+			NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+		}
+		 */
+		
+		
+		
+		/*NSError *error;
+		NSFetchRequest *fetchRequest =  [[NSFetchRequest alloc] init];
+		 MallExplorerAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+		 NSManagedObjectContext *context = [appDelegate managedObjectContext];
+		NSEntityDescription *entity = [NSEntityDescription entityForName: @"Shop" inManagedObjectContext: context];
+		
+		[fetchRequest setEntity: entity];
+		
+		[fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"mall_id == %d", 10]];
+		
+		NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+		
+		for (NSManagedObject *info in fetchedObjects) {
+			NSLog(@"id : %d", [[info valueForKey: @"id"] intValue]);
+			NSLog(@"name: %@", [info valueForKey: @"name"]);
+		}
+		[fetchRequest release];
+		*/
+		
+		
+		
+		NSArray *fields = [NSArray arrayWithObjects: @"description", @"name", @"unit", nil];
+		NSArray *tmpArry = [path componentsSeparatedByString: @"/"];
+		
+		NSString *mallId = [tmpArry objectAtIndex: 2];
+		
+		
+		NSArray *tmp = (NSArray *) returnObject;
+		
+		MallExplorerAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+		NSManagedObjectContext *context = [appDelegate managedObjectContext];
+		NSError *error;
+		
+		//delete all
+		
+		NSFetchRequest * allShops = [[NSFetchRequest alloc] init];
+		[allShops setEntity:[NSEntityDescription entityForName:@"Shop" inManagedObjectContext:context]];
+		[allShops setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+		
+		[allShops setPredicate: [NSPredicate predicateWithFormat: @"mall_id == %@", mallId]];
+		
+		NSArray * shops = [context executeFetchRequest:allShops error:&error];
+		[allShops release];
+		//error handling goes here
+		for (NSManagedObject * shop in shops) {
+			[context deleteObject:shop];
+		}
+		
+		[tmp enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 			
+			NSDictionary *shop = (NSDictionary *) obj;
 			
-			//NSFetchRequest *fetchRequest =  [[NSFetchRequest alloc] init];
-//			
-//			NSEntityDescription *entity = [NSEntityDescription entityForName: @"Mall" inManagedObjectContext: context];
-//			
-//			[fetchRequest setEntity: entity];
-//			
-//			[fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"id == %@", [mall valueForKey: @"id"]]];
-//			
-//			//NSLog(@"anything %@", [mall valueForKey: @"id"]);
-//			
-//			NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-//			
-//			[fetchRequest release];
-//			
-//			BOOL exist;
-//			
-//			if ([fetchedObjects count] >0) {
-//				exist = TRUE;
-//			}
-//			else {
-//				exist = FALSE;
-//			}
-//			//if exist => replace
-//			if (exist) {
-//				NSLog(@"%@", @"EXIST");
-//				
-//				
-//			}
-//			//if none => insert new cache
-//			else {
-
+			shop = [shop valueForKey: @"shop"];
+			
+			//add new
+			
+			NSManagedObject *tmpShop = [NSEntityDescription 
+										insertNewObjectForEntityForName: @"Shop"
+										inManagedObjectContext: context];
+			
+			[fields enumerateObjectsUsingBlock: ^(id obj, NSUInteger idx, BOOL *stop) {
+				id value = [shop valueForKey: obj];
+				if ([obj isEqualToString: @"description"]) {
+					value = @"a";
+				}
+				[tmpShop setValue: value forKey:obj];
+			}];
+			[tmpShop setValue: mallId forKey: @"mall_id"];
+			[tmpShop setValue: [NSString stringWithFormat: @"%@", [shop valueForKey: @"point_id"]] forKey: @"point_id"];
+			[tmpShop setValue: [NSString stringWithFormat: @"%@", [shop valueForKey: @"id"]] forKey: @"id"];
+			[tmpShop setValue: [[[shop valueForKey: @"map"] valueForKey: @"map"] valueForKey: @"level"] forKey: @"level"];
+			if (![context save: &error]) {
+				NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+			}
 		}];
 	}
 	
@@ -236,7 +363,7 @@
 }
 
 - (void) APIFailed: (ASIHTTPRequest *) request {
-	
+	[self release];
 	//recall
 	
 	
