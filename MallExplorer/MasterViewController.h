@@ -14,8 +14,10 @@
 	CityMapViewController* cityMapViewController;
 }
 @property (retain) IBOutlet CityMapViewController* cityMapViewController;
-//-(void)pushViewController:(UIViewController*) controller animated:(BOOL)animated;
--(id) initWithCityMap:(CityMapViewController*)cityMap;
 
+-(id) initWithCityMap:(CityMapViewController*)cityMap;
+//REQUIRES:
+//MODIFIES: self
+//EFFECTS: oreturn a nre MasterViewController
 @end
 

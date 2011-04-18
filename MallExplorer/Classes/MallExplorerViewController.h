@@ -6,6 +6,8 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 //	Updated by Dam Tuan Long on 29 Mar 2011 :add city map
+//
+//	Owner : Dam Tuan Long
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "MasterViewController.h"

@@ -5,7 +5,7 @@
 //  Created by Dam Tuan Long on 3/31/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
-
+//	Owner: Dam Tuan Long
 #import "MasterViewController.h"
 #import "CityMapViewController.h"
 #import "ListViewController.h"
@@ -17,8 +17,12 @@
 @implementation MasterViewController
 @synthesize cityMapViewController;
 
-
+#pragma mark -
+#pragma mark Initilization
 -(id)initWithCityMap:(CityMapViewController*)cityMap{
+	//REQUIRES:self != nil
+	//MODIFIES: listOfItem
+	//EFFECTS: override this method, used to load data for tableview
 	self =[super init];
 	if (self) {
 		cityMapViewController = cityMap;

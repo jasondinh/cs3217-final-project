@@ -5,7 +5,7 @@
 //  Created by Dam Tuan Long on 4/10/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
-
+//	Owner: Dam Tuan Long
 #import "ShopOverviewController.h"
 #import "Shop.h"
 

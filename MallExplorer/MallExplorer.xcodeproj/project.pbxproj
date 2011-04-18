@@ -48,8 +48,6 @@
 		28D7ACF80DDB3853001CB0EB /* MallExplorerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* MallExplorerViewController.m */; };
 		390C7432134F881D00785A2F /* overview_tab_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 390C7431134F881D00785A2F /* overview_tab_icon.png */; };
 		390C7434134F883300785A2F /* speechbubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 390C7433134F883300785A2F /* speechbubble.png */; };
-		390C74C4134F90CD00785A2F /* facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 390C74C3134F90CD00785A2F /* facebook_icon.png */; };
-		390C74C9134F915900785A2F /* facebook-icon_52x52.png in Resources */ = {isa = PBXBuildFile; fileRef = 390C74C8134F915900785A2F /* facebook-icon_52x52.png */; };
 		390C74EF134F942D00785A2F /* comments_tab_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 390C74EE134F942D00785A2F /* comments_tab_icon.png */; };
 		390C74F1134F945D00785A2F /* facebook_tab_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 390C74F0134F945D00785A2F /* facebook_tab_icon.png */; };
 		3916ECB513536B7500929EAF /* FacebookTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3916ECB313536B7500929EAF /* FacebookTabViewController.m */; };
@@ -225,8 +223,6 @@
 		32CA4F630368D1EE00C91783 /* MallExplorer_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MallExplorer_Prefix.pch; sourceTree = "<group>"; };
 		390C7431134F881D00785A2F /* overview_tab_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = overview_tab_icon.png; sourceTree = "<group>"; };
 		390C7433134F883300785A2F /* speechbubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speechbubble.png; sourceTree = "<group>"; };
-		390C74C3134F90CD00785A2F /* facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_icon.png; sourceTree = "<group>"; };
-		390C74C8134F915900785A2F /* facebook-icon_52x52.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-icon_52x52.png"; sourceTree = "<group>"; };
 		390C74EE134F942D00785A2F /* comments_tab_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comments_tab_icon.png; sourceTree = "<group>"; };
 		390C74F0134F945D00785A2F /* facebook_tab_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_tab_icon.png; sourceTree = "<group>"; };
 		3916ECB213536B7500929EAF /* FacebookTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookTabViewController.h; sourceTree = "<group>"; };
@@ -908,8 +904,6 @@
 				2742DE10134510F200E4A4A0 /* vivioMap.gif */,
 				390C7431134F881D00785A2F /* overview_tab_icon.png */,
 				390C7433134F883300785A2F /* speechbubble.png */,
-				390C74C3134F90CD00785A2F /* facebook_icon.png */,
-				390C74C8134F915900785A2F /* facebook-icon_52x52.png */,
 				390C74EE134F942D00785A2F /* comments_tab_icon.png */,
 				390C74F0134F945D00785A2F /* facebook_tab_icon.png */,
 			);
@@ -994,8 +988,6 @@
 				27B11A00134F4DD9002DD271 /* up_red_arrow.png in Resources */,
 				390C7432134F881D00785A2F /* overview_tab_icon.png in Resources */,
 				390C7434134F883300785A2F /* speechbubble.png in Resources */,
-				390C74C4134F90CD00785A2F /* facebook_icon.png in Resources */,
-				390C74C9134F915900785A2F /* facebook-icon_52x52.png in Resources */,
 				390C74EF134F942D00785A2F /* comments_tab_icon.png in Resources */,
 				390C74F1134F945D00785A2F /* facebook_tab_icon.png in Resources */,
 				395FCA221350D54500F2E3F5 /* ShopOverviewController.xib in Resources */,

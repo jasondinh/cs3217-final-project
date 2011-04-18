@@ -51,8 +51,7 @@
 @property (nonatomic, retain) Mall* mall;
 
 
-- (NSString *)subtitle;
-- (NSString *)title;
+
 - (IBAction) buttonClicked:(UIButton*) sender;
 - (IBAction) selectLevelClicked:(UIBarButtonItem*) sender;
 

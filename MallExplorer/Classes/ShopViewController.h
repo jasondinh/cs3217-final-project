@@ -5,7 +5,7 @@
 //  Created by bathanh-m on 3/25/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
-
+//	Owner : Dam Tuan Long
 #import <UIKit/UIKit.h>
 #import "AnnoViewController.h"
 #import "Shop.h"

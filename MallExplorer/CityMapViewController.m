@@ -5,7 +5,7 @@
 //  Created by Dam Tuan Long on 3/31/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
-
+//	Owner: Dam Tuan Long
 #import "CityMapViewController.h"
 #import "MasterViewController.h"
 #import "Mall.h"
@@ -57,52 +57,6 @@
     return self;
 }
 
--(void)reloadView:(id)sender{
-	for (id<MKAnnotation> currentAnnotation in mapView.annotations) {			
-		BOOL has = NO;
-		for (Mall* aMall in mallList){
-			if ([currentAnnotation isMemberOfClass:[Mall class]] && ((Mall*)currentAnnotation).mId ==aMall.mId) {
-				has = YES;
-			}
-		}
-		if (!has && currentAnnotation != mapView.userLocation) 
-			[mapView removeAnnotation:currentAnnotation];
-	}
-	for (Mall* aMall in mallList){
-		BOOL has = NO;
-		for (id<MKAnnotation> currentAnnotation in mapView.annotations) {       
-			if ([currentAnnotation isMemberOfClass:[Mall class]] && ((Mall*)currentAnnotation).mId ==aMall.mId) {
-				has = YES;
-			}
-		}
-		if (!has) 
-			[mapView addAnnotation:aMall];
-		if (shouldAutoFocus && fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < INSIDE_LATITUDE &&
-			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <INSIDE_LONGITUDE) ) {
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"mall enter" object:aMall];
-			shouldAutoFocus = NO;
-		}
-	}
-
-
-}
--(IBAction)backToCurrentLocation:(id)sender{
-			MKCoordinateRegion region;
-			MKCoordinateSpan span;
-			span.latitudeDelta = SPAN_LATITUDE;
-			span.longitudeDelta = SPAN_LONGITUDE;
-			region.span = span;
-			region.center = mapView.userLocation.coordinate;
-			[mapView setRegion:region animated:YES];
-	
-}
-
-
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
-	if ([view.annotation isKindOfClass:[Mall class]]) 
-				[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:view.annotation];
-
-}
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
@@ -142,6 +96,57 @@
 	
 	
 }
+
+#pragma mark -
+#pragma mark Mapview and Location support
+
+-(void)reloadView:(id)sender{
+	for (id<MKAnnotation> currentAnnotation in mapView.annotations) {			
+		BOOL has = NO;
+		for (Mall* aMall in mallList){
+			if ([currentAnnotation isMemberOfClass:[Mall class]] && ((Mall*)currentAnnotation).mId ==aMall.mId) {
+				has = YES;
+			}
+		}
+		if (!has && currentAnnotation != mapView.userLocation) 
+			[mapView removeAnnotation:currentAnnotation];
+	}
+	for (Mall* aMall in mallList){
+		BOOL has = NO;
+		for (id<MKAnnotation> currentAnnotation in mapView.annotations) {       
+			if ([currentAnnotation isMemberOfClass:[Mall class]] && ((Mall*)currentAnnotation).mId ==aMall.mId) {
+				has = YES;
+			}
+		}
+		if (!has) 
+			[mapView addAnnotation:aMall];
+		if (shouldAutoFocus && fabs([aMall.latitude doubleValue] - mapView.userLocation.coordinate.latitude) < INSIDE_LATITUDE &&
+			fabs([aMall.longitude doubleValue] - mapView.userLocation.coordinate.longitude <INSIDE_LONGITUDE) ) {
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"mall enter" object:aMall];
+			shouldAutoFocus = NO;
+		}
+	}
+	
+	
+}
+-(IBAction)backToCurrentLocation:(id)sender{
+	MKCoordinateRegion region;
+	MKCoordinateSpan span;
+	span.latitudeDelta = SPAN_LATITUDE;
+	span.longitudeDelta = SPAN_LONGITUDE;
+	region.span = span;
+	region.center = mapView.userLocation.coordinate;
+	[mapView setRegion:region animated:YES];
+	
+}
+
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
+	if ([view.annotation isKindOfClass:[Mall class]]) 
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"mall chosen" object:view.annotation];
+	
+}
+
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
 	if (annotation == self.mapView.userLocation) {
 		return nil;
@@ -157,40 +162,36 @@
     pin.canShowCallout = YES;
     pin.animatesDrop = NO;
 	
-    // now we'll add the right callout button
+
     UIButton *detailButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 	
-    // customize this line to fit the structure of your code.  basically
-    // you just need to find an integer value that matches your object in some way:
-    // its index in your array of MKAnnotation items, or an id of some sort, etc
-    // 
-    // here I'll assume you have an annotation array that is a property of the current
-    // class and we just want to store the index of this annotation.
+
     NSInteger annotationValue = [self.mapView.annotations indexOfObject:annotation];
-	
-    // set the tag property of the button to the index
+
     detailButton.tag = annotationValue;
 	
     // tell the button what to do when it gets touched
-    [detailButton addTarget:self action:@selector(rightCalloutAccessoryViewSelected:) forControlEvents:UIControlEventTouchUpInside];
+    [detailButton addTarget:self action:@selector(rightCalloutAccessoryViewSelected:) 
+		   forControlEvents:UIControlEventTouchUpInside];
 	
     pin.rightCalloutAccessoryView = detailButton;
     return pin;
 }
 
 -(void) rightCalloutAccessoryViewSelected:(id)sender{
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall enter" object:[mapView.annotations objectAtIndex:((UIButton*)sender).tag]];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"mall enter" 
+														object:[mapView.annotations objectAtIndex:((UIButton*)sender).tag]];
 }
 
 - (IBAction)changeType:(id)sender{
 	
-	if(mapType.selectedSegmentIndex==0){
+	if(mapType.selectedSegmentIndex==0){// normal map
 		mapView.mapType=MKMapTypeStandard;
 	}
-	else if (mapType.selectedSegmentIndex==1){
+	else if (mapType.selectedSegmentIndex==1){// satellite
 		mapView.mapType=MKMapTypeSatellite;
 	}
-	else if (mapType.selectedSegmentIndex==2){
+	else if (mapType.selectedSegmentIndex==2){//hybrid
 		mapView.mapType=MKMapTypeHybrid;
 	}
 }
@@ -237,7 +238,6 @@
 	
 
     NSMutableArray *items = [[toolbar items] mutableCopy];
-	//if (((UIBarButtonItem*)[items objectAtIndex:0]).title ==@"Root List" )
     [items removeObjectAtIndex:0];
     [toolbar setItems:items animated:YES];
     [items release];
