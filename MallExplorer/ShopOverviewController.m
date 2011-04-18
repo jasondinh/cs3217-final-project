@@ -47,10 +47,10 @@
     [super viewDidLoad];
 	//settings for self
 	self.view.backgroundColor = [UIColor whiteColor];
-	if (theShop.description != [NSNull null]) shopNameLabel.text = theShop.shopName;
-	if (theShop.description != [NSNull null])    levelLabel.text = theShop.level;
-	if (theShop.description != [NSNull null]) unitLabel.text = theShop.unitNumber;
-	if(theShop.description != [NSNull null]) descriptionTextView.text = theShop.description;
+	if (theShop.description != [NSNull null]) self.shopNameLabel.text = theShop.shopName;
+	if (theShop.description != [NSNull null])    self.levelLabel.text = theShop.level;
+	if (theShop.description != [NSNull null]) self.unitLabel.text = theShop.unitNumber;
+	if(theShop.description != [NSNull null]) self.descriptionTextView.text = theShop.description;
 
 }
 
