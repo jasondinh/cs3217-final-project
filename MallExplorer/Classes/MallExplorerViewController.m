@@ -97,7 +97,7 @@
 		[shopViewController loadShop:(Shop*)[sender object]];
 	UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController: shopViewController];
 	[popover presentPopoverFromRect:CGRectMake(0, 0, 1000, 1000) inView: [[[self viewControllers] objectAtIndex:1] view] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-	[popover release];
+	
 	//popover.passthroughViews = [NSArray arrayWithObject: [[[self viewControllers] objectAtIndex:1] view]];
 	//[[[self viewControllers] objectAtIndex:1] presentPopoverFromRect:CGRectMake(0, 0, 0, 0) inView: permittedArrowDirections:<#(UIPopoverArrowDirection)arrowDirections#> animated:<#(BOOL)animated#>
 		//[masterViewController pushViewController:shopViewController animated:YES];
@@ -171,15 +171,9 @@
 			}
 		}
 
-<<<<<<< HEAD
-		//NSLog(@"shop %d pid %d", i, aShop.pId);
+
 		for (int j = 0; j<[map.pointList count]; j++) {
-			//NSLog(@"point pid %d", [[map.pointList objectAtIndex:j] pId]);
-=======
-//		NSLog(@"shop %d pid %d", i, aShop.pId);
-		for (int j = 0; j<[map.pointList count]; j++) {
-//			NSLog(@"point pid %d", [[map.pointList objectAtIndex:j] pId]);
->>>>>>> 5bdb2a322723c98d44387048ed2da4e05fb22e5d
+
 			if ([[map.pointList objectAtIndex:j] pId] == aShop.pId) {
 				aShop.annotation = [Annotation annotationWithAnnotationType:kAnnoShop inlevel:map WithPosition:[[map.pointList objectAtIndex:j] position] title:aShop.shopName content:@"content"];
 				break;
