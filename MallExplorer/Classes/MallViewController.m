@@ -611,10 +611,10 @@
 	Annotation* anAnno = [notification.object annotation];
 	NSLog(@"%@", anAnno.title);
 	NSLog(@"this shop is chosen: %lf %lf", anAnno.position.x, anAnno.position.y);
-	if ([anAnno.level isEqual:mapViewController.map]) {
+	if (![anAnno.level isEqual:mapViewController.map]) {
 		[mapViewController focusToAMapPosition:anAnno.position];
 	} else {
-		[self changeToMap:[self getViewControllerOfMap:anAnno.level]];
+		[self changeToMap:anAnno.level];
 		[mapViewController focusToAMapPosition:anAnno.position];
 	}
 
@@ -622,9 +622,12 @@
 
 -(void) setStartTo:(NSNotification*) notification{
 	Annotation* anAnno = [notification.object annotation];
-	if ([anAnno.level isEqual:mapViewController.map]) {
+	if (![anAnno.level isEqual:mapViewController.map]) {
 		[self changeToMap:anAnno.level];
+	} else {
+		[mapViewController focusToAMapPosition:anAnno.position];
 	}
+
 	if (start!= nil) {
 		MapViewController* aMVC = [self getViewControllerOfMap:start.annotation.level];
 		[aMVC removeAllAnnotationOfType:kAnnoStart];
@@ -632,12 +635,15 @@
 	Annotation* startAnno = [Annotation annotationWithAnnotationType:kAnnoStart inlevel:anAnno.level WithPosition:anAnno.position title:@"Start" content:@"Your starting position"];
 	[mapViewController addAnnotation:startAnno];
 	start = [mapViewController.annotationList lastObject];
+	[self startOrGoalMoved:nil];
 }
 
 -(void) setGoalTo:(NSNotification*) notification{
 	Annotation* anAnno = [notification.object annotation];
-	if ([anAnno.level isEqual:mapViewController.map]) {
+	if (![anAnno.level isEqual:mapViewController.map]) {
 		[self changeToMap:anAnno.level];
+	}else {
+		[mapViewController focusToAMapPosition:anAnno.position];
 	}
 	if (goal!= nil) {
 		MapViewController* aMVC = [self getViewControllerOfMap:goal.annotation.level];
@@ -646,9 +652,18 @@
 	Annotation* goalAnno = [Annotation annotationWithAnnotationType:kAnnoGoal inlevel:anAnno.level WithPosition:anAnno.position title:@"Goal" content:@"Your destination"];
 	[mapViewController addAnnotation:goalAnno];
 	goal = [mapViewController.annotationList lastObject];
+	[self startOrGoalMoved:nil];
 }
 
--(void) changeToMap:(MapViewController*) aMVC{
+-(void) changeToMap:(Map*)aMap{
+	if (mapViewController.map!=aMap) {
+		if ([self.mall.mapList indexOfObject:aMap]!=NSNotFound) {
+			[self changeToMap: [self getViewControllerOfMap:aMap]];					
+		}
+	}
+}
+
+-(void) changeToMapViewController:(MapViewController*) aMVC{
 	[mapViewController.view removeFromSuperview];
 	mapViewController = aMVC;
 	[mapViewController redisplayPath];
@@ -868,7 +883,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 	for (int i = 0; i<[listMapViewController count]; i++) {
 		MapViewController* aMVC = [listMapViewController objectAtIndex:i];
 		if ([aMVC.map.mapName isEqualToString:chosenLevel]) {
-			[self changeToMap: aMVC];
+			[self changeToMapViewController: aMVC];
 			break;
 		}
 	}

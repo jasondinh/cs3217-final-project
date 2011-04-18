@@ -119,14 +119,14 @@
 	//REQUIRES: self=! nil, GoHere button is init-ed and pressed
 	//MODIFIES:none
 	//EFFECTS: raise notification for pressing GoHere button
-	//[[NSNotificationCenter defaultCenter] postNotificationName:@"set goal point to shop" object:self.theShop];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"set goal point to shop" object:self.theShop];
 }
 
 -(void) fromHere:(id)sender{
 	//REQUIRES: self=! nil, FromHere button is init-ed and pressed
 	//MODIFIES:none
 	//EFFECTS: raise notification for pressing FromHere button
-	//[[NSNotificationCenter defaultCenter] postNotificationName:@"set start point to shop" object:self.theShop];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"set start point to shop" object:self.theShop];
 }
 
 - (void)navigationController:(UINavigationController *)navigationController 
