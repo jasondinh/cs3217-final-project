@@ -58,6 +58,10 @@
 	[[self tabBar] insertSubview:v atIndex:0];
 	[v release];
 	
+	UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+	[self.view addSubview: toolbar];
+	[toolbar release];
+	
 	UIBarButtonItem* FromHere = [[UIBarButtonItem alloc]initWithTitle:@"From here" 
 																style:UIBarButtonItemStyleBordered 
 															   target:self 
@@ -66,7 +70,9 @@
 															  style:UIBarButtonItemStyleBordered 
 															 target:self 
 															 action:@selector(goHere:)];
-	[self setToolbarItems:[NSArray arrayWithObjects:FromHere,GoHere,nil] animated:YES];
+	
+	[toolbar setItems:[NSArray arrayWithObjects:FromHere,GoHere,nil]];
+	//[self setToolbarItems:[NSArray arrayWithObjects:FromHere,GoHere,nil] animated:YES];
 	//clean up
 	[GoHere release];
 	[FromHere release];

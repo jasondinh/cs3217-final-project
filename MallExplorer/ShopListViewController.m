@@ -205,7 +205,7 @@
 	
 	for(Shop* aShop in shopList){
 		if (aShop.shopName == string) 
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen"
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"shop enter"
 																object:aShop];
 	}
 	
