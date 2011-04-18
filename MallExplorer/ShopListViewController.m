@@ -161,7 +161,8 @@
 		}
     }
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen" object:sender];
+//	[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen" object:sender];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"this shop is chosen" object:[sender object]];
 	
 	
 }

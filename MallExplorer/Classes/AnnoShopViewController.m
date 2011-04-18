@@ -60,7 +60,7 @@
 }
 
 -(void) shopChosen: (UIGestureRecognizer*) recognizer{
-	//[[NSNotificationCenter defaultCenter] postNotificationName:@"Shopview will appear" object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"shop enter" object:[self.annotation shop]];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -85,7 +85,7 @@
 
 
 - (void)dealloc {
-    [super dealloc];
+	[super dealloc];
 }
 
 

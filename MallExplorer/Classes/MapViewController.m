@@ -568,7 +568,10 @@ NSMutableArray* edgeList;
 	CGFloat newOriginX = fmax(0, fmin(point.x-displayArea.frame.size.width/2, maxX));
 	CGFloat newOriginY = fmax(0, fmin(point.y-displayArea.frame.size.height/2, maxY));
 	CGPoint newOrigin = CGPointMake(newOriginX, newOriginY);
-	displayArea.contentOffset = newOrigin;
+	[UIView animateWithDuration:0.4 animations:^ {
+		displayArea.contentOffset = newOrigin;
+	}];
+	
 	// test
 	[self addATestPoint:point withImage:@"icon_shop.png" withDuration:5.0];
 }

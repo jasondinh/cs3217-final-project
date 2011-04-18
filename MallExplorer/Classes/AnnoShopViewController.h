@@ -10,7 +10,6 @@
 #import "AnnoViewController.h"
 
 @interface AnnoShopViewController : AnnoViewController {
-
 }
 
 @end

@@ -17,6 +17,14 @@
 @synthesize annotation;
 @synthesize commentList, description, sId, pId;
 
+-(void) setAnnotation:(Annotation *) anAnno{
+	if (annotation!= anAnno) {
+		[annotation release];
+		annotation = [anAnno retain];
+		annotation.shop = self;
+	}
+}
+
 -(void) loadComment:(NSArray*) commentList{
 	// do something
 }

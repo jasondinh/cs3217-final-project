@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define debug NO
+#define debug YES
 
 // Map constant
 #define MAP_ORIGIN_X 3
@@ -29,7 +29,7 @@
 #define ANNOTATION_VIEW_WIDTH 30
 
 // Annotation title:
-#define LENGTH_PER_CHARACTER 10
+#define LENGTH_PER_CHARACTER 12.5
 #define CAPTION_HEIGHT 18
 
 // Line view constant:
@@ -41,8 +41,8 @@
 
 //API constant
 
-//#define API_END_POINT @"http://cs3217.heroku.com"
-#define API_END_POINT @"http://macmini.dyndns.biz:3000"
+#define API_END_POINT @"http://cs3217.heroku.com"
+//#define API_END_POINT @"http://macmini.dyndns.biz:3000"
 
 //UISplitView constants;
 #define POPOVER_WIDTH 320

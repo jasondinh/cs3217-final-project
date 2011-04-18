@@ -609,6 +609,8 @@
 
 -(void) shopChosen:(NSNotification*) notification{
 	Annotation* anAnno = [notification.object annotation];
+	NSLog(@"%@", anAnno.title);
+	NSLog(@"this shop is chosen: %lf %lf", anAnno.position.x, anAnno.position.y);
 	if ([anAnno.level isEqual:mapViewController.map]) {
 		[mapViewController focusToAMapPosition:anAnno.position];
 	} else {
@@ -650,10 +652,12 @@
 	[mapViewController.view removeFromSuperview];
 	mapViewController = aMVC;
 	[mapViewController redisplayPath];
-	[self.view addSubview:mapViewController.view];
-	[self.view sendSubviewToBack:mapViewController.view];
-	self.titleLabel.text = mapViewController.map.mapName;
-	[self.view setNeedsDisplay];
+	[UIView animateWithDuration:1 animations:^ {
+		[self.view addSubview:mapViewController.view];
+		[self.view sendSubviewToBack:mapViewController.view];
+		self.titleLabel.text = mapViewController.map.mapName;
+		[self.view setNeedsDisplay];
+	}];
 }
 
 -(void) changeMap:(NSNotification*) notification{
