@@ -84,7 +84,12 @@
 	
 }
 -(void) shopEnter:(id)sender{
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen"
+														object:(Shop*)[sender object]];
 	if (debug) NSLog(((Shop*)[sender object]).shopName);
+	if ([masterViewController.topViewController isKindOfClass:[ShopViewController class]]) {
+		[masterViewController popViewControllerAnimated:NO];
+	}
 		ShopViewController* shopViewController = [[ShopViewController alloc] init] ;
 		[shopViewController loadShop:(Shop*)[sender object]];
 		[masterViewController pushViewController:shopViewController animated:YES];
