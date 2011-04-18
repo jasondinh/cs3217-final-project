@@ -87,13 +87,17 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen"
 														object:(Shop*)[sender object]];
 	if (debug) NSLog(((Shop*)[sender object]).shopName);
-	if ([masterViewController.topViewController isKindOfClass:[ShopViewController class]]) {
-		[masterViewController popViewControllerAnimated:NO];
-	}
+	//if ([masterViewController.topViewController isKindOfClass:[ShopViewController class]]) {
+	//	[masterViewController popViewControllerAnimated:NO];
+	//}
 		ShopViewController* shopViewController = [[ShopViewController alloc] init] ;
 		[shopViewController loadShop:(Shop*)[sender object]];
-		[masterViewController pushViewController:shopViewController animated:YES];
-		masterViewController.delegate = shopViewController;
+	UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController: shopViewController];
+	[popover presentPopoverFromRect:CGRectMake(0, 0, 1000, 1000) inView: [[[self viewControllers] objectAtIndex:1] view] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+	//popover.passthroughViews = [NSArray arrayWithObject: [[[self viewControllers] objectAtIndex:1] view]];
+	//[[[self viewControllers] objectAtIndex:1] presentPopoverFromRect:CGRectMake(0, 0, 0, 0) inView: permittedArrowDirections:<#(UIPopoverArrowDirection)arrowDirections#> animated:<#(BOOL)animated#>
+		//[masterViewController pushViewController:shopViewController animated:YES];
+		//masterViewController.delegate = shopViewController;
 	
 }
 
