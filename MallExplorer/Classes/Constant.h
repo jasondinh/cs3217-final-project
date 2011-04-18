@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define debug YES
+#define debug NO
 
 // Map constant
 #define MAP_ORIGIN_X 3
@@ -17,7 +17,7 @@
 #define MAP_HEIGHT	648
 
 // Graph constant
-#define MAX_NODES 200
+#define MAX_NODES 1
 
 // portrait
 #define MAP_PORTRAIT_WIDTH	762

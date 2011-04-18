@@ -34,8 +34,8 @@ typedef enum {
 @property CGPoint position;
 @property (nonatomic, retain) NSString* title;
 @property (nonatomic, retain) NSString* content;
-@property (assign) Map* level;
-@property (assign) Shop* shop;
+@property (retain) Map* level;
+@property (retain) Shop* shop;
 @property BOOL isDisplayed;
 +(Annotation*) annotationWithAnnotationType: (AnnotationType) annType inlevel:(Map*)level WithPosition: (CGPoint) position title:(NSString*) title content: (NSString*) content;
 @end
