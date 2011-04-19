@@ -50,6 +50,7 @@
 
 
 -(void) loadMaps:(NSArray *)listMap andStairs:(NSArray *)stairs withDefaultMap:(Map*) defaultMap{
+	double time = [NSDate timeIntervalSinceReferenceDate];
 	if (!self.mapDataLoaded) {
 		for (int i = 0; i<[listMap count]; i++) {
 			Map* aMap = [listMap objectAtIndex:i];
@@ -60,6 +61,8 @@
 	}
 	mall.defaultMap = defaultMap;
 	[self display];
+	time = ([NSDate timeIntervalSinceReferenceDate] - time)/1000;
+	NSLog(@"%lf", time);
 //	[mapViewController 
 }
 

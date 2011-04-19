@@ -109,7 +109,7 @@
 	
 	[fetchRequest release];
 	//
-	NSLog(@"shoplistlog %@", [results description]);
+	//NSLog(@"shoplistlog %@", [results description]);
 	return results;
 	
 }
@@ -155,7 +155,7 @@
 	NSString *fullPath = [NSString stringWithFormat: @"%@%@", API_END_POINT, path];
 	
 	if (debugMode) {
-		NSLog(@"APIController: postAPI with path: %@ and data: %@", fullPath, [data description]);
+		//NSLog(@"APIController: postAPI with path: %@ and data: %@", fullPath, [data description]);
 	}
 	
 	NSURL *url = [NSURL URLWithString: fullPath];
@@ -166,7 +166,7 @@
 	NSString *key;
 	
 	while ((key = [enumerator nextObject])) {
-		NSLog(@"%@ %@", [data objectForKey: key], key);
+		//NSLog(@"%@ %@", [data objectForKey: key], key);
 		[request addPostValue: [data objectForKey: key] forKey: key];
 	}
 	
@@ -180,7 +180,7 @@
 
 - (void) APIStarted: (ASIHTTPRequest *) request {
 	if (debugMode) {
-		NSLog(@"APIController: started to load");
+		//NSLog(@"APIController: started to load");
 	}
 	
 	self.url = [request url];
@@ -198,7 +198,7 @@
 	//it it doesn't, insert new cache
 	
 	if (debugMode) {
-		NSLog(@"APIController: finished load with data: %@", [request responseString]);
+		//NSLog(@"APIController: finished load with data: %@", [request responseString]);
 	}
 	
 	NSString *resultString = [request responseString];
