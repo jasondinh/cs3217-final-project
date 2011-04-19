@@ -83,14 +83,15 @@
 	while (tmpMall = [e nextObject]) {
 		NSDictionary *tmp = [tmpMall valueForKey: @"shop"];
 		
-		Shop *mall = [[Shop alloc] initWithId: [[tmp valueForKey: @"id"] intValue] 
+		Shop *shop = [[Shop alloc] initWithId: [[tmp valueForKey: @"id"] intValue] 
 									 andLevel:[[[tmp valueForKey: @"map"] valueForKey: @"map"] valueForKey: @"level"] 
 									  andUnit:[tmp valueForKey: @"unit"] 
 								  andShopName:[tmp valueForKey: @"name"] 
 							   andDescription:[tmp valueForKey: @"description"]];
-		
-		[tmpMalls addObject: mall];
-		[mall release];
+		NSInteger pid = [[tmp valueForKey: @"point_id"] intValue];
+		shop.pId = pid;
+		[tmpMalls addObject: shop];
+		[shop release];
 	}
 	
 	
