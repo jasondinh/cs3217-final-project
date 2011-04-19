@@ -395,6 +395,10 @@
 }
 
 
+-(void) viewWillDisappear:(BOOL)animated{
+	[super viewWillDisappear:animated];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:@"mall chosen"  object:nil];
+}
 - (void)viewDidUnload {
     [super viewDidUnload];
     // Release any retained subviews of the main view.

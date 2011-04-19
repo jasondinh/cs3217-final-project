@@ -351,6 +351,10 @@
     // Release any cached data, images, etc. that aren't in use.
 }
 
+-(void) viewWillDisappear:(BOOL)animated{
+	[super viewWillDisappear:animated];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:@"shop enter"  object:nil];
+}
 
 - (void)viewDidUnload {
     [super viewDidUnload];
