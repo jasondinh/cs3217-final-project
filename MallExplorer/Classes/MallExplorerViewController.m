@@ -98,6 +98,7 @@
 	
 }
 -(void) shopEnter:(id)sender{
+	CGFloat x,y;
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen"
 														object:(Shop*)[sender object]];
 	if (debug) NSLog(((Shop*)[sender object]).shopName);
