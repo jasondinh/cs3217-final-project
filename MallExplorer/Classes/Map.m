@@ -146,6 +146,9 @@ const int maxNumstep = 100;
 }
 
 -(Map*) initWithMapId:(NSInteger) mapid withLevel:(NSString *) lev withURL:(NSString*) url{
+	
+	url = [url stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+	
 	self = [super init];
 	if (self) {
 		self.pathOnMap = [[NSMutableArray alloc] init];
@@ -183,7 +186,7 @@ const int maxNumstep = 100;
 		[fetchRequest release];
 		
 		if (!cached) {
-			ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]];
+			ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString: url]];
 			[request setDelegate: self];
 			[request setDidFinishSelector: @selector(finishLoadedImage:)];
 			[request setDidFailSelector: @selector(failLoadedImage:)];
