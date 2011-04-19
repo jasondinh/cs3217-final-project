@@ -158,9 +158,7 @@ const int maxNumstep = 100;
 		self.mId = mapid;
 		self.level = lev;
 		self.mapName = [NSString stringWithFormat:@"Level %@", lev];
-		self.numMeterPerPixel = 30;		
-		
-		
+		self.numMeterPerPixel = 30;
 		BOOL cached = NO;
 		MallExplorerAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
 		NSManagedObjectContext *context = [appDelegate managedObjectContext];
@@ -179,9 +177,9 @@ const int maxNumstep = 100;
 		
 		for (NSManagedObject *info in fetchedObjects) {
 			cached = YES;
-			NSLog(@"YESSSSSSSSSSSSS");
+
 			NSString *local = [info valueForKey: @"local"];
-			NSLog(local);
+
 			self.imageMap = [UIImage imageWithData:[NSData dataWithContentsOfFile:local]];
 			mapLoadTime = [NSDate timeIntervalSinceReferenceDate] - mapLoadTime;
 			NSLog(@"time to load image map with cache %lf", mapLoadTime);
@@ -203,11 +201,10 @@ const int maxNumstep = 100;
 
 - (void) failLoadedImage: (ASIHTTPRequest *) request {
 	NSError *error = [request error];
-	NSLog([error description]);
+
 }
 
 - (void) finishLoadedImage: (ASIHTTPRequest *) request {
-	NSLog(@"%@", @"done loading image");
 	MallExplorerAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
 	NSManagedObjectContext *context = [appDelegate managedObjectContext];
 	
@@ -225,7 +222,6 @@ const int maxNumstep = 100;
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *userDocumentsPath = [paths objectAtIndex:0];
 	NSString *fileName = [NSString stringWithFormat: @"%@/map_%d", userDocumentsPath, mId];
-	NSLog(@"%@",fileName);
 	[tmpData writeToFile: fileName atomically:YES];
 	
 	[image setValue: fileName forKey:@"local"];
@@ -314,11 +310,11 @@ const int maxNumstep = 100;
 		MapPoint* point2 = [aPath objectAtIndex:i+1];
 		result += [MapPoint getDistantBetweenPoint:point1 andPoint:point2];
 	}
-	NSLog(@"%lf", result);
+
 	result = result / numMeterPerPixel;
-	NSLog(@"%lf", result);
+
 	result = result / M_TRAVEL_PER_MINUTE;
-	NSLog(@"%lf", result);
+
 	return result;
 }
 

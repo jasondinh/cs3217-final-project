@@ -379,7 +379,7 @@
 
 - (id)copyWithZone:(NSZone *)zone {
 	APIController *api = [[APIController alloc] initCopy: self];
-	return [api autorelease];
+	return api;
 }
 
 

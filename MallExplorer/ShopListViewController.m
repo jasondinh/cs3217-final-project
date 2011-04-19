@@ -2,7 +2,7 @@
 //  ShopListViewController.m
 //  MallExplorer
 //
-//  Created by Dam Tuan Long on 4/3/11.
+//  Created by Dam Tuan Long & Jason Dinh on 4/3/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 //	Owner : Dam Tuan Long
@@ -351,6 +351,10 @@
     // Release any cached data, images, etc. that aren't in use.
 }
 
+-(void) viewWillDisappear:(BOOL)animated{
+	[super viewWillDisappear:animated];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:@"shop enter"  object:nil];
+}
 
 - (void)viewDidUnload {
     [super viewDidUnload];

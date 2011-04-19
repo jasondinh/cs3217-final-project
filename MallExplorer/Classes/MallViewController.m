@@ -27,7 +27,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	if (debug) NSLog(@"Toolbar %d", [toolbar.items count ]);
 }
 
 -(void) display{
@@ -63,8 +62,7 @@
 	mall.defaultMap = defaultMap;
 	[self display];
 	time = ([NSDate timeIntervalSinceReferenceDate] - time);
-	NSLog(@"%lf", time);
-//	[mapViewController 
+	if (debug) NSLog(@"%lf", time);
 }
 
 
@@ -235,7 +233,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 			UIScrollView* theScrollView = (UIScrollView*) mapViewController.view;
 			double x = newX + button.frame.size.width/2  + theScrollView.contentOffset.x;
 			double y = newY + button.frame.size.height/2 + theScrollView.contentOffset.y ;
-			if (debug) NSLog(@"new x new y %lf %lf", x, y);
+
 			if (![mapViewController addAnnotationType:annoType ToScrollViewAtPosition:CGPointMake(x, y) withTitle:title withContent:content]) {
 				button.transform = CGAffineTransformIdentity;
 				return; // add to blocked position
