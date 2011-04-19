@@ -36,4 +36,10 @@
 	return [self initWithPoint1:pA point2:pB withLength:w isBidirectional:YES withTravelType:kWalk];
 }
 
+- (void) dealloc {
+	[pointB release];
+	[pointA release];
+	[super dealloc];
+}
+
 @end

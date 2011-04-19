@@ -72,7 +72,6 @@
 		}
 
 
-
 		
 		[self setDelegate: aMVC];
 		if (((UIBarButtonItem*)[[cityMapViewController toolbar].items objectAtIndex:0]).title == @"Root List") {
@@ -91,17 +90,22 @@
 														object:(Shop*)[sender object]];
 	if (debug) NSLog(((Shop*)[sender object]).shopName);
 	//if ([masterViewController.topViewController isKindOfClass:[ShopViewController class]]) {
-	//	[masterViewController popViewControllerAnimated:NO];
+	//	[masterViewController popViewControllerAnimated:NO];Å
 	//}
 		ShopViewController* shopViewController = [[ShopViewController alloc] init] ;
-		[shopViewController loadShop:(Shop*)[sender object]];
+	[shopViewController loadShop:(Shop*)[sender object]];
 	UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController: shopViewController];
 	[popover presentPopoverFromRect:CGRectMake(0, 0, 1000, 1000) inView: [[[self viewControllers] objectAtIndex:1] view] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-	
+	[ shopViewController release];
+	popover.delegate = self;
 	//popover.passthroughViews = [NSArray arrayWithObject: [[[self viewControllers] objectAtIndex:1] view]];
 		//[masterViewController pushViewController:shopViewController animated:YES];
 		//masterViewController.delegate = shopViewController;
 	
+}
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    [popoverController release];
 }
 
 -(void) shopListLoaded:(NSNotification*) notify{
@@ -272,6 +276,7 @@
 			}
 
 			[maps addObject: aMap];
+			[aMap release];
 		}];
 		numWaiting = 0;
 		[maps enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -301,9 +306,10 @@
 																			  [[tmpPoint valueForKey: @"y"] intValue]) andPointId:[[tmpPoint valueForKey: @"id"] intValue]];
 			
 			[points addObject: point];
+			[point release];
 		}
 		
-		NSLog(@"the points' map is %d", mId);
+		//NSLog(@"the points' map is %d", mId);
 		if (mId != 0) {
 			for (int i = 0; i<[maps count]; i++) {
 				Map* aMap = [maps objectAtIndex:i];
@@ -364,6 +370,7 @@
 			}
 			Edge* anEdge = [[Edge alloc] initWithPoint1:point1 point2:point2];
 			[edges addObject:anEdge];
+			[anEdge release];
 		}
 		aMap.edgeList = edges;
 		
@@ -396,7 +403,6 @@
 			for (int i = 0; i<[aMap.pointList count]; i++) {
 				aPoint = [aMap.pointList objectAtIndex:i];
 				if (aPoint.pId == p) {
-					point = aPoint;
 					break;
 				}
 			}
