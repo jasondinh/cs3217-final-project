@@ -30,6 +30,7 @@
 	// this list form a graph that is used for searching path between different levels
 	NSMutableArray* mapPointList;
 	Graph* mallGraph;
+	double travelTime;
 }
 
 @property (retain) NSString *name;
@@ -40,6 +41,7 @@
 @property (retain) NSArray* mapPointList;
 @property (retain) Map* defaultMap;
 @property BOOL mapLoaded;
+@property double travelTime;
 
 @property NSInteger mId;
 @property NSInteger zip;

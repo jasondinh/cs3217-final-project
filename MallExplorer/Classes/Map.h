@@ -27,6 +27,7 @@
 	NSString* mapName;
 	NSMutableArray* pathOnMap;
 	CGPoint defaultCenterPoint;
+	double numMeterPerPixel;
 //	NSTime* timer;
 }
 
@@ -39,6 +40,7 @@
 @property (nonatomic, retain) NSString* mapName;
 @property (nonatomic, retain) NSArray* pathOnMap;
 @property CGPoint defaultCenterPoint;
+@property double numMeterPerPixel;
 
 -(void) addAnnotation: (Annotation*) annotation;
 -(void) removeAnnotation: (Annotation*) annotation;
@@ -73,6 +75,8 @@
 -(BOOL) checkFreeAtPoint:(CGPoint) point;
 -(BOOL) checkPositionInsideMap:(CGPoint) aPosition;
 
+// return estimated time to travel in the provided path in this level, in minutes.
+-(double) estimateTime: (NSArray*) aPath;
 
 
 @end

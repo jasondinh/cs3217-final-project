@@ -15,6 +15,7 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 @synthesize mapPointList;
 @synthesize mapLoaded;
 @synthesize defaultMap;
+@synthesize travelTime;
 
 -(CLLocationCoordinate2D) coordinate{
 	CLLocationCoordinate2D cor;
@@ -172,6 +173,8 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 		[pathInLevel addObjectsFromArray:[level1 findPathFrom:point1 to:point2]];
 		[pathInLevel addObject:goalPoint];
 		result = [[level1 refineAPath:pathInLevel] retain];
+		travelTime = [level1 estimateTime: result];
+		NSLog(@"travelTime %lf", travelTime);
 		[startPoint release];
 		[goalPoint release];	
 		[level1 addPathOnMap: result];
@@ -184,6 +187,7 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 		[pathBetweenLevel addObject:goalPoint];
 		[startPoint release];
 		[goalPoint release];
+		travelTime = 0;
 		for (int i = [pathBetweenLevel count]-1; i>=0; i--) {
 			// the path between level is a mixed of map point and points that represent level.
 			// so we need to clear all the points that represent levels before continuing
@@ -199,8 +203,12 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 			lev2 = [p2 level];
 			if ([lev1 isEqual:lev2]) {
 				NSArray* aPath = [lev1 findPathFromStartPosition:[p1 position] ToGoalPosition:[p2 position]];
+				travelTime += [lev1 estimateTime: aPath];
 				[lev1 addPathOnMap:aPath];
+			} else {
+				travelTime += TIME_TRAVEL_PER_STAIR_IN_MINUTE;
 			}
+
 		}
 		
 //		[level1 addPathOnMap:[NSArray arrayWithObjects:startPoint, point1, nil]];
