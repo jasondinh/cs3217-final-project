@@ -13,16 +13,20 @@
 #import "MasterViewController.h"
 #import "CityMapViewController.h"
 #import "APIController.h"
+#import "Mall.h"
 
 
 @interface MallExplorerViewController : UISplitViewController<MKMapViewDelegate,CLLocationManagerDelegate,APIDelegate, UIPopoverControllerDelegate> {
 	CityMapViewController* cityMapViewController;
 	MasterViewController* masterViewController;
 	
+	MBProgressHUD* progress;
+	Mall* currentLoadedMall;
 	NSMutableArray *maps;
 	NSMutableArray *stairs;
-	
 	NSArray* shopList;
+	BOOL mallLoaded;
+	BOOL shopListLoaded;
 	BOOL mapsLoaded;
 	BOOL stairsLoaded;
 	BOOL pointsLoaded;
@@ -34,7 +38,10 @@
 
 @property (retain) NSArray *maps;
 @property (retain) NSArray *stairs;
+@property (retain) MBProgressHUD* progress;
 
+@property BOOL shopListLoaded;
+@property BOOL mallLoaded;
 @property BOOL mapsLoaded;
 @property BOOL stairsLoaded;
 @property BOOL pointsLoaded;

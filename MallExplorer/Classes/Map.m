@@ -36,6 +36,12 @@ const int maxNumstep = 100;
 }
 
 -(void) addAnnotation: (Annotation*) annotation{
+	for (int i = 0; i<[annotationList count]; i++) {
+		if ([annotation isEqual:[annotationList objectAtIndex:i]]) {
+			[annotationList replaceObjectAtIndex:i withObject:annotation];
+			return;
+		}
+	}
 	[annotationList addObject:annotation];
 }
 

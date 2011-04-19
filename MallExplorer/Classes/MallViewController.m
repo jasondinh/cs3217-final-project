@@ -50,7 +50,6 @@
 
 
 -(void) loadMaps:(NSArray *)listMap andStairs:(NSArray *)stairs withDefaultMap:(Map*) defaultMap{
-	double CurrentTime = CACurrentMediaTime(); 
 	if (!self.mapDataLoaded) {
 		for (int i = 0; i<[listMap count]; i++) {
 			Map* aMap = [listMap objectAtIndex:i];
@@ -60,9 +59,6 @@
 		mapDataLoaded = TRUE;
 	}
 	mall.defaultMap = defaultMap;
-	double length = CACurrentMediaTime() - CurrentTime;
-	length = length/1000;
-	NSLog(@"the time is: %lf", length);
 	[self display];
 //	[mapViewController 
 }
@@ -107,10 +103,20 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setGoalTo:) name:@"set goal point to shop" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setStartTo:) name:@"set start point to shop" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopChosen:) name:@"this shop is chosen" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopReleased:) name:@"shop released" object:nil];
 }
 
 #pragma mark -
 #pragma mark notification handling
+
+-(void) shopReleased:(NSNotification*) notification{
+	Annotation* anAnno = [notification.object annotation];
+	NSLog(@"%@", anAnno.title);
+	NSLog(@"this shop is released, so the anno needs to be released: %lf %lf", anAnno.position.x, anAnno.position.y);
+	[[self getViewControllerOfMap:anAnno.level] removeAnnotation: anAnno];
+	[self.view setNeedsDisplay];
+}
+
 
 -(void) shopChosen:(NSNotification*) notification{
 	Annotation* anAnno = [notification.object annotation];
@@ -457,8 +463,6 @@ toMakeAnnotationType:(AnnotationType) annoType
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	// Overriden to allow any orientation.
-	CGFloat width = mapViewController.view.frame.size.width;
-	CGFloat height = mapViewController.view.frame.size.height;
 	CGFloat newWidth, newHeight;
 	switch ([UIDevice currentDevice].orientation) {
 		case UIInterfaceOrientationLandscapeLeft:

@@ -51,6 +51,9 @@
 }
 
 - (void) dealloc {
+	if (self.annotation!=nil) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"shop released" object:self];		
+	}
 	[level release];
 	[unitNumber release];
 	[shopName release];

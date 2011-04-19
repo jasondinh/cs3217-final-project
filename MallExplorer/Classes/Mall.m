@@ -105,6 +105,18 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 	mapLoaded = YES;
 }
 
+-(void) resetData{
+	[defaultMap release];
+	defaultMap = nil;
+	[mapList release];
+	mapList = nil;
+	[mapPointList release];
+	mapPointList = nil;
+	[mallGraph release];
+	mallGraph = nil;
+	mapLoaded = NO;
+}
+
 -(void)addMap:(Map*) aMap{
 	
 }
