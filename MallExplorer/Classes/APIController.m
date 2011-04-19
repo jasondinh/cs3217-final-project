@@ -198,7 +198,7 @@
 	//it it doesn't, insert new cache
 	
 	if (debugMode) {
-		//NSLog(@"APIController: finished load with data: %@", [request responseString]);
+		NSLog(@"APIController: finished load with data: %@", [request responseString]);
 	}
 	
 	NSString *resultString = [request responseString];

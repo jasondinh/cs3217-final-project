@@ -8,26 +8,65 @@
 //	Owner : Dam Tuan Long
 #import "CommentViewController.h"
 #import "Shop.h"
-
+#import "ASIFormDataRequest.h"
+#import "APIController.h"
+#import "MBProgressHUD.h"
 
 @implementation CommentViewController
-@synthesize commentList,commentField,commentTable;
+@synthesize commentList,commentField,commentTable, shop, progress;
 
 
 #pragma mark -
 #pragma mark Initialization
 
--(id)initWithShop:(Shop *)shop{
+-(id)initWithShop:(Shop *)s{
 	//REQUIRES:
 	//MODIFIES:self
 	//EFFECTS: return a CommentViewController with commentList
 	//			obtained from aShop
 	
-	self= [super init];
+	self = [super init];
 	if(self){
-		self.commentList = [shop.commentList mutableCopy];
+		self.shop = s;
+		
+		
+		APIController *api = [[APIController alloc] init];
+		
+		api.delegate = self;
+		api.debugMode = YES;
+		NSString *url = [NSString stringWithFormat: @"/shops/%d/comments.json", s.sId];
+		NSLog(url);
+		[api getAPI: url];
+		//load comment
+		
+		//self.commentList = [shop.commentList mutableCopy];
 	}
 	return self;
+}
+
+- (void) requestDidStart:(APIController *)apiController {
+	[progress show:YES];
+}
+
+
+- (void) serverRespond:(APIController *)apiController {
+	//[progress performSelector:@selector(hide:) withObject:nil afterDelay:2];
+	[progress hide:YES];
+	NSLog( @"comments details: %@", [apiController.result description]);
+	self.commentList = [NSMutableArray array];
+	NSArray *tmpArray = apiController.result;
+	
+	
+	[tmpArray enumerateObjectsWithOptions: NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		NSDictionary *tmpComment = [obj valueForKey: @"comment"];
+		[self.commentList addObject: [tmpComment valueForKey: @"content"]];
+	}];
+	
+	
+	NSLog([commentList description]);
+	
+	[commentTable reloadData];
+	
 }
 
 
@@ -35,6 +74,13 @@
 
  }
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
+	
+	//submit to server
+	NSString *udid = [UIDevice currentDevice].uniqueIdentifier;
+	APIController *api = [[APIController alloc] init];
+	NSString *shopId = [NSString stringWithFormat: @"%d", shop.sId];
+	NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: udid, @"udid", commentField.text, @"content", shopId, @"shop_id", nil];
+	[api postAPI: @"/comments" withData:data];
 	
 	[commentList insertObject:commentField.text atIndex:0];
 	[commentTable beginUpdates];
@@ -70,6 +116,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	progress = [[MBProgressHUD alloc] initWithView: self.view];
+	[self.view addSubview: progress];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -82,7 +130,11 @@
 	[self.view addSubview:commentTable];
 	commentTable.delegate=self;
 	commentTable.dataSource = self;
-	commentList = [[NSMutableArray alloc] init];
+	
+	if (commentList == nil) {
+		commentList = [[NSMutableArray alloc] init];
+	}
+	
 	self.view.backgroundColor = [UIColor whiteColor];
 	//setting the textfield for entering comments.
 	commentField  = [[UITextField alloc]initWithFrame:CGRectMake(0, 50, self.view.frame.size.width , 100)];
@@ -233,6 +285,8 @@
 
 
 - (void)dealloc {
+	[progress release];
+	[shop release];
 	[commentList release];
 	[commentField release];
     [super dealloc];

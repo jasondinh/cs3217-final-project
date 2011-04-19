@@ -82,7 +82,8 @@
 	//add 3 new controllers for 3 tabs
 	
 	ShopOverviewController *shopOverviewController = [[ShopOverviewController alloc] initWithShop:theShop] ;
-	CommentViewController *commentController = [[CommentViewController alloc] init] ;
+	CommentViewController *commentController = [[CommentViewController alloc] initWithShop: theShop
+												] ;
 	FacebookTabViewController *facebookTabController = [[FacebookTabViewController alloc] init] ;
 	[self setViewControllers:[NSArray arrayWithObjects:shopOverviewController,commentController,facebookTabController,nil]];
 	
@@ -168,7 +169,7 @@
 	[super viewDidLoad];
 	//settings self
 	self.title = theShop.shopName;
-	self.contentSizeForViewInPopover = CGSizeMake(POPOVER_WIDTH, POPOVER_HEIGHT);
+	/*self.contentSizeForViewInPopover = CGSizeMake(POPOVER_WIDTH, POPOVER_HEIGHT);
 	//self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
 	[self.tabBar setBackgroundColor:[UIColor whiteColor]] ;
 	
@@ -196,7 +197,7 @@
 	
 	//add 3 new controllers for 3 tabs
 	ShopOverviewController *shopOverviewController = [[ShopOverviewController alloc] init] ;
-	CommentViewController *commentController = [[CommentViewController alloc] init] ;
+	CommentViewController *commentController = [[CommentViewController alloc] initWithShop: theShop] ;
 	FacebookTabViewController *facebookTabController = [[FacebookTabViewController alloc] init] ;
 	[self setViewControllers:[NSArray arrayWithObjects:shopOverviewController,commentController,facebookTabController,nil]];
 	
@@ -215,7 +216,7 @@
 	//clean up
 	[shopOverviewController release];
 	[commentController release];
-	[facebookTabController release];
+	[facebookTabController release];*/
 
 	
 

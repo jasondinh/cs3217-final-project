@@ -186,7 +186,7 @@ typedef void (^ASIDataBlock)(NSData *data);
     
 	// If an error occurs, error will contain an NSError
 	// If error code is = ASIConnectionFailureErrorType (1, Connection failure occurred) - inspect [[error userInfo] objectForKey:NSUnderlyingErrorKey] for more information
-	NSError *error;
+	NSError *error;	
 	
 	// Username and password used for authentication
 	NSString *username;
