@@ -2,7 +2,7 @@
 //  CommentViewController.m
 //  MallExplorer
 //
-//  Created by Dam Tuan Long on 4/10/11.
+//  Created by Jason Dinh on 4/10/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 //	Owner : Dam Tuan Long

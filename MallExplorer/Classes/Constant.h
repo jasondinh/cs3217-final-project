@@ -2,7 +2,7 @@
 //  Constant.h
 //  MallExplorer
 //
-//  Created by Tran Cong Hoang on 4/1/11.
+//  Created by Jason Dinh on 4/1/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
