@@ -10,6 +10,7 @@
 #import "Constant.h"
 #import "JSON.h"
 #import "ASIFormDataRequest.h"
+#import "TapkuLibrary.h"
 @implementation FacebookController
 @synthesize facebook;
 
@@ -24,7 +25,7 @@
 	return self;
 }
 
-- (void) checkInatLongitude: (NSString *) lon andLat: (NSString *) lat andShopName: (NSString *) shopName {
+- (void) checkInatLongitude: (NSString *) lon andLat: (NSString *) lat andShopName: (NSString *) shopName andPlaceId: (NSString *) pId {
 	//NSMutableDictionary *params = [NSMutableDictionary dictionary];
 	NSDictionary *coordinates = [NSDictionary dictionaryWithObjectsAndKeys: lat, @"latitude", lon, @"longitude", nil];
 //	[params setValue:[coordinates JSONRepresentation] forKey: @"coordinates"];
@@ -40,14 +41,14 @@
 	[request setDidFinishSelector: @selector(finished:)];
 	[request setPostValue: [coordinates JSONRepresentation] forKey: @"coordinates"];
 	[request setPostValue: facebook.accessToken forKey: @"access_token"];
-	[request setPostValue: @"aaaaaaa" forKey: @"message"];
-	[request setPostValue: @"162222677131935" forKey: @"place"];
+	[request setPostValue: [NSString stringWithFormat: @"I'm at %@", shopName] forKey: @"message"];
+	[request setPostValue: pId forKey: @"place"];
 	[request startAsynchronous];
 	
 }
 
 - (void) finished: (ASIFormDataRequest *) request {
-	NSLog([request responseString]);
+	[[TKAlertCenter defaultCenter] postAlertWithMessage:@"Checked in!"];
 }
 
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {

@@ -9,8 +9,11 @@
 #import "FacebookTabViewController.h"
 #import "Shop.h"
 #import "FacebookController.h"
+#import "ASIHTTPRequest.h"
+#import "JSON.h"
+#import "MBProgressHUD.h"
 @implementation FacebookTabViewController
-@synthesize shop, fb, location, loadNewShops, tableView, locationList;
+@synthesize shop, fb, location, loadNewShops, tableView, locationList, tmpRow, progress;
 #pragma mark -
 #pragma mark Initialization
 
@@ -42,17 +45,22 @@
 */
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+	progress = [[MBProgressHUD alloc] initWithView: self.view];
+	
 	
 	//add a table view
-	tableView  = [[UITableView alloc] initWithFrame: CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 44, self.view.frame.size.width, self.view.frame.size.height)];
+	tableView  = [[UITableView alloc] initWithFrame: CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 44, self.view.frame.size.width, 617)];
 	tableView.delegate = self;
 	tableView.dataSource = self;
 	//settings for self
 	
 	[self.view addSubview: tableView];
-
+	[self.view addSubview: progress];
+	
+	
 	self.view.backgroundColor = [UIColor whiteColor];
 	NSLog(@"aaaaaaaaaaaaa");
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fbLoggedIn:) name: @"FBLoggedIn" object:fb];
@@ -95,6 +103,7 @@
 	locationManager.desiredAccuracy=kCLLocationAccuracyNearestTenMeters;
 	[locationManager startUpdatingLocation];
 	[self loadShops];
+	
 }
 
 
@@ -104,17 +113,81 @@
 	NSLog(@"%f %f", location.longitude, location.latitude);
 	if (loadNewShops) {
 		
-		//NSString *url = 
-		//load new shop
 	}
 }
 
 - (void) loadShops {
 	loadNewShops = NO;
 	NSString *url = [NSString stringWithFormat: @"https://graph.facebook.com/search?type=place&center=%f,%f&distance=1000&access_token=%@", 1.2937125827502152, 103.77488136291504, fb.facebook.accessToken];
-	//ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL: @"
+
+	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL: [NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+	
+	[request setDelegate: self];
+	[request setDidStartSelector: @selector(startedLoadedNearBy:)];
+	[request setDidFinishSelector: @selector(finishedLoadedNearby:)];
+	[request setDidFailSelector: @selector(failedLoadedNearby:)];
+	[request startAsynchronous];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	NSDictionary *tmp = [locationList objectAtIndex: tmpRow];
+	NSString *name = [tmp valueForKey: @"shopName"];
+	
+	tmpRow = indexPath.row;
+	NSString *message = [NSString stringWithFormat: @"Do you want to check in at %@?", name];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Check in" message: message delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"yes", nil];
+	[alert show];
+	[tableView deselectRowAtIndexPath: indexPath animated:YES];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	if (buttonIndex == 1) {
+		NSDictionary *tmp = [locationList objectAtIndex: tmpRow];
+		
+		NSString *longitude = [tmp valueForKey: @"lon"];
+		NSString *latitude = [tmp valueForKey: @"lat"];
+		NSString *place_id = [tmp valueForKey: @"place_id"];
+		NSString *name = [tmp valueForKey: @"shopName"];
+		NSString *message = @"lalala";
+		
+		[fb checkInatLongitude:longitude andLat:latitude andShopName: name andPlaceId: place_id];
+	}
 	
 	
+} 
+
+- (void) startedLoadedNearBy: (ASIHTTPRequest *) request {
+	[progress show:YES];
+	NSLog(@"Started");
+	
+}
+
+- (void) failedLoadedNearby: (ASIHTTPRequest *) request {
+	[progress hide: YES];
+	NSLog([[request error] description]);
+}
+
+- (void) finishedLoadedNearby: (ASIHTTPRequest *) request {
+	[progress hide: YES];
+	NSString *respone = [request responseString];
+	NSArray  *result = [[respone JSONValue] valueForKey: @"data"];
+	NSLog([result description]);
+	NSMutableArray *tmpArray = [NSMutableArray array];
+	for (NSDictionary *tmpDict in result) {
+		
+		NSDictionary *tmpPush = [NSDictionary dictionaryWithObjectsAndKeys: 
+								 [tmpDict valueForKey: @"name"], @"name", 
+								 shop.shopName, @"shopName",
+								 [[tmpDict valueForKey: @"location"] valueForKey: @"longitude"], @"lon", 
+								 [[tmpDict valueForKey: @"location"] valueForKey: @"latitude"], @"lat", 
+								 [tmpDict valueForKey: @"id"], @"place_id", 
+								 nil];
+		[tmpArray addObject: tmpPush];
+	}
+	
+	self.locationList = [NSArray arrayWithArray: tmpArray];
+	[tableView reloadData];
 }
 
 
@@ -142,6 +215,7 @@
 
 
 - (void)dealloc {
+	[progress release];
 	[locationList release];
 	[tableView release];
 	[fb release];
