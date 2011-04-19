@@ -10,12 +10,13 @@
 
 
 @class Shop;
-@interface CommentViewController : UITableViewController {
+@interface CommentViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>{
 	//OVERVIEW: this class implements the controller of COMMENTS tab in ShopViewController
-	
+	UITableView *commentTable;
 	NSMutableArray* commentList;			//List of comments in the shop.
 	IBOutlet UITextField* commentField;		//Text field for entering user's comments.
 }
+@property (retain) IBOutlet UITableView* commentTable;
 @property (retain) NSMutableArray* commentList;
 @property (retain) IBOutlet UITextField* commentField;
 

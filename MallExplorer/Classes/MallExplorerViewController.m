@@ -108,7 +108,7 @@
 	[shopViewController loadShop:(Shop*)[sender object]];
 	UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController: shopViewController];
 	[popover presentPopoverFromRect:CGRectMake(0, 0, 1000, 1000) inView: [[[self viewControllers] objectAtIndex:1] view] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-	[ shopViewController release];
+	[shopViewController release];
 	popover.delegate = self;
 	//popover.passthroughViews = [NSArray arrayWithObject: [[[self viewControllers] objectAtIndex:1] view]];
 		//[masterViewController pushViewController:shopViewController animated:YES];
@@ -402,7 +402,7 @@
 		numWaiting--;
 		NSMutableArray *annotations = [NSMutableArray array];
 		NSArray *result = (NSArray *) api.result;
-		NSInteger mId = 0;
+		NSInteger mId = 0 ;
 		Map* aMap = nil;
 		for (id obj in result) {
 			NSDictionary *tmpAnno = [obj valueForKey: @"annotation"];

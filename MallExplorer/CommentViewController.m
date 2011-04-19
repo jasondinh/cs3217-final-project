@@ -11,7 +11,7 @@
 
 
 @implementation CommentViewController
-@synthesize commentList,commentField;
+@synthesize commentList,commentField,commentTable;
 
 
 #pragma mark -
@@ -35,10 +35,12 @@
 
  }
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
+	
 	[commentList insertObject:commentField.text atIndex:0];
-	[self.tableView beginUpdates];
-	[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]]  withRowAnimation:UITableViewRowAnimationFade];
-	[self.tableView endUpdates];
+	[commentTable beginUpdates];
+	[commentTable insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]]  
+						withRowAnimation:UITableViewRowAnimationMiddle];
+	[commentTable endUpdates];
 	commentField.text = @"";
 	[theTextField resignFirstResponder];
 	return YES;
@@ -76,11 +78,15 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	
 	//settings for self
+	commentTable=[[UITableView alloc]initWithFrame:CGRectMake(0, 120, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain ];
+	[self.view addSubview:commentTable];
+	commentTable.delegate=self;
+	commentTable.dataSource = self;
 	commentList = [[NSMutableArray alloc] init];
 	self.view.backgroundColor = [UIColor whiteColor];
 	//setting the textfield for entering comments.
-	commentField  = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width , 50)];
-	self.tableView.tableHeaderView = commentField;
+	commentField  = [[UITextField alloc]initWithFrame:CGRectMake(0, 50, commentTable.frame.size.width , 50)];
+	[self.view addSubview:commentField];
 	commentField.borderStyle = UITextBorderStyleRoundedRect;
 	commentField.placeholder = @"Your comment";
 	[commentField setDelegate:self];
