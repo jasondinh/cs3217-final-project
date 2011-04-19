@@ -58,6 +58,7 @@
 		masterViewController.delegate = shopListViewController;
 		[masterViewController pushViewController:shopListViewController animated:YES];
 		[shopListViewController loadData:nil];
+		[shopListViewController release];
 		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
 		shopListViewController.delegate = aMVC;
 		aMVC.mall = aMall;
@@ -382,7 +383,7 @@
 		numWaiting--;
 		NSMutableArray *annotations = [NSMutableArray array];
 		NSArray *result = (NSArray *) api.result;
-		NSInteger mId = 0;
+		NSInteger mId = 0 ;
 		Map* aMap = nil;
 		for (id obj in result) {
 			NSDictionary *tmpAnno = [obj valueForKey: @"annotation"];
