@@ -7,20 +7,23 @@
 //
 //	Owner : Dam Tuan Long
 #import <UIKit/UIKit.h>
-
+#import "APIController.h"
 
 @class Shop;
-@interface CommentViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>{
+@class MBProgressHUD;
+@interface CommentViewController : UIViewController <UITableViewDelegate,UITableViewDataSource, APIDelegate>{
 	//OVERVIEW: this class implements the controller of COMMENTS tab in ShopViewController
 	UITableView *commentTable;
 	NSMutableArray* commentList;			//List of comments in the shop.
 	IBOutlet UITextField* commentField;		//Text field for entering user's comments.
 	Shop *shop;
+	MBProgressHUD *progress;
 }
 @property (retain) IBOutlet UITableView* commentTable;
 @property (retain) NSMutableArray* commentList;
 @property (retain) IBOutlet UITextField* commentField;
 @property (retain) IBOutlet Shop *shop;
+@property (retain) MBProgressHUD *progress;
 
 
 -(id)initWithShop:(Shop*)aShop;

@@ -10,8 +10,10 @@
 #import "Shop.h"
 #import "ASIFormDataRequest.h"
 #import "APIController.h"
+#import "MBProgressHUD.h"
+
 @implementation CommentViewController
-@synthesize commentList,commentField,commentTable, shop;
+@synthesize commentList,commentField,commentTable, shop, progress;
 
 
 #pragma mark -
@@ -27,11 +29,44 @@
 	if(self){
 		self.shop = s;
 		
+		
+		APIController *api = [[APIController alloc] init];
+		
+		api.delegate = self;
+		api.debugMode = YES;
+		NSString *url = [NSString stringWithFormat: @"/shops/%d/comments.json", s.sId];
+		NSLog(url);
+		[api getAPI: url];
 		//load comment
 		
 		//self.commentList = [shop.commentList mutableCopy];
 	}
 	return self;
+}
+
+- (void) requestDidStart:(APIController *)apiController {
+	[progress show:YES];
+}
+
+
+- (void) serverRespond:(APIController *)apiController {
+	//[progress performSelector:@selector(hide:) withObject:nil afterDelay:2];
+	[progress hide:YES];
+	NSLog( @"comments details: %@", [apiController.result description]);
+	self.commentList = [NSMutableArray array];
+	NSArray *tmpArray = apiController.result;
+	
+	
+	[tmpArray enumerateObjectsWithOptions: NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		NSDictionary *tmpComment = [obj valueForKey: @"comment"];
+		[self.commentList addObject: [tmpComment valueForKey: @"content"]];
+	}];
+	
+	
+	NSLog([commentList description]);
+	
+	[commentTable reloadData];
+	
 }
 
 
@@ -81,6 +116,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	progress = [[MBProgressHUD alloc] initWithView: self.view];
+	[self.view addSubview: progress];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -93,7 +130,11 @@
 	[self.view addSubview:commentTable];
 	commentTable.delegate=self;
 	commentTable.dataSource = self;
-	commentList = [[NSMutableArray alloc] init];
+	
+	if (commentList == nil) {
+		commentList = [[NSMutableArray alloc] init];
+	}
+	
 	self.view.backgroundColor = [UIColor whiteColor];
 	//setting the textfield for entering comments.
 	commentField  = [[UITextField alloc]initWithFrame:CGRectMake(0, 50, self.view.frame.size.width , 100)];
@@ -244,6 +285,7 @@
 
 
 - (void)dealloc {
+	[progress release];
 	[shop release];
 	[commentList release];
 	[commentField release];
