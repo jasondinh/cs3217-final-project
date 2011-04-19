@@ -76,11 +76,23 @@
 
 - (void) fbLoggedIn: (NSNotification *) notf {
 	//load list of data
+	
+#if TARGET_IPHONE_SIMULATOR
+	CLLocationCoordinate2D l;
+	l.longitude = 103.77488136291504;
+	l.latitude = 1.2937125827502152;
+	location = l;
+	[self loadShops];
+#else
 	CLLocationManager *locationManager=[[CLLocationManager alloc] init];
 	locationManager.delegate=self;
 	locationManager.desiredAccuracy=kCLLocationAccuracyNearestTenMeters;
 	[locationManager startUpdatingLocation];
+#endif
+	
 	[progress show: YES];
+	
+	
 	
 }
 
