@@ -84,7 +84,7 @@
 	ShopOverviewController *shopOverviewController = [[ShopOverviewController alloc] initWithShop:theShop] ;
 	CommentViewController *commentController = [[CommentViewController alloc] initWithShop: theShop
 												] ;
-	FacebookTabViewController *facebookTabController = [[FacebookTabViewController alloc] init] ;
+	FacebookTabViewController *facebookTabController = [[FacebookTabViewController alloc] initWithShop:theShop] ;
 	[self setViewControllers:[NSArray arrayWithObjects:shopOverviewController,commentController,facebookTabController,nil]];
 	
 	//add icons and titles for 3 controllers

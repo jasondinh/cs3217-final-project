@@ -183,14 +183,21 @@ const int maxNumstep = 100;
 		[fetchRequest release];
 		
 		if (!cached) {
-			ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
+			ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]];
 			[request setDelegate: self];
 			[request setDidFinishSelector: @selector(finishLoadedImage:)];
+			[request setDidFailSelector: @selector(failLoadedImage:)];
 			[request startAsynchronous];
 		}
 	}
 	return self;
 
+}
+
+- (void) failLoadedImage: (ASIHTTPRequest *) request {
+	NSError *error = [request error];
+	NSLog([error description]);
+	NSLog(@"fuck");
 }
 
 - (void) finishLoadedImage: (ASIHTTPRequest *) request {

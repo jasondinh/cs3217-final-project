@@ -53,20 +53,41 @@
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
 	NSLog([error description]);
 }
+
+- (void) retrieveFBToken {
+	facebook.accessToken    = [[NSUserDefaults standardUserDefaults] stringForKey:@"FBAccessToken"];
+	facebook.expirationDate = (NSDate *) [[NSUserDefaults standardUserDefaults] objectForKey:@"FBExpirationDate"];
+}
 		 
 
 - (void) authorize {
 	NSLog(@"%@", @"fb authorized");
+	[self retrieveFBToken];
+	
 	//check if already authorized
-	NSArray *permission = [NSArray arrayWithObjects: @"publish_checkins", @"offline_access", nil];
-	[self.facebook authorize: permission delegate:self];
+	
+	if (![facebook isSessionValid]) {
+		NSArray *permission = [NSArray arrayWithObjects: @"publish_checkins", @"offline_access", nil];
+		[self.facebook authorize: permission delegate:self];
+	}
+	else {
+		NSLog(@"token %@", self.facebook.accessToken);
+		[[NSNotificationCenter defaultCenter] postNotificationName: @"FBLoggedIn" object:self];
+	}
+	
 }
 
 - (void)fbDidLogin {
-	NSLog(@"fb logged in");
-	//write to 
-	NSLog(facebook.accessToken);
-	[self checkInatLongitude: @"1.0" andLat:@"1.0" andShopName: @"aa"];
+	
+	NSLog(@"token %@", self.facebook.accessToken);
+	[[NSUserDefaults standardUserDefaults] setObject:self.facebook.accessToken forKey:@"FBAccessToken"];
+	[[NSUserDefaults standardUserDefaults] setObject:self.facebook.expirationDate forKey:@"FBExpirationDate"];
+	[[NSNotificationCenter defaultCenter] postNotificationName: @"FBLoggedIn" object:self];
+}
+
+- (void) clearFBInfo {
+	[[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"FBAccessToken"];
+	[[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"FBExpirationDate"];
 }
 
 - (void) dealloc {

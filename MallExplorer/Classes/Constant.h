@@ -62,7 +62,7 @@
 #define INSIDE_LONGITUDE 0.002
 #define INSIDE_LATITUDE 0.002
 
-#define FB_APP_ID @"126549780707590"
+#define FB_APP_ID @"100690146686000"
 @protocol Constant
 
 
