@@ -192,6 +192,8 @@
 		mapView.mapType=MKMapTypeSatellite;
 	}
 	else if (mapType.selectedSegmentIndex==2){//hybrid
+		
+		
 		mapView.mapType=MKMapTypeHybrid;
 	}
 }
