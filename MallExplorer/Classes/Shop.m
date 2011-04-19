@@ -43,6 +43,7 @@
 		self.unitNumber = u;
 		self.shopName = s;
 		self.description = d;
+		self.annotation = nil;
 	}
 	
 	return self;

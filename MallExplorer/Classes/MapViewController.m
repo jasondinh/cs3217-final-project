@@ -13,7 +13,6 @@
 @synthesize annotationList;
 @synthesize map;
 
-const BOOL DEBUG = YES;
 int startPoint,endPoint;
 
 NSMutableArray* hiddenAttribute;
@@ -94,7 +93,7 @@ NSMutableArray* edgeList;
 	[hiddenAttribute release];
 	[self redisplayPath];
 	
-	if (DEBUG) [self testGraphNode];
+	if (debug) [self testGraphNode];
 }
 
 #pragma mark -
@@ -423,7 +422,7 @@ NSMutableArray* edgeList;
 	[displayArea release];
 	
 	
-	if (DEBUG){
+	if (debug){
 		pointPathList = [[NSMutableArray alloc] init];
 		[self testGraphNode];
 	}
