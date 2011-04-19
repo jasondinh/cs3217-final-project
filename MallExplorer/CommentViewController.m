@@ -8,24 +8,28 @@
 //	Owner : Dam Tuan Long
 #import "CommentViewController.h"
 #import "Shop.h"
-
-
+#import "ASIFormDataRequest.h"
+#import "APIController.h"
 @implementation CommentViewController
-@synthesize commentList,commentField,commentTable;
+@synthesize commentList,commentField,commentTable, shop;
 
 
 #pragma mark -
 #pragma mark Initialization
 
--(id)initWithShop:(Shop *)shop{
+-(id)initWithShop:(Shop *)s{
 	//REQUIRES:
 	//MODIFIES:self
 	//EFFECTS: return a CommentViewController with commentList
 	//			obtained from aShop
 	
-	self= [super init];
+	self = [super init];
 	if(self){
-		self.commentList = [shop.commentList mutableCopy];
+		self.shop = s;
+		
+		//load comment
+		
+		//self.commentList = [shop.commentList mutableCopy];
 	}
 	return self;
 }
@@ -35,6 +39,13 @@
 
  }
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
+	
+	//submit to server
+	NSString *udid = [UIDevice currentDevice].uniqueIdentifier;
+	APIController *api = [[APIController alloc] init];
+	NSString *shopId = [NSString stringWithFormat: @"%d", shop.sId];
+	NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: udid, @"udid", commentField.text, @"content", shopId, @"shop_id", nil];
+	[api postAPI: @"/comments" withData:data];
 	
 	[commentList insertObject:commentField.text atIndex:0];
 	[commentTable beginUpdates];
@@ -233,6 +244,7 @@
 
 
 - (void)dealloc {
+	[shop release];
 	[commentList release];
 	[commentField release];
     [super dealloc];

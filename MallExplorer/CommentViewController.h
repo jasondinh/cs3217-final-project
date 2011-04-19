@@ -15,10 +15,12 @@
 	UITableView *commentTable;
 	NSMutableArray* commentList;			//List of comments in the shop.
 	IBOutlet UITextField* commentField;		//Text field for entering user's comments.
+	Shop *shop;
 }
 @property (retain) IBOutlet UITableView* commentTable;
 @property (retain) NSMutableArray* commentList;
 @property (retain) IBOutlet UITextField* commentField;
+@property (retain) IBOutlet Shop *shop;
 
 
 -(id)initWithShop:(Shop*)aShop;

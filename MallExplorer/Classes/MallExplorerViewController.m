@@ -105,10 +105,7 @@
 	CGSize distanceFromBound = [aMVC getDistanceFromBoundForObjectAtMapPosition: aShop.annotation.position];
 	NSLog(@" distance from bound: %lf %lf", distanceFromBound.width, distanceFromBound.height);
 	if (debug) NSLog(((Shop*)[sender object]).shopName);
-	//if ([masterViewController.topViewController isKindOfClass:[ShopViewController class]]) {
-	//	[masterViewController popViewControllerAnimated:NO];Å
-	//}
-		ShopViewController* shopViewController = [[ShopViewController alloc] init] ;
+	ShopViewController* shopViewController = [[ShopViewController alloc] init] ;
 	[shopViewController loadShop:aShop];
 	UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController: shopViewController];
 	UIView *tmpView = [[[self viewControllers] objectAtIndex: 0] view];
@@ -117,10 +114,6 @@
 		   permittedArrowDirections:UIPopoverArrowDirectionRight animated:YES];
 	[shopViewController release];
 	popover.delegate = self;
-	//popover.passthroughViews = [NSArray arrayWithObject: [[[self viewControllers] objectAtIndex:1] view]];
-		//[masterViewController pushViewController:shopViewController animated:YES];
-		//masterViewController.delegate = shopViewController;
-	
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {

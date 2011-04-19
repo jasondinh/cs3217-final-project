@@ -82,7 +82,8 @@
 	//add 3 new controllers for 3 tabs
 	
 	ShopOverviewController *shopOverviewController = [[ShopOverviewController alloc] initWithShop:theShop] ;
-	CommentViewController *commentController = [[CommentViewController alloc] init] ;
+	CommentViewController *commentController = [[CommentViewController alloc] initWithShop: theShop
+												] ;
 	FacebookTabViewController *facebookTabController = [[FacebookTabViewController alloc] init] ;
 	[self setViewControllers:[NSArray arrayWithObjects:shopOverviewController,commentController,facebookTabController,nil]];
 	
@@ -196,7 +197,7 @@
 	
 	//add 3 new controllers for 3 tabs
 	ShopOverviewController *shopOverviewController = [[ShopOverviewController alloc] init] ;
-	CommentViewController *commentController = [[CommentViewController alloc] init] ;
+	CommentViewController *commentController = [[CommentViewController alloc] initWithShop: theShop] ;
 	FacebookTabViewController *facebookTabController = [[FacebookTabViewController alloc] init] ;
 	[self setViewControllers:[NSArray arrayWithObjects:shopOverviewController,commentController,facebookTabController,nil]];
 	

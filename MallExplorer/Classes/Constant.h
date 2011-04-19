@@ -43,6 +43,7 @@
 
 //#define API_END_POINT @"http://cs3217.heroku.com"
 #define API_END_POINT @"http://macmini.dyndns.biz:3000"
+//#define API_END_POINT @"http://localhost:3000"
 
 //UISplitView constants;
 #define POPOVER_WIDTH 320
