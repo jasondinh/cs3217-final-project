@@ -148,6 +148,7 @@ const int maxNumstep = 100;
 }
 
 -(Map*) initWithMapId:(NSInteger) mapid withLevel:(NSString *) lev withURL:(NSString*) url{
+	mapLoadTime = [NSDate timeIntervalSinceReferenceDate];
 	
 	url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	
@@ -157,9 +158,7 @@ const int maxNumstep = 100;
 		self.mId = mapid;
 		self.level = lev;
 		self.mapName = [NSString stringWithFormat:@"Level %@", lev];
-		self.numMeterPerPixel = 30;
-		
-		NSLog(@"%d %@ %@", mapid, lev, url);
+		self.numMeterPerPixel = 30;		
 		
 		
 		BOOL cached = NO;
@@ -177,12 +176,15 @@ const int maxNumstep = 100;
 		
 		NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
 		
+		
 		for (NSManagedObject *info in fetchedObjects) {
 			cached = YES;
 			NSLog(@"YESSSSSSSSSSSSS");
 			NSString *local = [info valueForKey: @"local"];
 			NSLog(local);
 			self.imageMap = [UIImage imageWithData:[NSData dataWithContentsOfFile:local]];
+			mapLoadTime = [NSDate timeIntervalSinceReferenceDate] - mapLoadTime;
+			NSLog(@"time to load image map with cache %lf", mapLoadTime);
 		}
 		
 		[fetchRequest release];
@@ -227,7 +229,8 @@ const int maxNumstep = 100;
 	[tmpData writeToFile: fileName atomically:YES];
 	
 	[image setValue: fileName forKey:@"local"];
-	
+	mapLoadTime = [NSDate timeIntervalSinceReferenceDate] - mapLoadTime;
+	NSLog(@"time to load image map without cache %lf", mapLoadTime);
 	if (![context save: &error]) {
 		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 	}

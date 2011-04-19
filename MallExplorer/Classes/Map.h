@@ -29,6 +29,7 @@
 	CGPoint defaultCenterPoint;
 	double numMeterPerPixel;
 //	NSTime* timer;
+	double mapLoadTime;
 }
 
 @property NSInteger mId;

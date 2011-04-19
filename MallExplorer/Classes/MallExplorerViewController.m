@@ -22,7 +22,7 @@
 @implementation MallExplorerViewController
 @synthesize maps, stairs, shopListLoaded, mallLoaded, mapsLoaded, stairsLoaded, pointsLoaded, edgesLoaded, annotationsLoaded, progress;
 
-
+double loadtime;
 
 // The designated initializer. Override to perform setup that is required before the view is loaded.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -53,6 +53,7 @@
 	[masterViewController pushViewController:requestFail animated:YES];*/
 }
 -(void) mallEnter:(id)sender{
+	loadtime = [NSDate timeIntervalSinceReferenceDate];
 	id object = [sender object];
 	if ([masterViewController.topViewController isKindOfClass:[MallListViewController class]]) {		
 		Mall* aMall = object;
@@ -85,6 +86,8 @@
 		else {
 			[aMVC display];
 			[progress hide:YES];
+			loadtime = [NSDate timeIntervalSinceReferenceDate] - loadtime;
+			NSLog(@"time loaded %lf", loadtime);
 		}
 		
 		[self setDelegate: aMVC];
@@ -213,7 +216,9 @@
 	}
 	[theMVC loadMaps:maps andStairs:stairs withDefaultMap:[maps objectAtIndex:0]];
 	mallLoaded = YES;
-	[progress hide:YES];
+	[progress hide:YES];	
+	loadtime = [NSDate timeIntervalSinceReferenceDate] - loadtime;
+	NSLog(@"time loaded %lf", loadtime);
 	if (debug) NSLog(@"loaddddddddddddddd xongggggggggggggggggggg");
 }
 

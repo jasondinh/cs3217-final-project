@@ -62,7 +62,7 @@
 	}
 	mall.defaultMap = defaultMap;
 	[self display];
-	time = ([NSDate timeIntervalSinceReferenceDate] - time)/1000;
+	time = ([NSDate timeIntervalSinceReferenceDate] - time);
 	NSLog(@"%lf", time);
 //	[mapViewController 
 }
