@@ -8,8 +8,10 @@
 //	Owner: Dam Tuan Long
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 @class FacebookController;
 @class Shop;
+@class MBProgressHUD;
 @interface FacebookTabViewController : UIViewController {
 	//OVERVIEW: this class implements the FACEBOOK tab of  ShopViewController
 	Shop *shop;
@@ -18,6 +20,8 @@
 	BOOL loadNewShops;
 	UITableView *tableView;
 	NSArray *locationList;
+	NSInteger tmpRow;
+	MBProgressHUD *progress;
 }
 
 -(id) initWithShop:(Shop*) aShop;
@@ -25,6 +29,8 @@
 //MODIFIES:self
 //EFFECTS: return a FacebookTabViewController with information
 //			obtained from aShop
+@property NSInteger tmpRow;
+@property (retain) MBProgressHUD *progress;
 @property (retain) UITableView *tableView;
 @property 	BOOL loadNewShops;
 @property CLLocationCoordinate2D location;

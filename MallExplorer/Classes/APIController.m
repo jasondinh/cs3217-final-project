@@ -56,7 +56,7 @@
 	
 	NSString *fullPath = [NSString stringWithFormat: @"%@%@", API_END_POINT, path];
 	if (debugMode) {
-		NSLog(@"APIController: getAPI with path: %@, url: %@", path, fullPath);
+		//NSLog(@"APIController: getAPI with path: %@, url: %@", path, fullPath);
 	}
 	NSURL *url = [NSURL URLWithString: fullPath];
 	ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL: url];
@@ -384,6 +384,7 @@
 
 
 - (void) dealloc {
+	[delegate release];
 	[result release];
 	[path release];
 	[url release];

@@ -149,7 +149,7 @@ const int maxNumstep = 100;
 
 -(Map*) initWithMapId:(NSInteger) mapid withLevel:(NSString *) lev withURL:(NSString*) url{
 	
-	url = [url stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+	url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	
 	self = [super init];
 	if (self) {

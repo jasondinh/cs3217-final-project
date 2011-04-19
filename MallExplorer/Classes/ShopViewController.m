@@ -252,6 +252,7 @@
 
 - (void)dealloc {
 	[theShop release];
+	[annotation release];
     [super dealloc];
 }
 

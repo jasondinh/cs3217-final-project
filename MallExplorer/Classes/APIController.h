@@ -22,7 +22,7 @@
 @property (retain) NSString *path;
 @property (retain) NSURL *url;
 @property (retain) id result;
-@property (nonatomic,assign) id<APIDelegate> delegate;
+@property (nonatomic,retain) id<APIDelegate> delegate;
 @property BOOL debugMode;
 
 - (void) getAPI: (NSString *) path;
