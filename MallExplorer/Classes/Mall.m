@@ -186,7 +186,6 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 		[pathInLevel addObject:goalPoint];
 		result = [[level1 refineAPath:pathInLevel] retain];
 		travelTime = [level1 estimateTime: result];
-		NSLog(@"travelTime %lf", travelTime);
 		[startPoint release];
 		[goalPoint release];	
 		[level1 addPathOnMap: result];

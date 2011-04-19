@@ -98,7 +98,7 @@
 
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
-	//NSLog(@"didUpdateToLocation");
+
 	CLLocationCoordinate2D l;
 	l = newLocation.coordinate;
 	location = l;
@@ -150,13 +150,13 @@
 
 - (void) startedLoadedNearBy: (ASIHTTPRequest *) request {
 	[progress show:YES];
-	NSLog(@"Started");
+
 	
 }
 
 - (void) failedLoadedNearby: (ASIHTTPRequest *) request {
 	[progress hide: YES];
-	NSLog([[request error] description]);
+
 }
 
 - (void) finishedLoadedNearby: (ASIHTTPRequest *) request {

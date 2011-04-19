@@ -35,7 +35,6 @@
 		api.delegate = self;
 		api.debugMode = YES;
 		NSString *url = [NSString stringWithFormat: @"/shops/%d/comments.json", s.sId];
-		NSLog(url);
 		[api getAPI: url];
 		//load comment
 		
@@ -52,7 +51,6 @@
 - (void) serverRespond:(APIController *)apiController {
 	//[progress performSelector:@selector(hide:) withObject:nil afterDelay:2];
 	[progress hide:YES];
-	NSLog( @"comments details: %@", [apiController.result description]);
 	self.commentList = [NSMutableArray array];
 	NSArray *tmpArray = apiController.result;
 	
@@ -62,8 +60,6 @@
 		[self.commentList addObject: [tmpComment valueForKey: @"content"]];
 	}];
 	
-	
-	NSLog([commentList description]);
 	
 	[commentTable reloadData];
 	[apiController release];
@@ -100,13 +96,11 @@
 - (void) keyboardWillShow:(NSNotification *)notif{
     // The keyboard will be shown. If the user is editing the comments, adjust the display so that the
     // comments field will not be covered by the keyboard.
-	NSLog(@"keyboard will show");
 }
 
 - (void) keyboardWillHide:(NSNotification *)notif{
     // The keyboard will be hidden.
     // view should be shifted donw to its real position.
-    NSLog(@"keyboard will hide");
 }
 
 
