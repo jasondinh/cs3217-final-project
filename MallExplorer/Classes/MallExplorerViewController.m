@@ -295,7 +295,7 @@
 		NSMutableArray *points = [NSMutableArray array];
 		
 		NSArray *result = (NSArray *) api.result;
-		NSInteger mId;
+		NSInteger mId = 0;
 		
 		for (id obj in result) {
 			NSDictionary *tmpPoint = [obj valueForKey: @"point"];
@@ -309,7 +309,7 @@
 			[point release];
 		}
 		
-		//NSLog(@"the points' map is %d", mId);
+		NSLog(@"the points' map is %d", mId);
 		if (mId != 0) {
 			for (int i = 0; i<[maps count]; i++) {
 				Map* aMap = [maps objectAtIndex:i];
@@ -326,6 +326,7 @@
 		if (mId != 0) {
 			numWaiting++;
 			[self loadEdgesWithMapId: mId];
+			NSLog(@"mid %d", mId);
 			numWaiting++;
 			[self loadAnnotationsWithMapId: mId];
 		}
@@ -335,7 +336,7 @@
 		numWaiting--;
 		NSMutableArray *edges = [NSMutableArray array];
 		NSArray *result = (NSArray *) api.result;
-		NSInteger mId;
+		NSInteger mId = 0;
 		Map* aMap = nil;
 		for (id obj in result) {
 			NSDictionary *tmpEdge = [obj valueForKey: @"edge"];
@@ -381,7 +382,7 @@
 		numWaiting--;
 		NSMutableArray *annotations = [NSMutableArray array];
 		NSArray *result = (NSArray *) api.result;
-		NSInteger mId;
+		NSInteger mId = 0;
 		Map* aMap = nil;
 		for (id obj in result) {
 			NSDictionary *tmpAnno = [obj valueForKey: @"annotation"];
