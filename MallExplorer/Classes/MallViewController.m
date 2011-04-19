@@ -394,6 +394,14 @@ toMakeAnnotationType:(AnnotationType) annoType
 }
 
 #pragma mark -
+#pragma mark shop view popover support
+
+-(CGSize) getDistanceFromBoundForObjectAtMapPosition: (CGPoint) aPos{
+	return [mapViewController getDistanceFromBoundForObjectAtMapPosition:aPos];
+	
+}
+
+#pragma mark -
 #pragma mark level list table view datasource - delegate methods
 
 -(void) choseLevel: (NSString*) chosenLevel{
