@@ -2,7 +2,7 @@
 //  FacebookTabViewController.m
 //  MallExplorer
 //
-//  Created by Dam Tuan Long on 4/12/11.
+//  Created by Jason Dinh on 4/12/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -33,36 +33,16 @@
 
 
 
- // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-/*
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization.
-    }
-    return self;
-}
-*/
-
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 	progress = [[MBProgressHUD alloc] initWithView: self.view];
-	
-	
-	//add a table view
 	tableView  = [[UITableView alloc] initWithFrame: CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 44, self.view.frame.size.width, 617)];
 	tableView.delegate = self;
 	tableView.dataSource = self;
-	//settings for self
-	
 	[self.view addSubview: tableView];
 	[self.view addSubview: progress];
-	
-	
 	self.view.backgroundColor = [UIColor whiteColor];
-	NSLog(@"aaaaaaaaaaaaa");
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fbLoggedIn:) name: @"FBLoggedIn" object:fb];
 	[fb authorize];
 	
@@ -78,7 +58,6 @@
 	
 	// Set up the cell..
 	
-		
 	NSDictionary *tmp = [locationList objectAtIndex: indexPath.row];
 	cell.textLabel.text = [tmp valueForKey: @"name"];
 	
@@ -96,29 +75,29 @@
 
 
 - (void) fbLoggedIn: (NSNotification *) notf {
-	NSLog(@"%@", @"//load list of data");
 	//load list of data
 	CLLocationManager *locationManager=[[CLLocationManager alloc] init];
 	locationManager.delegate=self;
 	locationManager.desiredAccuracy=kCLLocationAccuracyNearestTenMeters;
 	[locationManager startUpdatingLocation];
-	[self loadShops];
+	[progress show: YES];
 	
 }
 
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
-	CLLocationCoordinate2D location;
-	location = newLocation.coordinate;
-	NSLog(@"%f %f", location.longitude, location.latitude);
+	//NSLog(@"didUpdateToLocation");
+	CLLocationCoordinate2D l;
+	l = newLocation.coordinate;
+	location = l;
 	if (loadNewShops) {
-		
+		[self loadShops];
 	}
 }
 
 - (void) loadShops {
 	loadNewShops = NO;
-	NSString *url = [NSString stringWithFormat: @"https://graph.facebook.com/search?type=place&center=%f,%f&distance=1000&access_token=%@", 1.2937125827502152, 103.77488136291504, fb.facebook.accessToken];
+	NSString *url = [NSString stringWithFormat: @"https://graph.facebook.com/search?type=place&center=%f,%f&distance=1000&access_token=%@", location.latitude, location.longitude, fb.facebook.accessToken];
 
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL: [NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
 	
@@ -172,7 +151,6 @@
 	[progress hide: YES];
 	NSString *respone = [request responseString];
 	NSArray  *result = [[respone JSONValue] valueForKey: @"data"];
-	NSLog([result description]);
 	NSMutableArray *tmpArray = [NSMutableArray array];
 	for (NSDictionary *tmpDict in result) {
 		

@@ -8,6 +8,7 @@
 //	Owner: Dam Tuan Long
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 @class FacebookController;
 @class Shop;
 @class MBProgressHUD;

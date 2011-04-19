@@ -19,7 +19,7 @@
 	Shop* theShop;
 }
 @property (retain) Shop* theShop;
-@property (assign) Annotation* annotation;
+@property (retain) Annotation* annotation;
 -(id)loadShop:(Shop*)aShop;
 //REQUIRES:
 //MODIFIES:self

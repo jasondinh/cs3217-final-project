@@ -62,7 +62,6 @@
 		 
 
 - (void) authorize {
-	NSLog(@"%@", @"fb authorized");
 	[self retrieveFBToken];
 	
 	//check if already authorized
@@ -72,15 +71,12 @@
 		[self.facebook authorize: permission delegate:self];
 	}
 	else {
-		NSLog(@"token %@", self.facebook.accessToken);
 		[[NSNotificationCenter defaultCenter] postNotificationName: @"FBLoggedIn" object:self];
 	}
 	
 }
 
 - (void)fbDidLogin {
-	
-	NSLog(@"token %@", self.facebook.accessToken);
 	[[NSUserDefaults standardUserDefaults] setObject:self.facebook.accessToken forKey:@"FBAccessToken"];
 	[[NSUserDefaults standardUserDefaults] setObject:self.facebook.expirationDate forKey:@"FBExpirationDate"];
 	[[NSNotificationCenter defaultCenter] postNotificationName: @"FBLoggedIn" object:self];
