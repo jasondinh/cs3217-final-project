@@ -575,6 +575,7 @@ NSMutableArray* edgeList;
 
 #pragma mark -
 #pragma mark focus supporting methods
+
 -(void) focusToAMapPosition:(CGPoint) point{
 	[self focusToAScrollViewPosition:[self translatePointToScrollViewCoordinationFromMapCoordination:point]];
 }
@@ -588,9 +589,19 @@ NSMutableArray* edgeList;
 	[UIView animateWithDuration:0.4 animations:^ {
 		displayArea.contentOffset = newOrigin;
 	}];
-
-	// test
 }
+
+-(CGSize) getDistanceFromBoundForObjectAtScrollviewPosition: (CGPoint) aPos{
+	CGSize result = {aPos.x-displayArea.contentOffset.x, aPos.y-displayArea.contentOffset.y};
+	return result;
+}
+
+
+-(CGSize) getDistanceFromBoundForObjectAtMapPosition: (CGPoint) aPos{
+	return [self getDistanceFromBoundForObjectAtScrollviewPosition: [self translatePointToScrollViewCoordinationFromMapCoordination:aPos]];
+}
+
+
 
 #pragma mark -
 

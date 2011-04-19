@@ -63,6 +63,7 @@
 // focusing support methods
 -(void) focusToAMapPosition:(CGPoint) point;
 -(void) focusToAScrollViewPosition:(CGPoint) point;
+-(CGSize) getDistanceFromBoundForObjectAtMapPosition: (CGPoint) aPos;
 
 -(void) redisplayPath;
 @end

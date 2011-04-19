@@ -61,4 +61,6 @@
 // if the mall is called to display after the first time, call display 
 -(void) display;
 
+-(CGSize) getDistanceFromBoundForObjectAtMapPosition: (CGPoint) aPos;
+
 @end

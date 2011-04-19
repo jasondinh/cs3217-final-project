@@ -98,15 +98,18 @@
 	
 }
 -(void) shopEnter:(id)sender{
-	CGFloat x,y;
+	Shop* aShop = (Shop*)[sender object];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"shop chosen"
-														object:(Shop*)[sender object]];
+														object:aShop];
+	MallViewController* aMVC = [self.viewControllers objectAtIndex:1];
+	CGSize distanceFromBound = [aMVC getDistanceFromBoundForObjectAtMapPosition: aShop.annotation.position];
+	NSLog(@" distance from bound: %lf %lf", distanceFromBound.width, distanceFromBound.height);
 	if (debug) NSLog(((Shop*)[sender object]).shopName);
 	//if ([masterViewController.topViewController isKindOfClass:[ShopViewController class]]) {
 	//	[masterViewController popViewControllerAnimated:NO];Å
 	//}
 		ShopViewController* shopViewController = [[ShopViewController alloc] init] ;
-	[shopViewController loadShop:(Shop*)[sender object]];
+	[shopViewController loadShop:aShop];
 	UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController: shopViewController];
 	[popover presentPopoverFromRect:CGRectMake(100, 100, 1000, 1000) inView: [[[self viewControllers] objectAtIndex:1] view] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 	[shopViewController release];
