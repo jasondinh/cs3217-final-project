@@ -191,7 +191,6 @@
 	return self;
 }
 -(void) loadData:(id)sender{
-
 	progress = [[MBProgressHUD alloc] initWithView: self.view];
 	[self.view addSubview: progress];
 	[progress release];

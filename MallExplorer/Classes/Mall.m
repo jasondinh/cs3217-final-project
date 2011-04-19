@@ -17,6 +17,18 @@ const int MAX_LEVEL_POSSIBLE = 10000;
 @synthesize defaultMap;
 @synthesize travelTime;
 
+
+-(BOOL) isEqual:(id)o{
+	if (![o isMemberOfClass:[Mall class]]) {
+		return NO;
+	}
+	Mall* obj = (Mall*) o;
+	if (self.mId == obj.mId){
+		return YES;
+	} else return NO;
+}
+
+
 -(CLLocationCoordinate2D) coordinate{
 	CLLocationCoordinate2D cor;
 	cor.latitude = [latitude doubleValue];
