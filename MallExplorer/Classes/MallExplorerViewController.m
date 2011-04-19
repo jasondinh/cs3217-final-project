@@ -129,15 +129,10 @@
 
 -(void) shopListLoaded:(NSNotification*) notify{
 	shopListLoaded = YES; // prone to race-condition
+	shopList = notify.object;
 	if (mallLoaded){
 		[self addShopInShopListToMallMap];
 	}
-}
-
--(void) mallChosen:(NSNotification*) notification{
-	
-	
-
 }
 
 - (void) loadPointsWithMapId: (NSInteger) mId {
@@ -174,20 +169,13 @@
 }
 
 - (void) finishedLoadingMap {
-	NSLog(@"loaddddddddddddddd xongggggggggggggggggggg");
-//	for	(int i = 0; i<[maps count]; i++)
-//	{
-//		[[maps objectAtIndex:i] buildMap];
-//	}	
-	NSLog(@"loaddddddddddddddd xongggggggggggggggggggg");
 	[self loadStairs];
 }
 
 -(void) addShopInShopListToMallMap{
-	ShopListViewController* theSLVC = [masterViewController topViewController];
-	shopList = theSLVC.shopList;
 	for (int i = 0; i<[shopList count]; i++) {
 		Shop* aShop = [shopList objectAtIndex:i];
+		NSLog(@"creating link between: shop: %@ and annotation", aShop.shopName);
 		Map* map = nil;
 		for (int j = 0; j<[maps count]; j++) {
 			map = [maps objectAtIndex:j];
@@ -203,6 +191,7 @@
 			
 			if ([[map.pointList objectAtIndex:j] pId] == aShop.pId) {
 				aShop.annotation = [Annotation annotationWithAnnotationType:kAnnoShop inlevel:map WithPosition:[[map.pointList objectAtIndex:j] position] title:aShop.shopName content:@"content"];
+				NSLog(@"creating link between: shop: %@ and annotation", aShop.shopName);
 				break;
 			}
 		}
@@ -217,6 +206,16 @@
 		[self addShopInShopListToMallMap];
 	}
 	MallViewController* theMVC = [self.viewControllers objectAtIndex:1];
+	BOOL fullyLoaded = NO;
+	while (!fullyLoaded){
+		fullyLoaded = YES;
+		for (int i = 0; i<[theMVC.mall.mapList count]; i++) {
+			if ([[theMVC.mall.mapList objectAtIndex:i] imageMap] == nil) {
+				fullyLoaded = NO;
+				break;
+			}
+		}
+	}
 	[theMVC loadMaps:maps andStairs:stairs withDefaultMap:[maps objectAtIndex:0]];
 	mallLoaded = YES;
 	[progress hide:YES];
@@ -290,7 +289,7 @@
 		NSArray *result = (NSArray *) api.result;
 		mapsLoaded = YES;
 		
-		[result enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		for(id obj in result) {
 			
 			NSDictionary *tmpMap = [obj valueForKey: @"map"];
 			
@@ -304,7 +303,7 @@
 
 			[maps addObject: aMap];
 			[aMap release];
-		}];
+		}
 		numWaiting = 0;
 		[maps enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 			numWaiting++;
@@ -462,7 +461,6 @@
 	
 
 	if (debug) NSLog([[api result] description]);
-	[api release];
 }
 
 - (void) loadStairs {

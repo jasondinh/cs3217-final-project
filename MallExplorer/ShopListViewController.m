@@ -159,7 +159,7 @@
 	if (_reloading){
 		[self doneLoadingTableViewData];
 	}
-	
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"shop list loaded" object:shopList];
 	[apiController release];
 	
 }

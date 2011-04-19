@@ -154,7 +154,7 @@ const int maxNumstep = 100;
 		self.mapName = [NSString stringWithFormat:@"Level %@", lev];
 		
 		
-		
+		NSLog(@"%d %@ %@", mapid, lev, url);
 		
 		
 		BOOL cached = NO;
@@ -183,36 +183,42 @@ const int maxNumstep = 100;
 		[fetchRequest release];
 		
 		if (!cached) {
-			__block ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
-			[request setCompletionBlock:^{
-				NSLog(@"%@", @"done loading image");
-				NSData *tmpData = [NSData dataWithData:[request responseData]];
-				imageMap = [[UIImage imageWithData: tmpData] retain];
-				
-				NSManagedObject *image = [NSEntityDescription 
-										  insertNewObjectForEntityForName: @"MapImage"
-										  inManagedObjectContext: context];
-				
-				[image setValue: [[request originalURL] absoluteString] forKey: @"url"];
-				
-				NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-				NSString *userDocumentsPath = [paths objectAtIndex:0];
-				NSString *fileName = [NSString stringWithFormat: @"%@/map_%d", userDocumentsPath, mId];
-				NSLog(@"%@",fileName);
-				[tmpData writeToFile: fileName atomically:YES];
-				
-				[image setValue: fileName forKey:@"local"];
-				
-				if (![context save: &error]) {
-					NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-				}
-				
-			}];		
+			ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
+			[request setDelegate: self];
+			[request setDidFinishSelector: @selector(finishLoadedImage:)];	
 			[request startAsynchronous];
 		}
 	}
 	return self;
 
+}
+
+- (void) finishLoadedImage: (ASIHTTPRequest *) request {
+	MallExplorerAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+	NSManagedObjectContext *context = [appDelegate managedObjectContext];
+	
+	NSError *error;
+	
+	NSData *tmpData = [NSData dataWithData:[request responseData]];
+	imageMap = [[UIImage imageWithData: tmpData] retain];
+	
+	NSManagedObject *image = [NSEntityDescription 
+							  insertNewObjectForEntityForName: @"MapImage"
+							  inManagedObjectContext: context];
+	
+	[image setValue: [[request originalURL] absoluteString] forKey: @"url"];
+	
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *userDocumentsPath = [paths objectAtIndex:0];
+	NSString *fileName = [NSString stringWithFormat: @"%@/map_%d", userDocumentsPath, mId];
+	NSLog(@"%@",fileName);
+	[tmpData writeToFile: fileName atomically:YES];
+	
+	[image setValue: fileName forKey:@"local"];
+	
+	if (![context save: &error]) {
+		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+	}
 }
 
 -(void) loadDataWithMapName:(NSString*) mName annotationList:(NSArray*) annList pointList:(NSArray*) pList edgeList:(NSArray*) edgeList{
