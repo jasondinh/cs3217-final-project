@@ -108,7 +108,7 @@
 		ShopViewController* shopViewController = [[ShopViewController alloc] init] ;
 	[shopViewController loadShop:(Shop*)[sender object]];
 	UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController: shopViewController];
-	[popover presentPopoverFromRect:CGRectMake(0, 0, 1000, 1000) inView: [[[self viewControllers] objectAtIndex:1] view] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+	[popover presentPopoverFromRect:CGRectMake(100, 100, 1000, 1000) inView: [[[self viewControllers] objectAtIndex:1] view] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 	[shopViewController release];
 	popover.delegate = self;
 	//popover.passthroughViews = [NSArray arrayWithObject: [[[self viewControllers] objectAtIndex:1] view]];
