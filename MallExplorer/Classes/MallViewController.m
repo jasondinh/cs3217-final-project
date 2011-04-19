@@ -23,6 +23,7 @@
 @synthesize resetButton;
 @synthesize levelListController;
 @synthesize mapDataLoaded;
+@synthesize estimateTravelTimeLabel;
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
@@ -283,6 +284,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 		resetButton.userInteractionEnabled = NO;
 		
 	}
+	estimateTravelTimeLabel.hidden = YES;
 	[mall resetPath];
 	[mapViewController redisplayPath];
 	for (int i = 0; i<[listMapViewController count]; i++) {
@@ -335,6 +337,16 @@ toMakeAnnotationType:(AnnotationType) annoType
 	}	
 	[levelConnectingPoint release];
 	[mapViewController redisplayPath];
+	int travelTime = round(mall.travelTime);
+	if (travelTime == 0) {
+		travelTime = round(mall.travelTime*60);
+		estimateTravelTimeLabel.text = [NSString stringWithFormat:@"Estimated travel time: %d seconds", travelTime]; 
+	} else if (travelTime == 1){
+		estimateTravelTimeLabel.text = [NSString stringWithFormat:@"Estimated travel time: %d minute", travelTime]; 
+	} else {
+		estimateTravelTimeLabel.text = [NSString stringWithFormat:@"Estimated travel time: %d minutes", travelTime]; 
+	}
+	estimateTravelTimeLabel.hidden = NO;
 }
 
 -(void) resetClicked{

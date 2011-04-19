@@ -25,9 +25,9 @@
 @property (retain ) NSArray* mallList;
 @property (nonatomic, retain) IBOutlet UIToolbar* toolbar;
 @property (nonatomic,retain) id detailItem;
-@property (nonatomic,retain)IBOutlet MKMapView *mapView;
-@property (nonatomic,retain)IBOutlet UISegmentedControl* mapType;
-@property (nonatomic,retain) 	IBOutlet UIBarButtonItem *backToCurrentLocation;
+@property (nonatomic,retain) IBOutlet MKMapView *mapView;
+@property (nonatomic,retain) IBOutlet UISegmentedControl* mapType;
+@property (nonatomic,retain) IBOutlet UIBarButtonItem *backToCurrentLocation;
 
 -(IBAction)backToCurrentLocation:(id)sender;
 - (IBAction)changeType:(id)sender;

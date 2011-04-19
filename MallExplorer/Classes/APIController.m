@@ -370,7 +370,7 @@
 	
 	
 	if (debugMode) {
-		NSLog(@"APIController: load failed");
+		NSLog(@"APIController: load failed at %@", request.originalURL);
 	}
 	if ([delegate respondsToSelector: @selector(requestFail:)]) {
 		[delegate requestFail: self];

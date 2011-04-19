@@ -46,6 +46,7 @@
 @property (nonatomic, retain) IBOutlet UIImageView* resetButton;
 @property (nonatomic, retain) IBOutlet UIBarItem*	selectLevel;
 @property (nonatomic, retain) IBOutlet UILabel* titleLabel;
+@property (nonatomic, retain) IBOutlet UILabel* estimateTravelTimeLabel;
 @property (nonatomic, retain) id detailItem;
 @property (nonatomic, retain) UIPopoverController* popoverController;
 @property (nonatomic,retain) UIPopoverController* levelListController;

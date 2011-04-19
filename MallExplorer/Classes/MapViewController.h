@@ -28,7 +28,7 @@
 
 @property (nonatomic, retain) NSArray* annotationList;
 @property (nonatomic, retain) Map* map;
-
+@property (retain) UIScrollView* displayArea;
 //@property (nonatomic, retain) UIImage* imageMap;
 
 +(CGRect) getSuitableFrame;
