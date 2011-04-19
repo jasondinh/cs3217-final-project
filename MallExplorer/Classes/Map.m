@@ -197,7 +197,6 @@ const int maxNumstep = 100;
 - (void) failLoadedImage: (ASIHTTPRequest *) request {
 	NSError *error = [request error];
 	NSLog([error description]);
-	NSLog(@"fuck");
 }
 
 - (void) finishLoadedImage: (ASIHTTPRequest *) request {
