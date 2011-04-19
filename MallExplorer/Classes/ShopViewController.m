@@ -169,7 +169,7 @@
 	[super viewDidLoad];
 	//settings self
 	self.title = theShop.shopName;
-	self.contentSizeForViewInPopover = CGSizeMake(POPOVER_WIDTH, POPOVER_HEIGHT);
+	/*self.contentSizeForViewInPopover = CGSizeMake(POPOVER_WIDTH, POPOVER_HEIGHT);
 	//self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addToFavorite:)];
 	[self.tabBar setBackgroundColor:[UIColor whiteColor]] ;
 	
@@ -216,7 +216,7 @@
 	//clean up
 	[shopOverviewController release];
 	[commentController release];
-	[facebookTabController release];
+	[facebookTabController release];*/
 
 	
 
