@@ -41,7 +41,7 @@
 	NSInteger mId = mall.mId;
 	[api getAPI: [NSString stringWithFormat: @"/malls/%d/shops.json", mId]];
 	
-
+	
 }
 
 -(void) cacheRespond:(APIController *)apiController {
@@ -57,6 +57,7 @@
 		NSInteger pid = [[tmp valueForKey: @"point_id"] intValue];
 		shop.pId = pid;
 		[tmpShops addObject: shop];
+		[shop release];
 	}];
 	//NSLog([apiController.result description]);
 	self.shopList = [tmpShops mutableCopy];
@@ -159,6 +160,7 @@
 		[self doneLoadingTableViewData];
 	}
 	
+	[apiController release];
 	
 }
 - (void) requestDidStart: (APIController *) apiController {

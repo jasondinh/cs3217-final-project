@@ -108,7 +108,7 @@
 	}
 	
 	[fetchRequest release];
-	NSLog(@"shoplistlog %@", [results description]);
+	//NSLog(@"shoplistlog %@", [results description]);
 	return results;
 	
 }

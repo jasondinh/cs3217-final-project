@@ -15,7 +15,7 @@
 #import "APIController.h"
 
 
-@interface MallExplorerViewController : UISplitViewController<MKMapViewDelegate,CLLocationManagerDelegate,APIDelegate> {
+@interface MallExplorerViewController : UISplitViewController<MKMapViewDelegate,CLLocationManagerDelegate,APIDelegate, UIPopoverControllerDelegate> {
 	CityMapViewController* cityMapViewController;
 	MasterViewController* masterViewController;
 	
