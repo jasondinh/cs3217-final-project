@@ -63,11 +63,13 @@
 -(NSArray*) findPathFrom:(CGPoint) point1 inLevel:(Map*)level1 to: (CGPoint) point2 inLevel:(Map*) level2;
 -(NSArray*) findPathFromStartAnnotation:(Annotation*) anno1 ToGoalAnnotaion:(Annotation*) anno2;
 
+// reset the map loaded to this mall
+-(void) resetData;
+
+
 // remove the path on all the maps
 -(void) resetPath;
 
-// data for shop list view controller
-@property (retain) NSArray* mapNameList;
 
 // load data functions
 

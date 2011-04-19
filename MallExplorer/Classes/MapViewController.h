@@ -41,6 +41,7 @@
 // remove annotations
 -(void) removeAllLevelConnectorAnnotation;
 -(void) removeAllAnnotationOfType:(AnnotationType)typeToRemove;
+-(void) removeAnnotation:(Annotation*) annotation;
 
 -(MapViewController*) initWithMapImage:(UIImage*)img 
 				withDefaultCenterPoint:(CGPoint)defaultPoint

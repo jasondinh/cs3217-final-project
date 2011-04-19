@@ -36,7 +36,7 @@
 @property (nonatomic, retain, readonly) UIImage* imageMap;
 @property (nonatomic, retain) NSArray* pointList;
 @property (nonatomic, retain) NSArray* edgeList;
-@property (nonatomic, retain, readonly) NSString* mapName;
+@property (nonatomic, retain) NSString* mapName;
 @property (nonatomic, retain) NSArray* pathOnMap;
 @property CGPoint defaultCenterPoint;
 

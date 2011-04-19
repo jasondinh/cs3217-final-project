@@ -17,7 +17,7 @@
 #define MAP_HEIGHT	648
 
 // Graph constant
-#define MAX_NODES 400
+#define MAX_NODES 200
 
 // portrait
 #define MAP_PORTRAIT_WIDTH	762

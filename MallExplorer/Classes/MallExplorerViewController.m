@@ -20,7 +20,7 @@
 #import "FacebookController.h"
 #import "APIController.h"
 @implementation MallExplorerViewController
-@synthesize maps, stairs, mapsLoaded, stairsLoaded, pointsLoaded, edgesLoaded, annotationsLoaded;
+@synthesize maps, stairs, shopListLoaded, mallLoaded, mapsLoaded, stairsLoaded, pointsLoaded, edgesLoaded, annotationsLoaded, progress;
 
 
 
@@ -39,6 +39,8 @@
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ListViewWillAppear:) name:@"Listview will appear" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShopViewWillAppear:) name:@"Shopview will appear"  object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestDidFail:) name:@"request did fail"  object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopListLoaded:) name:@"shop list loaded" object:nil];
+		currentLoadedMall = nil;
     }
     return self;
 }
@@ -54,6 +56,13 @@
 	id object = [sender object];
 	if ([masterViewController.topViewController isKindOfClass:[MallListViewController class]]) {		
 		Mall* aMall = object;
+		if (![aMall isEqual:currentLoadedMall]) {			
+			[currentLoadedMall resetData];
+			currentLoadedMall = aMall;
+		}
+		
+		mallLoaded = aMall.mapLoaded;
+		shopListLoaded = NO;
 		ShopListViewController* shopListViewController = [[ShopListViewController alloc] initWithMall:aMall] ;
 		masterViewController.delegate = shopListViewController;
 		[masterViewController pushViewController:shopListViewController animated:YES];
@@ -62,17 +71,19 @@
 		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
 		shopListViewController.delegate = aMVC;
 		aMVC.mall = aMall;
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopListLoaded:) name:@"shop list loaded" object:nil];
 		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];	
+		self.progress = [[MBProgressHUD alloc] initWithView:aMVC.view];
+		[aMVC.view addSubview:progress];
+		[progress release];
+		[progress show:YES];
 		if (!aMall.mapLoaded) {
 			NSLog(@"em dang load map");
 			[self loadMaps];				
 		}
 		else {
 			[aMVC display];
+			[progress hide:YES];
 		}
-
-
 		
 		[self setDelegate: aMVC];
 		if (((UIBarButtonItem*)[[cityMapViewController toolbar].items objectAtIndex:0]).title == @"Root List") {
@@ -110,7 +121,10 @@
 }
 
 -(void) shopListLoaded:(NSNotification*) notify{
-	shopList = [notify.object retain];
+	shopListLoaded = YES; // prone to race-condition
+	if (mallLoaded){
+		[self addShopInShopListToMallMap];
+	}
 }
 
 -(void) mallChosen:(NSNotification*) notification{
@@ -162,9 +176,7 @@
 	[self loadStairs];
 }
 
--(void) finishedLoading{	
-	NSLog(@"loaddddddddddddddd xongggggggggggggggggggg");
-	MallViewController* theMVC = [self.viewControllers objectAtIndex:1];
+-(void) addShopInShopListToMallMap{
 	ShopListViewController* theSLVC = [masterViewController topViewController];
 	shopList = theSLVC.shopList;
 	for (int i = 0; i<[shopList count]; i++) {
@@ -173,17 +185,15 @@
 		for (int j = 0; j<[maps count]; j++) {
 			map = [maps objectAtIndex:j];
 			NSString* lev = map.level;
-			NSLog(lev);
-			NSLog(aShop.level);
 			if ([lev isEqual: aShop.level]) {
 				map = [maps objectAtIndex:j];
 				break;
 			}
 		}
-
-
+		
+		
 		for (int j = 0; j<[map.pointList count]; j++) {
-
+			
 			if ([[map.pointList objectAtIndex:j] pId] == aShop.pId) {
 				aShop.annotation = [Annotation annotationWithAnnotationType:kAnnoShop inlevel:map WithPosition:[[map.pointList objectAtIndex:j] position] title:aShop.shopName content:@"content"];
 				break;
@@ -192,8 +202,17 @@
 		
 		[map addAnnotation:aShop.annotation];
 	}
-	[shopList  release];
+}
+
+-(void) finishedLoading{	
+	NSLog(@"loaddddddddddddddd xongggggggggggggggggggg");
+	if (shopListLoaded) {
+		[self addShopInShopListToMallMap];
+	}
+	MallViewController* theMVC = [self.viewControllers objectAtIndex:1];
 	[theMVC loadMaps:maps andStairs:stairs withDefaultMap:[maps objectAtIndex:0]];
+	mallLoaded = YES;
+	[progress hide:YES];
 	NSLog(@"loaddddddddddddddd xongggggggggggggggggggg");
 }
 
@@ -527,6 +546,7 @@
 }
 
 - (void) dealloc {
+	[progress release];
 	[maps release];
 	[stairs release];
 	[cityMapViewController release];

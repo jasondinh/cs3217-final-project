@@ -50,7 +50,7 @@
 	NSError *error;
 	NSFetchRequest *fetchRequest =  [[NSFetchRequest alloc] init];
 	
-	NSEntityDescription *entity = [NSEntityDescription entityForName: @"Mall" inManagedObjectContext: context];
+	NSEntityDescription *entity = [NSEntityDescription entityForName: @"MapImage" inManagedObjectContext: context];
 	
 	[fetchRequest setEntity: entity];
 	

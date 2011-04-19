@@ -31,6 +31,17 @@
 	anAnnotation.shop = nil;
 	return [anAnnotation autorelease];
 }
+
+-(BOOL) isEqual:(id)o{
+	if (![o isKindOfClass:[Annotation class]]) {
+		return NO;
+	}
+	Annotation* obj = (Annotation*) o;
+	if ([self.level isEqual: obj.level] && (self.position.x == obj.position.x) && (self.position.y == obj.position.y) && (self.annoType == obj.annoType)){
+		return YES;
+	} else return NO;
+}
+
 -(void) dealloc{
 	[level release];
 	[shop release];
