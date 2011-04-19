@@ -61,9 +61,10 @@
 		MallViewController* aMVC = [[MallViewController alloc] initWithNibName:@"MallViewController" bundle:nil];
 		shopListViewController.delegate = aMVC;
 		aMVC.mall = aMall;
-		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopListLoaded:) name:@"shop list loaded" object:nil];
 		self.viewControllers = [NSArray arrayWithObjects:masterViewController, aMVC, nil];	
 		if (!aMall.mapLoaded) {
+			NSLog(@"em dang load map");
 			[self loadMaps];				
 		}
 		else {
@@ -82,7 +83,6 @@
 			[items release];
 		}
 	}
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopListLoaded:) name:@"shop list loaded" object:nil];
 	
 }
 -(void) shopEnter:(id)sender{
@@ -99,7 +99,6 @@
 	[ shopViewController release];
 	popover.delegate = self;
 	//popover.passthroughViews = [NSArray arrayWithObject: [[[self viewControllers] objectAtIndex:1] view]];
-	//[[[self viewControllers] objectAtIndex:1] presentPopoverFromRect:CGRectMake(0, 0, 0, 0) inView: permittedArrowDirections:<#(UIPopoverArrowDirection)arrowDirections#> animated:<#(BOOL)animated#>
 		//[masterViewController pushViewController:shopViewController animated:YES];
 		//masterViewController.delegate = shopViewController;
 	
@@ -165,11 +164,17 @@
 -(void) finishedLoading{	
 	NSLog(@"loaddddddddddddddd xongggggggggggggggggggg");
 	MallViewController* theMVC = [self.viewControllers objectAtIndex:1];
+	ShopListViewController* theSLVC = [masterViewController topViewController];
+	shopList = theSLVC.shopList;
 	for (int i = 0; i<[shopList count]; i++) {
 		Shop* aShop = [shopList objectAtIndex:i];
 		Map* map = nil;
 		for (int j = 0; j<[maps count]; j++) {
-			if ([[[maps objectAtIndex:j] level] isEqual: aShop.level]) {
+			map = [maps objectAtIndex:j];
+			NSString* lev = map.level;
+			NSLog(lev);
+			NSLog(aShop.level);
+			if ([lev isEqual: aShop.level]) {
 				map = [maps objectAtIndex:j];
 				break;
 			}
@@ -269,7 +274,7 @@
 			if (maps == nil) {
 				maps = [[NSMutableArray array] retain];
 			}
-			
+
 			[maps addObject: aMap];
 			[aMap release];
 		}];

@@ -15,7 +15,7 @@
 
 @interface Map : NSObject {
 	NSInteger mId;
-	NSInteger level;
+	NSString* level;
 	NSMutableArray* annotationList;
 	NSMutableArray* pointList;
 	NSArray* edgeList;
@@ -31,7 +31,7 @@
 }
 
 @property NSInteger mId;
-@property NSInteger level;
+@property (retain) NSString* level;
 @property (nonatomic, retain) NSArray* annotationList;
 @property (nonatomic, retain, readonly) UIImage* imageMap;
 @property (nonatomic, retain) NSArray* pointList;
