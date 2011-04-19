@@ -19,6 +19,7 @@
 @synthesize edgeList;
 @synthesize defaultCenterPoint;
 @synthesize mId, level;
+@synthesize numMeterPerPixel;
 const double toleranceRange = 10;
 
 // number of maximum steps in binery search in B->C to refine a path A->B->C by a point in between B,C
@@ -141,13 +142,14 @@ const int maxNumstep = 100;
 		self.annotationList = [NSMutableArray array];
 		self.pointList = [NSMutableArray array];
 		self.edgeList = [NSMutableArray array];
+		self.numMeterPerPixel = 30;
 	}
 	return self;
 }
 
 -(Map*) initWithMapId:(NSInteger) mapid withLevel:(NSString *) lev withURL:(NSString*) url{
 	
-	url = [url stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+	url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	
 	self = [super init];
 	if (self) {
@@ -155,7 +157,7 @@ const int maxNumstep = 100;
 		self.mId = mapid;
 		self.level = lev;
 		self.mapName = [NSString stringWithFormat:@"Level %@", lev];
-		
+		self.numMeterPerPixel = 30;
 		
 		NSLog(@"%d %@ %@", mapid, lev, url);
 		
@@ -301,6 +303,21 @@ const int maxNumstep = 100;
 
 #pragma mark -
 #pragma mark path finding
+
+-(double) estimateTime: (NSArray*) aPath{
+	double result = 0;
+	for (int i = 0; i<[aPath count]-1; i++) {
+		MapPoint* point1 = [aPath objectAtIndex:i];
+		MapPoint* point2 = [aPath objectAtIndex:i+1];
+		result += [MapPoint getDistantBetweenPoint:point1 andPoint:point2];
+	}
+	NSLog(@"%lf", result);
+	result = result / numMeterPerPixel;
+	NSLog(@"%lf", result);
+	result = result / M_TRAVEL_PER_MINUTE;
+	NSLog(@"%lf", result);
+	return result;
+}
 
 -(NSArray*) findPathFrom:(MapPoint*) point1 to: (MapPoint*) point2{
 	return [graph getShortestPathUsingAStarFromNodeWithIndex:point1.index toNodeWithIndex:point2.index usingEstimatingFunction:@selector(estimateDistanceTo:)];

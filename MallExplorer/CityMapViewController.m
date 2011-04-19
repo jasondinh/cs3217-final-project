@@ -52,7 +52,7 @@
         // Custom initialization.
 		self.mapView.delegate =self;
 		fistTime = YES;
-		shouldAutoFocus = NO;
+		shouldAutoFocus = YES;
     }
     return self;
 }

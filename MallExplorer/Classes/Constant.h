@@ -53,6 +53,9 @@
 #define TAB_BAR_ICON_WIDTH 30
 #define TAB_BAR_ICON_HEIGHT 30
 
+//travel time estimating
+#define M_TRAVEL_PER_MINUTE 60
+#define TIME_TRAVEL_PER_STAIR_IN_MINUTE 0.5 
 
 //Constants for CityMapViewController
 #define SPAN_LONGITUDE 0.02
