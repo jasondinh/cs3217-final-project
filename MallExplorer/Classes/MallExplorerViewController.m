@@ -434,7 +434,7 @@
 					break;
 				}
 			}
-			Annotation* anAnno = [Annotation annotationWithAnnotationType:kAnnoShop inlevel:aMap WithPosition:aPoint.position title:@"" content:@""];
+			Annotation* anAnno = [Annotation annotationWithAnnotationType:kAnnoStair inlevel:aMap WithPosition:aPoint.position title:@"" content:@""];
 			[annotations addObject:anAnno];
 		}
 		if (aMap.annotationList) {
@@ -468,13 +468,12 @@
 - (void) loadStairs {
 	if (debug) NSLog(@"%@", @"loadStairs");
 
-		
+
 	
 	APIController *api = [[APIController alloc] init];
 	api.debugMode = YES;
 	api.delegate = self;
-
-		Mall* theMall = [[self.viewControllers objectAtIndex:1] mall];
+	Mall* theMall = [[self.viewControllers objectAtIndex:1] mall];
 	NSInteger mId = theMall.mId;
 	[api getAPI: [NSString stringWithFormat: @"/malls/%d/stairs.json", mId]];
 	
