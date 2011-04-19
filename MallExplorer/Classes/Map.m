@@ -177,7 +177,7 @@ const int maxNumstep = 100;
 			NSLog(@"YESSSSSSSSSSSSS");
 			NSString *local = [info valueForKey: @"local"];
 			NSLog(local);
-			imageMap = [[UIImage imageWithData:[NSData dataWithContentsOfFile:local]] retain];
+			self.imageMap = [UIImage imageWithData:[NSData dataWithContentsOfFile:local]];
 		}
 		
 		[fetchRequest release];
@@ -185,7 +185,7 @@ const int maxNumstep = 100;
 		if (!cached) {
 			ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
 			[request setDelegate: self];
-			[request setDidFinishSelector: @selector(finishLoadedImage:)];	
+			[request setDidFinishSelector: @selector(finishLoadedImage:)];
 			[request startAsynchronous];
 		}
 	}
@@ -194,13 +194,14 @@ const int maxNumstep = 100;
 }
 
 - (void) finishLoadedImage: (ASIHTTPRequest *) request {
+	NSLog(@"%@", @"done loading image");
 	MallExplorerAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
 	NSManagedObjectContext *context = [appDelegate managedObjectContext];
 	
 	NSError *error;
 	
 	NSData *tmpData = [NSData dataWithData:[request responseData]];
-	imageMap = [[UIImage imageWithData: tmpData] retain];
+	self.imageMap = [UIImage imageWithData: tmpData];
 	
 	NSManagedObject *image = [NSEntityDescription 
 							  insertNewObjectForEntityForName: @"MapImage"

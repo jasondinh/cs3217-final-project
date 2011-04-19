@@ -59,7 +59,6 @@
 		[tmpShops addObject: shop];
 		[shop release];
 	}];
-	//NSLog([apiController.result description]);
 	self.shopList = [tmpShops mutableCopy];
 	self.listOfItems = [[NSMutableArray alloc]init];
 	for (Shop* aShop in shopList){

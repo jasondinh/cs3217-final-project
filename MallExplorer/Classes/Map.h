@@ -33,7 +33,7 @@
 @property NSInteger mId;
 @property (retain) NSString* level;
 @property (nonatomic, retain) NSArray* annotationList;
-@property (nonatomic, retain, readonly) UIImage* imageMap;
+@property (nonatomic, retain) UIImage* imageMap;
 @property (nonatomic, retain) NSArray* pointList;
 @property (nonatomic, retain) NSArray* edgeList;
 @property (nonatomic, retain) NSString* mapName;

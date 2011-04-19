@@ -4,7 +4,7 @@
 //
 //  Created by Tran Cong Hoang on 4/7/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
+//  Author: Tran Cong Hoang
 
 #import "AnnotationFactory.h"
 #import "Annotation.h"

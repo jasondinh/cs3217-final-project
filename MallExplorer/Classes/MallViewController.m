@@ -4,7 +4,7 @@
 //
 //  Created by bathanh-m on 3/25/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
+//  Author: Tran Cong Hoang
 
 #import "MallViewController.h"
 #import "Graph.h"
@@ -111,8 +111,6 @@
 
 -(void) shopReleased:(NSNotification*) notification{
 	Annotation* anAnno = [notification.object annotation];
-	NSLog(@"%@", anAnno.title);
-	NSLog(@"this shop is released, so the anno needs to be released: %lf %lf", anAnno.position.x, anAnno.position.y);
 	[[self getViewControllerOfMap:anAnno.level] removeAnnotation: anAnno];
 	[self.view setNeedsDisplay];
 }
@@ -120,8 +118,6 @@
 
 -(void) shopChosen:(NSNotification*) notification{
 	Annotation* anAnno = [notification.object annotation];
-	NSLog(@"%@", anAnno.title);
-	NSLog(@"this shop is chosen: %lf %lf", anAnno.position.x, anAnno.position.y);
 	if ([anAnno.level isEqual:mapViewController.map]) {
 		[mapViewController focusToAMapPosition:anAnno.position];
 	} else {
@@ -217,7 +213,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 	if (gesture.state == UIGestureRecognizerStateEnded) {
 		double newX = button.frame.origin.x - mapViewController.view.frame.origin.x;
 		double newY = button.frame.origin.y - mapViewController.view.frame.origin.y;
-		//if (debug) NSLog(@"new x new y %lf %lf", newX, newY);
+
 		// bring the button to the original position
 		button.transform = CGAffineTransformIdentity;
 
@@ -260,7 +256,6 @@ toMakeAnnotationType:(AnnotationType) annoType
 }
 
 -(void) startOrGoalMoved:(NSNotification*) notification{
-	//if (debug) NSLog(@"start or goal moved");
 	if (start && goal) {
 		[self startOrGoalRemoved:nil];
 		[self pathFinding];
@@ -449,7 +444,6 @@ toMakeAnnotationType:(AnnotationType) annoType
 		  withBarButtonItem:(UIBarButtonItem*)barButtonItem 
 	   forPopoverController: (UIPopoverController*)pc {
 	
-    //if (debug) NSLog(barButtonItem.title) ;//= @"Root List";
     NSMutableArray *items = [[toolbar items] mutableCopy];
     [items insertObject:barButtonItem atIndex:0];
     [toolbar setItems:items animated:YES];
@@ -460,7 +454,7 @@ toMakeAnnotationType:(AnnotationType) annoType
 - (void)splitViewController: (UISplitViewController*)svc 
      willShowViewController:(UIViewController *)aViewController 
   invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
-	  //if (debug) NSLog(barButtonItem.title) ;//= @"Root List";
+
     NSMutableArray *items = [[toolbar items] mutableCopy];
     [items removeObjectAtIndex:0];
     [toolbar setItems:items animated:YES];

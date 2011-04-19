@@ -4,7 +4,7 @@
 //
 //  Created by bathanh-m on 3/25/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
+//  Author: Tran Cong Hoang
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>

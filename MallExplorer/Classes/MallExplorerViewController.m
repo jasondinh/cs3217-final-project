@@ -4,7 +4,7 @@
 //
 //  Created by bathanh-m on 3/25/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
+//  
 //	Updated by Dam Tuan Long on 29 Mar 2011 : add city map
 #import "MallExplorerViewController.h"
 #import "MallViewController.h"
@@ -77,7 +77,7 @@
 		[progress release];
 		[progress show:YES];
 		if (!aMall.mapLoaded) {
-			NSLog(@"em dang load map");
+			if (debug) NSLog(@"em dang load map");
 			[self loadMaps];				
 		}
 		else {
@@ -103,7 +103,7 @@
 														object:aShop];
 	MallViewController* aMVC = [self.viewControllers objectAtIndex:1];
 	CGSize distanceFromBound = [aMVC getDistanceFromBoundForObjectAtMapPosition: aShop.annotation.position];
-	NSLog(@" distance from bound: %lf %lf", distanceFromBound.width, distanceFromBound.height);
+	if (debug) NSLog(@" distance from bound: %lf %lf", distanceFromBound.width, distanceFromBound.height);
 	if (debug) NSLog(((Shop*)[sender object]).shopName);
 	ShopViewController* shopViewController = [[ShopViewController alloc] init] ;
 	[shopViewController loadShop:aShop];
@@ -168,7 +168,7 @@
 -(void) addShopInShopListToMallMap{
 	for (int i = 0; i<[shopList count]; i++) {
 		Shop* aShop = [shopList objectAtIndex:i];
-		NSLog(@"creating link between: shop: %@ and annotation", aShop.shopName);
+		if (debug) NSLog(@"creating link between: shop: %@ and annotation", aShop.shopName);
 		Map* map = nil;
 		for (int j = 0; j<[maps count]; j++) {
 			map = [maps objectAtIndex:j];
@@ -184,7 +184,7 @@
 			
 			if ([[map.pointList objectAtIndex:j] pId] == aShop.pId) {
 				aShop.annotation = [Annotation annotationWithAnnotationType:kAnnoShop inlevel:map WithPosition:[[map.pointList objectAtIndex:j] position] title:aShop.shopName content:@"content"];
-				NSLog(@"creating link between: shop: %@ and annotation", aShop.shopName);
+				if (debug) NSLog(@"creating link between: shop: %@ and annotation", aShop.shopName);
 				break;
 			}
 		}
@@ -194,7 +194,7 @@
 }
 
 -(void) finishedLoading{	
-	NSLog(@"loaddddddddddddddd xongggggggggggggggggggg");
+	if (debug) NSLog(@"loaddddddddddddddd xongggggggggggggggggggg");
 	if (shopListLoaded) {
 		[self addShopInShopListToMallMap];
 	}
@@ -202,8 +202,8 @@
 	BOOL fullyLoaded = NO;
 	while (!fullyLoaded){
 		fullyLoaded = YES;
-		for (int i = 0; i<[theMVC.mall.mapList count]; i++) {
-			if ([[theMVC.mall.mapList objectAtIndex:i] imageMap] == nil) {
+		for (int i = 0; i<[maps count]; i++) {
+			if ([[maps objectAtIndex:i] imageMap] == nil) {
 				fullyLoaded = NO;
 				break;
 			}
@@ -212,7 +212,7 @@
 	[theMVC loadMaps:maps andStairs:stairs withDefaultMap:[maps objectAtIndex:0]];
 	mallLoaded = YES;
 	[progress hide:YES];
-	NSLog(@"loaddddddddddddddd xongggggggggggggggggggg");
+	if (debug) NSLog(@"loaddddddddddddddd xongggggggggggggggggggg");
 }
 
 - (void) serverRespond: (APIController *) api {
@@ -328,11 +328,11 @@
 			[point release];
 		}
 		
-		NSLog(@"the points' map is %d", mId);
+		if (debug) NSLog(@"the points' map is %d", mId);
 		if (mId != 0) {
 			for (int i = 0; i<[maps count]; i++) {
 				Map* aMap = [maps objectAtIndex:i];
-				NSLog(@"points' map is %d", aMap.mId);
+				if (debug) NSLog(@"points' map is %d", aMap.mId);
 				if (aMap.mId == mId)
 				{
 					aMap.pointList = points;
@@ -345,7 +345,7 @@
 		if (mId != 0) {
 			numWaiting++;
 			[self loadEdgesWithMapId: mId];
-			NSLog(@"mid %d", mId);
+			if (debug) NSLog(@"mid %d", mId);
 			numWaiting++;
 			[self loadAnnotationsWithMapId: mId];
 		}

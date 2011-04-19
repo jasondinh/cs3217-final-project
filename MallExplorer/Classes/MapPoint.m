@@ -4,7 +4,7 @@
 //
 //  Created by bathanh-m on 3/25/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
+//  Author: Tran Cong Hoang
 
 #import "MapPoint.h"
 static int nextNodeIndex = 0;
@@ -22,7 +22,6 @@ static int nextNodeIndex = 0;
 		self.position = pos;
 		self.index = nextNodeIndex++;
 		self.level = map;
-		//NSLog(@"id is %d", nextNodeIndex);
 	}
 	return self;
 }
