@@ -129,6 +129,7 @@
 	if (viewController != self) {
         self.navigationController.delegate = nil;
         if ([[navigationController viewControllers] containsObject:self]) {
+			
         } else {
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"Listview will appear" object:self];
         }

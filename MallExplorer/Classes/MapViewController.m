@@ -53,6 +53,7 @@ NSMutableArray* edgeList;
 		LineEdgeView* aLine = [[LineEdgeView alloc] initWithPoint1:[self translatePointToScrollViewCoordinationFromMapCoordination:edge.pointA.position] andPoint2: [self translatePointToScrollViewCoordinationFromMapCoordination:edge.pointB.position]];
 		[self.view addSubview:aLine];
 		[aLine performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:5];
+		[aLine release];
 	}
 }
 
@@ -138,6 +139,17 @@ NSMutableArray* edgeList;
 	[[annoView retain] autorelease];
 	[annotationList addObject:annoView];
 	[self addAnnotationToMap:annoView];
+}
+
+-(void) removeAnnotation: (Annotation*) annotation{
+	[self.map removeAnnotation:annotation];
+	for (int i = 0; i<[annotationList count]; i++) {
+		AnnoViewController* annoView = [annotationList objectAtIndex:i];
+		if ([annoView.annotation isEqual: annotation]) {
+			[annotationList removeObjectAtIndex:i];
+			break;
+		}
+	}
 }
 
 -(void) removeAllAnnotationOfType:(AnnotationType) typeToRemove{
@@ -576,9 +588,8 @@ NSMutableArray* edgeList;
 	[UIView animateWithDuration:0.4 animations:^ {
 		displayArea.contentOffset = newOrigin;
 	}];
-	
+
 	// test
-	[self addATestPoint:point withImage:@"icon_shop.png" withDuration:5.0];
 }
 
 #pragma mark -
