@@ -576,9 +576,8 @@ NSMutableArray* edgeList;
 	[UIView animateWithDuration:0.4 animations:^ {
 		displayArea.contentOffset = newOrigin;
 	}];
-	
+
 	// test
-	[self addATestPoint:point withImage:@"icon_shop.png" withDuration:5.0];
 }
 
 #pragma mark -
