@@ -11,7 +11,7 @@
 
 @implementation MapViewController
 @synthesize annotationList;
-@synthesize map;
+@synthesize map, displayArea;
 
 int startPoint,endPoint;
 
@@ -241,7 +241,7 @@ NSMutableArray* edgeList;
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	displayArea = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,frame.size.width,frame.size.height)];
+	self.displayArea = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,frame.size.width,frame.size.height)];
 	imageView = [[UIImageView alloc] initWithImage:self.map.imageMap];
 	[displayArea addSubview:imageView];
 	[displayArea setContentSize:imageView.bounds.size];
@@ -259,7 +259,6 @@ NSMutableArray* edgeList;
 	displayArea.minimumZoomScale = 0.5;
 	[self stretchTheFirstTime];
 	[self focusToAMapPosition:map.defaultCenterPoint];
-	[displayArea release];
 	
 	
 	if (debug){
@@ -455,6 +454,7 @@ NSMutableArray* edgeList;
 
 
 - (void)dealloc {
+	[displayArea release];
 	[edgeDisplayedList release];
 	[annotationList release];
 	[map release];
