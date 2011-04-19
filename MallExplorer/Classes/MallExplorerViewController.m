@@ -59,6 +59,8 @@
 		if (![aMall isEqual:currentLoadedMall]) {			
 			[currentLoadedMall resetData];
 			currentLoadedMall = aMall;
+			self.maps = nil;
+			self.stairs = nil;
 		}
 		
 		mallLoaded = aMall.mapLoaded;
