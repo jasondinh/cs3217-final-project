@@ -78,14 +78,14 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	
 	//settings for self
-	commentTable=[[UITableView alloc]initWithFrame:CGRectMake(0, 120, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain ];
+	commentTable=[[UITableView alloc]initWithFrame:CGRectMake(0, 150, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain ];
 	[self.view addSubview:commentTable];
 	commentTable.delegate=self;
 	commentTable.dataSource = self;
 	commentList = [[NSMutableArray alloc] init];
 	self.view.backgroundColor = [UIColor whiteColor];
 	//setting the textfield for entering comments.
-	commentField  = [[UITextField alloc]initWithFrame:CGRectMake(0, 50, commentTable.frame.size.width , 50)];
+	commentField  = [[UITextField alloc]initWithFrame:CGRectMake(0, 50, self.view.frame.size.width , 100)];
 	[self.view addSubview:commentField];
 	commentField.borderStyle = UITextBorderStyleRoundedRect;
 	commentField.placeholder = @"Your comment";
