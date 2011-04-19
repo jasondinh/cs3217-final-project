@@ -66,7 +66,7 @@
 	NSLog([commentList description]);
 	
 	[commentTable reloadData];
-	
+	[apiController release];
 }
 
 

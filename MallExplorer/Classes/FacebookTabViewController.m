@@ -104,7 +104,7 @@
 	[request setDelegate: self];
 	[request setDidStartSelector: @selector(startedLoadedNearBy:)];
 	[request setDidFinishSelector: @selector(finishedLoadedNearby:)];
-	[request setDidFailSelector: @selector(failedLoadedNearby:)];
+	//[request setDidFailSelector: @selector(failedLoadedNearby:)];
 	[request startAsynchronous];
 }
 
